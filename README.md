@@ -1,3 +1,3 @@
 # SetupAndConfig
 
-Files and document for ServiceNow customizations
+Files and documents for ServiceNow customizations
