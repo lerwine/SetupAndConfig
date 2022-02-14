@@ -2,11 +2,12 @@
 
 Files and documents for ServiceNow customizations
 
-## Global Configuration
+## General Configuration
 
 - [Schedules and SLAs](./Schedules%20and%20SLAs.md)
 - [User Profile Customizations](./User%20Profile%20Customizations.md)
 - [VIP and Mission Priority Customizations](./VIP%20and%20Mission%20Priority%20Customizations.md)
+- [Update Sets and Exports](./UpdateSetsAndExports.md)
 
 ## Scoped Applications
 
