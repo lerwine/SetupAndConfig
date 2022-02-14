@@ -88,4 +88,4 @@ Following are the user groups that are defined in [sys_user_group.xml](sys_user_
 
 _____
 
-*[Home](./README.md)* | *[Update Sets and Exports](./UpdateSetsAndExports.md)*
+*[Home](./README.md)*
