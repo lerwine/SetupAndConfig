@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2022-02-14 17:16:54">
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>true</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20120101T235959</end_date_time>
+<float_day>1</float_day>
+<float_week>1</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>1</month>
+<monthly_type>dom</monthly_type>
+<name>New Year's Day</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>yearly</repeat_type>
+<repeat_until>20211231</repeat_until>
+<schedule display_value="U.S. Holidays">55ebbbf15f002000b12e3572f2b47714</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20120101T000000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2012-02-08 21:18:26</sys_created_on>
+<sys_id>b5fcbbf15f002000b12e3572f2b47741</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2012-02-08 21:41:23</sys_updated_on>
+<type>exclude</type>
+<yearly_type>doy</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>true</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20120116T235959</end_date_time>
+<float_day>2</float_day>
+<float_week>3</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>1</month>
+<monthly_type>dom</monthly_type>
+<name>Martin Luther King, Jr. Day</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>yearly</repeat_type>
+<repeat_until>20211231</repeat_until>
+<schedule display_value="U.S. Holidays">55ebbbf15f002000b12e3572f2b47714</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20120116T000000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2012-02-08 21:19:39</sys_created_on>
+<sys_id>cafdbbb15f002000b12e3572f2b47747</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2012-02-08 21:41:23</sys_updated_on>
+<type>exclude</type>
+<yearly_type>float</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>true</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20120220T235959</end_date_time>
+<float_day>2</float_day>
+<float_week>3</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>2</month>
+<monthly_type>dom</monthly_type>
+<name>Presidents' Day</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>yearly</repeat_type>
+<repeat_until>20211231</repeat_until>
+<schedule display_value="U.S. Holidays">55ebbbf15f002000b12e3572f2b47714</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20120220T000000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2012-02-08 21:20:10</sys_created_on>
+<sys_id>65fdffb15f002000b12e3572f2b477e3</sys_id>
+<sys_mod_count>11</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2012-02-08 23:18:47</sys_updated_on>
+<type>exclude</type>
+<yearly_type>float</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>true</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20120528T235959</end_date_time>
+<float_day>2</float_day>
+<float_week>last</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>5</month>
+<monthly_type>dom</monthly_type>
+<name>Memorial Day</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>yearly</repeat_type>
+<repeat_until>20211231</repeat_until>
+<schedule display_value="U.S. Holidays">55ebbbf15f002000b12e3572f2b47714</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20120528T000000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2012-02-08 21:20:41</sys_created_on>
+<sys_id>ddfdbbf15f002000b12e3572f2b477c5</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2012-02-08 21:41:23</sys_updated_on>
+<type>exclude</type>
+<yearly_type>float</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>true</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20120704T235959</end_date_time>
+<float_day>2</float_day>
+<float_week>last</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>5</month>
+<monthly_type>dom</monthly_type>
+<name>Independence Day</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>yearly</repeat_type>
+<repeat_until>20211231</repeat_until>
+<schedule display_value="U.S. Holidays">55ebbbf15f002000b12e3572f2b47714</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20120704T000000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2012-02-08 21:21:22</sys_created_on>
+<sys_id>cffdf7f15f002000b12e3572f2b477a6</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2012-02-08 21:41:23</sys_updated_on>
+<type>exclude</type>
+<yearly_type>doy</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>true</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20120901T235959</end_date_time>
+<float_day>2</float_day>
+<float_week>1</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>9</month>
+<monthly_type>dom</monthly_type>
+<name>Labor Day</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>yearly</repeat_type>
+<repeat_until>20211231</repeat_until>
+<schedule display_value="U.S. Holidays">55ebbbf15f002000b12e3572f2b47714</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20120901T000000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2012-02-08 21:21:49</sys_created_on>
+<sys_id>bdfef7f15f002000b12e3572f2b477a8</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2012-02-08 21:41:23</sys_updated_on>
+<type>exclude</type>
+<yearly_type>float</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>true</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20121009T235959</end_date_time>
+<float_day>2</float_day>
+<float_week>2</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>10</month>
+<monthly_type>dom</monthly_type>
+<name>Columbus Day</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>yearly</repeat_type>
+<repeat_until>20211231</repeat_until>
+<schedule display_value="U.S. Holidays">55ebbbf15f002000b12e3572f2b47714</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20121009T000000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2012-02-08 21:22:13</sys_created_on>
+<sys_id>63fe33315f002000b12e3572f2b477d2</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2012-02-08 21:41:23</sys_updated_on>
+<type>exclude</type>
+<yearly_type>float</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>true</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20121111T235959</end_date_time>
+<float_day>2</float_day>
+<float_week>2</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>10</month>
+<monthly_type>dom</monthly_type>
+<name>Veterans Day</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>yearly</repeat_type>
+<repeat_until>20211231</repeat_until>
+<schedule display_value="U.S. Holidays">55ebbbf15f002000b12e3572f2b47714</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20121111T000000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2012-02-08 21:22:54</sys_created_on>
+<sys_id>29fe3bb15f002000b12e3572f2b47740</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2012-02-08 21:41:23</sys_updated_on>
+<type>exclude</type>
+<yearly_type>doy</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>true</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20121122T235959</end_date_time>
+<float_day>5</float_day>
+<float_week>4</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>11</month>
+<monthly_type>dom</monthly_type>
+<name>Thanksgiving Day</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>yearly</repeat_type>
+<repeat_until>20211231</repeat_until>
+<schedule display_value="U.S. Holidays">55ebbbf15f002000b12e3572f2b47714</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20121122T000000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2012-02-08 21:23:32</sys_created_on>
+<sys_id>76fe3bb15f002000b12e3572f2b477cd</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2012-02-08 21:41:23</sys_updated_on>
+<type>exclude</type>
+<yearly_type>float</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>true</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20121224T235959</end_date_time>
+<float_day>5</float_day>
+<float_week>4</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>11</month>
+<monthly_type>dom</monthly_type>
+<name>Christmas Eve</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>yearly</repeat_type>
+<repeat_until>20211231</repeat_until>
+<schedule display_value="U.S. Holidays">55ebbbf15f002000b12e3572f2b47714</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20121224T000000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2012-02-08 21:23:50</sys_created_on>
+<sys_id>43fefbf15f002000b12e3572f2b47730</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2012-02-08 21:41:23</sys_updated_on>
+<type>exclude</type>
+<yearly_type>doy</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>true</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20121225T235959</end_date_time>
+<float_day>5</float_day>
+<float_week>4</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>11</month>
+<monthly_type>dom</monthly_type>
+<name>Christmas Day</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>yearly</repeat_type>
+<repeat_until>20211231</repeat_until>
+<schedule display_value="U.S. Holidays">55ebbbf15f002000b12e3572f2b47714</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20121225T000000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2012-02-08 21:23:58</sys_created_on>
+<sys_id>c9febbf15f002000b12e3572f2b477cf</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2012-02-08 21:41:23</sys_updated_on>
+<type>exclude</type>
+<yearly_type>doy</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>true</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20121231T235959</end_date_time>
+<float_day>5</float_day>
+<float_week>4</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>11</month>
+<monthly_type>dom</monthly_type>
+<name>New Year's Eve</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>yearly</repeat_type>
+<repeat_until>20211231</repeat_until>
+<schedule display_value="U.S. Holidays">55ebbbf15f002000b12e3572f2b47714</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20121231T000000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2012-02-08 21:24:20</sys_created_on>
+<sys_id>22fefbf15f002000b12e3572f2b47740</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2012-02-08 21:41:23</sys_updated_on>
+<type>exclude</type>
+<yearly_type>doy</yearly_type>
+</cmn_schedule_span>
+</unload>
