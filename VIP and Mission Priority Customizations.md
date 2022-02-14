@@ -1,5 +1,7 @@
 # VIP and Mission Priority Customizations
 
+*[Home](./README.md)*
+
 The following custom fields need to be added to the incident table:
 
 | Name                 | Label              | Type   | Purpose                                                      |
@@ -128,3 +130,7 @@ The “Importance Rating” is determined as follows:
 | Yes            | No                  | **2**             |
 | No             | Yes                 | **3**             |
 | No             | No                  | **4**             |
+
+_____
+
+*[Home](./README.md)*

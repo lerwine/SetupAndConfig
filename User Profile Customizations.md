@@ -1,5 +1,7 @@
 # User Profile Customizations
 
+*[Home](./README.md)*
+
 The following phone number fields need to be added to or have the label changed in the Users (`sys_user`) table:
 
 | Column Name    | Label       | Type   | Max Length                 |
@@ -79,3 +81,7 @@ Following are the UI policies that apply to fields according to the user's role:
 | VIP          | **Read-Only**         | Read/Write    | Read/Write    |
 | Email        | **Read-Only**         | **Read-Only** | Read/Write    |
 | User ID      | **Read-Only**         | **Read-Only** | **Read-Only** |
+
+_____
+
+*[Home](./README.md)*
