@@ -72,7 +72,6 @@ try {
         @{heading = 'Comments'; names = @('comments') }
     );
     $Rows = [System.Collections.ObjectModel.Collection[System.Collections.ObjectModel.Collection[string]]]::new();
-    $Columns | ForEach-Object { $_['width'] = $_['heading'].Length }
     foreach ($UpdateElement in @($UpdateSetXml.DocumentElement.SelectNodes('sys_update_xml'))) {
         $Cells = [System.Collections.ObjectModel.Collection[string]]::new();
         $Columns | ForEach-Object {
@@ -96,7 +95,6 @@ try {
             } else {
                 if ($v.Count -gt 0) { $t = @($v | Where-Object { $_.Length -gt 0 }) -join ' / ' }
             }
-            if ($_['names'] -notcontains 'comments' -and $t.Length -gt $_['width']) { $_['width'] = $t.Length }
             $Cells.Add($t);
         }
         $Rows.Add($Cells);
@@ -105,15 +103,12 @@ try {
     $Columns | ForEach-Object {
         $StreamWriter.Write(' ');
         $StreamWriter.Write($_['heading']);
-        $n = $_['width'];
-        $d = $n - $_.heading.Length;
-        if ($d -gt 0) { $StreamWriter.Write([string]::new(([char]' '), $d)) }
         $StreamWriter.Write(' |');
     }
     $StreamWriter.WriteLine('');
     $StreamWriter.Write('|');
     $Columns | ForEach-Object {
-        $StreamWriter.Write([string]::new(([char]'-'), $_['width'] + 2));
+        $StreamWriter.Write([string]::new(([char]'-'), $_['heading'].Length + 2));
         $StreamWriter.Write('|');
     }
     $StreamWriter.WriteLine('');
@@ -122,12 +117,11 @@ try {
         $StreamWriter.Write('|');
         $Cells = $Enumerator.Current;
         for ($i = 0; $i -lt $Columns.Count; $i++) {
-            $c = $Columns[$i];
             $t = $Cells[$i];
-            $StreamWriter.Write(' ');
-            $StreamWriter.Write($t);
-            $d = $c['width'] - $t.Length;
-            if ($d -gt 0) { $StreamWriter.Write([string]::new(([char]' '), $d)) }
+            if ($t.Length -gt 0) {
+                $StreamWriter.Write(' ');
+                $StreamWriter.Write($t);
+            }
             $StreamWriter.Write(' |');
         }
         $StreamWriter.WriteLine('');

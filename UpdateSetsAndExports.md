@@ -13,10 +13,11 @@ Following are the update sets to apply and xml to import in their respective ord
 7. [sys_group_has_role.xml](./xml/sys_group_has_role.xml): Role assignments for user groups.
 8. [sys_remote_update_set_Initial_Update_Set_Stage_2.xml](./xml/sys_remote_update_set_Initial_Update_Set_Stage_2.xml): Second update set to be applied (see [Initial Update Set Stage 2](./Initial%20Update%20Set%20Stage%202.md)).
 9. [sys_remote_update_set_Service_Catalog_Customizations.xml](./xml/sys_remote_update_set_Service_Catalog_Customizations.xml): Second update set to be applied (see [Service Catalog Customizations Update Set](./Service%20Catalog%20Customizations%20Update%20Set.md)).
-10. [sys_remote_update_set_EmailConfig_CabWorkbench.xml](./xml/sys_remote_update_set_EmailConfig_CabWorkbench.xml):
-11. [sys_remote_update_set_EmailConfig_TargetedCommunications.xml](./xml/sys_remote_update_set_EmailConfig_TargetedCommunications.xml):
-12. [sys_remote_update_set_Security_Incident_Setup.xml](./xml/sys_remote_update_set_Security_Incident_Setup.xml):
-13. [dl_definition_rel_match.xml](./xml/dl_definition_rel_match.xml):
+10. [sys_remote_update_set_UI_Updates.xml](./xml/sys_remote_update_set_UI_Updates.xml): Second update set to be applied (see [UI Updates Update Set](./UI%20Updates%20Update%20Set.md)).
+11. [sys_remote_update_set_EmailConfig_CabWorkbench.xml](./xml/sys_remote_update_set_EmailConfig_CabWorkbench.xml):
+12. [sys_remote_update_set_EmailConfig_TargetedCommunications.xml](./xml/sys_remote_update_set_EmailConfig_TargetedCommunications.xml):
+13. [sys_remote_update_set_Security_Incident_Setup.xml](./xml/sys_remote_update_set_Security_Incident_Setup.xml):
+14. [dl_definition_rel_match.xml](./xml/dl_definition_rel_match.xml):
 
 ## Initial Update Set Stage 1
 
