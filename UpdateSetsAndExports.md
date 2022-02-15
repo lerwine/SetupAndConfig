@@ -12,10 +12,11 @@ Following are the update sets to apply and xml to import in their respective ord
 6. [sys_user_group.xml](./xml/sys_user_group.xml): User groups (see [User Groups](#user-groups)).
 7. [sys_group_has_role.xml](./xml/sys_group_has_role.xml): Role assignments for user groups.
 8. [sys_remote_update_set_Initial_Update_Set_Stage_2.xml](./xml/sys_remote_update_set_Initial_Update_Set_Stage_2.xml): Second update set to be applied (see [Initial Update Set Stage 2](./Initial%20Update%20Set%20Stage%202.md)).
-9. [sys_remote_update_set_EmailConfig_CabWorkbench.xml](./xml/sys_remote_update_set_EmailConfig_CabWorkbench.xml):
-10. [sys_remote_update_set_EmailConfig_TargetedCommunications.xml](./xml/sys_remote_update_set_EmailConfig_TargetedCommunications.xml):
-11. [sys_remote_update_set_Security_Incident_Setup.xml](./xml/sys_remote_update_set_Security_Incident_Setup.xml):
-12. [dl_definition_rel_match.xml](./xml/dl_definition_rel_match.xml):
+9. [sys_remote_update_set_Service_Catalog_Customizations.xml](./xml/sys_remote_update_set_Service_Catalog_Customizations.xml): Second update set to be applied (see [Service Catalog Customizations Update Set](./Service%20Catalog%20Customizations%20Update%20Set.md)).
+10. [sys_remote_update_set_EmailConfig_CabWorkbench.xml](./xml/sys_remote_update_set_EmailConfig_CabWorkbench.xml):
+11. [sys_remote_update_set_EmailConfig_TargetedCommunications.xml](./xml/sys_remote_update_set_EmailConfig_TargetedCommunications.xml):
+12. [sys_remote_update_set_Security_Incident_Setup.xml](./xml/sys_remote_update_set_Security_Incident_Setup.xml):
+13. [dl_definition_rel_match.xml](./xml/dl_definition_rel_match.xml):
 
 ## Initial Update Set Stage 1
 
@@ -25,36 +26,34 @@ Following are the update sets to apply and xml to import in their respective ord
 - **Description:** Prepares system for initial configuration and plugin activation.
 - **Application Name:** Global
 
-Updates
-
-| Name | Type / Table | Target | Comments |
-|------|--------------|--------|----------|
-| sys_documentation_sys_user_u_grey_phone_en | Field Label / sys_user | User.Grey Phone | |
-| sys_ui_section_5134502bc611227c019dbdc4d7e32319 | Form Layout / sys_user | User | |
-| sys_dictionary_sys_user_u_grey_phone | Dictionary / sys_user | User.Grey Phone | |
-| sys_ui_related_cmn_location_null | Related Lists / cmn_location | Location | |
-| sys_script_667704440a0a0a6500a80f55058399b9 | Business Rule / sys_user | Lock Out Inactive Users | |
-| sys_email_layout_f4a2950cdb64130093da55d0cf9619ea | Email Layout | Classification Unsubscribe and Preferences | |
-| sys_dictionary_sys_user_phone | Dictionary / sys_user | User.Black phone | |
-| sys_ui_related_cmn_building_null | Related Lists / cmn_building | Building | |
-| sys_properties_4fad9448c611228e00a6fed5f85ed47d | System Property | glide.product.description | |
-| sys_email_layout_62e1950cdb64130093da55d0cf9619e8 | Email Layout | Classification Unsubscribe and Preferences Helvetica | |
-| sys_documentation_sys_user_phone_en | Field Label / sys_user | User.Black phone | |
-| sys_ui_section_19cd9044c0a8016400a6cf28513a496a | Form Layout / cmn_department | Department | |
-| sys_properties_24de57037f000001002b3574b0ad5187 | System Property | glide.sys.date_format | Sets display format for date/time to "yyyy-MM-dd". |
-| sys_documentation_sys_user_u_red_phone_en | Field Label / sys_user | User.Red Phone | |
-| sys_ui_section_a8fc8948db64130093da55d0cf9619ec | Form Layout / sys_user | User | |
-| sys_dictionary_sys_user_u_red_phone | Dictionary / sys_user | User.Red Phone | |
-| sys_ui_section_0e58739fc0a8016400e2e29c13e3798d | Form Layout / sys_user_group | Group | |
-| sys_dictionary_sys_user_group_roles | Dictionary / sys_user_group | Group.Roles | |
-| sys_ui_related_business_unit_null | Related Lists / business_unit | Business Unit | |
-| sys_documentation_sys_user_u_rank_en | Field Label / sys_user | User.Rank | |
-| sys_ui_section_815428970f487300d12eba8ce1050ed4 | Form Layout / cmn_building | Building | |
-| sys_dictionary_sys_user_u_rank | Dictionary / sys_user | User.Rank | |
-| sys_ui_related_core_company_customer | Related Lists / core_company | Company | |
-| sysevent_email_template_9553950cdb64130093da55d0cf9619f0 | Email Template / change_request | army.change.ess.role | |
-| sys_ui_form_sections_e4fc8948db64130093da55d0cf9619eb | Form Sections / sys_user | User | |
-| sys_properties_225b6a5fc0a8016400be95bf109ad07e | System Property | glide.sys.default.tz | Set timezone to US/Eastern |
+| Name | **Type** / Table | Target | Comments |
+|------|------------------|--------|----------|
+| sys_documentation_sys_user_u_grey_phone_en | **Field Label** / sys_user | User.Grey Phone | |
+| sys_ui_section_5134502bc611227c019dbdc4d7e32319 | **Form Layout** / sys_user | User | |
+| sys_dictionary_sys_user_u_grey_phone | **Dictionary** / sys_user | User.Grey Phone | |
+| sys_ui_related_cmn_location_null | **Related Lists** / cmn_location | Location | |
+| sys_script_667704440a0a0a6500a80f55058399b9 | **Business Rule** / sys_user | Lock Out Inactive Users | |
+| sys_email_layout_f4a2950cdb64130093da55d0cf9619ea | **Email Layout** | Classification Unsubscribe and Preferences | |
+| sys_dictionary_sys_user_phone | **Dictionary** / sys_user | User.Black phone | |
+| sys_ui_related_cmn_building_null | **Related Lists** / cmn_building | Building | |
+| sys_properties_4fad9448c611228e00a6fed5f85ed47d | **System Property** | glide.product.description | |
+| sys_email_layout_62e1950cdb64130093da55d0cf9619e8 | **Email Layout** | Classification Unsubscribe and Preferences Helvetica | |
+| sys_documentation_sys_user_phone_en | **Field Label** / sys_user | User.Black phone | |
+| sys_ui_section_19cd9044c0a8016400a6cf28513a496a | **Form Layout** / cmn_department | Department | |
+| sys_properties_24de57037f000001002b3574b0ad5187 | **System Property** | glide.sys.date_format | Sets display format for date/time to "yyyy-MM-dd". |
+| sys_documentation_sys_user_u_red_phone_en | **Field Label** / sys_user | User.Red Phone | |
+| sys_ui_section_a8fc8948db64130093da55d0cf9619ec | **Form Layout** / sys_user | User | |
+| sys_dictionary_sys_user_u_red_phone | **Dictionary** / sys_user | User.Red Phone | |
+| sys_ui_section_0e58739fc0a8016400e2e29c13e3798d | **Form Layout** / sys_user_group | Group | |
+| sys_dictionary_sys_user_group_roles | **Dictionary** / sys_user_group | Group.Roles | |
+| sys_ui_related_business_unit_null | **Related Lists** / business_unit | Business Unit | |
+| sys_documentation_sys_user_u_rank_en | **Field Label** / sys_user | User.Rank | |
+| sys_ui_section_815428970f487300d12eba8ce1050ed4 | **Form Layout** / cmn_building | Building | |
+| sys_dictionary_sys_user_u_rank | **Dictionary** / sys_user | User.Rank | |
+| sys_ui_related_core_company_customer | **Related Lists** / core_company | Company | |
+| sysevent_email_template_9553950cdb64130093da55d0cf9619f0 | **Email Template** / change_request | army.change.ess.role | |
+| sys_ui_form_sections_e4fc8948db64130093da55d0cf9619eb | **Form Sections** / sys_user | User | |
+| sys_properties_225b6a5fc0a8016400be95bf109ad07e | **System Property** | glide.sys.default.tz | Set timezone to US/Eastern |
 
 ## User Groups
 

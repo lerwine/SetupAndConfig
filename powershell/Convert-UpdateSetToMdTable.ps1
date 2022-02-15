@@ -66,22 +66,37 @@ try {
     }
     $StreamWriter.WriteLine('');
     $Columns = @(
-        @{heading = 'Name'; name = 'name' },
-        @{heading = 'Action'; name = 'action' },
-        @{heading = 'Type'; name = 'type' },
-        @{heading = 'Table'; name = 'table' },
-        @{heading = 'Target'; name = 'target_name' },
-        @{heading = 'Comments'; name = 'comments' }
+        @{heading = 'Name'; names = @('name') },
+        @{heading = '**Type** / Table'; names = @('type', 'table') },
+        @{heading = 'Target'; names = @('target_name') },
+        @{heading = 'Comments'; names = @('comments') }
     );
     $Rows = [System.Collections.ObjectModel.Collection[System.Collections.ObjectModel.Collection[string]]]::new();
     $Columns | ForEach-Object { $_['width'] = $_['heading'].Length }
     foreach ($UpdateElement in @($UpdateSetXml.DocumentElement.SelectNodes('sys_update_xml'))) {
         $Cells = [System.Collections.ObjectModel.Collection[string]]::new();
         $Columns | ForEach-Object {
+            $v = @($_['names'] | ForEach-Object {
+                $e = $UpdateElement.SelectSingleNode($_);
+                if ($null -eq $e -or $e.IsEmpty) { '' } else { $e.InnerText.Trim() }
+            });
             $t = '';
-            $e = $UpdateElement.SelectSingleNode($_['name']);
-            if ($null -ne $e -and -not $e.IsEmpty) { $t = $e.InnerText.Trim() }
-            if ($_['name'] -ne 'comments' -and $t.Length -gt $_['width']) { $_['width'] = $t.Length }
+            if ($_['names'] -contains 'type') {
+                if ($v.Count -eq 1 -or ($v.Count -gt 1 -and $v[1].Length -eq 0)) {
+                    if ($v[0].Length -gt 0) { $t = "**$($v[0])**" }
+                } else { 
+                    if ($v.Count -gt 0) {
+                        if ($v[0].Length -gt 0) {
+                            $t = "**$($v[0])** / $($v[1])"
+                        } else {
+                            $t = "/ $($v[1])"
+                        }
+                    }
+                }
+            } else {
+                if ($v.Count -gt 0) { $t = @($v | Where-Object { $_.Length -gt 0 }) -join ' / ' }
+            }
+            if ($_['names'] -notcontains 'comments' -and $t.Length -gt $_['width']) { $_['width'] = $t.Length }
             $Cells.Add($t);
         }
         $Rows.Add($Cells);
