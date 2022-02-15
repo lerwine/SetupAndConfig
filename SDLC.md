@@ -61,74 +61,74 @@ In ServiceNow, you check out (install) a specific version of an application by s
 
 ### Initial Implementation
 
-1. Create
-   1. Create new system application on Cloud Instance.
-   2. Create new repository in USASOC-HQ GitHub Org.
-      - Use the application scope name as the repository name, which should start with "x_g_inte_".
+1. **Create**
+   1. Create a new system application on the [Cloud Dev Instance](https://inscomscd.servicenowservices.com/).
+   2. Create a new repository in the [USASOC-HQ GitHub Org](https://github.com/USASOC-HQ).
+      - Use the application scope name as the repository name, which should start with `x_g_inte_`.
       - DO NOT initialize with README, .gitignore or licence.
    3. Link application with source control using the URL of the repository that was created.
    4. Ensure the master branch is not checked out. ServiceNow should have already created a separate branch for modifications.
-2. Implement
+2. **Implement**
    1. Perform initial design/implementation of application.
    2. Ensure changes are commit to source control.
-3. Validate
+3. **Validate**
    - Perform user acceptance testing, making further modifications as necessary.
-4. Tag V1.0
-   - The first version tag for the application will be "V1.0".
-   - At this point the application can be deployed to the production network. See the "Git Repositories" WIKI for details on moving repositories into the disconnected classified environment.
+4. **Tag V1.0**
+   - The first version tag for the application will be `V1.0`.
+   - At this point the application can be deployed to the production network. See the [Using Git with ServiceNow](./UsingGit.md) page for details on moving repositories into the disconnected classified environment.
 
 ### Subsequent Modifications
 
-1. Create New Branch
+1. **New Branch**
    - Create a new branch from the preceding repository version tag.
    - A good practice for the branch naming is to start with the letter 'D', followed by the the next incremented version number, so it can be easily identified as a development branch as well as what the target version number would be.
-2. Update
+2. **Update**
    - Change version number in ServiceNow application to reflect the new target version number.
    - Perform application modifications.
-3. Validate
+3. **Validate**
    - Perform user acceptance testing. Proceed to next step if passed; otherwise revert to #2.
-4. Tag Incremented Version
+4. **Tag Incremented Version**
    - Create release tag to match application version.
-   - At this point the latest application version can be deployed to the production network. See the "Git Repositories" WIKI for details on moving repositories into the disconnected classified environment.
+   - At this point the latest application version can be deployed to the production network. See the [Using Git with ServiceNow](./UsingGit.md) page for details on moving repositories into the disconnected classified environment.
 
 ## Classified Network SCLC
 
 Wherever practical, and where there are no security concerns, changes should first be performed on the unclassified network.
-![Classifed Network SCLD Diagram](./images/ClassifiedSdlc.png)
+![Classifed Network SDLC Diagram](./images/ClassifiedSdlc.png)
 
 ### Production Network Introduction
 
-1. Repository Merge
-   1. Merge changes from unclassified repository, overwriting any changes in the classified repository. The "Git Repositories" WIKI provides more technical details for synchronizing production with development.
+1. **Repository Merge**
+   1. Merge changes from unclassified repository, overwriting any changes in the classified repository. The [Using Git with ServiceNow](./UsingGit.md) page provides more technical details for synchronizing production with development.
    2. Create new repository branch from the target version tag with the next incremented revision umber.
    3. The name of this branch should start with a 'P' followed by the target application version (ie. Tag V1.0.0.0 ⇒ Branch P1.0.0.1). This makes it easily identifiable as a production branch.
    4. If there are no changes to be made on the high side, proceed to step #5
-2. Configure / Modify
+2. **Configure / Modify**
    1. Import application into ServiceNow high-side dev instance (or change branches if already installed) using the branch created in the previous step.
    2. Perform any changes that could not be done on the low side.
    3. Commit changes to repository.
-3. Validate
+3. **Validate**
    1. Check out branch in Test and/or UAT instances and conduct validation testing.
    2. If unsuccessful, revert to #2 or optionally revert to development cycle on low side.
-4. Revision Tag
+4. **Revision Tag**
    1. Create version tag in repository for the next incremented revision number (ie. Tag V1.0.0.0 ⇒ Branch P1.0.0.01 ⇒ Tag V1.0.0.1).
-5. Deploy
+5. **Deploy**
    1. Check out branch in latest revision tag into production instance.
    2. Application studio should automatically create a separate branch for any modifications that might occur in production.
 
 ### Subsequent Classified Modifications
 
-1. New Branch
+1. **New Branch**
    1. Create new repository branch for the new revision
    2. The name of this branch should start with a 'P' followed by the target application version with its revision number incremented (ie. Tag P1.0.0.1 ⇒ Branch P1.0.0.2).
-2. Update
+2. **Update**
    1. Perform application modification / reconfiguration.
       1. Commit changes to repository
-3. Validate
+3. **Validate**
    1. Check out branch in Test and/or UAT instances and conduct validation testing.
    2. If unsuccessful, revert to #2 or optionally revert to development cycle on low side.
-4. Revision Tag
+4. **Revision Tag**
    1. Create version tag in repository for the next incremented revision number (ie. Tag V1.0.0.1 ⇒ Branch P1.0.0.02 ⇒ Tag V1.0.0.2).
-5. Deploy
+5. **Deploy**
    1. Check out branch in latest revision tag into production instance.
    2. Application studio should automatically create a separate branch for any modifications that might occur in production.

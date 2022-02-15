@@ -17,3 +17,4 @@ Files and documents for ServiceNow customizations
 ## Other Information
 
 - [Custom App SDLC](./SDLC.md)
+- [Using Git with ServiceNow](./UsingGit.md)
