@@ -1,5 +1,7 @@
 # Recommended SDLC for ServiceNow Custom Applications
 
+*[Home](./README.md)*
+
 ## General Overview
 
 This page describes the Software Development Lifecycle for custom applications developed for the ServiceNow platform.
@@ -8,7 +10,7 @@ A specialized SDLC is required so we can benefit from the supportability of apps
 
 > Technical reasoning: Since it is not possible to create pull requests originating from classified networks, branches imported from the unclassified network must not be altered on the classified networks.  Therefore, any modifications required on the classified networks must be done in separate branches.
 
-Following is a generalized overview of the software development lifecycle. Specific details will be provided, later.
+Following is a generalized overview of the software development lifecycle. Specific details will be provided, later.\
 ![SDLC Overview Diagram](./images/SdlcOverview.png)
 
 ### General Unclassified Activities
@@ -33,8 +35,8 @@ Following is a generalized overview of the software development lifecycle. Speci
 
 ## Versioning in ServiceNow and Git Repositories
 
-This explains the standardized version numbering system that will be used to refer to specific application version. Each release of a ServiceNow application will be tagged with a unique, sequential version number. Typically, this starts with version 1.0 and is incremented with every release. The notation that is used to represent software versions follows the commonly used format which is comprised of 2 to 4 whole numbers separated by periods with each number representing major, minor, build and release versions:
-![Version Number Component Diagram](./images/VersionNumberComponents.png)
+This explains the standardized version numbering system that will be used to refer to specific application version. Each release of a ServiceNow application will be tagged with a unique, sequential version number. Typically, this starts with version 1.0 and is incremented with every release. The notation that is used to represent software versions follows the commonly used format which is comprised of 2 to 4 whole numbers separated by periods with each number representing major, minor, build and release versions:\
+![Version Number Component Diagram](./images/VersionNumberComponents.png)\
 If the last 1 or 2 parts are omitted, it is assumed to be zero (ex. 2.5 is equivalent to 2.5.0 and 2.5.0.0). Applications on the low side should only use 2 or 3 number version notation. The revision portion is reserved for changes made on the high side.
 
 ### Repository Version Tags
@@ -93,7 +95,7 @@ In ServiceNow, you check out (install) a specific version of an application by s
 
 ## Classified Network SCLC
 
-Wherever practical, and where there are no security concerns, changes should first be performed on the unclassified network.
+Wherever practical, and where there are no security concerns, changes should first be performed on the unclassified network.\
 ![Classifed Network SDLC Diagram](./images/ClassifiedSdlc.png)
 
 ### Production Network Introduction
@@ -132,3 +134,5 @@ Wherever practical, and where there are no security concerns, changes should fir
 5. **Deploy**
    1. Check out branch in latest revision tag into production instance.
    2. Application studio should automatically create a separate branch for any modifications that might occur in production.
+
+*[Home](./README.md)*

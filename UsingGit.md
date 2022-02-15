@@ -1,5 +1,7 @@
 # Using Git with ServiceNow
 
+*[Home](./README.md)*
+
 ## Shared Git Organization
 
 A shared Git organization has been created and can be accessed at the [USASOC-HQ Git org website](https://github.com/USASOC-HQ). Names of repositories for custom ServiceNow apps will begin with `x_`. Names of all other repositories should begin with something other than that.
@@ -14,12 +16,12 @@ Following is a list of some of the custom applications that are stored in git re
 
 ## GitHub Authentication from ServiceNow
 
-You will need to set up a personal developer token which you will use in ServiceNow to authenticate to GitHub. Log into GitHub and open your personal access token list from the developer settings as depicted:
-![Screen clips of menu selections for new personal access token](./images/DevSettingsPersonalDevTokens.png)
-Under the "Select Scopes" section, Select the "repo" group, and then click the "Generate Token" button at the bottom.
-![Screen clip of new personal access token page](./images/NewPersonalAccessToken.png)
-Your personal access token will be presented in the next screen. From within ServiceNow, you will configure a basic credential using  your GitHub login and the personal access token as the password.
-![Screen clip of page after personal token generated](./images/PersonalAccessTokenGenerated.png)
+You will need to set up a personal developer token which you will use in ServiceNow to authenticate to GitHub. Log into GitHub and open your personal access token list from the developer settings as depicted:\
+![Screen clips of menu selections for new personal access token](./images/DevSettingsPersonalDevTokens.png)\
+Under the "Select Scopes" section, Select the "repo" group, and then click the "Generate Token" button at the bottom.\
+![Screen clip of new personal access token page](./images/NewPersonalAccessToken.png)\
+Your personal access token will be presented in the next screen. From within ServiceNow, you will configure a basic credential using  your GitHub login and the personal access token as the password.\
+![Screen clip of page after personal token generated](./images/PersonalAccessTokenGenerated.png)\
 In ServiceNow, you will create credentials as follows:
 
 1. Navigate to Connections and Credentials => Credentials.
@@ -51,3 +53,5 @@ This procedure has not yet been fully tested and is subject to further adjustmen
 Previously, all ServiceNow application git repositories were initiated from a personal developer instance and are attributed to a specific person (registration #44813), and not to this organization. Applications and their repositories whose names use the prefix `x_44813_` should be re-created starting from the [Cloud Dev Instance](https://inscomscd.servicenowservices.com/), as outlined in this SDLC, as time permits. ServiceNow applications that have been created on the [Cloud Dev Instance](https://inscomscd.servicenowservices.com/) will be prefixed with `x_g_inte_`.
 
 No operational risk is incurred simply because an application was initiated through a personal dev instance. Such applications are just treated the same as any other 3rd party application. This also means that only the individual developer who owned that personal dev instance can make direct changes to that application without experiencing minor semantic complications. Another benefit of initiating apps from the cloud instance is that they are less prone to permissions and trust issues.
+
+*[Home](./README.md)*
