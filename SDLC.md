@@ -57,7 +57,7 @@ In ServiceNow, you check out (install) a specific version of an application by s
 ## Unclassified Network SDLC
 
 > **Recommended Training**
-> To understand how ServiceNow Applications work with Git repositories involved in the SDLC, you can do the "Create the NeedIt Application and Application Files" training module on the ServiceNow Developers website. To find this module, go to the [ServiceNow Developer Site](https://developer.servicenow.com), the navigate to "Learn" ⇒ "Learning Plans" and open the "ServiceNow Administrator" plan. This module should be the first one that shows up. In that training module, you'll actually create an application and check it into a Git Repository.
+> To understand how ServiceNow Applications work with Git repositories involved in the SDLC, you can do the "Create the NeedIt Application and Application Files" training module on the ServiceNow Developers website. To find this module, go to the [ServiceNow Developers website](https://developer.servicenow.com), the navigate to "Learn" ⇒ "Learning Plans" and open the "ServiceNow Administrator" plan. This module should be the first one that shows up. In that training module, you'll actually create an application and check it into a Git Repository.
 
 ![Unclass SDLC Diagram](./images/UnclassSdlc.png)
 
@@ -83,7 +83,7 @@ In ServiceNow, you check out (install) a specific version of an application by s
 
 1. **New Branch**
    - Create a new branch from the preceding repository version tag.
-   - A good practice for the branch naming is to start with the letter 'D', followed by the the next incremented version number, so it can be easily identified as a development branch as well as what the target version number would be.
+   - A good practice for the branch naming is to start with the letter *'D'*, followed by the the next incremented version number, so it can be easily identified as a development branch as well as what the target version number would be.
 2. **Update**
    - Change version number in ServiceNow application to reflect the new target version number.
    - Perform application modifications.
@@ -103,7 +103,7 @@ Wherever practical, and where there are no security concerns, changes should fir
 1. **Repository Merge**
    1. Merge changes from unclassified repository, overwriting any changes in the classified repository. The [Using Git with ServiceNow](./UsingGit.md) page provides more technical details for synchronizing production with development.
    2. Create new repository branch from the target version tag with the next incremented revision umber.
-   3. The name of this branch should start with a 'P' followed by the target application version (ie. Tag V1.0.0.0 ⇒ Branch P1.0.0.1). This makes it easily identifiable as a production branch.
+   3. The name of this branch should start with a *'P'* followed by the target application version *(ie. Tag `V1.0.0.0` ⇒ Branch `P1.0.0.1`)*. This makes it easily identifiable as a production branch.
    4. If there are no changes to be made on the high side, proceed to step #5
 2. **Configure / Modify**
    1. Import application into ServiceNow high-side dev instance (or change branches if already installed) using the branch created in the previous step.
@@ -113,7 +113,7 @@ Wherever practical, and where there are no security concerns, changes should fir
    1. Check out branch in Test and/or UAT instances and conduct validation testing.
    2. If unsuccessful, revert to #2 or optionally revert to development cycle on low side.
 4. **Revision Tag**
-   1. Create version tag in repository for the next incremented revision number (ie. Tag V1.0.0.0 ⇒ Branch P1.0.0.01 ⇒ Tag V1.0.0.1).
+   1. Create version tag in repository for the next incremented revision number *(ie. Tag `V1.0.0.0` ⇒ Branch `P1.0.0.01` ⇒ Tag `V1.0.0.1`)*.
 5. **Deploy**
    1. Check out branch in latest revision tag into production instance.
    2. Application studio should automatically create a separate branch for any modifications that might occur in production.
@@ -122,7 +122,7 @@ Wherever practical, and where there are no security concerns, changes should fir
 
 1. **New Branch**
    1. Create new repository branch for the new revision
-   2. The name of this branch should start with a 'P' followed by the target application version with its revision number incremented (ie. Tag P1.0.0.1 ⇒ Branch P1.0.0.2).
+   2. The name of this branch should start with a *'P'* followed by the target application version with its revision number incremented *(ie. Tag `P1.0.0.1` ⇒ Branch `P1.0.0.2`)*.
 2. **Update**
    1. Perform application modification / reconfiguration.
       1. Commit changes to repository
@@ -130,7 +130,7 @@ Wherever practical, and where there are no security concerns, changes should fir
    1. Check out branch in Test and/or UAT instances and conduct validation testing.
    2. If unsuccessful, revert to #2 or optionally revert to development cycle on low side.
 4. **Revision Tag**
-   1. Create version tag in repository for the next incremented revision number (ie. Tag V1.0.0.1 ⇒ Branch P1.0.0.02 ⇒ Tag V1.0.0.2).
+   1. Create version tag in repository for the next incremented revision number *(ie. Tag `V1.0.0.1` ⇒ Branch `P1.0.0.02` ⇒ Tag `V1.0.0.2`)*.
 5. **Deploy**
    1. Check out branch in latest revision tag into production instance.
    2. Application studio should automatically create a separate branch for any modifications that might occur in production.
