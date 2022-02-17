@@ -11,17 +11,36 @@ Following are the update sets to apply and xml to import in their respective ord
 5. [cmn_schedule_span (US Holidays).xml](./xml/cmn_schedule_span%20(US%20Holidays).xml): U.S. Holiday schedule entries.
 6. [sys_user_group.xml](./xml/sys_user_group.xml): User groups (see [User Groups](#user-groups)).
 7. [sys_group_has_role.xml](./xml/sys_group_has_role.xml): Role assignments for user groups.
-8. [sys_remote_update_set_Initial_Update_Set_Stage_2.xml](./xml/sys_remote_update_set_Initial_Update_Set_Stage_2.xml): Second update set to be applied (see [Initial Update Set Stage 2](./Initial%20Update%20Set%20Stage%202.md)).
-9. [sys_remote_update_set_Service_Catalog_Customizations.xml](./xml/sys_remote_update_set_Service_Catalog_Customizations.xml): Second update set to be applied (see [Service Catalog Customizations Update Set](./Service%20Catalog%20Customizations%20Update%20Set.md)).
-10. [sys_remote_update_set_EmailConfig_CabWorkbench.xml](./xml/sys_remote_update_set_EmailConfig_CabWorkbench.xml): Email Configuration for CAB Workbench (see [CAB Workbench Update Set](././Email%20Config.md#cab-workbench-update-set)).
-11. [sys_remote_update_set_EmailConfig_TargetedCommunications.xml](./xml/sys_remote_update_set_EmailConfig_TargetedCommunications.xml): Email Configuration for Targeted Communications (see [Targeted Communications Update Set](./Email%20Config.md#targeted-communications-update-set)).
-12. [sys_remote_update_set_Portal_Updates.xml](./xml/sys_remote_update_set_Portal_Updates.xml): Second update set to be applied (see [Portal Updates Update Set](./Portal%20Updates%20Update%20Set.md)).
-13. [sys_remote_update_set_Security_Incident_Setup.xml](./xml/sys_remote_update_set_Security_Incident_Setup.xml): Second update set to be applied (see [Security Incident Setup Update Set](#security-incident-setup-update-set)).
-14. *[sys_remote_update_set_Unclass_Setup.xml](./xml/sys_remote_update_set_Unclass_Setup.xml): Update set for initializing personal dev instances.*
-15. [sys_remote_update_set_Data_Lookup.xml](./xml/sys_remote_update_set_Data_Lookup.xml): Second update set to be applied (see [Data Lookup Update Set](./Data%20Lookup%20Update%20Set.md)).
-16. [sys_remote_update_set_UI_Updates.xml](./xml/sys_remote_update_set_UI_Updates.xml): Second update set to be applied (see [UI Updates Update Set](./UI%20Updates%20Update%20Set.md)).
-17. [sys_remote_update_set_Initial_Update_Set_Stage_2_Patch20200204.xml](./xml/sys_remote_update_set_Initial_Update_Set_Stage_2_Patch20200204.xml): Patch update set (see [Initial Update Set Stage 2 Patch 2020-02-04](#initial-update-set-stage-2-patch-2020-02-04)).
-18. [dl_definition_rel_match.xml](./xml/dl_definition_rel_match.xml):
+8. [sys_remote_update_set_Data_Lookup.xml](./xml/sys_remote_update_set_Data_Lookup.xml): Sets up data lookups for priority (see [Data Lookup Update Set](./Data%20Lookup%20Update%20Set.md)).
+9. [dl_definition_rel_match.xml](./xml/dl_definition_rel_match.xml): Matcher field associations.
+10. [sys_remote_update_set_Initial_Update_Set_Stage_2.xml](./xml/sys_remote_update_set_Initial_Update_Set_Stage_2.xml): Second update set to be applied (see [Initial Update Set Stage 2](./Initial%20Update%20Set%20Stage%202.md)).
+    - You may have to skip 4 updates for `sp_instance`.
+11. [sys_remote_update_set_UI_Updates.xml](./xml/sys_remote_update_set_UI_Updates.xml): Second update set to be applied (see [UI Updates Update Set](./UI%20Updates%20Update%20Set.md)).
+    - This requires that the `PPM Standard` plugin.
+12. [sys_remote_update_set_Service_Catalog_Customizations.xml](./xml/sys_remote_update_set_Service_Catalog_Customizations.xml): Second update set to be applied (see [Service Catalog Customizations Update Set](./Service%20Catalog%20Customizations%20Update%20Set.md)).
+13. [sys_remote_update_set_EmailConfig_CabWorkbench.xml](./xml/sys_remote_update_set_EmailConfig_CabWorkbench.xml): Email Configuration for CAB Workbench (see [CAB Workbench Update Set](././Email%20Config.md#cab-workbench-update-set)).
+14. [sys_remote_update_set_EmailConfig_TargetedCommunications.xml](./xml/sys_remote_update_set_EmailConfig_TargetedCommunications.xml): Email Configuration for Targeted Communications (see [Targeted Communications Update Set](./Email%20Config.md#targeted-communications-update-set)).
+15. [sys_remote_update_set_Portal_Updates.xml](./xml/sys_remote_update_set_Portal_Updates.xml): Second update set to be applied (see [Portal Updates Update Set](./Portal%20Updates%20Update%20Set.md)).
+16. [sys_remote_update_set_Security_Incident_Setup.xml](./xml/sys_remote_update_set_Security_Incident_Setup.xml): Second update set to be applied (see [Security Incident Setup Update Set](#security-incident-setup-update-set)).
+17. *[sys_remote_update_set_Unclass_Setup.xml](./xml/sys_remote_update_set_Unclass_Setup.xml): Update set for initializing personal dev instances.*
+18. [sys_remote_update_set_Initial_Update_Set_Stage_2_Patch20200204.xml](./xml/sys_remote_update_set_Initial_Update_Set_Stage_2_Patch20200204.xml): Patch update set (see [Initial Update Set Stage 2 Patch 2020-02-04](#initial-update-set-stage-2-patch-2020-02-04)).
+
+Dev Instance Tests
+
+Following are import tests being conducted
+
+| Validated | Name                                                           | Start               | End                 | Release             |
+| [X]       | sys_remote_update_set_Initial_Update_Set_Stage_1               | 2019-03-27 12:00:02 | 2019-05-01 13:24:50 | 2019-06-05 16:16:19 |
+| [X]       | sys_remote_update_set_Data_Lookup                              | 2019-05-01 11:35:43 | 2019-05-02 11:02:34 | 2020-02-12 03:04:15 |
+| [X]       | sys_remote_update_set_Initial_Update_Set_Stage_2               | 2019-04-15 13:11:50 | 2019-10-22 11:27:54 | 2020-02-11 17:04:15 |
+| [ ]       | sys_remote_update_set_UI_Updates                               | 2019-04-05 15:38:35 | 2020-02-10 17:54:06 | 2020-02-11 22:04:15 |
+| [ ]       | sys_remote_update_set_Service_Catalog_Customizations           | 2019-04-11 14:29:38 | 2020-02-10 19:08:38 | 2020-02-11 22:04:15 |
+| [ ]       | sys_remote_update_set_Portal_Updates                           | 2019-04-15 13:11:51 | 2020-01-21 14:14:59 | 2020-02-12 03:04:15 |
+| [ ]       | sys_remote_update_set_Security_Incident_Setup                  | 2019-07-23 09:15:44 | 2019-07-23 09:44:13 | 2019-08-09 17:57:49 |
+| [ ]       | sys_remote_update_set_EmailConfig_CabWorkbench                 | 2019-09-12 19:00:21 | 2019-09-12 19:00:35 | 2019-09-12 23:04:00 |
+| [ ]       | sys_remote_update_set_EmailConfig_TargetedCommunications       | 2019-09-12 19:00:21 | 2019-09-12 19:00:35 | 2019-09-12 23:04:00 |
+| [ ]       | sys_remote_update_set_Initial_Update_Set_Stage_2_Patch20200204 | 2020-02-27 12:23:32 | 2020-02-27 12:23:32 | 2020-02-27 17:12:59 |
+| [ ]       | sys_remote_update_set_Unclass_Setup                            | 2019-04-03 10:52:30 | 2019-10-24 18:03:26 | 2020-02-10 23:16:17 |
 
 ## Initial Update Set Stage 1
 
@@ -85,6 +104,7 @@ Following are the update sets to apply and xml to import in their respective ord
 
 ## Initial Update Set Stage 2 Patch 2020-02-04
 
+- **Source:** [sys_remote_update_set_Initial_Update_Set_Stage_2_Patch20200204.xml](./xml/sys_remote_update_set_Initial_Update_Set_Stage_2_Patch20200204.xml)
 - **Name:** Initial Update Set Stage 2 V1 2020-02-04
 - **Scope:** global
 - **Release Date:** 2020-02-27 17:12:59

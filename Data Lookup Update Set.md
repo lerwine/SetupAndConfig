@@ -7,8 +7,8 @@
 - **Release Date:** 2020-02-12 03:04:15
 - **Description:** Updates related to data lookup definitions
 - **Application Name:** Global
-- **First Update Added:** 2022-02-16 18:53:14
-- **Last Update Added:** 2022-02-16 18:53:14
+- **First Update Added:** 2019-05-01 11:35:43
+- **Last Update Added:** 2019-05-02 11:02:34
 
 | Name | **Type** / Table | Target | Comments |
 |------|------------------|--------|----------|
