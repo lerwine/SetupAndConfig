@@ -2,13 +2,17 @@
 
 *[Home](./README.md)* | *[Update Sets and Exports](./UpdateSetsAndExports.md)*
 
+## Overview
+
 - **Source:** [sys_remote_update_set_Data_Lookup.xml](./xml/sys_remote_update_set_Data_Lookup.xml)
 - **Scope:** global
 - **Release Date:** 2020-02-12 03:04:15
 - **Description:** Updates related to data lookup definitions
 - **Application Name:** Global
-- **First Update Added:** 2019-05-01 11:35:43
-- **Last Update Added:** 2019-05-02 11:02:34
+- **First Update Recorded:** 2019-05-01 11:35:43
+- **Last Update Recorded:** 2019-05-02 11:02:34
+
+## All Updates
 
 | Name | **Type** / Table | Target | Comments |
 |------|------------------|--------|----------|

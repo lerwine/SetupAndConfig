@@ -14,7 +14,7 @@ var USASOC_OnLogin = (function() {
         setValidated();
         USASOC_OnLogin._dialogWindow.destroy();
         USASOC_OnLogin._dialogWindow = null;
-        g_navigation.open = ("/sys_user.do?sys_id=" + g_user.userID + "&sysparm_view=ess");
+        g_navigation.openRecord("sys_user", g_user.userID);
     };
     addLateLoadEvent(function() {
         try {

@@ -38,13 +38,21 @@ This procedure has not yet been fully tested and is subject to further adjustmen
 2. Ensure target tag and branch has been fetched from the remote repository:
    1. List all tags to get the commit reference for the tag and to ensure the tag exists in the local repository.
       Example:
-      <pre><code>$ git show-ref --tags
+
+      ```sh
+      $ git show-ref --tags
       393bc8fca9bd180b57db4342d92c10c67316d113 refs/tags/V1.0.0.0
-      cafbf06e04c92145d814778a5366b58dd37ed9b2 refs/tags/V1.0.1.0</code></pre>
+      cafbf06e04c92145d814778a5366b58dd37ed9b2 refs/tags/V1.0.1.0
+      ```
+
    2. Ensure a local branch exists which contains the target tag
       Example:
-      <pre><code>$ git branch --contains 393bc8fca9bd180b57db4342d92c10c67316d113
-      origin/sn_instances/inscomscd</code></pre>
+
+      ```sh
+      $ git branch --contains 393bc8fca9bd180b57db4342d92c10c67316d113
+      origin/sn_instances/inscomscd
+      ```
+
 3. Compress the contents of the entire repository folder into a ZIP file and copy it to the production network.
 4. On the production network extract the repository and create a new branch from the target version tag. See the [Classified Network SDLC](./SDLC.md#classified-network-sclc) section of the SDLC page to determine the name of the new branch and for further instruction.
 
@@ -53,5 +61,7 @@ This procedure has not yet been fully tested and is subject to further adjustmen
 Previously, all ServiceNow application git repositories were initiated from a personal developer instance and are attributed to a specific person (registration #44813), and not to this organization. Applications and their repositories whose names use the prefix `x_44813_` should be re-created starting from the [Cloud Dev Instance](https://inscomscd.servicenowservices.com/), as outlined in this SDLC, as time permits. ServiceNow applications that have been created on the [Cloud Dev Instance](https://inscomscd.servicenowservices.com/) will be prefixed with `x_g_inte_`.
 
 No operational risk is incurred simply because an application was initiated through a personal dev instance. Such applications are just treated the same as any other 3rd party application. This also means that only the individual developer who owned that personal dev instance can make direct changes to that application without experiencing minor semantic complications. Another benefit of initiating apps from the cloud instance is that they are less prone to permissions and trust issues.
+
+_____
 
 *[Home](./README.md)*

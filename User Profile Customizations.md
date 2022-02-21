@@ -82,6 +82,14 @@ Following are the UI policies that apply to fields according to the user's role:
 | Email        | **Read-Only**         | **Read-Only** | Read/Write    |
 | User ID      | **Read-Only**         | **Read-Only** | **Read-Only** |
 
+## Scripts
+
+### Profile Validation
+
+- To validate the user profile upon login, the UI script [USASOC_OnLogin](./Script%20Sources.md#usasoc_onlogin) makes an ajax call to [x_44813_usasoc_cst.UsasocUserNotificationManager](./USASOC%20Customizations%20Application.md#usasocusernotificationmanager-api) for user login profile validation.
+- [Catalog requestor profile validation](./Script%20Sources.md#catalog-requestor-profile-validation)
+- [Incident caller profile validation](./Script%20Sources.md#incident-caller-profile-validation)
+
 _____
 
 *[Home](./README.md)*

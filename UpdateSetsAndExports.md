@@ -7,40 +7,28 @@ Following are the update sets to apply and xml to import in their respective ord
 1. [sys_remote_update_set_Initial_Update_Set_Stage_1.xml](./xml/sys_remote_update_set_Initial_Update_Set_Stage_1.xml): Initial update set to be applied (see [Initial Update Set Stage 1](#initial-update-set-stage-1)).
 2. [cmn_schedule.xml](./xml/cmn_schedule.xml): Schedule definitions (see [Schedules and SLAs](./Schedules%20and%20SLAs.md)).
 3. [cmn_other_schedule.xml](./xml/cmn_other_schedule.xml): Child schedule relationships.
-4. [cmn_schedule_span.xml](./xml/cmn_schedule_span.xml): Schedule entries (exception for U.S. Holidays).
+4. [cmn_schedule_span.xml](./xml/cmn_schedule_span.xml): Schedule entries (except for U.S. Holidays).
 5. [cmn_schedule_span (US Holidays).xml](./xml/cmn_schedule_span%20(US%20Holidays).xml): U.S. Holiday schedule entries.
 6. [sys_user_group.xml](./xml/sys_user_group.xml): User groups (see [User Groups](#user-groups)).
 7. [sys_group_has_role.xml](./xml/sys_group_has_role.xml): Role assignments for user groups.
 8. [sys_remote_update_set_Data_Lookup.xml](./xml/sys_remote_update_set_Data_Lookup.xml): Sets up data lookups for priority (see [Data Lookup Update Set](./Data%20Lookup%20Update%20Set.md)).
 9. [dl_definition_rel_match.xml](./xml/dl_definition_rel_match.xml): Matcher field associations.
-10. [sys_remote_update_set_Initial_Update_Set_Stage_2.xml](./xml/sys_remote_update_set_Initial_Update_Set_Stage_2.xml): Second update set to be applied (see [Initial Update Set Stage 2](./Initial%20Update%20Set%20Stage%202.md)).
-    - You may have to skip 4 updates for `sp_instance`.
-11. [sys_remote_update_set_UI_Updates.xml](./xml/sys_remote_update_set_UI_Updates.xml): Second update set to be applied (see [UI Updates Update Set](./UI%20Updates%20Update%20Set.md)).
-    - This requires that the `PPM Standard` plugin.
-12. [sys_remote_update_set_Service_Catalog_Customizations.xml](./xml/sys_remote_update_set_Service_Catalog_Customizations.xml): Second update set to be applied (see [Service Catalog Customizations Update Set](./Service%20Catalog%20Customizations%20Update%20Set.md)).
-13. [sys_remote_update_set_EmailConfig_CabWorkbench.xml](./xml/sys_remote_update_set_EmailConfig_CabWorkbench.xml): Email Configuration for CAB Workbench (see [CAB Workbench Update Set](././Email%20Config.md#cab-workbench-update-set)).
-14. [sys_remote_update_set_EmailConfig_TargetedCommunications.xml](./xml/sys_remote_update_set_EmailConfig_TargetedCommunications.xml): Email Configuration for Targeted Communications (see [Targeted Communications Update Set](./Email%20Config.md#targeted-communications-update-set)).
-15. [sys_remote_update_set_Portal_Updates.xml](./xml/sys_remote_update_set_Portal_Updates.xml): Second update set to be applied (see [Portal Updates Update Set](./Portal%20Updates%20Update%20Set.md)).
-16. [sys_remote_update_set_Security_Incident_Setup.xml](./xml/sys_remote_update_set_Security_Incident_Setup.xml): Second update set to be applied (see [Security Incident Setup Update Set](#security-incident-setup-update-set)).
-17. *[sys_remote_update_set_Unclass_Setup.xml](./xml/sys_remote_update_set_Unclass_Setup.xml): Update set for initializing personal dev instances.*
-18. [sys_remote_update_set_Initial_Update_Set_Stage_2_Patch20200204.xml](./xml/sys_remote_update_set_Initial_Update_Set_Stage_2_Patch20200204.xml): Patch update set (see [Initial Update Set Stage 2 Patch 2020-02-04](#initial-update-set-stage-2-patch-2020-02-04)).
-
-Dev Instance Tests
-
-Following are import tests being conducted
-
-| Validated | Name                                                           | Start               | End                 | Release             |
-| [X]       | sys_remote_update_set_Initial_Update_Set_Stage_1               | 2019-03-27 12:00:02 | 2019-05-01 13:24:50 | 2019-06-05 16:16:19 |
-| [X]       | sys_remote_update_set_Data_Lookup                              | 2019-05-01 11:35:43 | 2019-05-02 11:02:34 | 2020-02-12 03:04:15 |
-| [X]       | sys_remote_update_set_Initial_Update_Set_Stage_2               | 2019-04-15 13:11:50 | 2019-10-22 11:27:54 | 2020-02-11 17:04:15 |
-| [ ]       | sys_remote_update_set_UI_Updates                               | 2019-04-05 15:38:35 | 2020-02-10 17:54:06 | 2020-02-11 22:04:15 |
-| [ ]       | sys_remote_update_set_Service_Catalog_Customizations           | 2019-04-11 14:29:38 | 2020-02-10 19:08:38 | 2020-02-11 22:04:15 |
-| [ ]       | sys_remote_update_set_Portal_Updates                           | 2019-04-15 13:11:51 | 2020-01-21 14:14:59 | 2020-02-12 03:04:15 |
-| [ ]       | sys_remote_update_set_Security_Incident_Setup                  | 2019-07-23 09:15:44 | 2019-07-23 09:44:13 | 2019-08-09 17:57:49 |
-| [ ]       | sys_remote_update_set_EmailConfig_CabWorkbench                 | 2019-09-12 19:00:21 | 2019-09-12 19:00:35 | 2019-09-12 23:04:00 |
-| [ ]       | sys_remote_update_set_EmailConfig_TargetedCommunications       | 2019-09-12 19:00:21 | 2019-09-12 19:00:35 | 2019-09-12 23:04:00 |
-| [ ]       | sys_remote_update_set_Initial_Update_Set_Stage_2_Patch20200204 | 2020-02-27 12:23:32 | 2020-02-27 12:23:32 | 2020-02-27 17:12:59 |
-| [ ]       | sys_remote_update_set_Unclass_Setup                            | 2019-04-03 10:52:30 | 2019-10-24 18:03:26 | 2020-02-10 23:16:17 |
+10. [sys_remote_update_set_Initial_Update_Set_Stage_2.xml](./xml/sys_remote_update_set_Initial_Update_Set_Stage_2.xml): Second update set to be applied after plugins are activated (see [Initial Update Set Stage 2](./Initial%20Update%20Set%20Stage%202.md)).
+    the following plugins must be activated before applying this update set:
+    - PPM Standard
+    - Procurement
+    - Security Incident Response
+11. [sys_remote_update_set_UI_Updates.xml](./xml/sys_remote_update_set_UI_Updates.xml): Updates to views, form layouts and UI policies (see [UI Updates Update Set](./UI%20Updates%20Update%20Set.md)).
+12. [sys_remote_update_set_Service_Catalog_Customizations.xml](./xml/sys_remote_update_set_Service_Catalog_Customizations.xml): Updates related to the service catalog.
+    - **This has known errors.** See [Service Catalog Customizations Update Set](./Service%20Catalog%20Customizations%20Update%20Set.md) for details.
+13. [sys_remote_update_set_Portal_Updates.xml](./xml/sys_remote_update_set_Portal_Updates.xml): Updates for portal configuration
+14. [sys_remote_update_set_Security_Incident_Setup.xml](./xml/sys_remote_update_set_Security_Incident_Setup.xml): (see [Security Incident Setup Update Set](#security-incident-setup-update-set)).
+15. [sys_remote_update_set_EmailConfig_Global.xml](./xml/sys_remote_update_set_EmailConfig_Global.xml): Email template config for CAB Workbench (see [Global Email Config Update Set](././Email%20Config.md#global-update-set)).
+16. [sys_remote_update_set_EmailConfig_CabWorkbench.xml](./xml/sys_remote_update_set_EmailConfig_CabWorkbench.xml): Email template config for CAB Workbench (see [CAB Workbench Email Config Update Set](././Email%20Config.md#cab-workbench-update-set)).
+17. [sys_remote_update_set_EmailConfig_TargetedCommunications.xml](./xml/sys_remote_update_set_EmailConfig_TargetedCommunications.xml): Email template config for Targeted Communications (see [Targeted Communications Email Config Update Set](./Email%20Config.md#targeted-communications-update-set)).
+18. *[sys_remote_update_set_Unclass_Setup.xml](./xml/sys_remote_update_set_Unclass_Setup.xml): Update set for initializing personal dev instances.*
+19. [sys_remote_update_set_Patch20200204.xml](./xml/sys_remote_update_set_Patch20200204.xml): Patch update set (see [Patch 2020-02-04 Update Set](#patch-2020-02-04-update-set)).
+20. [sys_remote_update_set_Post_Upgrade_Patch20201104.xml](./xml/sys_remote_update_set_Post_Upgrade_Patch20201104.xml): Patch update set following upgrade to Paris (see [Post-Upgrade Patch 2020-11-04](./Post-Upgrade%20Patch%202020-11-04.md)).
 
 ## Initial Update Set Stage 1
 
@@ -49,8 +37,10 @@ Following are import tests being conducted
 - **Release Date:** 2019-06-05 16:16:19
 - **Description:** Prepares system for initial configuration and plugin activation.
 - **Application Name:** Global
-- **First Update Added:** 2019-03-27 12:00:02
-- **Last Update Added:** 2019-05-01 13:24:50
+- **First Update Recorded:** 2019-03-27 12:00:02
+- **Last Update Recorded:** 2019-05-01 13:24:50
+
+### All Initial Updates
 
 | Name | **Type** / Table | Target | Comments |
 |------|------------------|--------|----------|
@@ -79,18 +69,20 @@ Following are import tests being conducted
 | sys_ui_section_815428970f487300d12eba8ce1050ed4 | **Form Layout** / cmn_building | Building | |
 | sys_documentation_sys_user_u_rank_en | **Field Label** / sys_user | User.Rank | |
 | sys_dictionary_sys_user_group_roles | **Dictionary** / sys_user_group | Group.Roles | |
-| sys_ui_related_business_unit_null | **Related Lists** / business_unit | Business Unit | |
+| sys_ui_related_business_unit_null | **Related Lists** / business_unit | Business Unit | Adds "Department" to related lists in the "Business Unit" default view. |
 
 ## Security Incident Setup Update Set
 
 - **Source:** [sys_remote_update_set_Security_Incident_Setup.xml](./xml/sys_remote_update_set_Security_Incident_Setup.xml)
 - **Scope:** sn_si
 - **Release Date:** 2019-08-09 17:57:49
-- **Description:** 
+- **Description:** Security Incident Response application setup and config
 - **Application Name:** Security Incident Response
 - **Application Version:** 10.0.6
-- **First Update Added:** 2019-07-23 09:15:44
-- **Last Update Added:** 2019-07-23 09:44:13
+- **First Update Recorded:** 2019-07-23 09:15:44
+- **Last Update Recorded:** 2019-07-23 09:44:13
+
+### All Security Incident Updates
 
 | Name | **Type** / Table | Target | Comments |
 |------|------------------|--------|----------|
@@ -102,46 +94,49 @@ Following are import tests being conducted
 | sys_restricted_caller_access_751c4406dbba7700683b300f7c96198d | **Restricted Caller Access Privilege** | global | |
 | item_option_new_596f78dcff700200158bffffffffffe4 | **Variable** | Subcategory | |
 
-## Initial Update Set Stage 2 Patch 2020-02-04
+## Patch 2020-02-04 Update Set
 
-- **Source:** [sys_remote_update_set_Initial_Update_Set_Stage_2_Patch20200204.xml](./xml/sys_remote_update_set_Initial_Update_Set_Stage_2_Patch20200204.xml)
+- **Source:** [sys_remote_update_set_Patch20200204.xml](./xml/sys_remote_update_set_Patch20200204.xml)
 - **Name:** Initial Update Set Stage 2 V1 2020-02-04
 - **Scope:** global
 - **Release Date:** 2020-02-27 17:12:59
-- **Description:** 
+- **Description:** Fixes USASOC_OnLogin script bug.\
+  Adds "Network" column to change requests.\
+  Updates request item variables, form layouts and client scripts.
 - **Application Name:** Global
-- **First Update Added:** 2020-02-27 12:23:32
-- **Last Update Added:** 2020-02-27 12:23:32
+- **First Update Recorded:** 2020-02-27 12:23:32
+- **Last Update Recorded:** 2020-02-27 12:23:32
+
+### All Patch Updates
 
 | Name | **Type** / Table | Target | Comments |
 |------|------------------|--------|----------|
-| item_option_new_cbe47bb1dba0fb00683b300f7c961926 | **Variable** | Group to fulfill request | |
-| sys_ui_form_sections_bddb451c07570010683af0269c1ed0c8 | **Form Sections** / sc_req_item | Requested Item | |
-| sys_ui_script_2f9986cc07070010683af0269c1ed03e | **UI Script** | USASOC_OnLogin | |
-| item_option_new_824d10b5db68bb00683b300f7c9619a6 | **Variable** | Needed By (Hard Requirement) | |
-| sys_ui_section_b4535c4cd7410200d82ba1737e610388 | **Form Layout** / change_request | Change Request | |
-| item_option_new_d05f18f5db68bb00683b300f7c96198a | **Variable** | Detailed Description | |
 | sys_ui_page_10d2ce4807070010683af0269c1ed089 | **UI Page** | usasoc_profile_notice | |
-| sys_ui_script_ced7828c07070010683af0269c1ed042 | **UI Script** | | |
-| item_option_new_8a779871db68bb00683b300f7c9619f3 | **Variable** | Title / Brief Description | |
-| sys_ui_section_bddb051c07570010683af0269c1ed083 | **Form Layout** / sc_req_item | Requested Item | |
-| item_option_new_d83460f9db68bb00683b300f7c961990 | **Variable** | Associated Item | |
-| wf_workflow_8c61e839db68bb00683b300f7c9619c1 | **Workflow** / sc_req_item | Generic IT Request | |
-| sys_dictionary_change_request_u_network | **Dictionary** / change_request | Change Request.Network | |
-| sys_documentation_change_request_u_network_en | **Field Label** / change_request | Change Request.Network | |
-| item_option_new_a94cd075db68bb00683b300f7c9619f5 | **Variable** | Desired Fulfillment Date | |
-| sys_ui_section_cd591479c0a801640182b9b52e6f070b | **Form Layout** / change_request | Change Request | |
+| sys_ui_section_dde92facc0a8016501f4c4a351133247 | **Form Layout** / sc_req_item | Requested Item | |
 | item_option_new_f44b9835db68bb00683b300f7c9619d1 | **Variable** | Mission Impact | |
 | sys_security_acl_role_6e60b60107b20010683af0269c1ed0cf | **Access Roles** / vtb_board.owner | vtb_board.owner.admin | |
-| sys_ui_script_057782c807070010683af0269c1ed00f | **UI Script** | | |
-| sys_ui_section_dde92facc0a8016501f4c4a351133247 | **Form Layout** / sc_req_item | Requested Item | |
+| sys_ui_script_0dc5b88007430010683af0269c1ed000 | **UI Script** | USASOC_OnLogin | |
+| sys_ui_section_ee95827dc0a8016400f6e15e01fc13ed | **Form Layout** / change_request | Change Request | |
 | sys_choice_sc_req_item_stage | **Choice list** / sc_req_item | Requested Item.Stage | |
 | sys_security_acl_role_c1af7b70eb13210007e48c1cf106fe8a | **Access Roles** / vtb_board.owner | vtb_board.owner.nobody | |
-| sys_ui_script_0dc5b88007430010683af0269c1ed000 | **UI Script** | USASOC_OnLogin | |
+| sys_ui_script_2f9986cc07070010683af0269c1ed03e | **UI Script** | USASOC_OnLogin | |
 | catalog_script_client_6afb195807970010683af0269c1ed0ff | **Catalog Client Scripts** | Read-only after approve | |
-| sys_ui_section_b1db451c07570010683af0269c1ed0c8 | **Form Layout** / sc_req_item | Requested Item | |
+| sys_ui_section_b4535c4cd7410200d82ba1737e610388 | **Form Layout** / change_request | Change Request | |
+| item_option_new_cbe47bb1dba0fb00683b300f7c961926 | **Variable** | Group to fulfill request | |
+| sys_ui_form_sections_bddb451c07570010683af0269c1ed0c8 | **Form Sections** / sc_req_item | Requested Item | |
+| sys_ui_script_ced7828c07070010683af0269c1ed042 | **UI Script** | | |
+| item_option_new_824d10b5db68bb00683b300f7c9619a6 | **Variable** | Needed By (Hard Requirement) | |
+| sys_ui_section_bddb051c07570010683af0269c1ed083 | **Form Layout** / sc_req_item | Requested Item | |
+| item_option_new_d05f18f5db68bb00683b300f7c96198a | **Variable** | Detailed Description | |
+| wf_workflow_8c61e839db68bb00683b300f7c9619c1 | **Workflow** / sc_req_item | Generic IT Request | |
+| sys_dictionary_change_request_u_network | **Dictionary** / change_request | Change Request.Network | |
 | sys_ui_section_750d055c07570010683af0269c1ed0fe | **Form Layout** / sc_req_item | Requested Item | |
-| sys_ui_section_ee95827dc0a8016400f6e15e01fc13ed | **Form Layout** / change_request | Change Request | |
+| item_option_new_8a779871db68bb00683b300f7c9619f3 | **Variable** | Title / Brief Description | |
+| sys_ui_section_cd591479c0a801640182b9b52e6f070b | **Form Layout** / change_request | Change Request | |
+| item_option_new_d83460f9db68bb00683b300f7c961990 | **Variable** | Associated Item | |
+| sys_documentation_change_request_u_network_en | **Field Label** / change_request | Change Request.Network | |
+| item_option_new_a94cd075db68bb00683b300f7c9619f5 | **Variable** | Desired Fulfillment Date | |
+| sys_ui_section_b1db451c07570010683af0269c1ed0c8 | **Form Layout** / sc_req_item | Requested Item | |
 
 ## User Groups
 
