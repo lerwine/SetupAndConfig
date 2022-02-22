@@ -1,6 +1,6 @@
-# VIP and Mission Priority Customizations
+## VIP and Mission Priority Customizations
 
-*[Home](./README.md)*
+*[Home](./index.html)*
 
 The following custom fields need to be added to the incident table:
 
@@ -11,11 +11,11 @@ The following custom fields need to be added to the incident table:
 
 The “Is Mission Related” field is directly specified by the user. The “VIP Priority” is intended to reflect the VIP status of the caller at the time the incident was resolved, closed or canceled. Otherwise, the VIP Priority of all incidents get set to the same value as the VIP field in the caller’s user record.
 
-## User VIP Status Changes
+### User VIP Status Changes
 
 When the “VIP” field on a user record changes, the “VIP Priority” field on all active incidents for that should be updated accordingly. Additionally, the “Priority” field on all open incidents will need to be recalculated.
 
-## Lookup Matcher Rules
+### Lookup Matcher Rules
 
 | Order | Impact     | Urgency    | Is Mission Related | VIP Priority | Incident Priority |
 |-------|------------|------------|--------------------|--------------|-------------------|
@@ -56,16 +56,16 @@ When the “VIP” field on a user record changes, the “VIP Priority” field 
 | 3500  | 3 - Low    | 3 - Low    | True               | False        | **5 - Planning**  |
 | 3600  | 3 - Low    | 3 - Low    | False              | False        | **5 - Planning**  |
 
-## Incident Record Producer
+### Incident Record Producer
 
 To more accurately assess the initial urgency and impact of an incident from user-understandable terms, the following information is prompted by the incident record producer:
 
-### Yes/No Question: Is this mission related?
+#### Yes/No Question: Is this mission related?
 
 **Incident Form Field:** u_is_mission_related
 Mission-related incidents will be weighted toward a higher priority.
 
-### Multiple Choice: What affect does this have on productivity?
+#### Multiple Choice: What affect does this have on productivity?
 
 - Unspecified / Unknown *(no value)*
 - Complete Work Stoppage *(value = 1)*
@@ -76,7 +76,7 @@ Mission-related incidents will be weighted toward a higher priority.
 **Catalog Variable:** productivity_impact
 This helps to identify the individual user impact and urgency.
 
-### Multiple Choice: How widespread is this incident?
+#### Multiple Choice: How widespread is this incident?
 
 - Unspecified / Unknown *(no value)*
 - More than 100 people *(value = 1)*
@@ -89,7 +89,7 @@ This helps to identify the incident impact through its pervasiveness rating.
 
 > **Design Notes**: The “Is Mission Related” and “VIP Priority” values are saved as a custom field in the Incident table because management personnel have requirements to track and report on incidents separately, according to values in these fields. Furthermore, the “VIP Priority” value is saved in the incident table to reflect the historical VIP status of the incident if a user’s VIP status changes subsequently.
 
-## Urgency and Impact Calculation Algorithm
+### Urgency and Impact Calculation Algorithm
 
 The goal of the urgency and impact calculation algorithm is to translate user-provided information into urgency and impact ratings whereby work stoppages have greater urgency, and impact is a more averaged derivation of user provided information. Furthermore, these calculations are weighted according to caller VIP status and mission-related status.
 
@@ -98,7 +98,7 @@ The goal of the urgency and impact calculation algorithm is to translate user-pr
 Since the user is not required to provide productivity impact or user impact ratings, automatic values are calculated according to other criteria. These calculated values are only utilized as inputs to the urgency and impact calculations and do not change the inputs provided by the user:
 ![Default Pervasiveness and Productivity values diagram](images\DefaultPervasivenessAndProductivityDiagram.png)
 
-### Calculating Incident Impact
+#### Calculating Incident Impact
 
 Incident Impact is calculated as the average of the 4-tiered Productivity and Pervasiveness Ratings, weighted according to VIP and mission-related status, converted to a 3-tiered value, and rounded to the nearest integer, using the following formula:
 
@@ -115,7 +115,7 @@ The “Importance_Shift” value weights the calculation toward a higher impact 
 | No             | Yes                 | **1.25**               |
 | No             | No                  | **1.37**               |
 
-### Calculating Urgency
+#### Calculating Urgency
 
 Incident Urgency is calculated as the average of the 4-tiered Productivity Impact Rating and a 4-tiered Importance Rating, converted to a 3-tiered value, and rounded to the nearest integer using the following formula:
 
@@ -133,4 +133,4 @@ The “Importance Rating” is determined as follows:
 
 _____
 
-*[Home](./README.md)*
+*[Home](./index.html)*

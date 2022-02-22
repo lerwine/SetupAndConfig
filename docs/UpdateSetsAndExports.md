@@ -1,26 +1,26 @@
-# Update Sets and Exports
+## Update Sets and Exports
 
-*[Home](./README.md)*
+*[Home](./index.html)*
 
 Following are the update sets to apply and xml to import in their respective order:
 
 1. [sys_remote_update_set_Initial_Update_Set_Stage_1.xml](./xml/sys_remote_update_set_Initial_Update_Set_Stage_1.xml): Initial update set to be applied (see [Initial Update Set Stage 1](#initial-update-set-stage-1)).
-2. [cmn_schedule.xml](./xml/cmn_schedule.xml): Schedule definitions (see [Schedules and SLAs](./Schedules%20and%20SLAs.md)).
+2. [cmn_schedule.xml](./xml/cmn_schedule.xml): Schedule definitions (see [Schedules and SLAs](./Schedules%20and%20SLAs.html)).
 3. [cmn_other_schedule.xml](./xml/cmn_other_schedule.xml): Child schedule relationships.
 4. [cmn_schedule_span.xml](./xml/cmn_schedule_span.xml): Schedule entries (except for U.S. Holidays).
 5. [cmn_schedule_span (US Holidays).xml](./xml/cmn_schedule_span%20(US%20Holidays).xml): U.S. Holiday schedule entries.
 6. [sys_user_group.xml](./xml/sys_user_group.xml): User groups (see [User Groups](#user-groups)).
 7. [sys_group_has_role.xml](./xml/sys_group_has_role.xml): Role assignments for user groups.
-8. [sys_remote_update_set_Data_Lookup.xml](./xml/sys_remote_update_set_Data_Lookup.xml): Sets up data lookups for priority (see [Data Lookup Update Set](./Data%20Lookup%20Update%20Set.md)).
+8. [sys_remote_update_set_Data_Lookup.xml](./xml/sys_remote_update_set_Data_Lookup.xml): Sets up data lookups for priority (see [Data Lookup Update Set](./Data%20Lookup%20Update%20Set.html)).
 9. [dl_definition_rel_match.xml](./xml/dl_definition_rel_match.xml): Matcher field associations.
-10. [sys_remote_update_set_Initial_Update_Set_Stage_2.xml](./xml/sys_remote_update_set_Initial_Update_Set_Stage_2.xml): Second update set to be applied after plugins are activated (see [Initial Update Set Stage 2](./Initial%20Update%20Set%20Stage%202.md)).
+10. [sys_remote_update_set_Initial_Update_Set_Stage_2.xml](./xml/sys_remote_update_set_Initial_Update_Set_Stage_2.xml): Second update set to be applied after plugins are activated (see [Initial Update Set Stage 2](./Initial%20Update%20Set%20Stage%202.html)).
     the following plugins must be activated before applying this update set:
     - PPM Standard
     - Procurement
     - Security Incident Response
-11. [sys_remote_update_set_UI_Updates.xml](./xml/sys_remote_update_set_UI_Updates.xml): Updates to views, form layouts and UI policies (see [UI Updates Update Set](./UI%20Updates%20Update%20Set.md)).
+11. [sys_remote_update_set_UI_Updates.xml](./xml/sys_remote_update_set_UI_Updates.xml): Updates to views, form layouts and UI policies (see [UI Updates Update Set](./UI%20Updates%20Update%20Set.html)).
 12. [sys_remote_update_set_Service_Catalog_Customizations.xml](./xml/sys_remote_update_set_Service_Catalog_Customizations.xml): Updates related to the service catalog.
-    - **This has known errors.** See [Service Catalog Customizations Update Set](./Service%20Catalog%20Customizations%20Update%20Set.md) for details.
+    - **This has known errors.** See [Service Catalog Customizations Update Set](./Service%20Catalog%20Customizations%20Update%20Set.html) for details.
 13. [sys_remote_update_set_Portal_Updates.xml](./xml/sys_remote_update_set_Portal_Updates.xml): Updates for portal configuration
 14. [sys_remote_update_set_Security_Incident_Setup.xml](./xml/sys_remote_update_set_Security_Incident_Setup.xml): (see [Security Incident Setup Update Set](#security-incident-setup-update-set)).
 15. [sys_remote_update_set_EmailConfig_Global.xml](./xml/sys_remote_update_set_EmailConfig_Global.xml): Email template config for CAB Workbench (see [Global Email Config Update Set](././Email%20Config.md#global-update-set)).
@@ -28,9 +28,9 @@ Following are the update sets to apply and xml to import in their respective ord
 17. [sys_remote_update_set_EmailConfig_TargetedCommunications.xml](./xml/sys_remote_update_set_EmailConfig_TargetedCommunications.xml): Email template config for Targeted Communications (see [Targeted Communications Email Config Update Set](./Email%20Config.md#targeted-communications-update-set)).
 18. *[sys_remote_update_set_Unclass_Setup.xml](./xml/sys_remote_update_set_Unclass_Setup.xml): Update set for initializing personal dev instances.*
 19. [sys_remote_update_set_Patch20200204.xml](./xml/sys_remote_update_set_Patch20200204.xml): Patch update set (see [Patch 2020-02-04 Update Set](#patch-2020-02-04-update-set)).
-20. [sys_remote_update_set_Post_Upgrade_Patch20201104.xml](./xml/sys_remote_update_set_Post_Upgrade_Patch20201104.xml): Patch update set following upgrade to Paris (see [Post-Upgrade Patch 2020-11-04](./Post-Upgrade%20Patch%202020-11-04.md)).
+20. [sys_remote_update_set_Post_Upgrade_Patch20201104.xml](./xml/sys_remote_update_set_Post_Upgrade_Patch20201104.xml): Patch update set following upgrade to Paris (see [Post-Upgrade Patch 2020-11-04](./Post-Upgrade%20Patch%202020-11-04.html)).
 
-## Initial Update Set Stage 1
+### Initial Update Set Stage 1
 
 - **Source:** [sys_remote_update_set_Initial_Update_Set_Stage_1.xml](./xml/sys_remote_update_set_Initial_Update_Set_Stage_1.xml)
 - **Scope:** global
@@ -40,7 +40,7 @@ Following are the update sets to apply and xml to import in their respective ord
 - **First Update Recorded:** 2019-03-27 12:00:02
 - **Last Update Recorded:** 2019-05-01 13:24:50
 
-### All Initial Updates
+#### All Initial Updates
 
 | Name | **Type** / Table | Target | Comments |
 |------|------------------|--------|----------|
@@ -71,7 +71,7 @@ Following are the update sets to apply and xml to import in their respective ord
 | sys_dictionary_sys_user_group_roles | **Dictionary** / sys_user_group | Group.Roles | |
 | sys_ui_related_business_unit_null | **Related Lists** / business_unit | Business Unit | Adds "Department" to related lists in the "Business Unit" default view. |
 
-## Security Incident Setup Update Set
+### Security Incident Setup Update Set
 
 - **Source:** [sys_remote_update_set_Security_Incident_Setup.xml](./xml/sys_remote_update_set_Security_Incident_Setup.xml)
 - **Scope:** sn_si
@@ -82,7 +82,7 @@ Following are the update sets to apply and xml to import in their respective ord
 - **First Update Recorded:** 2019-07-23 09:15:44
 - **Last Update Recorded:** 2019-07-23 09:44:13
 
-### All Security Incident Updates
+#### All Security Incident Updates
 
 | Name | **Type** / Table | Target | Comments |
 |------|------------------|--------|----------|
@@ -94,7 +94,7 @@ Following are the update sets to apply and xml to import in their respective ord
 | sys_restricted_caller_access_751c4406dbba7700683b300f7c96198d | **Restricted Caller Access Privilege** | global | |
 | item_option_new_596f78dcff700200158bffffffffffe4 | **Variable** | Subcategory | |
 
-## Patch 2020-02-04 Update Set
+### Patch 2020-02-04 Update Set
 
 - **Source:** [sys_remote_update_set_Patch20200204.xml](./xml/sys_remote_update_set_Patch20200204.xml)
 - **Name:** Initial Update Set Stage 2 V1 2020-02-04
@@ -107,7 +107,7 @@ Following are the update sets to apply and xml to import in their respective ord
 - **First Update Recorded:** 2020-02-27 12:23:32
 - **Last Update Recorded:** 2020-02-27 12:23:32
 
-### All Patch Updates
+#### All Patch Updates
 
 | Name | **Type** / Table | Target | Comments |
 |------|------------------|--------|----------|
@@ -138,7 +138,7 @@ Following are the update sets to apply and xml to import in their respective ord
 | item_option_new_a94cd075db68bb00683b300f7c9619f5 | **Variable** | Desired Fulfillment Date | |
 | sys_ui_section_b1db451c07570010683af0269c1ed0c8 | **Form Layout** / sc_req_item | Requested Item | |
 
-## User Groups
+### User Groups
 
 Following are the user groups that are defined in [sys_user_group.xml](sys_user_group.xml):
 
@@ -170,4 +170,4 @@ Following are the user groups that are defined in [sys_user_group.xml](sys_user_
 
 _____
 
-*[Home](./README.md)*
+*[Home](./index.html)*

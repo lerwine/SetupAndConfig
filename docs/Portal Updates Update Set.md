@@ -1,8 +1,8 @@
-# Portal Updates
+## Portal Updates
 
-*[Home](./README.md)* | *[Update Sets and Exports](./UpdateSetsAndExports.md)*
+*[Home](./index.html)* | *[Update Sets and Exports](./UpdateSetsAndExports.html)*
 
-## Overview
+### Overview
 
 - **Source:** [sys_remote_update_set_Portal_Updates.xml](./xml/sys_remote_update_set_Portal_Updates.xml)
 - **Scope:** global
@@ -12,7 +12,7 @@
 - **First Update Recorded:** 2019-04-15 13:11:51
 - **Last Update Recorded:** 2019-08-13 15:12:51
 
-## All Updates
+### All Updates
 
 | Name | **Type** / Table | Target | Comments |
 |------|------------------|--------|----------|
@@ -399,4 +399,4 @@
 
 _____
 
-*[Home](./README.md)* | *[Update Sets and Exports](./UpdateSetsAndExports.md)*
+*[Home](./index.html)* | *[Update Sets and Exports](./UpdateSetsAndExports.html)*

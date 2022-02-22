@@ -1,10 +1,10 @@
-# Email Config
+## Email Config
 
-*[Home](./README.md)* | *[Update Sets and Exports](./UpdateSetsAndExports.md)*
+*[Home](./index.html)* | *[Update Sets and Exports](./UpdateSetsAndExports.html)*
 
 Reconfigure email templates to use  layouts with classification banners.
 
-## Global Update Set
+### Global Update Set
 
 - **Source:** [sys_remote_update_set_EmailConfig_CabWorkbench.xml](./xml/sys_remote_update_set_EmailConfig_CabWorkbench.xml)
 - **Scope:** global
@@ -14,7 +14,7 @@ Reconfigure email templates to use  layouts with classification banners.
 - **First Update Recorded:** 2019-09-12 18:59:04
 - **Last Update Recorded:** 2019-09-12 22:46:40
 
-### All Global Updates
+#### All Global Updates
 
 | Name | **Type** / Table | Target | Comments |
 |------|------------------|--------|----------|
@@ -55,7 +55,7 @@ Reconfigure email templates to use  layouts with classification banners.
 | sysevent_email_template_c2dee61cc611227601f80c0ea98f9a3f | **Email Template** / sysapproval_approver | mailto.approval | |
 | sysevent_email_template_49838e340a0a0b4b0049d6ce61c8c598 | **Email Template** / incident | incident.ess.resolve | |
 
-## CAB Workbench Update Set
+### CAB Workbench Update Set
 
 - **Source:** [sys_remote_update_set_EmailConfig_CabWorkbench.xml](./xml/sys_remote_update_set_EmailConfig_CabWorkbench.xml)
 - **Scope:** sn_change_cab
@@ -65,7 +65,7 @@ Reconfigure email templates to use  layouts with classification banners.
 - **First Update Recorded:** 2019-09-12 19:00:21
 - **Last Update Recorded:** 2019-09-12 19:00:35
 
-### All CAB Workbench Updates
+#### All CAB Workbench Updates
 
 
 | Name | **Type** / Table | Target | Comments |
@@ -74,7 +74,7 @@ Reconfigure email templates to use  layouts with classification banners.
 | sysevent_email_template_cd4327e5ebf022002a7a666cd206fe3d | **Email Template** / cab_attendee | CAB Meeting Delegate added | |
 | sysevent_email_template_8c67e44eebf022002a7a666cd206fe4d | **Email Template** / cab_agenda_item | CAB Change Request Delegate added | |
 
-## Targeted Communications Update Set
+### Targeted Communications Update Set
 
 - **Source:** [sys_remote_update_set_EmailConfig_TargetedCommunications.xml](./xml/sys_remote_update_set_EmailConfig_TargetedCommunications.xml)
 - **Scope:** sn_publications
@@ -83,7 +83,7 @@ Reconfigure email templates to use  layouts with classification banners.
 - **Application Version:** 2.6.1
 - **Update Recorded:** 2019-09-12 18:54:45
 
-### All Targeted Communications Updates
+#### All Targeted Communications Updates
 
 | Name | **Type** / Table | Target | Comments |
 |------|------------------|--------|----------|
@@ -91,4 +91,4 @@ Reconfigure email templates to use  layouts with classification banners.
 
 _____
 
-*[Home](./README.md)* | *[Update Sets and Exports](./UpdateSetsAndExports.md)*
+*[Home](./index.html)* | *[Update Sets and Exports](./UpdateSetsAndExports.html)*

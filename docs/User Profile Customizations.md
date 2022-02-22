@@ -1,6 +1,6 @@
-# User Profile Customizations
+## User Profile Customizations
 
-*[Home](./README.md)*
+*[Home](./index.html)*
 
 The following phone number fields need to be added to or have the label changed in the Users (`sys_user`) table:
 
@@ -11,7 +11,7 @@ The following phone number fields need to be added to or have the label changed 
 | `u_grey_phone` | Grey Phone  | String | 40                         |
 | `u_rank`       | Rank        | String | 40                         |
 
-## User Profile Conformance Validation Requirements
+### User Profile Conformance Validation Requirements
 
 - Building must be selected.
 - Department must be selected.
@@ -20,11 +20,11 @@ The following phone number fields need to be added to or have the label changed 
   - Grey Phone
   - Black Phone
   
-### Non-compliance Notification Requirements
+#### Non-compliance Notification Requirements
 
 There are 2 schemes for user profile conformance assertions. The first is a daily check with a modal notification, and the second is a per-reference check with a passive notification.
 
-#### Daily At-Login Profile Conformance Checking
+##### Daily At-Login Profile Conformance Checking
 
 - Profile compliance is validated the first time the user logs in for the day.
 - This check must only be performed once per day.
@@ -32,7 +32,7 @@ There are 2 schemes for user profile conformance assertions. The first is a dail
   - A modal dialog needs to be displayed which the user must acknowledge. This needs to tell them which fields were missing.
   - Upon acknowledgement of a non-compliant profile, they are to be redirected to their user record form where they may provide the missing information.
 
-#### Passive Profile Conformance Checking
+##### Passive Profile Conformance Checking
 
 **When to validate:**
 
@@ -44,7 +44,7 @@ There are 2 schemes for user profile conformance assertions. The first is a dail
 - A non-modal error message is presented to the user with appropriate 1st/3rd person context.
 - If the user has the ITIL role or the Caller/Requested For is the same is the current user, the error message must contain a link that refers to the related user edit form.
 
-## User Edit Form Validation
+### User Edit Form Validation
 
 Requirements for the Self Service and Service Portal Views:
 
@@ -59,7 +59,7 @@ Requirements for the Self Service and Service Portal Views:
   - Grey Phone
   - Black Phone.
 
-## Role-specific Field UI Policies
+### Role-specific Field UI Policies
 
 Following are the UI policies that apply to fields according to the user's role:
 
@@ -82,9 +82,9 @@ Following are the UI policies that apply to fields according to the user's role:
 | Email        | **Read-Only**         | **Read-Only** | Read/Write    |
 | User ID      | **Read-Only**         | **Read-Only** | **Read-Only** |
 
-## Scripts
+### Scripts
 
-### Profile Validation
+#### Profile Validation
 
 - To validate the user profile upon login, the UI script [USASOC_OnLogin](./Script%20Sources.md#usasoc_onlogin) makes an ajax call to [x_44813_usasoc_cst.UsasocUserNotificationManager](./USASOC%20Customizations%20Application.md#usasocusernotificationmanager-api) for user login profile validation.
 - [Catalog requestor profile validation](./Script%20Sources.md#catalog-requestor-profile-validation)
@@ -92,4 +92,4 @@ Following are the UI policies that apply to fields according to the user's role:
 
 _____
 
-*[Home](./README.md)*
+*[Home](./index.html)*

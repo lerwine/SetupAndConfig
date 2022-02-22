@@ -1,6 +1,6 @@
-# Script Sources
+## Script Sources
 
-*[Home](./README.md)*
+*[Home](./index.html)*
 
 - [Script Sources](#script-sources)
   - [Client Scripts](#client-scripts)
@@ -20,9 +20,9 @@
     - [User Building Changed](#user-building-changed)
     - [User VIP Changed](#user-vip-changed)
 
-## Client Scripts
+### Client Scripts
 
-### USASOC_OnLogin
+#### USASOC_OnLogin
 
 Makes an ajax call to [x_44813_usasoc_cst.UsasocUserNotificationManager](./User%20Profile%20Customizations.md#usasocusernotificationmanager-api) to retrieve any messages that need to be displayed to the user upon login. If the results of this call indicate that the user's profile is non-compliant, they will be redirected to the user edit form after the dialog is closed.
 
@@ -107,7 +107,7 @@ var USASOC_OnLogin = (function() {
 })();
 ```
 
-### Read-only after approve
+#### Read-only after approve
 
 Catalog client script properties:
 
@@ -134,9 +134,9 @@ function onLoad() {
 }
 ```
 
-## Business Rules
+### Business Rules
 
-### ARMY sc_req_item creating
+#### ARMY sc_req_item creating
 
 - **Table:** Requested Item *(`sc_req_item`)*
 - **When to run:** Before Insert
@@ -151,7 +151,7 @@ function onLoad() {
 })(current, previous);
 ```
 
-### ARMY sc_task creating
+#### ARMY sc_task creating
 
 - **Table:** Catalog Task *(`sc_task`)*
 - **When to run:** Before Insert
@@ -168,7 +168,7 @@ function onLoad() {
 })(current, previous);
 ```
 
-### Catalog requestor profile validation
+#### Catalog requestor profile validation
 
 - **Table:** Request *(`sc_request`)*
 - **When to run:** (Before Insert or Update) AND Active is `true`
@@ -212,7 +212,7 @@ function onLoad() {
 })(current, previous);
 ```
 
-### Ensure Department Business Unit
+#### Ensure Department Business Unit
 
 - **Table:** Department *(`cmn_department`)*
 - **When to run:** (Before Insert or Update) AND Parent is not empty
@@ -224,7 +224,7 @@ function onLoad() {
 })(current, previous);
 ```
 
-### Incident caller profile validation
+#### Incident caller profile validation
 
 - **Table:** Incident *(`incident`)*
 - **When to run:** (Before Insert or Update) AND (Incident State is `New`, `In Progress` or `On Hold`) AND Active is `true`
@@ -268,7 +268,7 @@ function onLoad() {
 })(current, previous);
 ```
 
-### Initialize User or Profile Photo
+#### Initialize User or Profile Photo
 
 - **Table:** Live Profile *(`live_profile`)*
 - **When to run:** After Insert
@@ -365,7 +365,7 @@ function onLoad() {
 })(current, previous);
 ```
 
-### Initialize User VIP
+#### Initialize User VIP
 
 - **Table:** User *(`sys_user`)*
 - **When to run:** After Insert
@@ -382,7 +382,7 @@ function onLoad() {
 })(current, previous);
 ```
 
-### Sync User Photo
+#### Sync User Photo
 
 - **Table:** Live Profile *(`live_profile`)*
 - **When to run:** After Update AND Photo changes
@@ -446,7 +446,7 @@ function onLoad() {
 })(current, previous);
 ```
 
-### Sync User Profile Photo
+#### Sync User Profile Photo
 
 - **Table:** User *(`sys_user`)*
 - **When to run:** After Update AND Photo changes
@@ -510,7 +510,7 @@ function onLoad() {
 })(current, previous);
 ```
 
-### Unassigned Task Work Warning
+#### Unassigned Task Work Warning
 
 If the task-based record is not assigned, assignments have not changed, the task caller (indicents) is not the current user and the "requested for" (requests) does not match the current user, then an error message is displayed prompting the user to set the assignment field.
 
@@ -526,7 +526,7 @@ If the task-based record is not assigned, assignments have not changed, the task
 })(current, previous);
 ```
 
-### User Building Changed
+#### User Building Changed
 
 Updates user's location field when the building has changed.
 
@@ -539,7 +539,7 @@ Updates user's location field when the building has changed.
 })(current, previous);
 ```
 
-### User VIP Changed
+#### User VIP Changed
 
 - **Table:** User *(`sys_user`)*
 - **When to run:** After Update AND VIP changes.
@@ -656,6 +656,6 @@ Updates user's location field when the building has changed.
 
 _____
 
-*[Home](./README.md)*
+*[Home](./index.html)*
 
 [^1]: `addLateLoadEvent` is an undocumented method from the ServiceNow client-side API (reference [ServiceNow Community post "UI Script"](https://community.servicenow.com/community?id=community_question&sys_id=885bc321db9cdbc01dcaf3231f9619aa)

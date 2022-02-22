@@ -1,8 +1,8 @@
-# Using Git with ServiceNow
+## Using Git with ServiceNow
 
-*[Home](./README.md)*
+*[Home](./index.html)*
 
-## Shared Git Organization
+### Shared Git Organization
 
 A shared Git organization has been created and can be accessed at the [USASOC-HQ Git org website](https://github.com/USASOC-HQ). Names of repositories for custom ServiceNow apps will begin with `x_`. Names of all other repositories should begin with something other than that.
 
@@ -14,7 +14,7 @@ Following is a list of some of the custom applications that are stored in git re
 - x_g_inte_off_net_s - Off-Net Software License Tracking app.
 - x_44813_usasoc_cst - General Legacy Customizations. To be superseded with a x_g_inte_* app once new production environment configuration has been determined.
 
-## GitHub Authentication from ServiceNow
+### GitHub Authentication from ServiceNow
 
 You will need to set up a personal developer token which you will use in ServiceNow to authenticate to GitHub. Log into GitHub and open your personal access token list from the developer settings as depicted:\
 ![Screen clips of menu selections for new personal access token](./images/DevSettingsPersonalDevTokens.png)\
@@ -29,7 +29,7 @@ In ServiceNow, you will create credentials as follows:
 3. In the "User name" field, enter your GitHub login name.
 4. In the "Password" field, enter the personal access token that was generated in GitHub.
 
-## Unclass-to-Production Synchronization
+### Unclass-to-Production Synchronization
 
 This procedure has not yet been fully tested and is subject to further adjustment.
 
@@ -56,7 +56,7 @@ This procedure has not yet been fully tested and is subject to further adjustmen
 3. Compress the contents of the entire repository folder into a ZIP file and copy it to the production network.
 4. On the production network extract the repository and create a new branch from the target version tag. See the [Classified Network SDLC](./SDLC.md#classified-network-sclc) section of the SDLC page to determine the name of the new branch and for further instruction.
 
-## Legacy Development Repositories
+### Legacy Development Repositories
 
 Previously, all ServiceNow application git repositories were initiated from a personal developer instance and are attributed to a specific person (registration #44813), and not to this organization. Applications and their repositories whose names use the prefix `x_44813_` should be re-created starting from the [Cloud Dev Instance](https://inscomscd.servicenowservices.com/), as outlined in this SDLC, as time permits. ServiceNow applications that have been created on the [Cloud Dev Instance](https://inscomscd.servicenowservices.com/) will be prefixed with `x_g_inte_`.
 
@@ -64,4 +64,4 @@ No operational risk is incurred simply because an application was initiated thro
 
 _____
 
-*[Home](./README.md)*
+*[Home](./index.html)*

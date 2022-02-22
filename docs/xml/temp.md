@@ -1,4 +1,4 @@
-# Patch 2020-02-04
+## Patch 2020-02-04
 
 - **Scope:** global
 - **Release Date:** 2020-02-27 17:12:59
