@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2022-02-11 16:49:00">
+<dl_definition_rel_match action="INSERT_OR_UPDATE">
+<dl_definition display_value="Priority Lookup">302849102b031000de0aba36a3fd5631</dl_definition>
+<exact_match>false</exact_match>
+<matcher_table>dl_u_priority</matcher_table>
+<matcher_table_field>impact</matcher_table_field>
+<source_table>incident</source_table>
+<source_table_field>impact</source_table_field>
+<sys_class_name>dl_definition_rel_match</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2012-01-03 21:32:19</sys_created_on>
+<sys_id>6397aa162b131000de0aba36a3fd5647</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>impact</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>dl_definition_rel_match_6397aa162b131000de0aba36a3fd5647</sys_update_name>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2012-01-03 21:32:19</sys_updated_on>
+</dl_definition_rel_match>
+<dl_definition_rel_match action="INSERT_OR_UPDATE">
+<dl_definition display_value="Priority Lookup">302849102b031000de0aba36a3fd5631</dl_definition>
+<exact_match>false</exact_match>
+<matcher_table>dl_u_priority</matcher_table>
+<matcher_table_field>urgency</matcher_table_field>
+<source_table>incident</source_table>
+<source_table_field>urgency</source_table_field>
+<sys_class_name>dl_definition_rel_match</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2012-01-03 21:32:32</sys_created_on>
+<sys_id>d197e6162b131000de0aba36a3fd568b</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>urgency</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>dl_definition_rel_match_d197e6162b131000de0aba36a3fd568b</sys_update_name>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2012-01-03 21:32:32</sys_updated_on>
+</dl_definition_rel_match>
+<dl_definition_rel_match action="INSERT_OR_UPDATE">
+<dl_definition display_value="Incident VIP Priority Lookup">70305593db893340b53f341f7c9619bb</dl_definition>
+<exact_match>true</exact_match>
+<matcher_table>u_vip_priority_lookup_matcher_rules</matcher_table>
+<matcher_table_field>u_vip_priority</matcher_table_field>
+<source_table>incident</source_table>
+<source_table_field>u_vip_priority</source_table_field>
+<sys_class_name>dl_definition_rel_match</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2019-05-01 22:45:45</sys_created_on>
+<sys_id>1edcee93db8d3340b53f341f7c961907</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>u_vip_priority</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>dl_definition_rel_match_1edcee93db8d3340b53f341f7c961907</sys_update_name>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2019-05-01 22:45:45</sys_updated_on>
+</dl_definition_rel_match>
+<dl_definition_rel_match action="INSERT_OR_UPDATE">
+<dl_definition display_value="Incident VIP Priority Lookup">70305593db893340b53f341f7c9619bb</dl_definition>
+<exact_match>true</exact_match>
+<matcher_table>u_vip_priority_lookup_matcher_rules</matcher_table>
+<matcher_table_field>u_urgency</matcher_table_field>
+<source_table>incident</source_table>
+<source_table_field>urgency</source_table_field>
+<sys_class_name>dl_definition_rel_match</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2019-05-01 16:01:56</sys_created_on>
+<sys_id>1f601993db893340b53f341f7c9619a3</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>urgency</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>dl_definition_rel_match_1f601993db893340b53f341f7c9619a3</sys_update_name>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2019-05-01 16:01:56</sys_updated_on>
+</dl_definition_rel_match>
+<dl_definition_rel_match action="INSERT_OR_UPDATE">
+<dl_definition display_value="Incident VIP Priority Lookup">70305593db893340b53f341f7c9619bb</dl_definition>
+<exact_match>true</exact_match>
+<matcher_table>u_vip_priority_lookup_matcher_rules</matcher_table>
+<matcher_table_field>u_impact</matcher_table_field>
+<source_table>incident</source_table>
+<source_table_field>impact</source_table_field>
+<sys_class_name>dl_definition_rel_match</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2019-05-01 16:01:40</sys_created_on>
+<sys_id>c550d593db893340b53f341f7c96193f</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>impact</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>dl_definition_rel_match_c550d593db893340b53f341f7c96193f</sys_update_name>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2019-05-01 16:01:40</sys_updated_on>
+</dl_definition_rel_match>
+<dl_definition_rel_match action="INSERT_OR_UPDATE">
+<dl_definition display_value="Incident VIP Priority Lookup">70305593db893340b53f341f7c9619bb</dl_definition>
+<exact_match>true</exact_match>
+<matcher_table>u_vip_priority_lookup_matcher_rules</matcher_table>
+<matcher_table_field>u_is_mission_related</matcher_table_field>
+<source_table>incident</source_table>
+<source_table_field>u_is_mission_related</source_table_field>
+<sys_class_name>dl_definition_rel_match</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2019-05-01 16:02:08</sys_created_on>
+<sys_id>cb705993db893340b53f341f7c96197d</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>u_is_mission_related</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>dl_definition_rel_match_cb705993db893340b53f341f7c96197d</sys_update_name>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2019-05-01 16:02:08</sys_updated_on>
+</dl_definition_rel_match>
+<dl_definition_rel_match action="INSERT_OR_UPDATE">
+<dl_definition display_value="Assignment Lookup">95bd23372b321000de0aba36a3fd5644</dl_definition>
+<exact_match>false</exact_match>
+<matcher_table>dl_u_assignment</matcher_table>
+<matcher_table_field>subcategory</matcher_table_field>
+<source_table>incident</source_table>
+<source_table_field>subcategory</source_table_field>
+<sys_class_name>dl_definition_rel_match</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2012-01-03 21:31:20</sys_created_on>
+<sys_id>34976a162b131000de0aba36a3fd5684</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>subcategory</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>dl_definition_rel_match_34976a162b131000de0aba36a3fd5684</sys_update_name>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2012-01-03 21:31:20</sys_updated_on>
+</dl_definition_rel_match>
+<dl_definition_rel_match action="INSERT_OR_UPDATE">
+<dl_definition display_value="Assignment Lookup">95bd23372b321000de0aba36a3fd5644</dl_definition>
+<exact_match>false</exact_match>
+<matcher_table>dl_u_assignment</matcher_table>
+<matcher_table_field>cmdb_ci</matcher_table_field>
+<source_table>incident</source_table>
+<source_table_field>cmdb_ci</source_table_field>
+<sys_class_name>dl_definition_rel_match</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2012-01-03 21:31:31</sys_created_on>
+<sys_id>36976a162b131000de0aba36a3fd568a</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>cmdb_ci</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>dl_definition_rel_match_36976a162b131000de0aba36a3fd568a</sys_update_name>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2012-01-03 21:31:31</sys_updated_on>
+</dl_definition_rel_match>
+<dl_definition_rel_match action="INSERT_OR_UPDATE">
+<dl_definition display_value="Assignment Lookup">95bd23372b321000de0aba36a3fd5644</dl_definition>
+<exact_match>false</exact_match>
+<matcher_table>dl_u_assignment</matcher_table>
+<matcher_table_field>location</matcher_table_field>
+<source_table>incident</source_table>
+<source_table_field>location</source_table_field>
+<sys_class_name>dl_definition_rel_match</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2012-01-03 21:30:26</sys_created_on>
+<sys_id>a696e2162b131000de0aba36a3fd562c</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>location</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>dl_definition_rel_match_a696e2162b131000de0aba36a3fd562c</sys_update_name>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2012-01-03 21:30:26</sys_updated_on>
+</dl_definition_rel_match>
+<dl_definition_rel_match action="INSERT_OR_UPDATE">
+<dl_definition display_value="Assignment Lookup">95bd23372b321000de0aba36a3fd5644</dl_definition>
+<exact_match>false</exact_match>
+<matcher_table>dl_u_assignment</matcher_table>
+<matcher_table_field>category</matcher_table_field>
+<source_table>incident</source_table>
+<source_table_field>category</source_table_field>
+<sys_class_name>dl_definition_rel_match</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2012-01-03 21:31:11</sys_created_on>
+<sys_id>f2962a162b131000de0aba36a3fd5647</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>category</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>dl_definition_rel_match_f2962a162b131000de0aba36a3fd5647</sys_update_name>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2012-01-03 21:31:11</sys_updated_on>
+</dl_definition_rel_match>
+<dl_definition_rel_match action="INSERT_OR_UPDATE">
+<dl_definition display_value="Priority Problem Lookup">a1714fc3d7032200f2d224837e610337</dl_definition>
+<exact_match>false</exact_match>
+<matcher_table>dl_problem_priority</matcher_table>
+<matcher_table_field>urgency</matcher_table_field>
+<source_table>problem</source_table>
+<source_table_field>urgency</source_table_field>
+<sys_class_name>dl_definition_rel_match</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2016-11-17 10:49:14</sys_created_on>
+<sys_id>58f10307d7032200f2d224837e610314</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>urgency</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>dl_definition_rel_match_58f10307d7032200f2d224837e610314</sys_update_name>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2016-11-17 10:49:14</sys_updated_on>
+</dl_definition_rel_match>
+<dl_definition_rel_match action="INSERT_OR_UPDATE">
+<dl_definition display_value="Priority Problem Lookup">a1714fc3d7032200f2d224837e610337</dl_definition>
+<exact_match>false</exact_match>
+<matcher_table>dl_problem_priority</matcher_table>
+<matcher_table_field>impact</matcher_table_field>
+<source_table>problem</source_table>
+<source_table_field>impact</source_table_field>
+<sys_class_name>dl_definition_rel_match</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2016-11-17 10:48:46</sys_created_on>
+<sys_id>6dd10307d7032200f2d224837e61030d</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_name>impact</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>dl_definition_rel_match_6dd10307d7032200f2d224837e61030d</sys_update_name>
+<sys_updated_by>admin</sys_updated_by>
+<sys_updated_on>2016-11-17 10:48:46</sys_updated_on>
+</dl_definition_rel_match>
+</unload>

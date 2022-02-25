@@ -1,0 +1,1389 @@
+<?xml version="1.0" encoding="UTF-8"?><unload unload_date="2022-02-21 15:25:25">
+<sys_remote_update_set action="INSERT_OR_UPDATE">
+<application display_value="Global">global</application>
+<application_name>Global</application_name>
+<application_scope>global</application_scope>
+<application_version/>
+<collisions/>
+<commit_date/>
+<deleted/>
+<description>Reconfigure email templates to use  layouts with classification banners.</description>
+<inserted/>
+<name>Email Config</name>
+<origin_sys_id/>
+<parent display_value=""/>
+<release_date>2019-09-12 22:46:40</release_date>
+<remote_base_update_set display_value=""/>
+<remote_parent_id/>
+<remote_sys_id>c1cdb9fd1b7505101497a820f54bcbf4</remote_sys_id>
+<state>loaded</state>
+<summary/>
+<sys_class_name>sys_remote_update_set</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>e8e08eb11bb505101497a820f54bcb7c</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<update_set display_value=""/>
+<update_source display_value=""/>
+<updated/>
+</sys_remote_update_set>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_adfe0cadc611227100ffab0a08978ef2</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;sysapproval_approver&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[&lt;div&gt;Short Description: ${sysapproval.short_description}&lt;/div&gt;
+&lt;div&gt;Priority: ${sysapproval.priority}&lt;/div&gt;
+&lt;div&gt;Category: ${sysapproval.category}&lt;/div&gt;
+&lt;div&gt;&amp;nbsp;&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt;&lt;hr /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div&gt;${mail_script:change_request_summary}&lt;/div&gt;
+&lt;div&gt;&amp;nbsp;&lt;/div&gt;
+&lt;div&gt;Comments:&lt;/div&gt;
+&lt;div&gt;${sysapproval.description}&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt;&lt;hr /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div&gt;${mailto:mailto.approval}&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt;&lt;hr /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div&gt;${mailto:mailto.rejection}&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt;&lt;hr /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div&gt;Approval Activity:&lt;/div&gt;
+&lt;div&gt;${mail_script:approval_activity}&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt;&lt;hr /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div&gt;Click here to view Approval Request: ${URI}&lt;/div&gt;
+&lt;div&gt;Click here to view ${sysapproval.sys_class_name}: ${sysapproval.URI}&lt;/div&gt;
+]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;change.itil.approve.role&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;${sysapproval.sys_class_name} ${sysapproval} Approval Request&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;glide.maint&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2005-05-05 17:53:57&lt;/sys_created_on&gt;&lt;sys_id&gt;adfe0cadc611227100ffab0a08978ef2&lt;/sys_id&gt;&lt;sys_mod_count&gt;33&lt;/sys_mod_count&gt;&lt;sys_name&gt;change.itil.approve.role&lt;/sys_name&gt;&lt;sys_package display_value="Service Management Basics" source="com.snc.service"&gt;bc3c805fdb403300b53f341f7c96193b&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_adfe0cadc611227100ffab0a08978ef2&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:58:33&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1166601817</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>20e04af11bb505101497a820f54bcbba</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27b320810000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>sysapproval_approver</table>
+<target_name>change.itil.approve.role</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>77d4b8261cf7370083c505b7e1fe2cb8</update_guid>
+<update_guid_history>77d4b8261cf7370083c505b7e1fe2cb8:1166601817,67d43826d8f73700937d59c68bcd640b:562031260</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_03987295c0a801020007beda58d7cd66</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;sc_task&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[Short Description: ${short_description}
+Assignment group: ${assignment_group}
+Assigned to: ${assigned_to}
+Due date: ${due_date}
+Click here to view Task: ${URI_REF}
+&lt;hr/&gt;
+
+Description: ${description}]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;sc_task.itil.role&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;Task ${number} notification&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;glide.maint&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2006-06-24 01:12:37&lt;/sys_created_on&gt;&lt;sys_id&gt;03987295c0a801020007beda58d7cd66&lt;/sys_id&gt;&lt;sys_mod_count&gt;2&lt;/sys_mod_count&gt;&lt;sys_name&gt;sc_task.itil.role&lt;/sys_name&gt;&lt;sys_package display_value="Service Catalog Platform" source="com.glideapp.servicecatalog.platform"&gt;044dc893db803300b53f341f7c9619b9&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_03987295c0a801020007beda58d7cd66&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:50:31&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1328123180</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>20e08eb11bb505101497a820f54bcb7d</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27abc4ce0000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>sc_task</table>
+<target_name>sc_task.itil.role</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>8e0370e2cdf737007efeb167b6d278e0</update_guid>
+<update_guid_history>8e0370e2cdf737007efeb167b6d278e0:1328123180,020370e231f737009ecd9073a1f493e0:-1017220861</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_7ed0481f3b0b2200c869c2c703efc487</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sysevent_email_template"><sysevent_email_template action="INSERT_OR_UPDATE"><collection/><email_layout display_value="Classification Unsubscribe and Preferences">f4a2950cdb64130093da55d0cf9619ea</email_layout><message/><message_html/><message_list/><message_text/><name>Unsubscribe and Preferences</name><sms_alternate/><subject/><sys_class_name>sysevent_email_template</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2016-11-17 15:24:19</sys_created_on><sys_id>7ed0481f3b0b2200c869c2c703efc487</sys_id><sys_mod_count>2</sys_mod_count><sys_name>Unsubscribe and Preferences</sys_name><sys_package display_value="Email Layout" source="com.glide.email_layout">e3a84893db003300b53f341f7c9619a9</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sysevent_email_template_7ed0481f3b0b2200c869c2c703efc487</sys_update_name><sys_updated_by>erwinel_da</sys_updated_by><sys_updated_on>2019-09-12 22:48:31</sys_updated_on><sys_version>2</sys_version></sysevent_email_template></record_update>]]></payload>
+<payload_hash>-1170346082</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>20e08eb11bb505101497a820f54bcb80</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27a9f01b0000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table/>
+<target_name>Unsubscribe and Preferences</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>2c92f4a21bf73700e1b73aab6eaa55d1</update_guid>
+<update_guid_history>2c92f4a21bf73700e1b73aab6eaa55d1:-1170346082,ac92f4a209f73700a3f0fbdae9b54bd0:-1851784637</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_f8469a360a0a0a6f00e7f13b2ff30883</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;kb_submission&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[Thank you for submitting ${number}. We appreciate your willingness to help out the knowledge management team. Unfortunately, your submission was deemed to be an invalid entry. In general this means your article either A) answered a question for which we have little demand or B) didn't provide sufficient information for us to build a full knowledge article off of.
+
+The knowledge engineer had the following comments upon closure:
+${close_notes}
+
+    ]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;Knowledge Closed Invalid&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;Your KB Submission ${number} was closed as an invalid&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;glide.maint&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2007-06-04 19:46:55&lt;/sys_created_on&gt;&lt;sys_id&gt;f8469a360a0a0a6f00e7f13b2ff30883&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;Knowledge Closed Invalid&lt;/sys_name&gt;&lt;sys_package display_value="Knowledge Management" source="com.glideapp.knowledge"&gt;863d4893db803300b53f341f7c96197b&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_f8469a360a0a0a6f00e7f13b2ff30883&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:58:40&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1664531194</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>24e04af11bb505101497a820f54bcbbc</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27b33b040000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>kb_submission</table>
+<target_name>Knowledge Closed Invalid</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>99e4f8266cf73700cbf7f4e977e2ab05</update_guid>
+<update_guid_history>99e4f8266cf73700cbf7f4e977e2ab05:1664531194,1de4f82608f7370011fff946c193d104:1504618819</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_647f5201ef001000dada09700922566a</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;sysapproval_approver&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[Revision Name: ${document_id.name}
+Owner:${document_id.owner}
+Author: ${document_id.author}
+Notes:${document_id.note}
+&lt;hr/&gt;
+The following comments were given by Approver: ${approver} about the rejection
+Comments: ${comments}
+
+&lt;hr/&gt;
+Click to view ${document_id.sys_class_name}:  ${document_id.URI}
+]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;document_revision.rejected&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;${document_id.sys_class_name} ${document_id} has been rejected by ${approver}&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;ross.weir&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2011-07-22 10:22:48&lt;/sys_created_on&gt;&lt;sys_id&gt;647f5201ef001000dada09700922566a&lt;/sys_id&gt;&lt;sys_mod_count&gt;3&lt;/sys_mod_count&gt;&lt;sys_name&gt;document_revision.rejected&lt;/sys_name&gt;&lt;sys_package display_value="Managed documents" source="com.snc.document_management"&gt;193d9e4edb907300b53f341f7c9619ed&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_647f5201ef001000dada09700922566a&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:57:05&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-1863576341</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>24e08eb11bb505101497a820f54bcb7f</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27b1c6a20000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>sysapproval_approver</table>
+<target_name>document_revision.rejected</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>ca84b4269ef73700db52e1bf46d1b909</update_guid>
+<update_guid_history>ca84b4269ef73700db52e1bf46d1b909:-1863576341,4e84b426a7f7370099e9cca326d6de08:948083320</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_d465111f3b4b2200c869c2c703efc47c</name>
+<payload><![CDATA[<?xml version="1.0" encoding="UTF-8"?><record_update table="sysevent_email_template"><sysevent_email_template action="INSERT_OR_UPDATE"><collection/><email_layout display_value="Classification Unsubscribe and Preferences Helvetica">62e1950cdb64130093da55d0cf9619e8</email_layout><message/><message_html/><message_list/><message_text/><name>Unsubscribe and Preferences Helvetica</name><sms_alternate/><subject/><sys_class_name>sysevent_email_template</sys_class_name><sys_created_by>admin</sys_created_by><sys_created_on>2016-11-17 21:33:11</sys_created_on><sys_id>d465111f3b4b2200c869c2c703efc47c</sys_id><sys_mod_count>2</sys_mod_count><sys_name>Unsubscribe and Preferences Helvetica</sys_name><sys_package display_value="Email Layout" source="com.glide.email_layout">e3a84893db003300b53f341f7c9619a9</sys_package><sys_policy/><sys_scope display_value="Global">global</sys_scope><sys_update_name>sysevent_email_template_d465111f3b4b2200c869c2c703efc47c</sys_update_name><sys_updated_by>erwinel_da</sys_updated_by><sys_updated_on>2019-09-12 22:52:22</sys_updated_on><sys_version>2</sys_version></sysevent_email_template></record_update>]]></payload>
+<payload_hash>-601018289</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>28e04af11bb505101497a820f54bcbbb</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27ad76850000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table/>
+<target_name>Unsubscribe and Preferences Helvetica</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>8d7374e23ef73700b7fb495c27ab891e</update_guid>
+<update_guid_history>8d7374e23ef73700b7fb495c27ab891e:-601018289,017374e2f4f73700e9d38a2d9d533a1e:1706332395</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_50c033e04a36231200089127bb0af7de</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;change_task&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message/&gt;&lt;message_html&gt;&lt;![CDATA[&lt;div&gt;Short description: ${short_description}&lt;/div&gt;
+&lt;div&gt;Click here to view Change Task: ${URI_REF}&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt;&lt;hr /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div&gt;State: ${state}&lt;/div&gt;
+&lt;div&gt;Category: ${category}&lt;/div&gt;
+&lt;div&gt;Configuration item: ${cmdb_ci}&lt;/div&gt;
+&lt;div&gt;Change Opened by: ${change_request.opened_by}&lt;/div&gt;
+&lt;div&gt;Assignment group: ${assignment_group}&lt;/div&gt;
+&lt;div&gt;Assigned to: ${assigned_to}&lt;/div&gt;
+&lt;div&gt;&amp;nbsp;&lt;/div&gt;
+&lt;div&gt;Description:&lt;/div&gt;
+&lt;div&gt;${description}&lt;/div&gt;
+&lt;div&gt;${mail_script:attach_links}&lt;/div&gt;
+&lt;div&gt;Comments and Work notes:&lt;/div&gt;
+&lt;div&gt;${comments_and_work_notes}&lt;/div&gt;]]&gt;&lt;/message_html&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;change_task.itil.role&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;Change Task ${number} notification -- ${short_description}&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2010-04-30 22:04:53&lt;/sys_created_on&gt;&lt;sys_id&gt;50c033e04a36231200089127bb0af7de&lt;/sys_id&gt;&lt;sys_mod_count&gt;6&lt;/sys_mod_count&gt;&lt;sys_name&gt;change_task.itil.role&lt;/sys_name&gt;&lt;sys_package display_value="Upgrade content for 2011 - activated only for new instances" source="upgrade.2011_common_practice"&gt;2e6e485bdb803300b53f341f7c961908&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_50c033e04a36231200089127bb0af7de&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:49:42&lt;/sys_updated_on&gt;&lt;sys_version&gt;2&lt;/sys_version&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-1228878376</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>28e08eb11bb505101497a820f54bcb7e</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27ab064f0000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>change_task</table>
+<target_name>change_task.itil.role</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>8ad230e221f73700206600eb4391ff66</update_guid>
+<update_guid_history>8ad230e221f73700206600eb4391ff66:-1228878376,cad230e203f737007f5c5782143e5265:424541191</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_bddca161c61122aa0152e7a47f83700a</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;incident&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[Click here to view ${TABLE_NAME}: ${URI}
+]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;notify.change&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;${TABLE_NAME} ${DISPLAY_VALUE} Change Notification&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;don.goodliffe&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2005-10-04 22:59:44&lt;/sys_created_on&gt;&lt;sys_id&gt;bddca161c61122aa0152e7a47f83700a&lt;/sys_id&gt;&lt;sys_mod_count&gt;2&lt;/sys_mod_count&gt;&lt;sys_name&gt;notify.change&lt;/sys_name&gt;&lt;sys_package display_value="Labels" source="com.glide.labels"&gt;99e80017db003300b53f341f7c961903&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_bddca161c61122aa0152e7a47f83700a&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:57:31&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>680536984</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>2ce04af11bb505101497a820f54bcbba</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27b22ec10000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>incident</table>
+<target_name>notify.change</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>60a4742602f737005d540af37bbaf8e5</update_guid>
+<update_guid_history>60a4742602f737005d540af37bbaf8e5:680536984,e0a4742601f73700548ae329fe9b64e4:-144361169</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_2d9cf960c611228400ba63a2b2409595</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;sc_request&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[Click here to view Request: ${URI_REF}
+
+Number: ${number}
+Due date: ${due_date}
+Opened: ${opened_at}
+Approval: ${approval}
+
+&lt;mail_script&gt;
+  template.print("&lt;p&gt;&lt;/p&gt;Requested items:\n");
+
+  var gr = new GlideRecord("sc_req_item");
+  gr.addQuery("request", current.sys_id);
+  gr.query();
+  while(gr.next()) {
+    var stage = gr.stage.getDisplayValue();
+    if (JSUtil.nil(stage))
+        stage = gr.stage.getChoiceValue();
+    template.print(gr.number + ":  " + gr.cat_item.getDisplayValue() + ", Stage: " + stage + "\n");
+  }
+&lt;/mail_script&gt;]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;request.general&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;Request ${number}&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;glide.maint&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2006-02-03 01:53:15&lt;/sys_created_on&gt;&lt;sys_id&gt;2d9cf960c611228400ba63a2b2409595&lt;/sys_id&gt;&lt;sys_mod_count&gt;20&lt;/sys_mod_count&gt;&lt;sys_name&gt;request.general&lt;/sys_name&gt;&lt;sys_package display_value="Service Catalog Platform" source="com.glideapp.servicecatalog.platform"&gt;044dc893db803300b53f341f7c9619b9&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_2d9cf960c611228400ba63a2b2409595&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:57:22&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>2018432291</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>2ce08eb11bb505101497a820f54bcb7d</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27b20a790000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>sc_request</table>
+<target_name>request.general</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>16947426cef737002bfdef2954d027bc</update_guid>
+<update_guid_history>16947426cef737002bfdef2954d027bc:2018432291,9694742654f737004d03c6f4e7204bbb:601637342</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_9fcbcc11eb31310023c7a9bcf106fe8d</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;task_activity&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message/&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text&gt;&lt;![CDATA[BEGIN:VCALENDAR
+PRODID:-//Service-now.com//Outlook 11.0 MIMEDIR//EN
+VERSION:2.0
+METHOD:CANCEL
+BEGIN:VEVENT
+STATUS:CANCELLED
+ORGANIZER;CN=${from_user.name}:MAILTO:${from_user.email}
+ATTENDEE;ROLE=REQ-PARTICIPANT;RSVP=TRUE:MAILTO:${to}
+ATTENDEE;ROLE=REQ-PARTICIPANT;RSVP=TRUE:MAILTO:${from_user.email}
+LOCATION:${location}
+DTSTART:${dtstart}
+DTEND:${dtend}
+UID:${sys_id}
+SEQUENCE:${sys_mod_count}
+DTSTAMP:${dtstamp}
+DESCRIPTION:${description}
+SUMMARY:${subject}
+END:VEVENT
+END:VCALENDAR]]&gt;&lt;/message_text&gt;&lt;name&gt;task_activity.appointment_cancellation&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject/&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2015-01-22 19:12:18&lt;/sys_created_on&gt;&lt;sys_id&gt;9fcbcc11eb31310023c7a9bcf106fe8d&lt;/sys_id&gt;&lt;sys_mod_count&gt;6&lt;/sys_mod_count&gt;&lt;sys_name&gt;task_activity.appointment_cancellation&lt;/sys_name&gt;&lt;sys_package display_value="Task Activities" source="com.snc.task_activity"&gt;913e160edbd07300b53f341f7c9619f3&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_9fcbcc11eb31310023c7a9bcf106fe8d&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:49:00&lt;/sys_updated_on&gt;&lt;sys_version&gt;2&lt;/sys_version&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1227802203</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>2ce08eb11bb505101497a820f54bcb80</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27aa602a0000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>task_activity</table>
+<target_name>task_activity.appointment_cancellation</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>6ba2f4a260f737003977b0a9f6042789</update_guid>
+<update_guid_history>6ba2f4a260f737003977b0a9f6042789:1227802203,eba2f4a227f7370080e0712e7041e788:1989979438</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_f83f9dda0a0a0a6f003873cc5be393c8</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;kb_submission&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[Thank you for submitting ${number}. We appreciate your willingness to help out the knowledge management team. Unfortunately, however, your submission was deemed to be a duplicate entry, which usually means we have other knowledge articles out there that cover the same same topic. 
+
+The knowledge engineer had the following comments upon closure:
+${close_notes}
+
+    ]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;Knowledge Closed Duplicate&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;Your KB Submission ${number} was closed as a duplicate entry&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;glide.maint&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2007-06-04 19:43:23&lt;/sys_created_on&gt;&lt;sys_id&gt;f83f9dda0a0a0a6f003873cc5be393c8&lt;/sys_id&gt;&lt;sys_mod_count&gt;2&lt;/sys_mod_count&gt;&lt;sys_name&gt;Knowledge Closed Duplicate&lt;/sys_name&gt;&lt;sys_package display_value="Knowledge Management" source="com.glideapp.knowledge"&gt;863d4893db803300b53f341f7c96197b&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_f83f9dda0a0a0a6f003873cc5be393c8&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:50:23&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-317007576</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>60e04af11bb505101497a820f54bcbbc</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27aba5630000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>kb_submission</table>
+<target_name>Knowledge Closed Duplicate</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>000370e2d3f737001436141484401429</update_guid>
+<update_guid_history>000370e2d3f737001436141484401429:-317007576,800370e2ccf737000705b62d74aa9d28:-1981989697</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_5eaaaa81ef001000dada0970092256ea</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;sysapproval_approver&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[Revision Name: ${document_id.name}
+Owner:${document_id.owner}
+Author: ${document_id.author}
+Notes:${document_id.note}
+&lt;hr/&gt;
+The following comments were given by Approver: ${approver} about the rejection
+Comments: ${comments}
+&lt;hr/&gt;
+Click to view ${document_id.sys_class_name}:  ${document_id.URI}
+]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;document_revision.rej.by.other&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;${document_id.sys_class_name} ${document_id} has been rejected by ${approver}&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;ross.weir&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2011-07-22 11:10:27&lt;/sys_created_on&gt;&lt;sys_id&gt;5eaaaa81ef001000dada0970092256ea&lt;/sys_id&gt;&lt;sys_mod_count&gt;2&lt;/sys_mod_count&gt;&lt;sys_name&gt;document_revision.rej.by.other&lt;/sys_name&gt;&lt;sys_package display_value="Managed documents" source="com.snc.document_management"&gt;193d9e4edb907300b53f341f7c9619ed&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_5eaaaa81ef001000dada0970092256ea&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:49:58&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1389090151</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>60e08eb11bb505101497a820f54bcb7f</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27ab45210000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>sysapproval_approver</table>
+<target_name>document_revision.rej.by.other</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>06e2f8a2aff737005a0a47de0516492c</update_guid>
+<update_guid_history>06e2f8a2aff737005a0a47de0516492c:1389090151,86e2f8a264f7370039ac76ffeadeba2b:1238067002</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_c9e3b8efc61122740156f14ca095cc47</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;task&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[Short Description: ${short_description}
+Click here to view ${sys_class_name}: ${URI_REF}
+&lt;hr/&gt;
+Priority: ${priority}
+Description: 
+${description}]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;task.itil.approve.action.role&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;${sys_class_name} ${number} has been ${approval}&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;itil&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2005-08-18 14:00:08&lt;/sys_created_on&gt;&lt;sys_id&gt;c9e3b8efc61122740156f14ca095cc47&lt;/sys_id&gt;&lt;sys_mod_count&gt;2&lt;/sys_mod_count&gt;&lt;sys_name&gt;task.itil.approve.action.role&lt;/sys_name&gt;&lt;sys_package display_value="Service Management Basics" source="com.snc.service"&gt;bc3c805fdb403300b53f341f7c96193b&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_c9e3b8efc61122740156f14ca095cc47&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:58:47&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-326790760</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>64e04af11bb505101497a820f54bcbbb</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27b356cf0000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>task</table>
+<target_name>task.itil.approve.action.role</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>8be4b42603f73700de47df8441104dd3</update_guid>
+<update_guid_history>8be4b42603f73700de47df8441104dd3:-326790760,0fe4b426f8f7370031b81ee640065fd2:1765906793</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_50bf41d24a3623120191b782ab38061e</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;change_request&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message/&gt;&lt;message_html&gt;&lt;![CDATA[&lt;div&gt;Short description: ${short_description}&lt;/div&gt;
+&lt;div&gt;Click here to view Change Request: ${URI_REF}&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt;&lt;hr /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div&gt;State: ${state}&lt;/div&gt;
+&lt;div&gt;Category: ${category}&lt;/div&gt;
+&lt;div&gt;Configuration item: ${cmdb_ci}&lt;/div&gt;
+&lt;div&gt;Opened by: ${opened_by}&lt;/div&gt;
+&lt;div&gt;Assignment group: ${assignment_group}&lt;/div&gt;
+&lt;div&gt;Assigned to: ${assigned_to}&lt;/div&gt;
+&lt;div&gt;&amp;nbsp;&lt;/div&gt;
+&lt;div&gt;Description:&lt;/div&gt;
+&lt;div&gt;${description}&lt;/div&gt;
+&lt;div&gt;${mail_script:attach_links}&lt;/div&gt;
+&lt;div&gt;Comments and Work notes:&lt;/div&gt;
+&lt;div&gt;${comments_and_work_notes}&lt;/div&gt;]]&gt;&lt;/message_html&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;change.itil.role&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;Change Request ${number} notification -- ${short_description}&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2010-04-30 22:03:51&lt;/sys_created_on&gt;&lt;sys_id&gt;50bf41d24a3623120191b782ab38061e&lt;/sys_id&gt;&lt;sys_mod_count&gt;5&lt;/sys_mod_count&gt;&lt;sys_name&gt;change.itil.role&lt;/sys_name&gt;&lt;sys_package display_value="Upgrade content for 2011 - activated only for new instances" source="upgrade.2011_common_practice"&gt;2e6e485bdb803300b53f341f7c961908&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_50bf41d24a3623120191b782ab38061e&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:58:25&lt;/sys_updated_on&gt;&lt;sys_version&gt;2&lt;/sys_version&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-747047814</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>64e08eb11bb505101497a820f54bcb7e</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27b301420000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>change_request</table>
+<target_name>change.itil.role</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>f1d474266cf73700ebbc4e5d134fb0d9</update_guid>
+<update_guid_history>f1d474266cf73700ebbc4e5d134fb0d9:-747047814,35d4742633f73700ac03f197f113e4d8:736702989</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_b34150b4c61122710191275b96d265fe</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;sysapproval_approver&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[Short Description: ${sysapproval.short_description}
+Click here to view Approval Request: ${URI}
+Click here to view ${sysapproval.sys_class_name}:  ${sysapproval.URI}
+&lt;hr/&gt;
+Priority: ${sysapproval.priority}
+Category: ${sysapproval.category}
+Comments:
+${sysapproval.description}
+&lt;hr/&gt;
+The following comments were given by Approver: ${approver} about the rejection
+&lt;hr/&gt;
+Comments: ${comments}
+]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;change.itil.rejected.by.other&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;${sysapproval.sys_class_name} ${sysapproval} has been rejected by ${approver}&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;glide.maint&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2005-05-06 18:25:31&lt;/sys_created_on&gt;&lt;sys_id&gt;b34150b4c61122710191275b96d265fe&lt;/sys_id&gt;&lt;sys_mod_count&gt;7&lt;/sys_mod_count&gt;&lt;sys_name&gt;change.itil.rejected.by.other&lt;/sys_name&gt;&lt;sys_package display_value="Service Management Basics" source="com.snc.service"&gt;bc3c805fdb403300b53f341f7c96193b&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_b34150b4c61122710191275b96d265fe&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:50:06&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-1089326297</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>68e04af11bb505101497a820f54bcbba</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27ab632c0000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>sysapproval_approver</table>
+<target_name>change.itil.rejected.by.other</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>f3e270e259f7370070a52e048981b4ce</update_guid>
+<update_guid_history>f3e270e259f7370070a52e048981b4ce:-1089326297,77e270e20bf73700ed7de64750f280cd:892568186</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_2d7d1d30ef001000dada09700922567c</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;sysapproval_approver&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[Revision Name: ${document_id.name}
+Owner:${document_id.owner}
+Author: ${document_id.author}
+Notes:  ${document_id.note}
+
+&lt;hr/&gt;
+${mailto:mailto.approval}
+&lt;hr/&gt;
+${mailto:mailto.rejection}
+&lt;hr/&gt;
+Click here to view Approval Request: ${URI}
+Click here to view ${document_id.sys_class_name}:  ${document_id.URI}]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;document_revision.approve&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;${document_id.sys_class_name} ${document_id} is ${document_id.stage} &lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;ross.weir&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2011-07-21 10:54:40&lt;/sys_created_on&gt;&lt;sys_id&gt;2d7d1d30ef001000dada09700922567c&lt;/sys_id&gt;&lt;sys_mod_count&gt;6&lt;/sys_mod_count&gt;&lt;sys_name&gt;document_revision.approve&lt;/sys_name&gt;&lt;sys_package display_value="Managed documents" source="com.snc.document_management"&gt;193d9e4edb907300b53f341f7c9619ed&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_2d7d1d30ef001000dada09700922567c&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:49:51&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-1062754489</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>68e08eb11bb505101497a820f54bcb7d</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27ab275c0000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>sysapproval_approver</table>
+<target_name>document_revision.approve</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>88e230e217f73700c84b1cc5bf2e5fa4</update_guid>
+<update_guid_history>88e230e217f73700c84b1cc5bf2e5fa4:-1062754489,0ce230e22af7370051cf147c9d9a79a3:2135698452</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_9e5d2805d751120035ae23c7ce6103c8</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;incident&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences Helvetica"&gt;62e1950cdb64130093da55d0cf9619e8&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[&lt;Number: ${number}
+Short Description: ${short_description}
+Click here to view Incident: ${URI_REF}
+&lt;hr/&gt;
+Severity: ${severity}
+Priority: ${priority}
+Category: ${category}
+Comments:
+${comments}]]&gt;&lt;/message&gt;&lt;message_html&gt;&lt;![CDATA[&lt;p class="p1"&gt;${mail_script:incident_body_header}&lt;/p&gt;
+&lt;p class="p1"&gt;${mail_script:incident_additional_details}&lt;/p&gt;
+&lt;p class="p1"&gt;${mail_script:incident_take_me_to_the_incident}&lt;/p&gt;]]&gt;&lt;/message_html&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;incident.header.details&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject/&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2016-01-29 22:50:56&lt;/sys_created_on&gt;&lt;sys_id&gt;9e5d2805d751120035ae23c7ce6103c8&lt;/sys_id&gt;&lt;sys_mod_count&gt;1&lt;/sys_mod_count&gt;&lt;sys_name&gt;incident.header.details&lt;/sys_name&gt;&lt;sys_package display_value="Incident Management Notification" source="com.snc.incident_notification"&gt;795ccc5fdb403300b53f341f7c9619ea&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_9e5d2805d751120035ae23c7ce6103c8&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:52:33&lt;/sys_updated_on&gt;&lt;sys_version&gt;2&lt;/sys_version&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-744415931</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>68e08eb11bb505101497a820f54bcb80</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27ad9f950000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>incident</table>
+<target_name>incident.header.details</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>af7338e22df73700a2064c18a10b9db6</update_guid>
+<update_guid_history>af7338e22df73700a2064c18a10b9db6:-744415931,ef7338e27df73700dbf91dc2bbaf10b5:-1695686907</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_704bb0b1c611227d01b8b5cddd16c84d</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;sc_req_item&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[Click here to view Request: ${URI_REF}
+&lt;p&gt;
+Number: ${number}
+Opened: ${opened_at}
+Item: ${cat_item}
+Quantity: ${quantity}
+Assigned to: ${assigned_to}
+&lt;/p&gt;
+&lt;p&gt;
+Additional comments: 
+${comments}
+&lt;/p&gt;
+
+]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;request_item.general&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;Request Item ${number} - ${cat_item}&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;glide.maint&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2006-02-16 00:39:02&lt;/sys_created_on&gt;&lt;sys_id&gt;704bb0b1c611227d01b8b5cddd16c84d&lt;/sys_id&gt;&lt;sys_mod_count&gt;9&lt;/sys_mod_count&gt;&lt;sys_name&gt;request_item.general&lt;/sys_name&gt;&lt;sys_package display_value="Service Catalog Platform" source="com.glideapp.servicecatalog.platform"&gt;044dc893db803300b53f341f7c9619b9&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_704bb0b1c611227d01b8b5cddd16c84d&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:50:39&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1863049284</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>6ce08eb11bb505101497a820f54bcb7f</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27abe2850000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>sc_req_item</table>
+<target_name>request_item.general</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>f703b0e2f5f737002c11d96f3154515b</update_guid>
+<update_guid_history>f703b0e2f5f737002c11d96f3154515b:1863049284,7b03b0e263f73700cdadabb80269c35a:1913509981</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_c2e1a8f5c611227601e565bd20b8b578</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;sysapproval_approver&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[Click here to reject ${sysapproval}]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;mailto.rejection&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;Re:${sysapproval} - reject&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;glide.maint&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2005-05-09 19:14:58&lt;/sys_created_on&gt;&lt;sys_id&gt;c2e1a8f5c611227601e565bd20b8b578&lt;/sys_id&gt;&lt;sys_mod_count&gt;8&lt;/sys_mod_count&gt;&lt;sys_name&gt;mailto.rejection&lt;/sys_name&gt;&lt;sys_package display_value="Service Management Basics" source="com.snc.service"&gt;bc3c805fdb403300b53f341f7c96193b&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_c2e1a8f5c611227601e565bd20b8b578&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:57:14&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-552845646</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>a0e04af11bb505101497a820f54bcbbb</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27b1e9fd0000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>sysapproval_approver</table>
+<target_name>mailto.rejection</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>9494f426f2f73700ef6d590147277e15</update_guid>
+<update_guid_history>9494f426f2f73700ef6d590147277e15:-552845646,1894f4267bf73700a9a705539b0ed014:-1766903803</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_4cf85f7ebf0211002eff1c2a7f07395d</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;sys_sync_history&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message/&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text&gt;&lt;![CDATA[Push Name: ${name}
+Request sent on: ${sys_created_on}
+Status: Your code request is ${stage}
+ 
+&lt;mail_script&gt;
+    template.print("Click here for more details: \n");
+    var gr = new GlideRecord("sys_update_set_source");
+    gr.addQuery("instance_id", current.instance);
+    gr.query();
+    if (gr.next())  {
+       template.print(gr.url + "/nav_to.do?uri=sys_sync_history.do?sys_id=" + current.source_history + "&amp;sysparm_stack=sys_sync_history_list.do" + "\n");
+   }
+&lt;/mail_script&gt;]]&gt;&lt;/message_text&gt;&lt;name&gt;Code Review Update&lt;/name&gt;&lt;sms_alternate&gt;&lt;![CDATA[ ]]&gt;&lt;/sms_alternate&gt;&lt;subject&gt;Your code review request is ${stage} &lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2014-01-07 19:53:11&lt;/sys_created_on&gt;&lt;sys_id&gt;4cf85f7ebf0211002eff1c2a7f07395d&lt;/sys_id&gt;&lt;sys_mod_count&gt;4&lt;/sys_mod_count&gt;&lt;sys_name&gt;Code Review Update&lt;/sys_name&gt;&lt;sys_package display_value="Team Development" source="com.snc.apps_hub"&gt;f5d888d3db003300b53f341f7c96199a&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_4cf85f7ebf0211002eff1c2a7f07395d&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:58:11&lt;/sys_updated_on&gt;&lt;sys_version&gt;2&lt;/sys_version&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-982748937</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>a0e08eb11bb505101497a820f54bcb7e</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27b2c98b0000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>sys_sync_history</table>
+<target_name>Code Review Update</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>96c478261ef73700a5321c54c31f988e</update_guid>
+<update_guid_history>96c478261ef73700a5321c54c31f988e:-982748937,1ac47026def73700642a9020f7931fc7:1045514286</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_b2c595b7c6112271016ff9e00e98a4f5</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;sysapproval_approver&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[Short Description: ${sysapproval.short_description}
+Click here to view Approval Request: ${URI}
+Click here to view ${sysapproval.sys_class_name}:  ${sysapproval.URI}
+&lt;hr/&gt;
+Priority: ${sysapproval.priority}
+Category: ${sysapproval.category}
+Comments:
+${sysapproval.description}
+&lt;hr/&gt;
+The following comments were given by Approver: ${approver} about the rejection
+&lt;hr/&gt;
+Comments: ${comments}
+
+]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;change.itil.approver.reject&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;${sysapproval.sys_class_name} ${sysapproval} has been rejected by ${approver}&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;glide.maint&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2005-05-06 16:10:23&lt;/sys_created_on&gt;&lt;sys_id&gt;b2c595b7c6112271016ff9e00e98a4f5&lt;/sys_id&gt;&lt;sys_mod_count&gt;5&lt;/sys_mod_count&gt;&lt;sys_name&gt;change.itil.approver.reject&lt;/sys_name&gt;&lt;sys_package display_value="Service Management Basics" source="com.snc.service"&gt;bc3c805fdb403300b53f341f7c96193b&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_b2c595b7c6112271016ff9e00e98a4f5&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:50:54&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-1985049133</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>a4e04af11bb505101497a820f54bcbba</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27ac1da80000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>sysapproval_approver</table>
+<target_name>change.itil.approver.reject</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>a713bca285f73700013fa6000585ebb8</update_guid>
+<update_guid_history>a713bca285f73700013fa6000585ebb8:-1985049133,2b13bca28ef737005eccb672ef5ee1b7:523286368</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_1e300e640a0a3c7400bc120e346fcca8</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;sc_req_item&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message/&gt;&lt;message_html&gt;&lt;![CDATA[&lt;div&gt;Short description: ${short_description}&lt;/div&gt;
+&lt;div&gt;Item: ${cat_item}&lt;/div&gt;
+&lt;div&gt;&amp;nbsp;&lt;/div&gt;
+&lt;div&gt;Click here to view request item: ${URI_REF}&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt;&lt;hr /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div&gt;${mail_script:attach_links}&lt;/div&gt;
+&lt;div&gt;Comments:&lt;/div&gt;
+&lt;div&gt;${comments}&lt;/div&gt;]]&gt;&lt;/message_html&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;sc_req_item.ess.role&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;Request Item ${number} comments added -- ${short_description}&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2010-11-05 22:37:34&lt;/sys_created_on&gt;&lt;sys_id&gt;1e300e640a0a3c7400bc120e346fcca8&lt;/sys_id&gt;&lt;sys_mod_count&gt;4&lt;/sys_mod_count&gt;&lt;sys_name&gt;sc_req_item.ess.role&lt;/sys_name&gt;&lt;sys_package display_value="Upgrade content for 2011 - activated only for new instances" source="upgrade.2011_common_practice"&gt;2e6e485bdb803300b53f341f7c961908&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_1e300e640a0a3c7400bc120e346fcca8&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:56:46&lt;/sys_updated_on&gt;&lt;sys_version&gt;2&lt;/sys_version&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1677215794</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>a4e08eb11bb505101497a820f54bcb7d</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27b17c160000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>sc_req_item</table>
+<target_name>sc_req_item.ess.role</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>197474267ef73700e9e49b0706d13a9f</update_guid>
+<update_guid_history>197474267ef73700e9e49b0706d13a9f:1677215794,597474262df737008d1725941d44209e:-859829475</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_927a1efbc0a8010a019ab254ce7ae3fa</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;sysapproval_approver&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[The request has been cancelled. No further action on your part is required.
+Short Description: ${sysapproval.short_description}
+Click here to view Approval Request: ${URI}
+Click here to view ${sysapproval.sys_class_name}:  ${sysapproval.URI}
+&lt;hr/&gt;
+Priority: ${sysapproval.priority}
+Requested For: ${sysapproval.requested_for}
+Requested By: ${sysapproval.opened_by}
+Total Price: ${sysapproval.price}
+&lt;mail_script&gt;
+  template.print("Summary of Requested items:\n");  
+  var gr = new GlideRecord("sc_req_item");
+  gr.addQuery("request", current.sysapproval);
+  gr.query();
+  while(gr.next()) {
+    template.print(gr.number + ":  " + gr.quantity + " X " + gr.cat_item.getDisplayValue() + " at " + gr.cat_item.price.getDisplayValue() + " each \n");
+  }
+&lt;/mail_script&gt;
+Comments:
+${sysapproval.description}
+&lt;hr/&gt;
+
+]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;request.itil.cancelled.role&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;${sysapproval.sys_class_name} ${sysapproval} Has been cancelled&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;glide.maint&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2006-07-21 19:05:12&lt;/sys_created_on&gt;&lt;sys_id&gt;927a1efbc0a8010a019ab254ce7ae3fa&lt;/sys_id&gt;&lt;sys_mod_count&gt;2&lt;/sys_mod_count&gt;&lt;sys_name&gt;request.itil.cancelled.role&lt;/sys_name&gt;&lt;sys_package display_value="Service Catalog Platform" source="com.glideapp.servicecatalog.platform"&gt;044dc893db803300b53f341f7c9619b9&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_927a1efbc0a8010a019ab254ce7ae3fa&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:56:37&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>214121882</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>a4e08eb11bb505101497a820f54bcb80</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27b15bb90000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>sysapproval_approver</table>
+<target_name>request.itil.cancelled.role</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>5b64702681f73700ac9b46f29cbf42c1</update_guid>
+<update_guid_history>5b64702681f73700ac9b46f29cbf42c1:214121882,db647026ddf73700d51ff8d89fc391c0:1250921959</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_fcaae005d751120035ae23c7ce61037a</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;incident&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences Helvetica"&gt;62e1950cdb64130093da55d0cf9619e8&lt;/email_layout&gt;&lt;message/&gt;&lt;message_html&gt;&lt;![CDATA[&lt;div&gt;${mail_script:incident_body_header}&lt;/div&gt;
+&lt;div&gt;${mail_script:incident_additional_details}&lt;/div&gt;
+&lt;div&gt;${mail_script:incident_comments}&lt;/div&gt;
+&lt;div&gt;${mail_script:incident_take_me_to_the_incident}&lt;/div&gt;]]&gt;&lt;/message_html&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;incident.header.comments.details&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject/&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2016-01-29 22:39:04&lt;/sys_created_on&gt;&lt;sys_id&gt;fcaae005d751120035ae23c7ce61037a&lt;/sys_id&gt;&lt;sys_mod_count&gt;4&lt;/sys_mod_count&gt;&lt;sys_name&gt;incident.header.comments.details&lt;/sys_name&gt;&lt;sys_package display_value="Incident Management Notification" source="com.snc.incident_notification"&gt;795ccc5fdb403300b53f341f7c9619ea&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_fcaae005d751120035ae23c7ce61037a&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:52:40&lt;/sys_updated_on&gt;&lt;sys_version&gt;2&lt;/sys_version&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-691315761</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>a8e04af11bb505101497a820f54bcbbc</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27adbdda0000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>incident</table>
+<target_name>incident.header.comments.details</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>618378e20ff737001aeb5c64b4c2ccd4</update_guid>
+<update_guid_history>618378e20ff737001aeb5c64b4c2ccd4:-691315761,a18378e2b7f7370074971a0b2983c1d3:1068481935</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_69fc06b64a362312012698e6952090e4</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;change_request&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message/&gt;&lt;message_html&gt;&lt;![CDATA[&lt;div&gt;Short description: ${short_description}&lt;/div&gt;
+&lt;div&gt;&amp;nbsp;&lt;/div&gt;
+&lt;div&gt;Click here to view Change Request: ${URI_REF}&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt;&lt;hr /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div&gt;${mail_script:attach_links}&lt;/div&gt;
+&lt;div&gt;Comments:&lt;/div&gt;
+&lt;div&gt;${comments}&lt;/div&gt;]]&gt;&lt;/message_html&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;change.ess.role&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;Change Request ${number} comments added -- ${short_description}&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2010-05-05 19:40:44&lt;/sys_created_on&gt;&lt;sys_id&gt;69fc06b64a362312012698e6952090e4&lt;/sys_id&gt;&lt;sys_mod_count&gt;4&lt;/sys_mod_count&gt;&lt;sys_name&gt;change.ess.role&lt;/sys_name&gt;&lt;sys_package display_value="Upgrade content for 2011 - activated only for new instances" source="upgrade.2011_common_practice"&gt;2e6e485bdb803300b53f341f7c961908&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_69fc06b64a362312012698e6952090e4&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:46:40&lt;/sys_updated_on&gt;&lt;sys_version&gt;2&lt;/sys_version&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1149783101</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>a8e08eb11bb505101497a820f54bcb7f</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27a83e0d0000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>change_request</table>
+<target_name>change.ess.role</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>a12274a244f737001dc518cbb9882b7a</update_guid>
+<update_guid_history>a12274a244f737001dc518cbb9882b7a:1149783101,ed2274a256f73700e130d2c6baf1cd78:-459217726</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_f1fdb7fcc0a8011b009d3f8b7e3f8864</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;sysapproval_approver&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[Short Description: ${sysapproval.short_description}
+Priority: ${sysapproval.priority}
+Requested For: ${sysapproval.requested_for}
+Requested By: ${sysapproval.opened_by}
+Total Price: ${sysapproval.price}
+&lt;mail_script&gt;
+  template.print("Summary of Requested items:\n");  
+  var gr = new GlideRecord("sc_req_item");
+  gr.addQuery("request", current.sysapproval);
+  gr.query();
+  while(gr.next()) {
+    template.print(gr.number + ":  " + gr.quantity + " X " + gr.cat_item.getDisplayValue() + " at " + gr.cat_item.price.getDisplayValue() + " each \n");
+  }
+&lt;/mail_script&gt;
+Comments:
+${sysapproval.description}
+&lt;hr/&gt;
+${mailto:mailto.approval}
+&lt;hr/&gt;
+${mailto:mailto.rejection}
+&lt;hr/&gt;
+Click here to view Approval Request: ${URI}
+Click here to view ${sysapproval.sys_class_name}:  ${sysapproval.URI}
+
+]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;request.itil.approver.reject&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;${sysapproval.sys_class_name} ${sysapproval} has been rejected by ${approver}&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;glide.maint&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2006-06-20 15:10:04&lt;/sys_created_on&gt;&lt;sys_id&gt;f1fdb7fcc0a8011b009d3f8b7e3f8864&lt;/sys_id&gt;&lt;sys_mod_count&gt;8&lt;/sys_mod_count&gt;&lt;sys_name&gt;request.itil.approver.reject&lt;/sys_name&gt;&lt;sys_package display_value="Service Catalog Platform" source="com.glideapp.servicecatalog.platform"&gt;044dc893db803300b53f341f7c9619b9&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_f1fdb7fcc0a8011b009d3f8b7e3f8864&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:49:09&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-311698392</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>ace04af11bb505101497a820f54bcbbb</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27aa84e50000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>sysapproval_approver</table>
+<target_name>request.itil.approver.reject</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>c2b2bca2e5f737007cc23670fea89e80</update_guid>
+<update_guid_history>c2b2bca2e5f737007cc23670fea89e80:-311698392,46b2bca217f737001e0db1cb6d74647f:-1109537221</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_5406f2a39320020092ffb46b767ffb2e</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;vtb_task&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message/&gt;&lt;message_html&gt;&lt;![CDATA[&lt;table style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-table-rspace: 0; border-collapse: collapse !important; margin: 0; padding: 0; width: 100% !important; background-color: #eee;"&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-table-rspace: 0; padding: 0 15px 15px;"&gt;
+&lt;table style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-table-rspace: 0; border-collapse: collapse !important; height: 100% !important; margin: 0; padding: 15px; width: 100% !important; background-color: #fff; font-size: 16px;"&gt;
+&lt;tbody&gt;
+&lt;tr&gt;
+&lt;td style="-webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; mso-table-lspace: 0; mso-table-rspace: 0; padding: 15px;"&gt;
+&lt;div&gt;Short description: ${short_description}&lt;/div&gt;
+${mail_script:vtb_board_links}&lt;hr /&gt;${mail_script:vtb_task_details}&lt;hr /&gt;
+&lt;div&gt;Manage the emails you receive in &lt;a href="/notification_preferences.do"&gt;Notification Preferences&lt;/a&gt;.&lt;/div&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+&lt;p&gt;&amp;nbsp;&lt;/p&gt;]]&gt;&lt;/message_html&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;vtb.task.notification&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;VTB Task ${number} notification -- ${short_description}&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2015-06-16 00:18:41&lt;/sys_created_on&gt;&lt;sys_id&gt;5406f2a39320020092ffb46b767ffb2e&lt;/sys_id&gt;&lt;sys_mod_count&gt;22&lt;/sys_mod_count&gt;&lt;sys_name&gt;vtb.task.notification&lt;/sys_name&gt;&lt;sys_package display_value="Visual Task Boards" source="com.glide.ui.vtb"&gt;de19c057db003300b53f341f7c9619b8&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_5406f2a39320020092ffb46b767ffb2e&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:48:48&lt;/sys_updated_on&gt;&lt;sys_version&gt;2&lt;/sys_version&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-1340377497</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>ace08eb11bb505101497a820f54bcb7e</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27aa326b0000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>vtb_task</table>
+<target_name>vtb.task.notification</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>f4a2f8a202f7370015dade12643b2dd9</update_guid>
+<update_guid_history>f4a2f8a202f7370015dade12643b2dd9:-1340377497,38a2f8a280f73700601feeab292346d8:-1543453278</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_ae00dc48c6112271000ed262e0794e3a</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;change_request&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[Short Description: ${short_description}
+Click here to view ${sys_class_name}: ${URI_REF}
+&lt;hr/&gt;
+Priority: ${priority}
+Category: ${category}
+Description: 
+${description}]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;change.itil.approve.action.role&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;${sys_class_name} ${number} has been ${approval}&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;glide.maint&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2005-05-05 17:57:01&lt;/sys_created_on&gt;&lt;sys_id&gt;ae00dc48c6112271000ed262e0794e3a&lt;/sys_id&gt;&lt;sys_mod_count&gt;6&lt;/sys_mod_count&gt;&lt;sys_name&gt;change.itil.approve.action.role&lt;/sys_name&gt;&lt;sys_package display_value="Change Request" source="com.snc.change_request"&gt;b25c409fdb403300b53f341f7c961909&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_ae00dc48c6112271000ed262e0794e3a&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:50:47&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>930685241</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>e0e04af11bb505101497a820f54bcbba</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27ac01800000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>change_request</table>
+<target_name>change.itil.approve.action.role</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>b91334e288f73700865ac655410d0c6d</update_guid>
+<update_guid_history>b91334e288f73700865ac655410d0c6d:930685241,3d1334e2faf737000bb5d0ff31e6bb6c:-685279308</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_1e29a3f00a0a3c74012ea73c59c4b3ea</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;sc_req_item&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message/&gt;&lt;message_html&gt;&lt;![CDATA[&lt;div&gt;A request item associated with one of your (or your groups) tasks has been commented.&lt;/div&gt;
+&lt;div&gt;&amp;nbsp;&lt;/div&gt;
+&lt;div&gt;Short Description: ${short_description}&lt;/div&gt;
+&lt;div&gt;Click here to view ${sys_class_name}: ${URI_REF}&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt;&lt;hr /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div&gt;State: ${state}&lt;/div&gt;
+&lt;div&gt;Approval: ${approval}&lt;/div&gt;
+&lt;div&gt;Requested for: ${request.requested_for}&lt;/div&gt;
+&lt;div&gt;Item: ${cat_item}&lt;/div&gt;
+&lt;div&gt;&amp;nbsp;&lt;/div&gt;
+&lt;div&gt;${mail_script:attach_links}&lt;/div&gt;
+&lt;div&gt;Comments:&lt;/div&gt;
+&lt;div&gt;${u_comments_and_work_notes}&lt;/div&gt;]]&gt;&lt;/message_html&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;sc_req_item.itil.role&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;Request Item ${number} notification -- ${short_description}&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2010-11-05 22:30:34&lt;/sys_created_on&gt;&lt;sys_id&gt;1e29a3f00a0a3c74012ea73c59c4b3ea&lt;/sys_id&gt;&lt;sys_mod_count&gt;6&lt;/sys_mod_count&gt;&lt;sys_name&gt;sc_req_item.itil.role&lt;/sys_name&gt;&lt;sys_package display_value="Upgrade content for 2011 - activated only for new instances" source="upgrade.2011_common_practice"&gt;2e6e485bdb803300b53f341f7c961908&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_1e29a3f00a0a3c74012ea73c59c4b3ea&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:49:26&lt;/sys_updated_on&gt;&lt;sys_version&gt;2&lt;/sys_version&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-1238451390</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>e0e08eb11bb505101497a820f54bcb7d</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27aac5550000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>sc_req_item</table>
+<target_name>sc_req_item.itil.role</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>4ac2fca2def737004b4e2457fc95ec93</update_guid>
+<update_guid_history>4ac2fca2def737004b4e2457fc95ec93:-1238451390,8ac2fca2a2f73700b18220c15f265e92:1002507343</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_8f910b5ec0a80164009a5a484f657b57</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;incident&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences Helvetica"&gt;62e1950cdb64130093da55d0cf9619e8&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[Short description: ${short_description}
+Click here to view: ${URI_REF}
+&lt;hr/&gt;
+Comments: 
+${comments}
+&lt;hr/&gt;
+&lt;div&gt;${mail_script:cxs_EmailSearchResults}&lt;/div&gt;]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;incident.ess.role&lt;/name&gt;&lt;sms_alternate&gt;&lt;![CDATA[ ]]&gt;&lt;/sms_alternate&gt;&lt;subject&gt;Incident ${number} notification&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;fred.luddy&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2004-12-01 16:57:55&lt;/sys_created_on&gt;&lt;sys_id&gt;8f910b5ec0a80164009a5a484f657b57&lt;/sys_id&gt;&lt;sys_mod_count&gt;5&lt;/sys_mod_count&gt;&lt;sys_name&gt;incident.ess.role&lt;/sys_name&gt;&lt;sys_package display_value="Contextual Search" source="com.snc.contextual_search"&gt;a51e88d7db803300b53f341f7c96198c&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_8f910b5ec0a80164009a5a484f657b57&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:59:04&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-954543174</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>e0e08eb11bb505101497a820f54bcb80</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27b3976b0000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>incident</table>
+<target_name>incident.ess.role</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>c7f43c2644f73700ad2550928fa73f7a</update_guid>
+<update_guid_history>c7f43c2644f73700ad2550928fa73f7a:-954543174,4bf43c265ef73700bec330476b1d5879:1923401082</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_f847752c0a0a0a6f00f1cf35de915144</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;kb_submission&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message/&gt;&lt;message_html&gt;&lt;![CDATA[&lt;div&gt;Thank you for submitting ${number}. We appreciate your willingness to help out the knowledge management team. Your article led us to generate the following new knowledge base articles:&lt;/div&gt;
+&lt;div&gt;${mail_script:knowledge_articles_list}&lt;/div&gt;
+&lt;div&gt;The knowledge engineer had the following comments upon closure:&lt;/div&gt;
+&lt;div&gt;${close_notes}&lt;/div&gt;
+&lt;div&gt;&amp;nbsp;&lt;/div&gt;]]&gt;&lt;/message_html&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;Knowledge Closed Created&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;Your KB Submission ${number} was closed after one or more articles were created&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;glide.maint&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2007-06-04 19:47:51&lt;/sys_created_on&gt;&lt;sys_id&gt;f847752c0a0a0a6f00f1cf35de915144&lt;/sys_id&gt;&lt;sys_mod_count&gt;15&lt;/sys_mod_count&gt;&lt;sys_name&gt;Knowledge Closed Created&lt;/sys_name&gt;&lt;sys_package display_value="Knowledge Management" source="com.glideapp.knowledge"&gt;863d4893db803300b53f341f7c96197b&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_f847752c0a0a0a6f00f1cf35de915144&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:56:56&lt;/sys_updated_on&gt;&lt;sys_version&gt;2&lt;/sys_version&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-1633307638</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>e4e04af11bb505101497a820f54bcbbc</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27b1a4590000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>kb_submission</table>
+<target_name>Knowledge Closed Created</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>3b7474261ff7370011c5698e2731bdd3</update_guid>
+<update_guid_history>3b7474261ff7370011c5698e2731bdd3:-1633307638,7b74742610f73700fbb4c4896f038ed2:577165605</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_6986b7e04a36231200448af799bf15e8</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;problem_task&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message/&gt;&lt;message_html&gt;&lt;![CDATA[&lt;div&gt;Short description: ${short_description}&lt;/div&gt;
+&lt;div&gt;Click here to view Problem Task: ${URI_REF}&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt;&lt;hr /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div&gt;State: ${state}&lt;/div&gt;
+&lt;div&gt;Priority: ${priority}&lt;/div&gt;
+&lt;div&gt;Configuration item: ${cmdb_ci}&lt;/div&gt;
+&lt;div&gt;Assignment group: ${assignment_group}&lt;/div&gt;
+&lt;div&gt;Assigned to: ${assigned_to}&lt;/div&gt;
+&lt;div&gt;&amp;nbsp;&lt;/div&gt;
+&lt;div&gt;Description:&lt;/div&gt;
+&lt;div&gt;${description}&lt;/div&gt;
+&lt;div&gt;${mail_script:attach_links}&lt;/div&gt;
+&lt;div&gt;Comments and Work notes:&lt;/div&gt;
+&lt;div&gt;${comments_and_work_notes}&lt;/div&gt;]]&gt;&lt;/message_html&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;problem_task.itil.role&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;Problem Task ${number} notification -- ${short_description}&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2010-05-05 17:32:36&lt;/sys_created_on&gt;&lt;sys_id&gt;6986b7e04a36231200448af799bf15e8&lt;/sys_id&gt;&lt;sys_mod_count&gt;7&lt;/sys_mod_count&gt;&lt;sys_name&gt;problem_task.itil.role&lt;/sys_name&gt;&lt;sys_package display_value="Upgrade content for 2011 - activated only for new instances" source="upgrade.2011_common_practice"&gt;2e6e485bdb803300b53f341f7c961908&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_6986b7e04a36231200448af799bf15e8&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:58:18&lt;/sys_updated_on&gt;&lt;sys_version&gt;2&lt;/sys_version&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>1272353205</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>e4e08eb11bb505101497a820f54bcb7f</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27b2e5670000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>problem_task</table>
+<target_name>problem_task.itil.role</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>c4d4f4269bf737005589c96d7d8644d2</update_guid>
+<update_guid_history>c4d4f4269bf737005589c96d7d8644d2:1272353205,08d4f4266cf73700d5941a618097d6d1:-1216188442</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_f1fb4a87c0a8011b01f86e79d14b0990</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;sysapproval_approver&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[Short Description: ${sysapproval.short_description}
+Priority: ${sysapproval.priority}
+Requested For: ${sysapproval.requested_for}
+Requested By: ${sysapproval.opened_by}
+Total Price: ${sysapproval.price}
+&lt;hr/&gt;
+&lt;mail_script&gt;
+  template.print("Summary of Requested items:\n");  
+  var item = new GlideRecord("sc_req_item");
+  item.addQuery("request", current.sysapproval);
+  item.query();
+  while(item.next()) {
+      template.print(item.number + ":  " + item.quantity + " X " + item.cat_item.getDisplayValue() + " at " + item.price.getDisplayValue() + " each \n");
+      template.print("    Options:\n");
+      var keys = new Array();
+      var set = new GlideappVariablePoolQuestionSet();
+      set.setRequestID(item.sys_id);
+      set.load();
+      var vs = set.getFlatQuestions();
+      for (var i=0; i &lt; vs.size(); i++) {
+        if(vs.get(i).getLabel() != '') {
+           template.space(4);
+           template.print('     ' +  vs.get(i).getLabel() + " = " + vs.get(i).getDisplayValue() + "\n");  
+        }
+      }
+  }
+&lt;/mail_script&gt;
+Comments:
+${sysapproval.description}
+&lt;hr/&gt;
+${mailto:mailto.approval}
+&lt;hr/&gt;
+${mailto:mailto.rejection}
+&lt;hr/&gt;
+Approval Activity:
+${mail_script:approval_activity}
+&lt;hr /&gt;
+Click here to view Approval Request: ${URI}
+Click here to view ${sysapproval.sys_class_name}:  ${sysapproval.URI}
+]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;request.itil.approve.role&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;${sysapproval.sys_class_name} ${sysapproval} Approval Request&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;glide.maint&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2006-06-20 15:07:25&lt;/sys_created_on&gt;&lt;sys_id&gt;f1fb4a87c0a8011b01f86e79d14b0990&lt;/sys_id&gt;&lt;sys_mod_count&gt;34&lt;/sys_mod_count&gt;&lt;sys_name&gt;request.itil.approve.role&lt;/sys_name&gt;&lt;sys_package display_value="Service Catalog Platform" source="com.glideapp.servicecatalog.platform"&gt;044dc893db803300b53f341f7c9619b9&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_f1fb4a87c0a8011b01f86e79d14b0990&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:56:18&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-574052758</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>e8e04af11bb505101497a820f54bcbbb</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27b1117f0000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>sysapproval_approver</table>
+<target_name>request.itil.approve.role</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>76543426e7f73700599d32d3c3475b81</update_guid>
+<update_guid_history>76543426e7f73700599d32d3c3475b81:-574052758,f6543426e1f7370006106381cbdaf680:119790077</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_50c14d114a362312012abd92715dafc8</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;problem&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message/&gt;&lt;message_html&gt;&lt;![CDATA[&lt;div&gt;Short description: ${short_description}&lt;/div&gt;
+&lt;div&gt;Click here to view Problem: ${URI_REF}&lt;/div&gt;
+&lt;div&gt;
+&lt;div&gt;&lt;hr /&gt;&lt;/div&gt;
+&lt;/div&gt;
+&lt;div&gt;State: ${state}&lt;/div&gt;
+&lt;div&gt;Priority: ${priority}&lt;/div&gt;
+&lt;div&gt;Configuration item: ${cmdb_ci}&lt;/div&gt;
+&lt;div&gt;Opened by: ${opened_by}&lt;/div&gt;
+&lt;div&gt;Assignment group: ${assignment_group}&lt;/div&gt;
+&lt;div&gt;Assigned to: ${assigned_to}&lt;/div&gt;
+&lt;div&gt;&amp;nbsp;&lt;/div&gt;
+&lt;div&gt;Description:&lt;/div&gt;
+&lt;div&gt;${description}&lt;/div&gt;
+&lt;div&gt;${mail_script:attach_links}&lt;/div&gt;
+&lt;div&gt;Comments and Work notes:&lt;/div&gt;
+&lt;div&gt;${comments_and_work_notes}&lt;/div&gt;]]&gt;&lt;/message_html&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;problem.itil.role&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;Problem ${number} notification -- ${short_description}&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;admin&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2010-04-30 22:06:05&lt;/sys_created_on&gt;&lt;sys_id&gt;50c14d114a362312012abd92715dafc8&lt;/sys_id&gt;&lt;sys_mod_count&gt;7&lt;/sys_mod_count&gt;&lt;sys_name&gt;problem.itil.role&lt;/sys_name&gt;&lt;sys_package display_value="Upgrade content for 2011 - activated only for new instances" source="upgrade.2011_common_practice"&gt;2e6e485bdb803300b53f341f7c961908&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_50c14d114a362312012abd92715dafc8&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:49:34&lt;/sys_updated_on&gt;&lt;sys_version&gt;2&lt;/sys_version&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>268592617</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>e8e08eb11bb505101497a820f54bcb7e</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27aae6520000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>problem</table>
+<target_name>problem.itil.role</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>ccd2f8a23ef737001840579b68eda012</update_guid>
+<update_guid_history>ccd2f8a23ef737001840579b68eda012:268592617,00d2f8a23df737007558c7a0aa2e6a12:1600981674</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_c2dee61cc611227601f80c0ea98f9a3f</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;sysapproval_approver&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[Click here to approve ${sysapproval}]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;mailto.approval&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;Re:${sysapproval} - approve&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;glide.maint&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2005-05-09 19:11:57&lt;/sys_created_on&gt;&lt;sys_id&gt;c2dee61cc611227601f80c0ea98f9a3f&lt;/sys_id&gt;&lt;sys_mod_count&gt;18&lt;/sys_mod_count&gt;&lt;sys_name&gt;mailto.approval&lt;/sys_name&gt;&lt;sys_package display_value="Service Management Basics" source="com.snc.service"&gt;bc3c805fdb403300b53f341f7c96193b&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_c2dee61cc611227601f80c0ea98f9a3f&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:50:14&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>398046390</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>ece04af11bb505101497a820f54bcbba</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27ab818f0000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>sysapproval_approver</table>
+<target_name>mailto.approval</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>31f2f8a2bff73700c08acbba3c1bf430</update_guid>
+<update_guid_history>31f2f8a2bff73700c08acbba3c1bf430:398046390,b1f2f8a227f737002b5e2da8cd87482f:-816011767</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+<sys_update_xml action="INSERT_OR_UPDATE">
+<action>INSERT_OR_UPDATE</action>
+<application display_value="Global">global</application>
+<category>customer</category>
+<comments/>
+<name>sysevent_email_template_49838e340a0a0b4b0049d6ce61c8c598</name>
+<payload>&lt;?xml version="1.0" encoding="UTF-8"?&gt;&lt;record_update table="sysevent_email_template"&gt;&lt;sysevent_email_template action="INSERT_OR_UPDATE"&gt;&lt;collection&gt;incident&lt;/collection&gt;&lt;email_layout display_value="Classification Unsubscribe and Preferences"&gt;f4a2950cdb64130093da55d0cf9619ea&lt;/email_layout&gt;&lt;message&gt;&lt;![CDATA[Your incident ${number} has been resolved and will automatically close &lt;mail_script&gt;
+var days = parseInt(gs.getProperty("glide.ui.autoclose.time"));
+var hours = days * 24;
+
+if (days == 0)
+    template.print('now');
+else if (days &lt;= 3)
+    template.print('in ' + hours + ' hour' + ((hours&gt;1) ? 's' : ''));
+else
+    template.print('in ' + days + ' day' + ((days&gt;1) ? 's' : ''));
+&lt;/mail_script&gt;. If you feel the issue is not resolved, please click the following link to reopen your incident:
+${mailto:mailto.unsatisfied}
+
+Short Description:
+Short description: ${short_description}
+Priority: ${priority}
+Category: ${category}
+Comments:
+Additional comments: ${comments}
+&lt;hr/&gt;
+Click here to view Incident: ${URI_REF}]]&gt;&lt;/message&gt;&lt;message_html/&gt;&lt;message_list/&gt;&lt;message_text/&gt;&lt;name&gt;incident.ess.resolve&lt;/name&gt;&lt;sms_alternate/&gt;&lt;subject&gt;Your incident ${number} has been resolved&lt;/subject&gt;&lt;sys_class_name&gt;sysevent_email_template&lt;/sys_class_name&gt;&lt;sys_created_by&gt;glide.maint&lt;/sys_created_by&gt;&lt;sys_created_on&gt;2009-05-16 13:09:50&lt;/sys_created_on&gt;&lt;sys_id&gt;49838e340a0a0b4b0049d6ce61c8c598&lt;/sys_id&gt;&lt;sys_mod_count&gt;4&lt;/sys_mod_count&gt;&lt;sys_name&gt;incident.ess.resolve&lt;/sys_name&gt;&lt;sys_package display_value="Best Practice - Incident Resolution Workflow" source="com.snc.bestpractice.incident"&gt;701e48d7db803300b53f341f7c961920&lt;/sys_package&gt;&lt;sys_policy/&gt;&lt;sys_scope display_value="Global"&gt;global&lt;/sys_scope&gt;&lt;sys_update_name&gt;sysevent_email_template_49838e340a0a0b4b0049d6ce61c8c598&lt;/sys_update_name&gt;&lt;sys_updated_by&gt;erwinel_da&lt;/sys_updated_by&gt;&lt;sys_updated_on&gt;2019-09-12 22:49:17&lt;/sys_updated_on&gt;&lt;sys_version/&gt;&lt;/sysevent_email_template&gt;&lt;/record_update&gt;</payload>
+<payload_hash>-1940087324</payload_hash>
+<remote_update_set display_value="Email Config">e8e08eb11bb505101497a820f54bcb7c</remote_update_set>
+<replace_on_upgrade>false</replace_on_upgrade>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-21 15:25:25</sys_created_on>
+<sys_id>ece08eb11bb505101497a820f54bcb7d</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_recorded_at>16d27aaa57f0000001</sys_recorded_at>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-21 15:25:25</sys_updated_on>
+<table>incident</table>
+<target_name>incident.ess.resolve</target_name>
+<type>Email Template</type>
+<update_domain>global</update_domain>
+<update_guid>80c2fca25ef737007726bf5ad8176b6c</update_guid>
+<update_guid_history>80c2fca25ef737007726bf5ad8176b6c:-1940087324,04c2fca2c1f737007fc22cba6a60096b:-417245765</update_guid_history>
+<update_set display_value=""/>
+<view/>
+</sys_update_xml>
+</unload>

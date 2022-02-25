@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2022-02-14 17:11:13">
+<cmn_schedule action="INSERT_OR_UPDATE">
+<calendar_name/>
+<description>Defines 8-hour work days with 1 hour for lunch, Monday through Friday, including holidays.</description>
+<document/>
+<document_key/>
+<is_legacy_schedule>true</is_legacy_schedule>
+<label/>
+<name>All Weekdays (8 hours, including holidays)</name>
+<parent display_value=""/>
+<plural_label/>
+<read_only>false</read_only>
+<sys_class_name>cmn_schedule</sys_class_name>
+<sys_created_by>glide.maint</sys_created_by>
+<sys_created_on>2008-07-09 18:05:03</sys_created_on>
+<sys_domain>global</sys_domain>
+<sys_id>08fcd0830a0a0b2600079f56b1adb9ae</sys_id>
+<sys_mod_count>6</sys_mod_count>
+<sys_name>All Weekdays (8 hours, including holidays)</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>cmn_schedule_08fcd0830a0a0b2600079f56b1adb9ae</sys_update_name>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 17:05:47</sys_updated_on>
+<time_zone/>
+<type/>
+</cmn_schedule>
+<cmn_schedule action="INSERT_OR_UPDATE">
+<calendar_name/>
+<description>Defines working hours as being from 0600 to 1800, Monday through Friday, except for weekends and holidays.</description>
+<document/>
+<document_key/>
+<is_legacy_schedule>true</is_legacy_schedule>
+<label/>
+<name>Business Day Facility Hours (0600-1800 weekdays)</name>
+<parent display_value=""/>
+<plural_label/>
+<read_only>false</read_only>
+<sys_class_name>cmn_schedule</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2018-02-23 00:43:45</sys_created_on>
+<sys_domain>global</sys_domain>
+<sys_id>696fc988db64130093da55d0cf9619e0</sys_id>
+<sys_mod_count>5</sys_mod_count>
+<sys_name>Business Day Facility Hours (0600-1800 weekdays)</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>cmn_schedule_696fc988db64130093da55d0cf9619e0</sys_update_name>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 16:12:11</sys_updated_on>
+<time_zone/>
+<type/>
+</cmn_schedule>
+<cmn_schedule action="INSERT_OR_UPDATE">
+<calendar_name/>
+<description>Defines core hours as 0900 to 1400 (5 hours) Monday through Friday, except for weekends and holidays.</description>
+<document/>
+<document_key/>
+<is_legacy_schedule>true</is_legacy_schedule>
+<label/>
+<name>Core Hours (0900-1400 weekdays)</name>
+<parent display_value=""/>
+<plural_label/>
+<read_only>false</read_only>
+<sys_class_name>cmn_schedule</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-14 16:17:25</sys_created_on>
+<sys_domain>global</sys_domain>
+<sys_id>07594e671b6989501497a820f54bcb59</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_name>Core Hours (0900-1400 weekdays)</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>cmn_schedule_07594e671b6989501497a820f54bcb59</sys_update_name>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 17:07:29</sys_updated_on>
+<time_zone/>
+<type/>
+</cmn_schedule>
+<cmn_schedule action="INSERT_OR_UPDATE">
+<calendar_name/>
+<description/>
+<document/>
+<document_key/>
+<is_legacy_schedule>true</is_legacy_schedule>
+<label/>
+<name>Default MS Project</name>
+<parent display_value=""/>
+<plural_label/>
+<read_only>false</read_only>
+<sys_class_name>cmn_schedule</sys_class_name>
+<sys_created_by>kenny.gabel</sys_created_by>
+<sys_created_on>2010-02-22 22:24:36</sys_created_on>
+<sys_domain>global</sys_domain>
+<sys_id>f7c7d3a60a0a0b6500cc36babf981351</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_name>Default MS Project</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>cmn_schedule_f7c7d3a60a0a0b6500cc36babf981351</sys_update_name>
+<sys_updated_by>system</sys_updated_by>
+<sys_updated_on>2020-03-20 05:08:00</sys_updated_on>
+<time_zone/>
+<type>Project Import Schedule</type>
+</cmn_schedule>
+<cmn_schedule action="INSERT_OR_UPDATE">
+<calendar_name/>
+<description>This schedule contains holidays that are observed by all personnel, which may not necessarily be observed by external entities.</description>
+<document/>
+<document_key/>
+<is_legacy_schedule>true</is_legacy_schedule>
+<label/>
+<name>Facility Holidays</name>
+<parent display_value=""/>
+<plural_label/>
+<read_only>false</read_only>
+<sys_class_name>cmn_schedule</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-14 16:01:15</sys_created_on>
+<sys_domain>global</sys_domain>
+<sys_id>7ec54ea31b6989501497a820f54bcb25</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_name>Facility Holidays</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>cmn_schedule_7ec54ea31b6989501497a820f54bcb25</sys_update_name>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 16:27:38</sys_updated_on>
+<time_zone/>
+<type/>
+</cmn_schedule>
+<cmn_schedule action="INSERT_OR_UPDATE">
+<calendar_name/>
+<description>Defines working hours as being from 0600 to 1800 every day, including weekends and holidays.</description>
+<document/>
+<document_key/>
+<is_legacy_schedule>true</is_legacy_schedule>
+<label/>
+<name>Facility Hours Every Day (0600-1800 + Weekends and Holidays)</name>
+<parent display_value=""/>
+<plural_label/>
+<read_only>false</read_only>
+<sys_class_name>cmn_schedule</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2018-02-23 00:42:55</sys_created_on>
+<sys_domain>global</sys_domain>
+<sys_id>051fc9c8db64130093da55d0cf9619b8</sys_id>
+<sys_mod_count>5</sys_mod_count>
+<sys_name>Facility Hours Every Day (0600-1800 + Weekends and Holidays)</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>cmn_schedule_051fc9c8db64130093da55d0cf9619b8</sys_update_name>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 16:31:26</sys_updated_on>
+<time_zone/>
+<type/>
+</cmn_schedule>
+<cmn_schedule action="INSERT_OR_UPDATE">
+<calendar_name/>
+<description>Defines 8-hour work days with 1 hour for lunch, Monday through Friday, except for weekends and holidays.</description>
+<document/>
+<document_key/>
+<is_legacy_schedule>true</is_legacy_schedule>
+<label/>
+<name>Personnel Hours (8 hours on weekdays)</name>
+<parent display_value=""/>
+<plural_label/>
+<read_only>false</read_only>
+<sys_class_name>cmn_schedule</sys_class_name>
+<sys_created_by>glide.maint</sys_created_by>
+<sys_created_on>2008-07-09 18:21:57</sys_created_on>
+<sys_domain>global</sys_domain>
+<sys_id>090eecae0a0a0b260077e1dfa71da828</sys_id>
+<sys_mod_count>7</sys_mod_count>
+<sys_name>Personnel Hours (8 hours on weekdays)</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>cmn_schedule_090eecae0a0a0b260077e1dfa71da828</sys_update_name>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 17:06:22</sys_updated_on>
+<time_zone/>
+<type/>
+</cmn_schedule>
+<cmn_schedule action="INSERT_OR_UPDATE">
+<calendar_name/>
+<description>This schedule contains holidays that are observed by all personnel, which are also likely to be observed by external entities, such as vendors.</description>
+<document/>
+<document_key/>
+<is_legacy_schedule>true</is_legacy_schedule>
+<label/>
+<name>U.S. Holidays</name>
+<parent display_value=""/>
+<plural_label/>
+<read_only>false</read_only>
+<sys_class_name>cmn_schedule</sys_class_name>
+<sys_created_by>admin</sys_created_by>
+<sys_created_on>2012-02-08 21:12:41</sys_created_on>
+<sys_domain>global</sys_domain>
+<sys_id>55ebbbf15f002000b12e3572f2b47714</sys_id>
+<sys_mod_count>38</sys_mod_count>
+<sys_name>U.S. Holidays</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>cmn_schedule_55ebbbf15f002000b12e3572f2b47714</sys_update_name>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 16:28:03</sys_updated_on>
+<time_zone/>
+<type/>
+</cmn_schedule>
+<cmn_schedule action="INSERT_OR_UPDATE">
+<calendar_name/>
+<description>Defines working hours as being from 0600 to 1800, Monday through Friday, except for weekends and holidays observed by militiary and civilian personnel.</description>
+<document/>
+<document_key/>
+<is_legacy_schedule>true</is_legacy_schedule>
+<label/>
+<name>UM/CIV Business Day Facility Hours (0600-1800 weekdays)</name>
+<parent display_value=""/>
+<plural_label/>
+<read_only>false</read_only>
+<sys_class_name>cmn_schedule</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-14 16:38:10</sys_created_on>
+<sys_domain>global</sys_domain>
+<sys_id>764ece6b1b6989501497a820f54bcb2e</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_name>UM/CIV Business Day Facility Hours (0600-1800 weekdays)</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>cmn_schedule_764ece6b1b6989501497a820f54bcb2e</sys_update_name>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 17:09:16</sys_updated_on>
+<time_zone/>
+<type/>
+</cmn_schedule>
+<cmn_schedule action="INSERT_OR_UPDATE">
+<calendar_name/>
+<description>Defines core hours as 0900 to 1400 (5 hours) Monday through Friday, except for weekends and holidays observed by militiary and civilian personnel.</description>
+<document/>
+<document_key/>
+<is_legacy_schedule>true</is_legacy_schedule>
+<label/>
+<name>UM/CIV Core Hours (0900-1400 weekdays)</name>
+<parent display_value=""/>
+<plural_label/>
+<read_only>false</read_only>
+<sys_class_name>cmn_schedule</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-14 16:39:51</sys_created_on>
+<sys_domain>global</sys_domain>
+<sys_id>afbe42ab1b6989501497a820f54bcb0f</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_name>UM/CIV Core Hours (0900-1400 weekdays)</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>cmn_schedule_afbe42ab1b6989501497a820f54bcb0f</sys_update_name>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 17:10:23</sys_updated_on>
+<time_zone/>
+<type/>
+</cmn_schedule>
+<cmn_schedule action="INSERT_OR_UPDATE">
+<calendar_name/>
+<description>This schedule contains holidays that are observed only by military and civilian personnel, such as training holidays.</description>
+<document/>
+<document_key/>
+<is_legacy_schedule>true</is_legacy_schedule>
+<label/>
+<name>UM/CIV Holidays</name>
+<parent display_value=""/>
+<plural_label/>
+<read_only>false</read_only>
+<sys_class_name>cmn_schedule</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-14 16:00:20</sys_created_on>
+<sys_domain>global</sys_domain>
+<sys_id>c9a50ae31b6989501497a820f54bcb57</sys_id>
+<sys_mod_count>2</sys_mod_count>
+<sys_name>UM/CIV Holidays</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>cmn_schedule_c9a50ae31b6989501497a820f54bcb57</sys_update_name>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 16:29:50</sys_updated_on>
+<time_zone/>
+<type/>
+</cmn_schedule>
+<cmn_schedule action="INSERT_OR_UPDATE">
+<calendar_name/>
+<description>Defines 8-hour work days with 1 hour for lunch, Monday through Friday, except for weekends and holidays observed by militiary and civilian personnel.</description>
+<document/>
+<document_key/>
+<is_legacy_schedule>true</is_legacy_schedule>
+<label/>
+<name>UM/CIV Personnel Hours (8 hours on weekdays)</name>
+<parent display_value=""/>
+<plural_label/>
+<read_only>false</read_only>
+<sys_class_name>cmn_schedule</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-14 16:25:59</sys_created_on>
+<sys_domain>global</sys_domain>
+<sys_id>9fca0ae71b6989501497a820f54bcbb9</sys_id>
+<sys_mod_count>6</sys_mod_count>
+<sys_name>UM/CIV Personnel Hours (8 hours on weekdays)</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>cmn_schedule_9fca0ae71b6989501497a820f54bcbb9</sys_update_name>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 17:09:30</sys_updated_on>
+<time_zone/>
+<type/>
+</cmn_schedule>
+<cmn_schedule action="INSERT_OR_UPDATE">
+<calendar_name/>
+<description>Defines working hours as being from 0600 to 1800, Monday through Friday, including weekends and holidays.</description>
+<document/>
+<document_key/>
+<is_legacy_schedule>true</is_legacy_schedule>
+<label/>
+<name>Weekday Facility Hours (0600-1800 including holidays)</name>
+<parent display_value=""/>
+<plural_label/>
+<read_only>false</read_only>
+<sys_class_name>cmn_schedule</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2018-02-23 00:44:19</sys_created_on>
+<sys_domain>global</sys_domain>
+<sys_id>649f89c8db64130093da55d0cf9619d1</sys_id>
+<sys_mod_count>3</sys_mod_count>
+<sys_name>Weekday Facility Hours (0600-1800 including holidays)</sys_name>
+<sys_policy/>
+<sys_scope display_value="Global">global</sys_scope>
+<sys_update_name>cmn_schedule_649f89c8db64130093da55d0cf9619d1</sys_update_name>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 15:53:48</sys_updated_on>
+<time_zone/>
+<type/>
+</cmn_schedule>
+</unload>

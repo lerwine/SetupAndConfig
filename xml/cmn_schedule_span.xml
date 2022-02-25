@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<unload unload_date="2022-02-14 17:15:39">
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>false</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20080707T120000</end_date_time>
+<float_day>1</float_day>
+<float_week>1</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>1</month>
+<monthly_type>dom</monthly_type>
+<name>0800 -1200 Weekdays</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>weekdays</repeat_type>
+<repeat_until>00000000</repeat_until>
+<schedule display_value="All Weekdays (8 hours, including holidays)">08fcd0830a0a0b2600079f56b1adb9ae</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20080707T080000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>glide.maint</sys_created_by>
+<sys_created_on>2008-07-09 18:08:46</sys_created_on>
+<sys_id>090205270a0a0b26001ea141b42a7040</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 17:03:31</sys_updated_on>
+<type/>
+<yearly_type>doy</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>false</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20080709T120000</end_date_time>
+<float_day>1</float_day>
+<float_week>1</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>1</month>
+<monthly_type>dom</monthly_type>
+<name>0800 -1200 Weekdays</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>weekdays</repeat_type>
+<repeat_until>00000000</repeat_until>
+<schedule display_value="Personnel Hours (8 hours on weekdays)">090eecae0a0a0b260077e1dfa71da828</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20080709T080000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>glide.maint</sys_created_by>
+<sys_created_on>2008-07-09 18:26:23</sys_created_on>
+<sys_id>091271fd0a0a0b26005b6e43fbd29497</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 16:58:02</sys_updated_on>
+<type/>
+<yearly_type>doy</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>false</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20180222T180000</end_date_time>
+<float_day>1</float_day>
+<float_week>1</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>1</month>
+<monthly_type>dom</monthly_type>
+<name>0800 - 1800 Daily</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>daily</repeat_type>
+<repeat_until>00000000</repeat_until>
+<schedule display_value="Facility Hours Every Day (0600-1800 + Weekends and Holidays)">051fc9c8db64130093da55d0cf9619b8</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20180222T060000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2018-02-23 00:45:45</sys_created_on>
+<sys_id>60cf810cdb64130093da55d0cf9619bd</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 15:52:14</sys_updated_on>
+<type/>
+<yearly_type>doy</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>false</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20180222T180000</end_date_time>
+<float_day>1</float_day>
+<float_week>1</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>1</month>
+<monthly_type>dom</monthly_type>
+<name>0600 - 1800 Weekdays</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>weekdays</repeat_type>
+<repeat_until>00000000</repeat_until>
+<schedule display_value="Business Day Facility Hours (0600-1800 weekdays)">696fc988db64130093da55d0cf9619e0</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20180222T060000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2018-02-23 00:46:40</sys_created_on>
+<sys_id>9300510cdb64130093da55d0cf9619eb</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2018-02-23 00:46:40</sys_updated_on>
+<type/>
+<yearly_type>doy</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>false</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20180222T180000</end_date_time>
+<float_day>1</float_day>
+<float_week>1</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>1</month>
+<monthly_type>dom</monthly_type>
+<name>0600 - 1800 Weekdays</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>weekdays</repeat_type>
+<repeat_until>00000000</repeat_until>
+<schedule display_value="Weekday Facility Hours (0600-1800 including holidays)">649f89c8db64130093da55d0cf9619d1</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20180222T060000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2018-02-23 00:47:46</sys_created_on>
+<sys_id>d330910cdb64130093da55d0cf961956</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2018-02-23 00:47:46</sys_updated_on>
+<type/>
+<yearly_type>doy</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>false</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20220214T180000</end_date_time>
+<float_day>1</float_day>
+<float_week>1</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>1</month>
+<monthly_type>dom</monthly_type>
+<name>0600-1800 Weekdays</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>weekdays</repeat_type>
+<repeat_until>00000000</repeat_until>
+<schedule display_value="UM/CIV Business Day Facility Hours (0600-1800 weekdays)">764ece6b1b6989501497a820f54bcb2e</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20220214T060000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-14 16:39:11</sys_created_on>
+<sys_id>5f7e466b1b6989501497a820f54bcb4a</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 16:39:11</sys_updated_on>
+<type/>
+<yearly_type>doy</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>false</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20220214T090000</end_date_time>
+<float_day>1</float_day>
+<float_week>1</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>1</month>
+<monthly_type>dom</monthly_type>
+<name>0800 -1200 Weekdays</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>weekdays</repeat_type>
+<repeat_until>00000000</repeat_until>
+<schedule display_value="UM/CIV Personnel Hours (8 hours on weekdays)">9fca0ae71b6989501497a820f54bcbb9</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20220214T080000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-14 16:35:54</sys_created_on>
+<sys_id>f2cd0a6b1b6989501497a820f54bcb35</sys_id>
+<sys_mod_count>1</sys_mod_count>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 16:36:02</sys_updated_on>
+<type/>
+<yearly_type>doy</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>false</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20220214T140000</end_date_time>
+<float_day>1</float_day>
+<float_week>1</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>1</month>
+<monthly_type>dom</monthly_type>
+<name>0900-1400 Weekdays</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>weekdays</repeat_type>
+<repeat_until>00000000</repeat_until>
+<schedule display_value="Core Hours (0900-1400 weekdays)">07594e671b6989501497a820f54bcb59</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20220214T090000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-14 16:20:12</sys_created_on>
+<sys_id>801a86a71b6989501497a820f54bcb3e</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 16:20:12</sys_updated_on>
+<type/>
+<yearly_type>doy</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>false</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20220214T140000</end_date_time>
+<float_day>1</float_day>
+<float_week>1</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>1</month>
+<monthly_type>dom</monthly_type>
+<name>0900-1400 Weekdays</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>weekdays</repeat_type>
+<repeat_until>00000000</repeat_until>
+<schedule display_value="UM/CIV Core Hours (0900-1400 weekdays)">afbe42ab1b6989501497a820f54bcb0f</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20220214T090000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-14 16:41:01</sys_created_on>
+<sys_id>03ee06ab1b6989501497a820f54bcba0</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 16:41:01</sys_updated_on>
+<type/>
+<yearly_type>doy</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>false</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20220214T170000</end_date_time>
+<float_day>1</float_day>
+<float_week>1</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>1</month>
+<monthly_type>dom</monthly_type>
+<name>1300-1700 Weekdays</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>weekdays</repeat_type>
+<repeat_until>00000000</repeat_until>
+<schedule display_value="Personnel Hours (8 hours on weekdays)">090eecae0a0a0b260077e1dfa71da828</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20220214T130000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-14 16:58:28</sys_created_on>
+<sys_id>2df2526f1b6989501497a820f54bcb05</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 16:58:28</sys_updated_on>
+<type/>
+<yearly_type>doy</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>false</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20220214T170000</end_date_time>
+<float_day>1</float_day>
+<float_week>1</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>1</month>
+<monthly_type>dom</monthly_type>
+<name>1300-1700 Weekdays</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>weekdays</repeat_type>
+<repeat_until>00000000</repeat_until>
+<schedule display_value="All Weekdays (8 hours, including holidays)">08fcd0830a0a0b2600079f56b1adb9ae</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20220214T130000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-14 17:03:50</sys_created_on>
+<sys_id>353452af1b6989501497a820f54bcb89</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 17:03:50</sys_updated_on>
+<type/>
+<yearly_type>doy</yearly_type>
+</cmn_schedule_span>
+<cmn_schedule_span action="INSERT_OR_UPDATE">
+<all_day>false</all_day>
+<calendar display_value=""/>
+<counter/>
+<days_of_week>1</days_of_week>
+<end/>
+<end_date_time>20220214T170000</end_date_time>
+<float_day>1</float_day>
+<float_week>1</float_week>
+<index0/>
+<index1/>
+<index2/>
+<index3/>
+<index4/>
+<index5/>
+<index6/>
+<index7/>
+<index8/>
+<index9/>
+<month>1</month>
+<monthly_type>dom</monthly_type>
+<name>1300-1700 Weekdays</name>
+<notes/>
+<override_start_date>00000000</override_start_date>
+<parent display_value=""/>
+<repeat_count>1</repeat_count>
+<repeat_type>weekdays</repeat_type>
+<repeat_until>00000000</repeat_until>
+<schedule display_value="UM/CIV Personnel Hours (8 hours on weekdays)">9fca0ae71b6989501497a820f54bcbb9</schedule>
+<show_as>busy</show_as>
+<span_name display_value=""/>
+<start/>
+<start_date_time>20220214T130000</start_date_time>
+<sys_class_name>cmn_schedule_span</sys_class_name>
+<sys_created_by>erwinel_da</sys_created_by>
+<sys_created_on>2022-02-14 16:36:37</sys_created_on>
+<sys_id>dfed0e6b1b6989501497a820f54bcb2d</sys_id>
+<sys_mod_count>0</sys_mod_count>
+<sys_updated_by>erwinel_da</sys_updated_by>
+<sys_updated_on>2022-02-14 16:36:37</sys_updated_on>
+<type/>
+<yearly_type>doy</yearly_type>
+</cmn_schedule_span>
+</unload>
