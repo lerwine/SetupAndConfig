@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">14.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+    <Name>Site17</Name>
+    <RootNamespace>Site17</RootNamespace>
+    <SaveNodeJsSettingsInProjectFile>True</SaveNodeJsSettingsInProjectFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>4bb594e9-0754-42bc-a1cd-712ca9efdda2</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <StartupFile>app.ts</StartupFile>
+    <StartWebBrowser>False</StartWebBrowser>
+    <StartWebBrowser>False</StartWebBrowser>
+    <SearchPath>&#xD;&#xD;
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <ProjectTypeGuids>{3AF33F2E-1136-4D97-BBB7-1795711AC8B8};{9092AA53-FB77-4645-B42D-1CCCA6BD08BD}</ProjectTypeGuids>
+    <EnableTypeScript>true</EnableTypeScript>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
+  <Import Project="$(VSToolsPath)\Node.js Tools\Microsoft.NodejsToolsV2.targets"/>
+  <ItemGroup>
+    <None Include="app.js"/>
+    <None Include="app.ts"/>
+    <None Include="app.d.ts"/>
+    <Content Include="package.json"/>
+    <Content Include="tsconfig.json"/>
+    <Content Include="rhino.d.ts"/>
+    <Content Include="servicenowCommon.d.ts"/>
+    <Content Include="projectManagement.d.ts"/>
+    <Content Include="sys_script\DistinguishedNameContext.ts"/>
+    <Content Include="sys_script\LocationApproval.ts"/>
+    <Content Include="sys_script\Site17ProfileValidator.ts"/>
+    <Content Include="sys_script\Site17Util.ts"/>
+    <Content Include="sys_script_fix\Ensure Schedule Entries.ts"/>
+    <Content Include="sys_ui_page\Settings.xml"/>
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="rhino.d.ts"/>
+    <TypeScriptCompile Include="servicenowCommon.d.ts"/>
+    <TypeScriptCompile Include="projectManagement.d.ts"/>
+    <TypeScriptCompile Include="sys_script\Site17Util.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="sys_script\Site17ProfileValidator.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="sys_script\DistinguishedNameContext.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="sys_script\Site17ProfileValidator.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="sys_script\LocationApproval.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+    <TypeScriptCompile Include="sys_script_fix\Ensure Schedule Entries.ts">
+      <SubType>Code</SubType>
+    </TypeScriptCompile>
+  </ItemGroup>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:48022/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost:1337</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>&#xD;&#xD;
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>&#xD;&#xD;
+          </ExternalProgram>
+          <StartExternalURL>&#xD;&#xD;
+          </StartExternalURL>
+          <StartCmdLineArguments>&#xD;&#xD;
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>&#xD;&#xD;
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>

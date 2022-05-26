@@ -1,4 +1,33 @@
-var schedules = [{ // Facility Holidays
+type RepeatType = "yearly" | "monthly" | "weekdays" | "daily";
+type YearlyType = "doy" | "float";
+type ScheduleType = "include" | "exclude";
+type FloatDayType = "1" | "2" | "3" | "4" | "5" | "6" | "7";
+type FloatWeekType = "1" | "2" | "3" | "4" | "last";
+type MonthType = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "11" | "12";
+interface IChildScheduleDefinition {
+    sys_id: string;
+    type: ScheduleType;
+}
+interface IEntryDefinition {
+    name: string;
+    start_date_time: string;
+    end_date_time: string;
+    all_day: boolean;
+    repeat_type: RepeatType;
+    type?: ScheduleType;
+    yearly_type?: YearlyType;
+    float_day?: FloatDayType;
+    float_week?: FloatWeekType;
+    month?: MonthType;
+    notes?: string;
+}
+interface IScheduleDefinition {
+    sys_id: string;
+    is_holiday: boolean;
+    entries: IEntryDefinition[];
+    child_schedules: IChildScheduleDefinition[];
+}
+var schedules: IScheduleDefinition[] = [{ // Facility Holidays
     sys_id: "c7475f021ba7c9101497a820f54bcb04",
     is_holiday: true,
     entries: [{
@@ -106,8 +135,8 @@ var schedules = [{ // Facility Holidays
         type: "exclude"
     }],
     child_schedules: []
-}, { // UM/CIV Holidays
-    sys_id: "46981f421ba7c9101497a820f54bcbff",
+}, { //  UM/CIV Holidays
+    sys_id: "c7475f021ba7c9101497a820f54bcb04",
     is_holiday: true,
     entries: [{
         name: "Presidents' Day",
@@ -266,8 +295,8 @@ var schedules = [{ // Facility Holidays
     child_schedules: []
 }];
 for (var s = 0; s < schedules.length; s++) {
-    var cmn_schedule = schedules[s];
-    var gr = new GlideRecord('cmn_schedule');
+    var cmn_schedule: IScheduleDefinition = schedules[s];
+    var gr: GlideRecord = new GlideRecord('cmn_schedule');
     gr.addQuery('sys_id', cmn_schedule.sys_id);
     gr.query();
     if (!gr.next()) {
@@ -277,12 +306,12 @@ for (var s = 0; s < schedules.length; s++) {
     gr = new GlideRecord('cmn_schedule_span');
     gr.addQuery('schedule', cmn_schedule.sys_id);
     gr.query();
-    var rowCount = gr.getRowCount();
+    var rowCount: number = gr.getRowCount();
     if (cmn_schedule.is_holiday) {
         if (rowCount > 0 || cmn_schedule.entries.length == 0) continue;
         gs.warn("Adding " + cmn_schedule.entries.length + " entries for cmn_schedule_span[schedule='" + cmn_schedule.sys_id + "']");
         for (var i = 0; i < cmn_schedule.entries.length; i++) {
-            var entry = cmn_schedule.entries[i];
+            var entry: IEntryDefinition = cmn_schedule.entries[i];
             gr = new GlideRecord('cmn_schedule_span');
             gr.newRecord();
             gr.setValue('name', entry.name);
@@ -314,7 +343,7 @@ for (var s = 0; s < schedules.length; s++) {
             gs.info("Adding " + cmn_schedule.entries.length + " entries for cmn_schedule[sys_id='" + cmn_schedule.sys_id + "']");
         gr.deleteMultiple();
         for (var i = 0; i < cmn_schedule.entries.length; i++) {
-            var entry = cmn_schedule.entries[i];
+            var entry: IEntryDefinition = cmn_schedule.entries[i];
             gr = new GlideRecord('cmn_schedule_span');
             gr.newRecord();
             gr.setValue('name', entry.name);
@@ -337,7 +366,7 @@ for (var s = 0; s < schedules.length; s++) {
         }
     }
     for (var c = 0; c < cmn_schedule.child_schedules.length; c++) {
-        var child_schedule = cmn_schedule.child_schedules[c];
+        var child_schedule: IChildScheduleDefinition = cmn_schedule.child_schedules[c];
         gr = new GlideRecord("cmn_other_schedule");
         gr.addQuery('schedule', cmn_schedule.sys_id);
         gr.addQuery('child_schedule', cmn_schedule.sys_id);
