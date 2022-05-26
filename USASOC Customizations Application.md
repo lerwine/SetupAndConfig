@@ -101,8 +101,8 @@ var UsasocUserNotificationManager = (function () {
         gs.info("Entering isUsasocUserNotificationManagerFault!");
         return typeof result === 'object' && null != result && result.code !== 0;
     };
-    UsasocUserNotificationManagerConstructor.getUserGlideObject = function (user) {
-        gs.info("Entering getUserGlideObject");
+    UsasocUserNotificationManagerConstructor.getUserLookupResult = function (user) {
+        gs.info("Entering getUserLookupResult");
         var user_id, sys_id;
         var systemProvidedId;
         if (typeof user === 'object') {
@@ -209,7 +209,7 @@ var UsasocUserNotificationManager = (function () {
     };
     UsasocUserNotificationManagerConstructor.getUserProfileCompliance = function (user) {
         gs.info("Entering getUserProfileCompliance");
-        var getUserResponse = UsasocUserNotificationManager.getUserGlideObject(user);
+        var getUserResponse = UsasocUserNotificationManager.getUserLookupResult(user);
         if (UsasocUserNotificationManager.isUsasocUserNotificationManagerFault(getUserResponse))
             return getUserResponse;
         var result = UsasocUserNotificationManager.checkUserProfileCompliance(getUserResponse.user);
@@ -220,7 +220,7 @@ var UsasocUserNotificationManager = (function () {
     };
     UsasocUserNotificationManagerConstructor.getUserNotifications = function (user) {
         gs.info("Entering getUserNotifications");
-        var getUserResult = UsasocUserNotificationManager.getUserGlideObject(user);
+        var getUserResult = UsasocUserNotificationManager.getUserLookupResult(user);
         if (UsasocUserNotificationManager.isUsasocUserNotificationManagerFault(getUserResult))
             return getUserResult;
         return {

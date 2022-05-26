@@ -1,0 +1,47 @@
+<j:jelly trim="false" xmlns:j="jelly:core" xmlns:g="glide" xmlns:j2="null" xmlns:g2="null">
+    <g:evaluate>
+    function testSysId(displayName, tableName, value) {
+        if (gs.nil(value) || ('' + value).trim().length == 0)
+            gs.addError(displayName + " setting is empty.");
+        else if (!(/^[a-f\d]{32}$/).test(value))
+            gs.addError(displayName + " setting does not contain a valid sys_id");
+        else
+        {
+            var gr = new GlideRecord(tableName);
+            gr.addQuery('sys_id', value);
+            gr.query();
+            if (gr.next()) return true;
+            gs.addError(displayName + ': Record with sys_id "' + value + '" not found in ' + tableName);
+        }
+        return false;
+    }
+
+
+    function testDistinguishedName(displayName, value) {
+        if (gs.nil(value) || ('' + value).trim().length == 0)
+            gs.addError(displayName + " setting is empty.");
+        else
+        {
+            if (Site17DNUtil.testDistinguishedName(value)) return true;
+            gs.addError(displayName + ' is not a valid distinguished name');
+        }
+        return false;
+    }
+
+    var default_knowledge_base = gs.getProperty('x_g_inte_site_17.default_knowledge_base');
+    testSysId('Default knowledge base', 'kb_knowledge_base', default_knowledge_base);
+    testDistinguishedName("Site 17 users AD container DN", Site17DNUtil.getUsersContainerDN());
+    testDistinguishedName("Site 17 groups AD container DN", Site17DNUtil.getGroupsContainerDN());
+    </g:evaluate>
+	<form action="system_properties_update.do" method="POST">
+		<input name="referer" type="HIDDEN" value="/x_g_inte_site_17_Settings.do" />
+		<div class="props">
+			<g2:system_properties_categorized category="Site 17 Settings" />
+			<div class="form-group">
+                <div class="form-field input_controls">
+                    <button class="listactions btn btn-primary" type="submit" name="action">${gs.getMessage("Save")}</button>
+                </div>
+            </div>
+		</div>
+	</form>
+</j:jelly>
