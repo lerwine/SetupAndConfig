@@ -46,6 +46,22 @@
     <Content Include="sys_script\Site17Util.ts"/>
     <Content Include="sys_script_fix\Ensure Schedule Entries.ts"/>
     <Content Include="sys_ui_page\Settings.xml"/>
+    <Content Include="app.js.map"/>
+    <Content Include="sys_script\DistinguishedNameContext.d.ts"/>
+    <Content Include="sys_script\DistinguishedNameContext.js"/>
+    <Content Include="sys_script\DistinguishedNameContext.js.map"/>
+    <Content Include="sys_script\LocationApproval.d.ts"/>
+    <Content Include="sys_script\LocationApproval.js"/>
+    <Content Include="sys_script\LocationApproval.js.map"/>
+    <Content Include="sys_script\Site17ProfileValidator.d.ts"/>
+    <Content Include="sys_script\Site17ProfileValidator.js"/>
+    <Content Include="sys_script\Site17ProfileValidator.js.map"/>
+    <Content Include="sys_script\Site17Util.d.ts"/>
+    <Content Include="sys_script\Site17Util.js"/>
+    <Content Include="sys_script\Site17Util.js.map"/>
+    <Content Include="sys_script_fix\Ensure Schedule Entries.d.ts"/>
+    <Content Include="sys_script_fix\Ensure Schedule Entries.js"/>
+    <Content Include="sys_script_fix\Ensure Schedule Entries.js.map"/>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="rhino.d.ts"/>
