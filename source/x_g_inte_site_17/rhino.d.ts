@@ -160,7 +160,6 @@ declare namespace Packages {
                  * Returns the char value at the specified index.
                  * @param {number} index -
                  * @returns {number}
-                 * @memberof {String}
                  */
                 charAt(index: Integer): number;
 
@@ -168,7 +167,6 @@ declare namespace Packages {
                  * Returns the character (Unicode code point) at the specified index.
                  * @param {number} index -
                  * @returns {number}
-                 * @memberof {String}
                  */
                 codePointAt(index: Integer): number;
 
@@ -176,7 +174,6 @@ declare namespace Packages {
                  * Returns the character (Unicode code point) before the specified index.
                  * @param {number} index -
                  * @returns {number}
-                 * @memberof {String}
                  */
                 codePointBefore(index: Integer): number;
 
@@ -185,7 +182,6 @@ declare namespace Packages {
                  * @param {number} beginIndex -
                  * @param {number} endIndex -
                  * @returns {number}
-                 * @memberof {String}
                  */
                 codePointCount(beginIndex: number, endIndex: number): number;
 
@@ -193,7 +189,6 @@ declare namespace Packages {
                  * Compares two strings lexicographically.
                  * @param {String} anotherString -
                  * @returns {number}
-                 * @memberof {String}
                  */
                 compareTo(anotherString: String): number;
 
@@ -201,7 +196,6 @@ declare namespace Packages {
                  * Compares two strings lexicographically, ignoring case differences.
                  * @param {String} str -
                  * @returns {number}
-                 * @memberof {String}
                  */
                 compareToIgnoreCase(str: String): number;
 
@@ -209,7 +203,6 @@ declare namespace Packages {
                  * Concatenates the specified string to the end of this string.
                  * @param {String} str -
                  * @returns {String}
-                 * @memberof {String}
                  */
                 concat(str: String): String;
 
@@ -217,7 +210,6 @@ declare namespace Packages {
                  * Tests if this string ends with the specified suffix.
                  * @param {String} suffix -
                  * @returns {boolean}
-                 * @memberof {String}
                  */
                 endsWith(suffix: String): boolean;
 
@@ -225,7 +217,6 @@ declare namespace Packages {
                  * Compares this string to the specified object.
                  * @param {Object} anObject -
                  * @returns {boolean}
-                 * @memberof {String}
                  */
                 equals(anObject: Object): boolean;
 
@@ -233,14 +224,12 @@ declare namespace Packages {
                  * Compares this String to another String, ignoring case considerations.
                  * @param {String} anotherString -
                  * @returns {boolean}
-                 * @memberof {String}
                  */
                 equalsIgnoreCase(anotherString: String): boolean;
 
                 /**
                  * Encodes this String into a sequence of bytes using the platform's default charset, storing the result into a new byte array.
                  * @returns {$$rhino.IJavaArray<number>}
-                 * @memberof {String}
                  */
                 getBytes(): $$rhino.IJavaArray<number>;
 
@@ -248,7 +237,6 @@ declare namespace Packages {
                  * Encodes this String into a sequence of bytes using the named charset, storing the result into a new byte array.
                  * @param {String} charsetName -
                  * @returns {$$rhino.IJavaArray<number>}
-                 * @memberof {String}
                  */
                 getBytes(charsetName: String): $$rhino.IJavaArray<number>;
 
@@ -258,14 +246,12 @@ declare namespace Packages {
                  * @param {number} srcEnd -
                  * @param {$$rhino.IJavaArray<number>} dst -
                  * @param {number} dstBegin -
-                 * @memberof {String}
                  */
                 getChars(srcBegin: number, srcEnd: number, dst: $$rhino.IJavaArray<number>, dstBegin: number): void;
 
                 /**
                  * Returns a hash code for this string.
                  * @returns {number}
-                 * @memberof {String}
                  */
                 hashCode(): number;
 
@@ -273,7 +259,6 @@ declare namespace Packages {
                  * Returns the index within this string of the first occurrence of the specified character.
                  * @param {number} ch -
                  * @returns {number}
-                 * @memberof {String}
                  */
                 indexOf(ch: number): number;
 
@@ -282,7 +267,6 @@ declare namespace Packages {
                  * @param {number} ch -
                  * @param {number} fromIndex -
                  * @returns {number}
-                 * @memberof {String}
                  */
                 indexOf(ch: number, fromIndex: number): number;
 
@@ -290,7 +274,6 @@ declare namespace Packages {
                  * Returns the index within this string of the first occurrence of the specified substring.
                  * @param {String} str -
                  * @returns {number}
-                 * @memberof {String}
                  */
                 indexOf(str: String): number;
 
@@ -299,21 +282,18 @@ declare namespace Packages {
                  * @param {String} str -
                  * @param {number} fromIndex -
                  * @returns {number}
-                 * @memberof {String}
                  */
                 indexOf(str: String, fromIndex: number): number;
 
                 /**
                  * Returns a canonical representation for the string object.
                  * @returns {String}
-                 * @memberof {String}
                  */
                 intern(): String;
 
                 /**
                  * Returns true if, and only if, length() is 0.
                  * @returns {boolean}
-                 * @memberof {String}
                  */
                 isEmpty(): boolean;
 
@@ -321,7 +301,6 @@ declare namespace Packages {
                  * Returns the index within this string of the last occurrence of the specified character.
                  * @param {number} ch -
                  * @returns {number}
-                 * @memberof {String}
                  */
                 lastIndexOf(ch: number): number;
 
@@ -330,7 +309,6 @@ declare namespace Packages {
                  * @param {number} ch -
                  * @param {number} fromIndex -
                  * @returns {number}
-                 * @memberof {String}
                  */
                 lastIndexOf(ch: number, fromIndex: number): number;
 
@@ -338,7 +316,6 @@ declare namespace Packages {
                  * Returns the index within this string of the last occurrence of the specified substring.
                  * @param {String} str -
                  * @returns {number}
-                 * @memberof {String}
                  */
                 lastIndexOf(str: String): number;
 
@@ -347,14 +324,12 @@ declare namespace Packages {
                  * @param {String} str -
                  * @param {number} fromIndex -
                  * @returns {number}
-                 * @memberof {String}
                  */
                 lastIndexOf(str: String, fromIndex: number): number;
 
                 /**
                  * Returns the length of this string.
                  * @returns {number}
-                 * @memberof {String}
                  */
                 length(): number;
 
@@ -362,7 +337,6 @@ declare namespace Packages {
                  * Tells whether or not this string matches the given regular expression.
                  * @param {String} regex -
                  * @returns {boolean}
-                 * @memberof {String}
                  */
                 matches(regex: String): boolean;
 
@@ -371,7 +345,6 @@ declare namespace Packages {
                  * @param {number} index -
                  * @param {number} codePointOffset -
                  * @returns {number}
-                 * @memberof {String}
                  */
                 offsetByCodePoints(index: Integer, codePointOffset: number): number;
 
@@ -383,7 +356,6 @@ declare namespace Packages {
                  * @param {number} ooffset -
                  * @param {number} len -
                  * @returns {boolean}
-                 * @memberof {String}
                  */
                 regionMatches(ignoreCase: boolean, toffset: number, other: String, ooffset: number, len: number): boolean;
 
@@ -394,7 +366,6 @@ declare namespace Packages {
                  * @param {number} ooffset -
                  * @param {number} len -
                  * @returns {boolean}
-                 * @memberof {String}
                  */
                 regionMatches(toffset: number, other: String, ooffset: number, len: number): boolean;
 
@@ -403,7 +374,6 @@ declare namespace Packages {
                  * @param {number} oldChar -
                  * @param {number} newChar -
                  * @returns {String}
-                 * @memberof {String}
                  */
                 replace(oldChar: number, newChar: number): String;
 
@@ -412,7 +382,6 @@ declare namespace Packages {
                  * @param {String} regex -
                  * @param {String} replacement -
                  * @returns {String}
-                 * @memberof {String}
                  */
                 replaceAll(regex: String, replacement: String): String;
 
@@ -421,7 +390,6 @@ declare namespace Packages {
                  * @param {String} regex -
                  * @param {String} replacement -
                  * @returns {String}
-                 * @memberof {String}
                  */
                 replaceFirst(regex: String, replacement: String): String;
 
@@ -429,7 +397,6 @@ declare namespace Packages {
                  * Splits this string around matches of the given regular expression.
                  * @param {String} regex -
                  * @returns {$$rhino.IJavaArray<String>}
-                 * @memberof {String}
                  */
                 split(regex: String): $$rhino.IJavaArray<String>;
 
@@ -438,7 +405,6 @@ declare namespace Packages {
                  * @param {String} regex -
                  * @param {number} limit -
                  * @returns {$$rhino.IJavaArray<String>}
-                 * @memberof {String}
                  */
                 split(regex: String, limit: number): $$rhino.IJavaArray<String>;
 
@@ -446,7 +412,6 @@ declare namespace Packages {
                  * Tests if this string starts with the specified prefix.
                  * @param {String} prefix -
                  * @returns {boolean}
-                 * @memberof {String}
                  */
                 startsWith(prefix: String): boolean;
 
@@ -455,7 +420,6 @@ declare namespace Packages {
                  * @param {String} prefix -
                  * @param {number} toffset -
                  * @returns {boolean}
-                 * @memberof {String}
                  */
                 startsWith(prefix: String, toffset: number): boolean;
 
@@ -463,7 +427,6 @@ declare namespace Packages {
                  * Returns a new string that is a substring of this string.
                  * @param {number} beginIndex -
                  * @returns {String}
-                 * @memberof {String}
                  */
                 substring(beginIndex: number): String;
 
@@ -472,42 +435,36 @@ declare namespace Packages {
                  * @param {number} beginIndex -
                  * @param {number} endIndex -
                  * @returns {String}
-                 * @memberof {String}
                  */
                 substring(beginIndex: number, endIndex: number): String;
 
                 /**
                  * Converts this string to a new character array.
                  * @returns {$$rhino.IJavaArray<number>}
-                 * @memberof {String}
                  */
                 toCharArray(): $$rhino.IJavaArray<number>;
 
                 /**
                  * Converts all of the characters in this String to lower case using the rules of the default locale.
                  * @returns {String}
-                 * @memberof {String}
                  */
                 toLowerCase(): String;
 
                 /**
                  * This object (which is already a string!) is itself returned.
                  * @returns {String}
-                 * @memberof {String}
                  */
                 toString(): String;
 
                 /**
                  * Converts all of the characters in this String to upper case using the rules of the default locale.
                  * @returns {String}
-                 * @memberof {String}
                  */
                 toUpperCase(): String;
 
                 /**
                  * Returns a copy of the string, with leading and trailing whitespace omitted.
                  * @returns {String}
-                 * @memberof {String}
                  */
                 trim(): String;
             }
@@ -524,7 +481,6 @@ declare namespace Packages {
                 /**
                  * Returns the value of this Character object.
                  * @returns {number}
-                 * @memberof {Character}
                  */
                 charValue(): number;
 
@@ -532,7 +488,6 @@ declare namespace Packages {
                  * Compares two Character objects numerically.
                  * @param {Character} anotherCharacter -
                  * @returns {number}
-                 * @memberof {Character}
                  */
                 compareTo(anotherCharacter: Character): number;
 
@@ -540,21 +495,18 @@ declare namespace Packages {
                  * Compares this object against the specified object.
                  * @param {Object} obj -
                  * @returns {boolean}
-                 * @memberof {Character}
                  */
                 equals(obj: Object): boolean;
 
                 /**
                  * Returns a hash code for this Character; equal to the result of invoking charValue().
                  * @returns {number}
-                 * @memberof {Character}
                  */
                 hashCode(): number;
 
                 /**
                  * Returns a String object representing this Character's value.
                  * @returns {String}
-                 * @memberof {Character}
                  */
                 toString(): String;
             }
@@ -578,7 +530,6 @@ declare namespace Packages {
                 /**
                  * Returns the value of this Boolean object as a boolean primitive.
                  * @returns {boolean}
-                 * @memberof {Boolean}
                  */
                 booleanValue(): boolean;
 
@@ -586,7 +537,6 @@ declare namespace Packages {
                  * Compares this Boolean instance with another.
                  * @param {Boolean} b -
                  * @returns {number}
-                 * @memberof {Boolean}
                  */
                 compareTo(b: Boolean): number;
 
@@ -594,21 +544,18 @@ declare namespace Packages {
                  * Returns true if and only if the argument is not null and is a Boolean object that represents the same boolean value as this object.
                  * @param {Object} obj -
                  * @returns {boolean}
-                 * @memberof {Boolean}
                  */
                 equals(obj: Object): boolean;
 
                 /**
                  * Returns a hash code for this Boolean object.
                  * @returns {number}
-                 * @memberof {Boolean}
                  */
                 hashCode(): number;
 
                 /**
                  * Returns a String object representing this Boolean's value.
                  * @returns {String}
-                 * @memberof {Boolean}
                  */
                 toString(): String;
             }
@@ -625,7 +572,6 @@ declare namespace Packages {
                 /**
                  * Returns the value of this Integer as a byte.
                  * @returns {number}
-                 * @memberof {Integer}
                  */
                 byteValue(): number;
 
@@ -633,14 +579,12 @@ declare namespace Packages {
                  * Compares two Integer objects numerically.
                  * @param {Integer} anotherInteger -
                  * @returns {number}
-                 * @memberof {Integer}
                  */
                 compareTo(anotherInteger: Integer): number;
 
                 /**
                  * Returns the value of this Integer as a double.
                  * @returns {number}
-                 * @memberof {Integer}
                  */
                 doubleValue(): number;
 
@@ -648,49 +592,42 @@ declare namespace Packages {
                  * Compares this object to the specified object.
                  * @param {Object} obj -
                  * @returns {boolean}
-                 * @memberof {Integer}
                  */
                 equals(obj: Object): boolean;
 
                 /**
                  * Returns the value of this Integer as a float.
                  * @returns {number}
-                 * @memberof {Integer}
                  */
                 floatValue(): number;
 
                 /**
                  * Returns a hash code for this Integer.
                  * @returns {number}
-                 * @memberof {Integer}
                  */
                 hashCode(): number;
 
                 /**
                  * Returns the value of this Integer as an int.
                  * @returns {number}
-                 * @memberof {Integer}
                  */
                 intValue(): number;
 
                 /**
                  * Returns the value of this Integer as a long.
                  * @returns {number}
-                 * @memberof {Integer}
                  */
                 longValue(): number;
 
                 /**
                  * Returns the value of this Integer as a short.
                  * @returns {number}
-                 * @memberof {Integer}
                  */
                 shortValue(): number;
 
                 /**
                  * Returns a String object representing this Integer's value.
                  * @returns {String}
-                 * @memberof {Integer}
                  */
                 toString(): String;
             }
@@ -707,7 +644,6 @@ declare namespace Packages {
                 /**
                  * Returns the value of this Long as a byte.
                  * @returns {number}
-                 * @memberof {Long}
                  */
                 byteValue(): number;
 
@@ -715,14 +651,12 @@ declare namespace Packages {
                  * Compares two Long objects numerically.
                  * @param {Long} anotherLong -
                  * @returns {number}
-                 * @memberof {Long}
                  */
                 compareTo(anotherLong: Long): number;
 
                 /**
                  * Returns the value of this Long as a double.
                  * @returns {number}
-                 * @memberof {Long}
                  */
                 doubleValue(): number;
 
@@ -730,49 +664,42 @@ declare namespace Packages {
                  * Compares this object to the specified object.
                  * @param {Object} obj -
                  * @returns {boolean}
-                 * @memberof {Long}
                  */
                 equals(obj: Object): boolean;
 
                 /**
                  * Returns the value of this Long as a float.
                  * @returns {number}
-                 * @memberof {Long}
                  */
                 floatValue(): number;
 
                 /**
                  * Returns a hash code for this Long.
                  * @returns {number}
-                 * @memberof {Long}
                  */
                 hashCode(): number;
 
                 /**
                  * Returns the value of this Long as an int.
                  * @returns {number}
-                 * @memberof {Long}
                  */
                 intValue(): number;
 
                 /**
                  * Returns the value of this Long as a long value.
                  * @returns {number}
-                 * @memberof {Long}
                  */
                 longValue(): number;
 
                 /**
                  * Returns the value of this Long as a short.
                  * @returns {number}
-                 * @memberof {Long}
                  */
                 shortValue(): number;
 
                 /**
                  * Returns a String object representing this Long's value.
                  * @returns {String}
-                 * @memberof {Long}
                  */
                 toString(): String;
             }
@@ -789,7 +716,6 @@ declare namespace Packages {
                 /**
                  * Returns the value of this Double as a byte (by casting to a byte).
                  * @returns {number}
-                 * @memberof {Double}
                  */
                 byteValue(): number;
 
@@ -797,14 +723,12 @@ declare namespace Packages {
                  * Compares two Double objects numerically.
                  * @param {Double} anotherDouble -
                  * @returns {number}
-                 * @memberof {Double}
                  */
                 compareTo(anotherDouble: Double): number;
 
                 /**
                  * Returns the double value of this Double object.
                  * @returns {number}
-                 * @memberof {Double}
                  */
                 doubleValue(): number;
 
@@ -812,63 +736,54 @@ declare namespace Packages {
                  * Compares this object against the specified object.
                  * @param {Object} obj -
                  * @returns {boolean}
-                 * @memberof {Double}
                  */
                 equals(obj: Object): boolean;
 
                 /**
                  * Returns the float value of this Double object.
                  * @returns {number}
-                 * @memberof {Double}
                  */
                 floatValue(): number;
 
                 /**
                  * Returns a hash code for this Double object.
                  * @returns {number}
-                 * @memberof {Double}
                  */
                 hashCode(): number;
 
                 /**
                  * Returns the value of this Double as an int (by casting to type int).
                  * @returns {number}
-                 * @memberof {Double}
                  */
                 intValue(): number;
 
                 /**
                  * Returns true if this Double value is infinitely large in magnitude, false otherwise.
                  * @returns {boolean}
-                 * @memberof {Double}
                  */
                 isInfinite(): boolean;
 
                 /**
                  * Returns true if this Double value is a Not-a-Number (NaN), false otherwise.
                  * @returns {boolean}
-                 * @memberof {Double}
                  */
                 isNaN(): boolean;
 
                 /**
                  * Returns the value of this Double as a long (by casting to type long).
                  * @returns {number}
-                 * @memberof {Double}
                  */
                 longValue(): number;
 
                 /**
                  * Returns the value of this Double as a short (by casting to a short).
                  * @returns {number}
-                 * @memberof {Double}
                  */
                 shortValue(): number;
 
                 /**
                  * Returns a string representation of this Double object.
                  * @returns {String}
-                 * @memberof {Double}
                  */
                 toString(): String;
             }
@@ -885,7 +800,6 @@ declare namespace Packages {
                 /**
                  * Returns the value of this Byte as a byte.
                  * @returns {number}
-                 * @memberof {Byte}
                  */
                 byteValue(): number;
 
@@ -893,14 +807,12 @@ declare namespace Packages {
                  * Compares two Byte objects numerically.
                  * @param {Byte} anotherByte -
                  * @returns {number}
-                 * @memberof {Byte}
                  */
                 compareTo(anotherByte: Byte): number;
 
                 /**
                  * Returns the value of this Byte as a double.
                  * @returns {number}
-                 * @memberof {Byte}
                  */
                 doubleValue(): number;
 
@@ -908,49 +820,42 @@ declare namespace Packages {
                  * Compares this object to the specified object.
                  * @param {Object} obj -
                  * @returns {boolean}
-                 * @memberof {Byte}
                  */
                 equals(obj: Object): boolean;
 
                 /**
                  * Returns the value of this Byte as a float.
                  * @returns {number}
-                 * @memberof {Byte}
                  */
                 floatValue(): number;
 
                 /**
                  * Returns a hash code for this Byte; equal to the result of invoking intValue().
                  * @returns {number}
-                 * @memberof {Byte}
                  */
                 hashCode(): number;
 
                 /**
                  * Returns the value of this Byte as an int.
                  * @returns {number}
-                 * @memberof {Byte}
                  */
                 intValue(): number;
 
                 /**
                  * Returns the value of this Byte as a long.
                  * @returns {number}
-                 * @memberof {Byte}
                  */
                 longValue(): number;
 
                 /**
                  * Returns the value of this Byte as a short.
                  * @returns {number}
-                 * @memberof {Byte}
                  */
                 shortValue(): number;
 
                 /**
                  * Returns a String object representing this Byte's value.
                  * @returns {String}
-                 * @memberof {Byte}
                  */
                 toString(): String;
             }
@@ -967,7 +872,6 @@ declare namespace Packages {
                 /**
                  * Returns the value of this Float as a byte (by casting to a byte).
                  * @returns {number}
-                 * @memberof {Float}
                  */
                 byteValue(): number;
 
@@ -975,14 +879,12 @@ declare namespace Packages {
                  * Compares two Float objects numerically.
                  * @param {Float} anotherFloat -
                  * @returns {number}
-                 * @memberof {Float}
                  */
                 compareTo(anotherFloat: Float): number;
 
                 /**
                  * Returns the double value of this Float object.
                  * @returns {number}
-                 * @memberof {Float}
                  */
                 doubleValue(): number;
 
@@ -990,63 +892,54 @@ declare namespace Packages {
                  * Compares this object against the specified object.
                  * @param {Object} obj -
                  * @returns {boolean}
-                 * @memberof {Float}
                  */
                 equals(obj: Object): boolean;
 
                 /**
                  * Returns the float value of this Float object.
                  * @returns {number}
-                 * @memberof {Float}
                  */
                 floatValue(): number;
 
                 /**
                  * Returns a hash code for this Float object.
                  * @returns {number}
-                 * @memberof {Float}
                  */
                 hashCode(): number;
 
                 /**
                  * Returns the value of this Float as an int (by casting to type int).
                  * @returns {number}
-                 * @memberof {Float}
                  */
                 intValue(): number;
 
                 /**
                  * Returns true if this Float value is infinitely large in magnitude, false otherwise.
                  * @returns {boolean}
-                 * @memberof {Float}
                  */
                 isInfinite(): boolean;
 
                 /**
                  * Returns true if this Float value is a Not-a-Number (NaN), false otherwise.
                  * @returns {boolean}
-                 * @memberof {Float}
                  */
                 isNaN(): boolean;
 
                 /**
                  * Returns value of this Float as a long (by casting to type long).
                  * @returns {number}
-                 * @memberof {Float}
                  */
                 longValue(): number;
 
                 /**
                  * Returns the value of this Float as a short (by casting to a short).
                  * @returns {number}
-                 * @memberof {Float}
                  */
                 shortValue(): number;
 
                 /**
                  * Returns a string representation of this Float object.
                  * @returns {String}
-                 * @memberof {Float}
                  */
                 toString(): String;
             }
@@ -1063,7 +956,6 @@ declare namespace Packages {
                 /**
                  * Returns the value of this Short as a byte.
                  * @returns {number}
-                 * @memberof {Short}
                  */
                 byteValue(): number;
 
@@ -1071,14 +963,12 @@ declare namespace Packages {
                  * Compares two Short objects numerically.
                  * @param {Short} anotherShort -
                  * @returns {number}
-                 * @memberof {Short}
                  */
                 compareTo(anotherShort: Short): number;
 
                 /**
                  * Returns the value of this Short as a double.
                  * @returns {number}
-                 * @memberof {Short}
                  */
                 doubleValue(): number;
 
@@ -1086,49 +976,42 @@ declare namespace Packages {
                  * Compares this object to the specified object.
                  * @param {Object} obj -
                  * @returns {boolean}
-                 * @memberof {Short}
                  */
                 equals(obj: Object): boolean;
 
                 /**
                  * Returns the value of this Short as a float.
                  * @returns {number}
-                 * @memberof {Short}
                  */
                 floatValue(): number;
 
                 /**
                  * Returns a hash code for this Short; equal to the result of invoking intValue().
                  * @returns {number}
-                 * @memberof {Short}
                  */
                 hashCode(): number;
 
                 /**
                  * Returns the value of this Short as an int.
                  * @returns {number}
-                 * @memberof {Short}
                  */
                 intValue(): number;
 
                 /**
                  * Returns the value of this Short as a long.
                  * @returns {number}
-                 * @memberof {Short}
                  */
                 longValue(): number;
 
                 /**
                  * Returns the value of this Short as a short.
                  * @returns {number}
-                 * @memberof {Short}
                  */
                 shortValue(): number;
 
                 /**
                  * Returns a String object representing this Short's value.
                  * @returns {String}
-                 * @memberof {Short}
                  */
                 toString(): String;
             }
@@ -1875,21 +1758,18 @@ declare namespace Packages {
                 /**
                  * Creates a copy of this TimeZone.
                  * @returns {TimeZone}
-                 * @memberof TimeZone
                  */
                 clone(): TimeZone;
 
                 /**
                  * Returns the amount of time to be added to local standard time to get local wall clock time.
                  * @returns {int}
-                 * @memberof TimeZone
                  */
                 getDSTSavings(): lang.Integer;
 
                 /**
                  * Returns a long standard time name of this TimeZone suitable for presentation to the user in the default locale.
                  * @returns {string}
-                 * @memberof TimeZone
                  */
                 getDisplayName(): lang.String;
 
@@ -1898,14 +1778,12 @@ declare namespace Packages {
                  * a Daylight Saving Time name is returned (even if this TimeZone doesn't observe Daylight Saving Time). Otherwise, a Standard Time name is returned.
                  * @param {boolean} daylight
                  * @param {int} style
-                 * @memberof TimeZone
                  */
                 getDisplayName(daylight: boolean, style: lang.Integer);
 
                 /**
                  * Gets the ID of this time zone.
                  * @returns {string}
-                 * @memberof TimeZone
                  */
                 getID(): lang.String;
 
@@ -1914,7 +1792,6 @@ declare namespace Packages {
                  * the offset value is adjusted with the amount of daylight saving.
                  * @param {long} date
                  * @returns {int}
-                 * @memberof TimeZone
                  */
                 getOffset(date: lang.Long): lang.Integer;
 
@@ -1927,35 +1804,30 @@ declare namespace Packages {
                  * @param {int} dayOfWeek
                  * @param {int} milliseconds
                  * @returns {int}
-                 * @memberof TimeZone
                  */
                 getOffset(era: lang.Integer, year: lang.Integer, month: lang.Integer, day: lang.Integer, dayOfWeek: lang.Integer, milliseconds: lang.Integer): lang.Integer;
 
                 /**
                  * Returns true if this zone has the same rule and offset as another zone. That is, if this zone differs only in ID, if at all. Returns false if the other zone is null.
                  * @param {TimeZone} other
-                 * @memberof TimeZone
                  */
                 hasSameRules(other: TimeZone): boolean;
 
                 /**
                  * Returns true if this TimeZone is currently in Daylight Saving Time, or if a transition from Standard Time to Daylight Saving Time occurs at any future time.
                  * @returns {boolean}
-                 * @memberof TimeZone
                  */
                 observesDaylightTime(): boolean;
 
                 /**
                  * Sets the time zone ID. This does not change any other data in the time zone object.
                  * @param {string} id
-                 * @memberof TimeZone
                  */
                 setID(id: lang.String);
 
                 /**S
                  * Queries if this TimeZone uses Daylight Saving Time.
                  * @returns {boolean}
-                 * @memberof TimeZone
                  */
                 useDaylightTime(): boolean;
             }

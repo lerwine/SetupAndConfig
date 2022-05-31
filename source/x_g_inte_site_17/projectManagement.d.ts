@@ -1289,7 +1289,6 @@ declare interface dmn_demandFields extends taskFields {
      * Assumptions field. Internal type is "html".
      * @summary Assumptions.
      * @type {$$rhino.Nilable<$$property.Element>}
-     * @memberof dmn_demandFields
      */
 	assumptions: $$rhino.Nilable<$$property.Element>;
 
@@ -1297,7 +1296,6 @@ declare interface dmn_demandFields extends taskFields {
      * Barriers field. Internal type is "html".
      * @summary Barriers.
      * @type {$$rhino.Nilable<$$property.Element>}
-     * @memberof dmn_demandFields
      */
 	barriers: $$rhino.Nilable<$$property.Element>;
 
@@ -1305,7 +1303,6 @@ declare interface dmn_demandFields extends taskFields {
      * Business Applications field. Internal type is "glide_list"; refers to $$property.generic.Reference<cmdb_ci_business_appFields, cmdb_ci_business_appGlideRecord>.
      * @summary Business Applications.
      * @type {$$rhino.Nilable<IGlideElement>}
-     * @memberof dmn_demandFields
      */
 	business_applications: $$rhino.Nilable<IGlideElement>;
 
@@ -1313,7 +1310,6 @@ declare interface dmn_demandFields extends taskFields {
      * Business Capabilities field. Internal type is "glide_list"; refers to $$property.generic.Reference<cmdb_ci_business_capabilityFields, cmdb_ci_business_capabilityGlideRecord>.
      * @summary Business Capabilities.
      * @type {$$rhino.Nilable<IGlideElement>}
-     * @memberof dmn_demandFields
      */
 	business_capabilities: $$rhino.Nilable<IGlideElement>;
 
@@ -1321,42 +1317,36 @@ declare interface dmn_demandFields extends taskFields {
      * Business case field. Internal type is "html".
      * @summary Business case.
      * @type {$$rhino.Nilable<$$property.Element>}
-     * @memberof dmn_demandFields
      */
 	business_case: $$rhino.Nilable<$$property.Element>;
 
     /**
      * Business Unit
      * @type {$$rhino.Nilable<$$property.generic.Reference<business_unitFields, business_unitGlideRecord>>}
-     * @memberof dmn_demandFields
      */
 	business_unit: $$rhino.Nilable<$$property.generic.Reference<business_unitFields, business_unitGlideRecord>>;
 
     /**
      * Capital budget
      * @type {$$rhino.Nilable<$$property.Currency>}
-     * @memberof dmn_demandFields
      */
 	capital_budget: $$rhino.Nilable<$$property.Currency>;
 
     /**
      * Capital expense
      * @type {$$rhino.Nilable<$$property.Currency>}
-     * @memberof dmn_demandFields
      */
 	capital_outlay: $$rhino.Nilable<$$property.Currency>;
 
     /**
      * Category
      * @type {$$rhino.Nilable<$$property.generic.Element<DemandCategory>>}
-     * @memberof dmn_demandFields
      */
 	category: $$rhino.Nilable<$$property.generic.Element<DemandCategory>>;
 
     /**
      * Change
      * @type {$$rhino.Nilable<$$property.generic.Reference<change_requestFields, change_requestGlideRecord>>}
-     * @memberof dmn_demandFields
      */
 	change: $$rhino.Nilable<$$property.generic.Reference<change_requestFields, change_requestGlideRecord>>;
 
@@ -1364,7 +1354,6 @@ declare interface dmn_demandFields extends taskFields {
      * Collaborators field. Internal type is "glide_list"; refers to $$property.generic.Reference<sys_userFields, sys_userGlideRecord>.
      * @summary Collaborators.
      * @type {$$rhino.Nilable<IGlideElement>}
-     * @memberof dmn_demandFields
      */
 	collaborators: $$rhino.Nilable<IGlideElement>;
 
@@ -1372,7 +1361,6 @@ declare interface dmn_demandFields extends taskFields {
      * Cost field. Internal type is "decimal".
      * @summary Cost.
      * @type {$$rhino.Nilable<$$property.Numeric>}
-     * @memberof dmn_demandFields
      */
 	score_cost: $$rhino.Nilable<$$property.Numeric>;
 
@@ -1380,7 +1368,6 @@ declare interface dmn_demandFields extends taskFields {
      * Defect field. Refers to Defect $$property.generic.Reference<rm_defectFields, rm_defectGlideRecord>.
      * @summary Defect.
      * @type {$$rhino.Nilable<IGlideElement>}
-     * @memberof dmn_demandFields
      */
 	defect: $$rhino.Nilable<IGlideElement>;
 
@@ -1388,21 +1375,18 @@ declare interface dmn_demandFields extends taskFields {
      * Demand field. Internal type is "composite_field";.
      * @summary Demand.
      * @type {$$rhino.Nilable<$$property.Element>}
-     * @memberof dmn_demandFields
      */
 	demand: $$rhino.Nilable<$$property.Element>;
 
     /**
      * Demand manager
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
-     * @memberof dmn_demandFields
      */
 	demand_manager: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
     /**
      * Department
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
-     * @memberof dmn_demandFields
      */
 	department: $$rhino.Nilable<$$property.generic.Reference<cmn_departmentFields, cmn_departmentGlideRecord>>;
 
@@ -1410,7 +1394,6 @@ declare interface dmn_demandFields extends taskFields {
      * Discount Rate % field. Internal type is "decimal".
      * @summary Discount Rate %.
      * @type {$$rhino.Nilable<$$property.Numeric>}
-     * @memberof dmn_demandFields
      */
 	discount_rate: $$rhino.Nilable<$$property.Numeric>;
 
@@ -1418,7 +1401,6 @@ declare interface dmn_demandFields extends taskFields {
      * Due date field. Internal type is "glide_date".
      * @summary Due date.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
-     * @memberof dmn_demandFields
      */
 	requested_by: $$rhino.Nilable<$$property.GlideObject>;
 
@@ -1426,7 +1408,6 @@ declare interface dmn_demandFields extends taskFields {
      * Enablers field. Internal type is "html".
      * @summary Enablers.
      * @type {$$rhino.Nilable<$$property.Element>}
-     * @memberof dmn_demandFields
      */
 	enablers: $$rhino.Nilable<$$property.Element>;
 
@@ -1434,28 +1415,24 @@ declare interface dmn_demandFields extends taskFields {
      * Enhancement field. Refers to Enhancement $$property.generic.Reference<rm_enhancementFields, rm_enhancementGlideRecord>.
      * @summary Enhancement.
      * @type {$$rhino.Nilable<IGlideElement>}
-     * @memberof dmn_demandFields
      */
 	enhancement: $$rhino.Nilable<IGlideElement>;
 
     /**
      * Financial benefit
      * @type {$$rhino.Nilable<$$property.Currency>}
-     * @memberof dmn_demandFields
      */
 	financial_benefit: $$rhino.Nilable<$$property.Currency>;
 
     /**
      * Financial return
      * @type {$$rhino.Nilable<$$property.Currency>}
-     * @memberof dmn_demandFields
      */
 	financial_return: $$rhino.Nilable<$$property.Currency>;
 
     /**
      * Goal
      * @type {$$rhino.Nilable<$$property.generic.Reference<goalFields, goalGlideRecord>>}
-     * @memberof dmn_demandFields
      */
 	goal: $$rhino.Nilable<$$property.generic.Reference<goalFields, goalGlideRecord>>;
 
@@ -1463,14 +1440,12 @@ declare interface dmn_demandFields extends taskFields {
      * Goals field. Internal type is "glide_list"; refers to $$property.generic.Reference<goalFields, goalGlideRecord>.
      * @summary Goals.
      * @type {$$rhino.Nilable<IGlideElement>}
-     * @memberof dmn_demandFields
      */
 	goals: $$rhino.Nilable<IGlideElement>;
 
     /**
      * Idea
      * @type {$$rhino.Nilable<$$property.generic.Reference<ideaFields, ideaGlideRecord>>}
-     * @memberof dmn_demandFields
      */
 	idea: $$rhino.Nilable<$$property.generic.Reference<ideaFields, ideaGlideRecord>>;
 
@@ -1478,7 +1453,6 @@ declare interface dmn_demandFields extends taskFields {
      * Impacted Business Units field. Internal type is "glide_list"; refers to $$property.generic.Reference<business_unitFields, business_unitGlideRecord>.
      * @summary Impacted Business Units.
      * @type {$$rhino.Nilable<IGlideElement>}
-     * @memberof dmn_demandFields
      */
 	impacted_business_units: $$rhino.Nilable<IGlideElement>;
 
@@ -1486,7 +1460,6 @@ declare interface dmn_demandFields extends taskFields {
      * In scope field. Internal type is "html".
      * @summary In scope.
      * @type {$$rhino.Nilable<$$property.Element>}
-     * @memberof dmn_demandFields
      */
 	in_scope: $$rhino.Nilable<$$property.Element>;
 
@@ -1494,7 +1467,6 @@ declare interface dmn_demandFields extends taskFields {
      * Internal rate of return % field. Internal type is "decimal".
      * @summary Internal rate of return %.
      * @type {$$rhino.Nilable<$$property.Numeric>}
-     * @memberof dmn_demandFields
      */
 	irr_value: $$rhino.Nilable<$$property.Numeric>;
 
@@ -1502,7 +1474,6 @@ declare interface dmn_demandFields extends taskFields {
      * Investment Class field. Choice from investment_class field in pm_project table;.
      * @summary Investment Class.
      * @type {$$rhino.Nilable<$$property.Element>}
-     * @memberof dmn_demandFields
      */
 	investment_class: $$rhino.Nilable<$$property.Element>;
 
@@ -1510,42 +1481,36 @@ declare interface dmn_demandFields extends taskFields {
      * Investment Type field. Choice from investment_type field in pm_project table;.
      * @summary Investment Type.
      * @type {$$rhino.Nilable<$$property.Element>}
-     * @memberof dmn_demandFields
      */
 	investment_type: $$rhino.Nilable<$$property.Element>;
 
     /**
      * Labor costs
      * @type {$$rhino.Nilable<$$property.Currency>}
-     * @memberof dmn_demandFields
      */
 	labor_costs: $$rhino.Nilable<$$property.Currency>;
 
     /**
      * Net present value
      * @type {$$rhino.Nilable<$$property.Currency>}
-     * @memberof dmn_demandFields
      */
 	npv_value: $$rhino.Nilable<$$property.Currency>;
 
     /**
      * Operating budget
      * @type {$$rhino.Nilable<$$property.Currency>}
-     * @memberof dmn_demandFields
      */
 	operational_budget: $$rhino.Nilable<$$property.Currency>;
 
     /**
      * Operating expense
      * @type {$$rhino.Nilable<$$property.Currency>}
-     * @memberof dmn_demandFields
      */
 	operational_outlay: $$rhino.Nilable<$$property.Currency>;
 
     /**
      * Other costs
      * @type {$$rhino.Nilable<$$property.Currency>}
-     * @memberof dmn_demandFields
      */
 	other_costs: $$rhino.Nilable<$$property.Currency>;
 
@@ -1553,28 +1518,24 @@ declare interface dmn_demandFields extends taskFields {
      * Out of scope field. Internal type is "html".
      * @summary Out of scope.
      * @type {$$rhino.Nilable<$$property.Element>}
-     * @memberof dmn_demandFields
      */
 	out_of_scope: $$rhino.Nilable<$$property.Element>;
 
     /**
      * Portfolio
      * @type {$$rhino.Nilable<$$property.generic.Reference<pm_portfolioFields, pm_portfolioGlideRecord>>}
-     * @memberof dmn_demandFields
      */
 	portfolio: $$rhino.Nilable<$$property.generic.Reference<pm_portfolioFields, pm_portfolioGlideRecord>>;
 
     /**
      * Program
      * @type {$$rhino.Nilable<$$property.generic.Reference<pm_programFields, pm_programGlideRecord>>}
-     * @memberof dmn_demandFields
      */
 	primary_program: $$rhino.Nilable<$$property.generic.Reference<pm_programFields, pm_programGlideRecord>>;
 
     /**
      * Project
      * @type {$$rhino.Nilable<$$property.generic.Reference<pm_projectFields, pm_projectGlideRecord>>}
-     * @memberof dmn_demandFields
      */
 	project: $$rhino.Nilable<$$property.generic.Reference<pm_projectFields, pm_projectGlideRecord>>;
 
@@ -1582,21 +1543,18 @@ declare interface dmn_demandFields extends taskFields {
      * Related Records field. Internal type is "glide_list"; refers to $$property.generic.Reference<taskFields, taskGlideRecord>.
      * @summary Related Records.
      * @type {$$rhino.Nilable<IGlideElement>}
-     * @memberof dmn_demandFields
      */
 	related_records: $$rhino.Nilable<IGlideElement>;
 
     /**
      * Resource allocated cost
      * @type {$$rhino.Nilable<$$property.Currency>}
-     * @memberof dmn_demandFields
      */
 	resource_allocated_cost: $$rhino.Nilable<$$property.Currency>;
 
     /**
      * Resource planned cost
      * @type {$$rhino.Nilable<$$property.Currency>}
-     * @memberof dmn_demandFields
      */
 	resource_planned_cost: $$rhino.Nilable<$$property.Currency>;
 
@@ -1604,14 +1562,12 @@ declare interface dmn_demandFields extends taskFields {
      * Risk field. Internal type is "decimal".
      * @summary Risk.
      * @type {$$rhino.Nilable<$$property.Numeric>}
-     * @memberof dmn_demandFields
      */
 	score_risk: $$rhino.Nilable<$$property.Numeric>;
 
     /**
      * Risk Level
      * @type {$$rhino.Nilable<$$property.generic.Element<DemandRiskLevel>>}
-     * @memberof dmn_demandFields
      */
 	expected_risk: $$rhino.Nilable<$$property.generic.Element<DemandRiskLevel>>;
 
@@ -1619,7 +1575,6 @@ declare interface dmn_demandFields extends taskFields {
      * Risk of not performing field. Internal type is "html".
      * @summary Risk of not performing.
      * @type {$$rhino.Nilable<$$property.Element>}
-     * @memberof dmn_demandFields
      */
 	risk_of_not_performing: $$rhino.Nilable<$$property.Element>;
 
@@ -1627,7 +1582,6 @@ declare interface dmn_demandFields extends taskFields {
      * Risk of performing field. Internal type is "html".
      * @summary Risk of performing.
      * @type {$$rhino.Nilable<$$property.Element>}
-     * @memberof dmn_demandFields
      */
 	risk_of_performing: $$rhino.Nilable<$$property.Element>;
 
@@ -1635,7 +1589,6 @@ declare interface dmn_demandFields extends taskFields {
      * ROI % field. Internal type is "decimal".
      * @summary ROI %.
      * @type {$$rhino.Nilable<$$property.Numeric>}
-     * @memberof dmn_demandFields
      */
 	expected_roi: $$rhino.Nilable<$$property.Numeric>;
 
@@ -1643,7 +1596,6 @@ declare interface dmn_demandFields extends taskFields {
      * Score field. Internal type is "decimal".
      * @summary Score.
      * @type {$$rhino.Nilable<$$property.Numeric>}
-     * @memberof dmn_demandFields
      */
 	score: $$rhino.Nilable<$$property.Numeric>;
 
@@ -1651,7 +1603,6 @@ declare interface dmn_demandFields extends taskFields {
      * Size field. Internal type is "decimal".
      * @summary Size.
      * @type {$$rhino.Nilable<$$property.Numeric>}
-     * @memberof dmn_demandFields
      */
 	score_size: $$rhino.Nilable<$$property.Numeric>;
 
@@ -1659,7 +1610,6 @@ declare interface dmn_demandFields extends taskFields {
      * Stage field. Internal type is "decoration";.
      * @summary Stage.
      * @type {$$rhino.Nilable<IGlideElement>}
-     * @memberof dmn_demandFields
      */
 	stage: $$rhino.Nilable<IGlideElement>;
 
@@ -1667,7 +1617,6 @@ declare interface dmn_demandFields extends taskFields {
      * Start date field. Internal type is "glide_date".
      * @summary Start date.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
-     * @memberof dmn_demandFields
      */
 	start_date: $$rhino.Nilable<$$property.GlideObject>;
 
@@ -1675,7 +1624,6 @@ declare interface dmn_demandFields extends taskFields {
      * Strategic Alignment field. Internal type is "decimal".
      * @summary Strategic Alignment.
      * @type {$$rhino.Nilable<$$property.Numeric>}
-     * @memberof dmn_demandFields
      */
 	score_strategic_allignment: $$rhino.Nilable<$$property.Numeric>;
 
@@ -1683,14 +1631,12 @@ declare interface dmn_demandFields extends taskFields {
      * Strategies field. Internal type is "glide_list"; refers to Strategic Objective $$property.generic.Reference<strategic_objectiveFields, strategic_objectiveGlideRecord>.
      * @summary Strategies.
      * @type {$$rhino.Nilable<IGlideElement>}
-     * @memberof dmn_demandFields
      */
 	strategic_objectives: $$rhino.Nilable<IGlideElement>;
 
     /**
      * Submitted by
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
-     * @memberof dmn_demandFields
      */
 	submitter: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -1698,7 +1644,6 @@ declare interface dmn_demandFields extends taskFields {
      * Submitted on field. Internal type is "glide_date".
      * @summary Submitted on.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
-     * @memberof dmn_demandFields
      */
 	submitted_date: $$rhino.Nilable<$$property.GlideObject>;
 
@@ -1706,21 +1651,18 @@ declare interface dmn_demandFields extends taskFields {
      * T-Shirt size field ("small"="S - Small"; "medium"="M - Medium"; "large"="L - Large"; "xlarge"="XL - Extra Large"; "xxlarge"="XXL - Extra Extra Large").
      * @summary T-Shirt size.
      * @type {$$rhino.Nilable<$$property.generic.Element<"small" | "medium" | "large" | "xlarge" | "xxlarge">>}
-     * @memberof dmn_demandFields
      */
 	size: $$rhino.Nilable<$$property.generic.Element<"small" | "medium" | "large" | "xlarge" | "xxlarge">>;
 
     /**
      * Total planned cost
      * @type {$$rhino.Nilable<$$property.Currency>}
-     * @memberof dmn_demandFields
      */
 	total_costs: $$rhino.Nilable<$$property.Currency>;
 
     /**
      * Type
      * @type {$$rhino.Nilable<$$property.generic.Element<DemandType>>}
-     * @memberof dmn_demandFields
      */
 	type: $$rhino.Nilable<$$property.generic.Element<DemandType>>;
 
@@ -1728,14 +1670,12 @@ declare interface dmn_demandFields extends taskFields {
      * Value field. Internal type is "decimal".
      * @summary Value.
      * @type {$$rhino.Nilable<$$property.Numeric>}
-     * @memberof dmn_demandFields
      */
 	score_value: $$rhino.Nilable<$$property.Numeric>;
 
     /**
      * Visited States
      * @type {$$rhino.Nilable<$$property.Element>}
-     * @memberof dmn_demandFields
      */
 	visited_state: $$rhino.Nilable<$$property.Element>;
 
@@ -1753,7 +1693,6 @@ declare interface ideaFields extends taskFields {
      * Business Applications field. Internal type is "glide_list"; refers to $$property.generic.Reference<cmdb_ci_business_appFields, cmdb_ci_business_appGlideRecord>.
      * @summary Business Applications.
      * @type {$$rhino.Nilable<IGlideElement>}
-     * @memberof ideaFields
      */
 	business_applications: $$rhino.Nilable<IGlideElement>;
 
@@ -1761,14 +1700,12 @@ declare interface ideaFields extends taskFields {
      * Business Capabilities field. Internal type is "glide_list"; refers to $$property.generic.Reference<cmdb_ci_business_capabilityFields, cmdb_ci_business_capabilityGlideRecord>.
      * @summary Business Capabilities.
      * @type {$$rhino.Nilable<IGlideElement>}
-     * @memberof ideaFields
      */
 	business_capabilities: $$rhino.Nilable<IGlideElement>;
 
     /**
      * Business Unit
      * @type {$$rhino.Nilable<$$property.generic.Reference<business_unitFields, business_unitGlideRecord>>}
-     * @memberof ideaFields
      */
 	business_unit: $$rhino.Nilable<$$property.generic.Reference<business_unitFields, business_unitGlideRecord>>;
 
@@ -1776,14 +1713,12 @@ declare interface ideaFields extends taskFields {
      * Collaborators field. Internal type is "glide_list"; refers to $$property.generic.Reference<sys_userFields, sys_userGlideRecord>.
      * @summary Collaborators.
      * @type {$$rhino.Nilable<IGlideElement>}
-     * @memberof ideaFields
      */
 	collaborators: $$rhino.Nilable<IGlideElement>;
 
     /**
      * Demand
      * @type {$$rhino.Nilable<$$property.generic.Reference<dmn_demandFields, dmn_demandGlideRecord>>}
-     * @memberof ideaFields
      */
 	demand: $$rhino.Nilable<$$property.generic.Reference<dmn_demandFields, dmn_demandGlideRecord>>;
 
@@ -1791,14 +1726,12 @@ declare interface ideaFields extends taskFields {
      * Demand field. Internal type is "composite_field";.
      * @summary Demand.
      * @type {$$rhino.Nilable<$$property.Element>}
-     * @memberof ideaFields
      */
 	demand_composite: $$rhino.Nilable<$$property.Element>;
 
     /**
      * Department
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
-     * @memberof ideaFields
      */
 	department: $$rhino.Nilable<$$property.generic.Reference<cmn_departmentFields, cmn_departmentGlideRecord>>;
 
@@ -1806,7 +1739,6 @@ declare interface ideaFields extends taskFields {
      * Description field. Internal type is "html".
      * @summary Description.
      * @type {$$rhino.Nilable<$$property.Element>}
-     * @memberof ideaFields
      */
 	business_case: $$rhino.Nilable<$$property.Element>;
 
@@ -1814,7 +1746,6 @@ declare interface ideaFields extends taskFields {
      * Idea field. Internal type is "composite_field";.
      * @summary Idea.
      * @type {$$rhino.Nilable<$$property.Element>}
-     * @memberof ideaFields
      */
 	idea: $$rhino.Nilable<$$property.Element>;
 
@@ -1822,7 +1753,6 @@ declare interface ideaFields extends taskFields {
      * Impacted Business Units field. Internal type is "glide_list"; refers to $$property.generic.Reference<business_unitFields, business_unitGlideRecord>.
      * @summary Impacted Business Units.
      * @type {$$rhino.Nilable<IGlideElement>}
-     * @memberof ideaFields
      */
 	impacted_business_units: $$rhino.Nilable<IGlideElement>;
 
@@ -1830,14 +1760,12 @@ declare interface ideaFields extends taskFields {
      * Stage field. Internal type is "decoration";.
      * @summary Stage.
      * @type {$$rhino.Nilable<IGlideElement>}
-     * @memberof ideaFields
      */
 	stage: $$rhino.Nilable<IGlideElement>;
 
     /**
      * Submitted by
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
-     * @memberof dmn_demandFields
      */
 	submitter: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
