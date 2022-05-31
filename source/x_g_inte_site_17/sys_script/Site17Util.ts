@@ -1,6 +1,6 @@
 /// <reference path="../servicnowCommon.d.ts" />
 
-interface ISite17UtilBase extends ICustomClassBase<ISite17UtilBase, "Site17Util"> {
+interface ISite17UtilBase extends $$snClass.ICustomClassBase<ISite17UtilBase, "Site17Util"> {
     isDnContainedBy(sourceDN: string, containerDN: string): "true" | "false";
     getUsersContainerDN(): string;
     getGroupsContainerDN(): string;
@@ -12,12 +12,12 @@ interface ISite17UtilBase extends ICustomClassBase<ISite17UtilBase, "Site17Util"
     isSite17Group(sys_user_group: string): "true" | "false";
 }
 
-interface ISite17UtilPrototype extends ICustomClassPrototype0<ISite17UtilBase, ISite17UtilPrototype, "Site17Util">, ISite17UtilBase {
+interface ISite17UtilPrototype extends $$snClass.ICustomClassPrototype0<ISite17UtilBase, ISite17UtilPrototype, "Site17Util">, ISite17UtilBase {
 }
 
 interface ISite17Util extends Readonly<ISite17UtilBase> { }
 
-interface Site17UtilConstructor extends CustomClassConstructor0<ISite17UtilBase, ISite17UtilPrototype, ISite17Util> {
+interface Site17UtilConstructor extends $$snClass.CustomClassConstructor0<ISite17UtilBase, ISite17UtilPrototype, ISite17Util> {
     isUser(target: GlideRecord | GlideElementReference): boolean;
     isGroup(target: GlideRecord | GlideElementReference): boolean;
     isVip(target: GlideRecord | GlideElementReference): boolean;

@@ -143,10 +143,10 @@ interface IUserProfileComplianceInfo {
     /**
      * Compliance check results by name.
      *
-     * @type {({ [key: string]: IComplianceCheckResult } | undefined)}
+     * @type {(Record<string, IComplianceCheckResult> | undefined)}
      * @memberof IUserProfileComplianceInfo
      */
-    results?: { [key: string]: IComplianceCheckResult }
+    results?: Record<string, IComplianceCheckResult>
 
     /**
      * Compliance check result message.
@@ -225,7 +225,7 @@ interface IUserNotificationsResult {
      profileCompliance: IUserProfileComplianceInfo;
 }
 
-interface IProfileValidatorBase extends ICustomClassBase<IProfileValidatorBase, "ProfileValidator"> {
+interface IProfileValidatorBase extends $$snClass.ICustomClassBase<IProfileValidatorBase, "ProfileValidator"> {
     /**
      * Gets compliance check information for the user indicated by the 'sysparm_user_id' parameter.
      *
@@ -243,12 +243,12 @@ interface IProfileValidatorBase extends ICustomClassBase<IProfileValidatorBase, 
     getUserNotifications(): string;
 }
 
-interface IProfileValidatorPrototype extends ICustomClassPrototype0<IProfileValidatorBase, IProfileValidatorPrototype, "ProfileValidator">, IProfileValidatorBase {
+interface IProfileValidatorPrototype extends $$snClass.ICustomClassPrototype0<IProfileValidatorBase, IProfileValidatorPrototype, "ProfileValidator">, IProfileValidatorBase {
 }
 
 interface IProfileValidator extends Readonly<IProfileValidatorBase> { }
 
-interface ProfileValidatorConstructor extends CustomClassConstructor0<IProfileValidatorBase, IProfileValidatorPrototype, IProfileValidator> {
+interface ProfileValidatorConstructor extends $$snClass.CustomClassConstructor0<IProfileValidatorBase, IProfileValidatorPrototype, IProfileValidator> {
     /**
      * Indicates whether the user lookup result represents a fatal error.
      *

@@ -1,5 +1,5 @@
 /// <reference path="../servicnowCommon.d.ts" />
-interface ILocationApprovalBase extends ICustomClassBase<ILocationApprovalBase, "LocationApproval"> {
+interface ILocationApprovalBase extends $$snClass.ICustomClassBase<ILocationApprovalBase, "LocationApproval"> {
     /**
      * The target {@link GlideRecord}.
      *
@@ -27,11 +27,11 @@ interface ILocationApprovalBase extends ICustomClassBase<ILocationApprovalBase, 
      */
     getDefaultApprovalGroup(): GlideElementReference | undefined;
 }
-interface ILocationApprovalPrototype extends ICustomClassPrototype1<ILocationApprovalBase, ILocationApprovalPrototype, "LocationApproval", GlideRecord | GlideElementReference>, ILocationApprovalBase {
+interface ILocationApprovalPrototype extends $$snClass.ICustomClassPrototype1<ILocationApprovalBase, ILocationApprovalPrototype, "LocationApproval", GlideRecord | GlideElementReference>, ILocationApprovalBase {
 }
 interface ILocationApproval extends Readonly<ILocationApprovalBase> {
 }
-interface LocationApprovalConstructor extends CustomClassConstructor1<ILocationApprovalBase, ILocationApprovalPrototype, ILocationApproval, GlideRecord | GlideElementReference> {
+interface LocationApprovalConstructor extends $$snClass.CustomClassConstructor1<ILocationApprovalBase, ILocationApprovalPrototype, ILocationApproval, GlideRecord | GlideElementReference> {
     /**
      * Creates a new {@link LocationApproval} instance.
      *

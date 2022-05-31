@@ -1,6 +1,10 @@
 /// <reference path="rhino.d.ts" />
 
-
+/**
+ * Neither this namespace, nor types within it are defined in the server-side ServiceNow scripting environment.
+ * @summary Utility type definitions for Server-side ServiceNow scripting environment.
+ * @namespace $$rhino
+ */
 declare namespace $$element {
     /**
      * Defines members that are common to both GlideRecord and GlideElement objects
@@ -14,114 +18,167 @@ declare namespace $$element {
          * @returns {boolean} True if the field can be created, false otherwise.
          */
         canCreate(): boolean;
+
         /**
          * Indicates whether the user's role permits them to read the associated GlideRecord.
          * @memberof IDbObject
          * @returns {boolean} True if the field can be read, false otherwise.
          */
         canRead(): boolean;
+
         /**
          * Determines whether the user's role permits them to write to the associated GlideRecord.
          * @memberof IDbObject
          * @returns {boolean} True if the user can write to the field, false otherwise.
          */
         canWrite(): boolean;
+
         /**
          * Returns the value of the specified attribute from the dictionary.
          * @memberof IDbObject
          * @param {string} attributeName - Attribute name
          * @returns {string} Attribute value.
-         * @description 
          */
         getAttribute(attributeName: string): string;
+
         /**
-         * Returns the element's descriptor.
+         * Returns the element's descriptor.=
          * @memberof IDbObject
          * @returns {GlideElementDescriptor} Element's descriptor.
          */
         getED(): GlideElementDescriptor;
+
         /**
-         * Returns the object label.
+         * Returns the object label.=
          * @memberof IDbObject
          * @returns {string} Object label.
          */
         getLabel(): string;
+
         /**
-         * Returns for Element objects, returns the name of the table on which the field resides; Otherwise, retrieves the name of the table associated with the GlideRecord.
+         * Returns for Element objects, returns the name of the table on which the field resides; Otherwise, retrieves the name of the table associated with the GlideRecord.=
          * @memberof IDbObject
          * @returns {string} Name of the table. The returned value may be different from the table Class that the record is in. See Tables and Classes in the product documentation.
          */
         getTableName(): string;
     }
+
+    /**
+     * Represents a {@link IGlideElement} for a field with a specific value type.
+     * @export
+     * @interface IValueSpecific
+     * @extends {IGlideElement}
+     * @template V The type of value the current field represents.
+     * @template E The type of {@link IGlideElement} whose type is equivalant to the current field type.
+     * @template S The type of string value that can be compared with the current field value.
+     */
     export interface IValueSpecific<V, E extends IGlideElement, S extends string> extends IGlideElement {
+        /**
+         * Determines if the previous value of the current field matches the specified value.
+         *
+         * @param {(V | E | $$rhino.Nilable<S>)} o - The value to be compared to the previous value of the current field.
+         * @returns {boolean} true if the previous value matches; otherwise, false.
+         * @memberof IValueSpecific
+         */
         changesFrom(o: V | E | $$rhino.Nilable<S>): boolean;
+
+        /**
+         * Determines if the new value of the current field, after a change, matches the specified object.
+         *
+         * @param {(V | E | $$rhino.Nilable<S>)} o - The value to be compared to the new value of the current field.
+         * @returns {boolean} true if the new value matches; otherwise, false.
+         * @memberof IValueSpecific
+         */
         changesTo(o: V | E | $$rhino.Nilable<S>): boolean;
+
+        /**
+         * Sets the new value of a the current field.
+         *
+         * @param {(V | E | $$rhino.Nilable<S>)} obj - The value to be applied to the current field.
+         * @memberof IValueSpecific
+         */
         setValue(obj: V | E | $$rhino.Nilable<S>): void;
     }
-    export class StringBased<V extends string | number, E extends StringBased<V, E, S>, S extends string> extends Packages.java.lang.String implements IValueSpecific<V, E, S> {
+
+    /**
+     * Utility base type for {@link GlideElement}s for {@link IValueSpecific} fields with a specific string-based value type.
+     * @export
+     * @class StringBased
+     * @extends {Packages.java.lang.String}
+     * @implements {IValueSpecific<V, E, S>}
+     * @template V The type of value the current field represents.
+     * @template E The type of {@link IGlideElement} whose underlying field type is equivalant to the current field type.
+     * @template S The type of string or number value that can represent the underlying field field value.
+     */
+    export class StringBased<V extends string | number, E extends IValueSpecific<V, E, S>, S extends string> extends Packages.java.lang.String implements IValueSpecific<V, E, S> {
         /**
          * Determines if the user's role permits the creation of new records in this field.
          * @memberof IDbObject
          * @returns {boolean} True if the field can be created, false otherwise.
          */
         canCreate(): boolean;
+
         /**
          * Indicates whether the user's role permits them to read the associated GlideRecord.
          * @memberof IDbObject
          * @returns {boolean} True if the field can be read, false otherwise.
          */
         canRead(): boolean;
+
         /**
          * Determines whether the user's role permits them to write to the associated GlideRecord.
          * @memberof IDbObject
          * @returns {boolean} True if the user can write to the field, false otherwise.
          */
         canWrite(): boolean;
+
         /**
          * Determines if the current field has been modified. This functionality is available for all available data types, except Journal fields.
          * @memberof GlideElement
          * @returns {boolean} True if the fields have been changed, false if the field has not.
-         * @description 
          */
         changes(): boolean;
+
         /**
          * Determines if the previous value of the current field matches the specified object.
          * @memberof GlideElement
          * @param {V | E | $$property.Nilable<S>} o - An object value to check against the previous value of the current field.
          * @returns {boolean} True if the previous value matches, false if it does not.
-         * @description 
          */
         changesFrom(o: V | E | $$rhino.Nilable<S>): boolean;
+
         /**
          * Determines if the new value of a field, after a change, matches the specified object.
          * @memberof GlideElement
          * @param {V | E | $$property.Nilable<S>} o - An object value to check against the new value of the current field.
          * @returns {boolean} True if the previous value matches, false if it does not.
-         * @description 
          */
         changesTo(o: V | E | $$rhino.Nilable<S>): boolean;
+
         /**
-         * Returns the number of milliseconds since January 1, 1970, 00:00:00 GMT for a duration field. Does not require the creation of a GlideDateTime object because the duration field is already a GlideDateTime object.
+         * Returns the number of milliseconds since January 1, 1970, 00:00:00 GMT for a duration field. Does not require the creation of a GlideDateTime object because the duration field is already
+         * a GlideDateTime object.
          * @memberof GlideElement
          * @returns {number} Number of milliseconds since January 1, 1970, 00:00:00 GMT.
          */
         dateNumericValue(): number;
+
         /**
          * Returns the value of the specified attribute from the dictionary.
          * @memberof IDbObject
          * @param {string} attributeName - Attribute name
          * @returns {string} Attribute value.
-         * @description 
          */
         getAttribute(attributeName: string): string;
+
         /**
          * Returns the Boolean value of the specified attribute from the dictionary.
          * @memberof GlideElement
          * @param {string} attributeName - Attribute name
          * @returns {boolean} Boolean value of the attribute. Returns false if the attribute does not exist.
-         * @description 
          */
         getBooleanAttribute(attributeName: string): boolean;
+
         /**
          * Generates a choice list for a field.
          * @memberof GlideElement
@@ -129,19 +186,21 @@ declare namespace $$element {
          * @returns {Array<*>} An array list of choices.
          */
         getChoices(dependent?: string): any[];
+
         /**
          * Returns the choice label for the current choice.
          * @memberof GlideElement
          * @returns {string} The selected choice's label.
-         * @description 
          */
         getChoiceValue(): string;
+
         /**
          * Returns the clear text value for Password (2 way encrypted) fields in scoped applications.
          * @memberof GlideElement
          * @returns {string} The clear text password.
          */
         getDecryptedValue(): string;
+
         /**
          * Gets the formatted display value of the field.
          * @memberof GlideElement
@@ -149,18 +208,21 @@ declare namespace $$element {
          * @returns {string} The display value of the field.
          */
         getDisplayValue(maxCharacters?: number): string;
+
         /**
          * Returns the element's descriptor.
          * @memberof IDbObject
          * @returns {GlideElementDescriptor} Element's descriptor.
          */
         getED(): GlideElementDescriptor;
+
         /**
          * Returns the phone number in international format.
          * @memberof GlideElement
          * @returns {string} The phone number in international format.
          */
         getGlobalDisplayValue(): string;
+
         /**
          * Returns the HTML value of a field.
          * @memberof GlideElement
@@ -168,147 +230,537 @@ declare namespace $$element {
          * @returns {string} HTML value for the field.
          */
         getHTMLValue(maxChars?: number): string;
+
         /**
          * Returns either the most recent journal entry or all journal entries.
          * @memberof GlideElement
          * @param {number} mostRecent - If 1, returns the most recent entry. If -1, returns all journal entries.
-         * @returns {string} For the most recent entry, returns a string that contains the field label, timestamp, and user display name of the journal entry.For all journal entries, returns the same information for all journal entries ever entered as a single string with each entry delimited by "\n\n".
+         * @returns {string} For the most recent entry, returns a string that contains the field label, timestamp, and user display name of the journal entry.For all journal entries,
+         * returns the same information for all journal entries ever entered as a single string with each entry delimited by "\n\n".
          */
         getJournalEntry(mostRecent: number): string;
+
         /**
          * Returns the object label.
          * @memberof IDbObject
          * @returns {string} Object label.
          */
         getLabel(): string;
+
         /**
          * Returns the name of the field.
          * @memberof GlideElement
          * @returns {string} Field name.
          */
         getName(): string;
+
         /**
          * Returns the name of the table on which the field resides.
          * @memberof IDbObject
          * @returns {string} Name of the table. The returned value may be different from the table Class that the record is in. See Tables and Classes in the product documentation.
          */
         getTableName(): string;
+
         /**
          * Determines if a field is null.
          * @memberof GlideElement
          * @returns {boolean} True if the field is null or an empty string, false if not.
          */
         nil(): boolean;
+
         /**
          * Sets the value of a date/time element to the specified number of milliseconds since January 1, 1970 00:00:00 GMT.
          * @memberof GlideElement
          * @param {number} milliseconds - Number of milliseconds since 1/1/1970
-         * @description 
          */
         setDateNumericValue(milliseconds: number): void;
+
         /**
          * Sets the display value of the field.
          * @memberof GlideElement
          * @param {*} value - The value to set for the field.
          */
         setDisplayValue(value: any): void;
+
         /**
          * Adds an error message. Available in Fuji patch 3.
          * @memberof GlideElement
          * @param {string} errorMessage - The error message.
          */
         setError(errorMessage: string): void;
+
         /**
          * Sets the field to the specified phone number.
          * @memberof GlideElement
          * @param {*} phoneNumber - The phone number to set. This can be in either the international or local format.
          * @param {boolean} strict - When true, specifies that the number specified must match the correct format. When false, the system attempts to correct an improperly formatted phone number.
          * @returns {boolean} True if the value was set.
-         * @description 
          */
         setPhoneNumber(phoneNumber: any, strict: boolean): boolean;
+
         /**
          * Sets the value of a field.
          * @memberof GlideElement
          * @param {V | E | $$property.Nilable<S>} value - Object value to set the field to.
-         * @description 
          */
         setValue(value: V | E | $$rhino.Nilable<S>): void;
     }
+
+    /**
+     * Represents a {@link GlideElement} with a specific string type.
+     * @export
+     * @typedef {(IValueSpecific<S, GlideElement, S> & GlideElement)} Element<S>
+     * @template S - The type of string value that can represent the underlying field field value.
+     */
     export type Element<S extends string> = IValueSpecific<S, GlideElement, S> & GlideElement;
+
+    /**
+     * Represents a {@link GlideElementNumeric} with a specific numerical type.
+     * @export
+     * @typedef {(IValueSpecific<N, GlideElementNumeric, S> & GlideElementNumeric)} Numeric<N, S>
+     * @template N - The type of underlying numerical field value.
+     * @template S - The type of string value that can represent the underlying field field value.
+     */
     export type Numeric<N extends number, S extends string> = IValueSpecific<N, GlideElementNumeric, S> & GlideElementNumeric;
+
+    /**
+     * Represents a {@link GlideElementGlideObject} with a specific string type.
+     * @export
+     * @typedef {(IValueSpecific<S, GlideElementGlideObject, S> & GlideElementGlideObject)} GlideObject<S>
+     * @template S - The type of string value that can represent the underlying field field value.
+     */
     export type GlideObject<S extends string> = IValueSpecific<S, GlideElementGlideObject, S> & GlideElementGlideObject;
+
+    /**
+     * Represents a {@link GlideElementSysClassName} with a specific string type.
+     * @export
+     * @typedef {(IValueSpecific<S, GlideElementSysClassName, S> & GlideElementSysClassName)} SysClassName<S>
+     * @template S - The type of string value that can represent the underlying field field value.
+     */
     export type SysClassName<S extends string> = IValueSpecific<S, GlideElementSysClassName, S> & GlideElementSysClassName;
+
+    /**
+     * Represents a {@link GlideElementTranslatedField} with a specific string type.
+     * @export
+     * @typedef {(IValueSpecific<S, GlideElementTranslatedField, S> & GlideElementTranslatedField)} TranslatedField<S>
+     * @template S - The type of string value that can represent the underlying field field value.
+     */
     export type TranslatedField<S extends string> = IValueSpecific<S, GlideElementTranslatedField, S> & GlideElementTranslatedField;
+
+    /**
+     * Represents a {@link GlideElementConditions} with a specific string type.
+     * @typedef {(IValueSpecific<S, GlideElementConditions, S> & GlideElementConditions)} Conditions<S>
+     * @template S - The type of string value that can represent the underlying field field value.
+     */
     export type Conditions<S extends string> = IValueSpecific<S, GlideElementConditions, S> & GlideElementConditions;
+
+    /**
+     * Represents a {@link GlideElementDocumentation} with a specific string type.
+     * @export
+     * @typedef {(IValueSpecific<S, GlideElementDocumentation, S> & GlideElementDocumentation)} Documentation<S>
+     * @template S - The type of string value that can represent the underlying field field value.
+     */
     export type Documentation<S extends string> = IValueSpecific<S, GlideElementDocumentation, S> & GlideElementDocumentation;
+
+    /**
+     * Represents a {@link GlideElementScript} with a specific string type.
+     * @export
+     * @typedef {(IValueSpecific<S, GlideElementScript, S> & GlideElementScript)} Script<S>
+     * @template S - The type of string value that can represent the underlying field field value.
+     */
     export type Script<S extends string> = IValueSpecific<S, GlideElementScript, S> & GlideElementScript;
+
+    /**
+     * Represents a {@link GlideElementUserImage} with a specific string type.
+     * @export
+     * @typedef {(IValueSpecific<S, GlideElementUserImage, S> & GlideElementUserImage)} UserImage<S>
+     * @template S - The type of string value that can represent the underlying field field value.
+     */
     export type UserImage<S extends string> = IValueSpecific<S, GlideElementUserImage, S> & GlideElementUserImage;
+
+    /**
+     * Represents a {@link GlideElementPassword2} with a specific string type.
+     * @export
+     * @typedef {(IValueSpecific<S, GlideElementPassword2, S> & GlideElementPassword2)} Password2<S>
+     * @template S - The type of string value that can represent the underlying field field value.
+     */
     export type Password2<S extends string> = IValueSpecific<S, GlideElementPassword2, S> & GlideElementPassword2;
-    export type Counter<N extends number, S extends string> = IValueSpecific<N, GlideElementNumeric, S> & GlideElementNumeric;
+
+    /**
+     * Represents a {@link GlideElementCounter} with a specific string type.
+     * @export
+     * @typedef {(IValueSpecific<S, GlideElementCounter, S> & GlideElementCounter)} Counter<S>
+     * @template S - The type of string value that can represent the underlying field field value.
+     */
+    export type Counter<N extends number, S extends string> = IValueSpecific<N, GlideElementCounter, S> & GlideElementCounter;
+
+    /**
+     * Represents a {@link IGlideElement} that references a specific {@link GlideRecord} type.
+     * @export
+     * @interface IReference
+     * @extends {IValueSpecific<R, Reference<P, R>, string>}
+     * @template P The properties shared by the {@link IValueSpecific} type and the {@link GlideRecord} type it references.
+     * @template R - The type of {@link GlideRecord} being referenced.
+     */
     export interface IReference<P extends IGlideTableProperties, R extends P & GlideRecord> extends IValueSpecific<R, Reference<P, R>, string> {
         changesFrom(o: R | Reference<P, R> | $$rhino.Nilable<string>): boolean;
+
         changesTo(o: R | Reference<P, R> | $$rhino.Nilable<string>): boolean;
+
         getReferenceTable(): string;
+
         getRefRecord(): R | null | undefined;
+
         setValue(obj: R | Reference<P, R> | $$rhino.Nilable<string>): void;
     }
+
+    /**
+     * Represents a {@link GlideElementReference} with a specific reference type.
+     * @export
+     * @typedef {(IReference<P, R> & GlideElementReference & P)} Reference<P, R>
+     * @template P - The properties shared by the {@link GlideElementReference} type and the {@link GlideRecord} type it references.
+     * @template R - The type of {@link GlideRecord} being referenced.
+     */
     export type Reference<P extends IGlideTableProperties, R extends P & GlideRecord> = IReference<P, R> & GlideElementReference & P;
 }
 
+/**
+ * Utility type definitions for Server-side ServiceNow scripting environment for discrimated unions combining element objects types with their underlying value type.
+ * Neither this namespace, nor types within it are defined in the server-side ServiceNow scripting environment.
+ * @summary Glide object property combined type definitions.
+ * @namespace $$property
+ */
 declare namespace $$property {
+    /**
+     * Represents a {@link GlideElementBoolean} field that can be coerced as a {@link $$rhino.BooleanLike} value.
+     * @export
+     * @typedef {(GlideElementBoolean | $$rhino.BooleanLike)} Boolean
+     */
     export type Boolean = GlideElementBoolean | $$rhino.BooleanLike;
+
+    /**
+     * Represents a {@link GlideElementBreakdownElement} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementBreakdownElement | $$rhino.String)} BreakdownElement
+     */
     export type BreakdownElement = GlideElementBreakdownElement | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElement} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElement | $$rhino.String)} Element
+     */
     export type Element = GlideElement | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementCompressed} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementCompressed | $$rhino.String)} Compressed
+     */
     export type Compressed = GlideElementCompressed | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementConditions} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementConditions | $$rhino.String)} Conditions
+     */
     export type Conditions = GlideElementConditions | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementCounter} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementCounter | $$rhino.NumberLike<number, string>)} Counter
+     */
     export type Counter = GlideElementCounter | $$rhino.NumberLike<number, string>;
+
+    /**
+     * Represents a {@link GlideElementCurrency} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementCurrency | $$rhino.NumberLike<number, string>)} Currency
+     */
     export type Currency = GlideElementCurrency | $$rhino.NumberLike<number, string>;
+
+    /**
+     * Represents a {@link GlideElementDataObject} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementDataObject | $$rhino.String)} DataObject
+     */
     export type DataObject = GlideElementDataObject | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementDocumentation} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementDocumentation | $$rhino.String)} Documentation
+     */
     export type Documentation = GlideElementDocumentation | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementDocumentId} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementDocumentId | $$rhino.String)} DocumentId
+     */
     export type DocumentId = GlideElementDocumentId | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementDomainId} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementDomainId | $$rhino.String)} DomainId
+     */
     export type DomainId = GlideElementDomainId | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementFullUTF8} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementFullUTF8 | $$rhino.String)} FullUTF8
+     */
     export type FullUTF8 = GlideElementFullUTF8 | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementGlideObject} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementGlideObject | $$rhino.String)} GlideObject
+     */
     export type GlideObject = GlideElementGlideObject | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementGlideVar} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementGlideVar | $$rhino.String)} GlideVar
+     */
     export type GlideVar = GlideElementGlideVar | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementIcon} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementIcon | $$rhino.String)} Icon
+     */
     export type Icon = GlideElementIcon | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementInternalType} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementInternalType | $$rhino.String)} InternalType
+     */
     export type InternalType = GlideElementInternalType | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementNumeric} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementNumeric | $$rhino.NumberLike<number, string>)} Numeric
+     */
     export type Numeric = GlideElementNumeric | $$rhino.NumberLike<number, string>;
+
+    /**
+     * Represents a {@link GlideElementPassword} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementPassword | $$rhino.String)} Password
+     */
     export type Password = GlideElementPassword | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementPassword2} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementPassword2 | $$rhino.String)} Password2
+     */
     export type Password2 = GlideElementPassword2 | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementPrice} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementPrice | $$rhino.NumberLike<number, string>)} Price
+     */
     export type Price = GlideElementPrice | $$rhino.NumberLike<number, string>;
+
+    /**
+     * Represents a {@link GlideElementReference} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementReference | $$rhino.String)} Reference
+     */
     export type Reference = GlideElementReference | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementScript} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementScript | $$rhino.String)} Script
+     */
     export type Script = GlideElementScript | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementShortFieldName} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementShortFieldName | $$rhino.String)} ShortFieldName
+     */
     export type ShortFieldName = GlideElementShortFieldName | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementShortTableName} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementShortTableName | $$rhino.String)} ShortTableName
+     */
     export type ShortTableName = GlideElementShortTableName | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementSourceId} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementSourceId | $$rhino.String)} SourceId
+     */
     export type SourceId = GlideElementSourceId | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementSourceName} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementSourceName | $$rhino.String)} SourceName
+     */
     export type SourceName = GlideElementSourceName | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementSourceTable} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementSourceTable | $$rhino.String)} SourceTable
+     */
     export type SourceTable = GlideElementSourceTable | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementSysClassName} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementSysClassName | $$rhino.String)} SysClassName
+     */
     export type SysClassName = GlideElementSysClassName | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementTranslatedField} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementTranslatedField | $$rhino.String)} TranslatedField
+     */
     export type TranslatedField = GlideElementTranslatedField | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementTranslatedHTML} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementTranslatedHTML | $$rhino.String)} TranslatedHTML
+     */
     export type TranslatedHTML = GlideElementTranslatedHTML | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementTranslatedText} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementTranslatedText | $$rhino.String)} TranslatedText
+     */
     export type TranslatedText = GlideElementTranslatedText | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementURL} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementURL | $$rhino.String)} URL
+     */
     export type URL = GlideElementURL | $$rhino.String;
+
+    /**
+     * Represents a {@link GlideElementUserImage} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementUserImage | $$rhino.String)} UserImage
+     */
     export type UserImage = GlideElementUserImage | $$rhino.String;
-    export type Variables = GlideElementVariables | { [key: string]: any };
+
+    /**
+     * Represents a {@link GlideElementVariables} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementVariables | Record<string, any>)} Variables
+     */
+    export type Variables = GlideElementVariables | Record<string, any>;
+
+    /**
+     * Represents a {@link GlideElementWikiText} field that can be coerced as a {@link $$rhino.String} value.
+     * @export
+     * @typedef {(GlideElementWikiText | $$rhino.String)} WikiText
+     */
     export type WikiText = GlideElementWikiText | $$rhino.String;
+
     export namespace generic {
+        /**
+         * Represents a {@link GlideElement} field that contains a specific string value type.
+         * @typedef {($$element.Element<S> | S)} Element<S>
+         * @template S - The type of string value that can represent the underlying field field value.
+         */
         export type Element<S extends string> = $$element.Element<S> | S;
+
+        /**
+         * Represents a {@link GlideElementNumeric} field that contains a specific string value type.
+         * @typedef {($$element.Numeric<S> | S)} Numeric<N, S>
+         * @template N - The type of underlying field field value.
+         * @template S - The type of string value that can represent the underlying field field value.
+         */
         export type Numeric<N extends number, S extends string> = $$element.Numeric<N, S> | number | S;
-        export type GlideObject<S extends string> = $$element.Element<S> | S;
-        export type SysClassName<S extends string> = $$element.Element<S> | S;
-        export type TranslatedField<S extends string> = $$element.Element<S> | S;
-        export type Conditions<S extends string> = $$element.Element<S> | S;
-        export type Documentation<S extends string> = $$element.Element<S> | S;
-        export type Script<S extends string> = $$element.Element<S> | S;
-        export type UserImage<S extends string> = $$element.Element<S> | S;
-        export type Password2<S extends string> = $$element.Element<S> | S;
-        export type Reference<P extends IGlideTableProperties, R extends P & GlideRecord> = $$element.Reference<P, R> | R | $$rhino.String;
+
+        /**
+         * Represents a {@link GlideElementGlideObject} field that contains a specific string value type.
+         * @typedef {($$element.GlideObject<S> | S)} GlideObject<S>
+         * @template S - The type of string value that can represent the underlying field field value.
+         */
+        export type GlideObject<S extends string> = $$element.GlideObject<S> | S;
+
+        /**
+         * Represents a {@link GlideElementSysClassName} field that contains a specific string value type.
+         * @typedef {($$element.SysClassName<S> | S)} SysClassName<S>
+         * @template S - The type of string value that can represent the underlying field field value.
+         */
+        export type SysClassName<S extends string> = $$element.SysClassName<S> | S;
+
+        /**
+         * Represents a {@link GlideElementTranslatedField} field that contains a specific string value type.
+         * @typedef {($$element.TranslatedField<S> | S)} TranslatedField<S>
+         * @template S - The type of string value that can represent the underlying field field value.
+         */
+        export type TranslatedField<S extends string> = $$element.TranslatedField<S> | S;
+
+        /**
+         * Represents a {@link GlideElementConditions} field that contains a specific string value type.
+         * @typedef {($$element.Conditions<S> | S)} Conditions<S>
+         * @template S - The type of string value that can represent the underlying field field value.
+         */
+        export type Conditions<S extends string> = $$element.Conditions<S> | S;
+
+        /**
+         * Represents a {@link GlideElementDocumentation} field that contains a specific string value type.
+         * @typedef {($$element.Documentation<S> | S)} Documentation<S>
+         * @template S - The type of string value that can represent the underlying field field value.
+         */
+        export type Documentation<S extends string> = $$element.Script<S> | S;
+
+        /**
+         * Represents a {@link GlideElementScript} field that contains a specific string value type.
+         * @typedef {($$element.Script<S> | S)} Script<S>
+         * @template S - The type of string value that can represent the underlying field field value.
+         */
+        export type Script<S extends string> = $$element.Script<S> | S;
+
+        /**
+         * Represents a {@link GlideElementUserImage} field that contains a specific string value type.
+         * @typedef {($$element.UserImage<S> | S)} UserImage<S>
+         * @template S - The type of string value that can represent the underlying field field value.
+         */
+        export type UserImage<S extends string> = $$element.UserImage<S> | S;
+
+        /**
+         * Represents a {@link GlideElementPassword2} field that contains a specific string value type.
+         * @typedef {($$element.Password2<S> | S)} Password2<S>
+         * @template S - The type of string value that can represent the underlying field field value.
+         */
+        export type Password2<S extends string> = $$element.Password2<S> | S;
+
+        /**
+         * Represents a {@link GlideElementReference} field that references a specific {@link GlideRecord} type that can be coerced as its underlying value type.
+         * @typedef {($$element.Reference<P, R> | P)} Reference<P, R>
+         * @template P - The properties shared by the {@link GlideElementReference} type and the {@link GlideRecord} type it references.
+         * @template R - The type of {@link GlideRecord} being referenced.
+         */
+        export type Reference<P extends IGlideTableProperties, R extends P & GlideRecord> = $$element.Reference<P, R> | P;
     }
 }
 
 /**
  * The Scoped GlideElement API provides a number of convenient script methods for dealing with fields and their values. Scoped GlideElement methods are available for the fields of the current GlideRecord.
+ * @summary Interface representing members common to Glide elements.
  * @interface IGlideElement
  */
 declare interface IGlideElement extends $$element.IDbObject {
@@ -316,39 +768,41 @@ declare interface IGlideElement extends $$element.IDbObject {
      * Determines if the current field has been modified. This functionality is available for all available data types, except Journal fields.
      * @memberof GlideElement
      * @returns {boolean} True if the fields have been changed, false if the field has not.
-     * @description 
      */
     changes(): boolean;
+
     /**
      * Determines if the previous value of the current field matches the specified object.
      * @memberof GlideElement
      * @param {*} o - An object value to check against the previous value of the current field.
      * @returns {boolean} True if the previous value matches, false if it does not.
-     * @description 
      */
     changesFrom(o: any): boolean;
+
     /**
      * Determines if the new value of a field, after a change, matches the specified object.
      * @memberof GlideElement
      * @param {*} o - An object value to check against the new value of the current field.
      * @returns {boolean} True if the previous value matches, false if it does not.
-     * @description 
      */
     changesTo(o: any): boolean;
+
     /**
-     * Returns the number of milliseconds since January 1, 1970, 00:00:00 GMT for a duration field. Does not require the creation of a GlideDateTime object because the duration field is already a GlideDateTime object.
+     * Returns the number of milliseconds since January 1, 1970, 00:00:00 GMT for a duration field. Does not require the creation of a GlideDateTime object because the duration field is already
+     * a GlideDateTime object.
      * @memberof GlideElement
      * @returns {number} Number of milliseconds since January 1, 1970, 00:00:00 GMT.
      */
     dateNumericValue(): number;
+
     /**
      * Returns the Boolean value of the specified attribute from the dictionary.
      * @memberof GlideElement
      * @param {string} attributeName - Attribute name
      * @returns {boolean} Boolean value of the attribute. Returns false if the attribute does not exist.
-     * @description 
      */
     getBooleanAttribute(attributeName: string): boolean;
+
     /**
      * Generates a choice list for a field.
      * @memberof GlideElement
@@ -356,19 +810,21 @@ declare interface IGlideElement extends $$element.IDbObject {
      * @returns {Array<*>} An array list of choices.
      */
     getChoices(dependent?: string): any[];
+
     /**
      * Returns the choice label for the current choice.
      * @memberof GlideElement
      * @returns {string} The selected choice's label.
-     * @description 
      */
     getChoiceValue(): string;
+
     /**
      * Returns the clear text value for Password (2 way encrypted) fields in scoped applications.
      * @memberof GlideElement
      * @returns {string} The clear text password.
      */
     getDecryptedValue(): string;
+
     /**
      * Gets the formatted display value of the field.
      * @memberof GlideElement
@@ -376,12 +832,14 @@ declare interface IGlideElement extends $$element.IDbObject {
      * @returns {string} The display value of the field.
      */
     getDisplayValue(maxCharacters?: number): string;
+
     /**
      * Returns the phone number in international format.
      * @memberof GlideElement
      * @returns {string} The phone number in international format.
      */
     getGlobalDisplayValue(): string;
+
     /**
      * Returns the HTML value of a field.
      * @memberof GlideElement
@@ -389,64 +847,71 @@ declare interface IGlideElement extends $$element.IDbObject {
      * @returns {string} HTML value for the field.
      */
     getHTMLValue(maxChars?: number): string;
+
     /**
      * Returns either the most recent journal entry or all journal entries.
      * @memberof GlideElement
      * @param {number} mostRecent - If 1, returns the most recent entry. If -1, returns all journal entries.
-     * @returns {string} For the most recent entry, returns a string that contains the field label, timestamp, and user display name of the journal entry.For all journal entries, returns the same information for all journal entries ever entered as a single string with each entry delimited by "\n\n".
+     * @returns {string} For the most recent entry, returns a string that contains the field label, timestamp, and user display name of the journal entry.For all journal entries,
+     * returns the same information for all journal entries ever entered as a single string with each entry delimited by "\n\n".
      */
     getJournalEntry(mostRecent: number): string;
+
     /**
      * Returns the name of the field.
      * @memberof GlideElement
      * @returns {string} Field name.
      */
     getName(): string;
+
     /**
      * Determines if a field is null.
      * @memberof GlideElement
      * @returns {boolean} True if the field is null or an empty string, false if not.
      */
     nil(): boolean;
+
     /**
      * Sets the value of a date/time element to the specified number of milliseconds since January 1, 1970 00:00:00 GMT.
      * @memberof GlideElement
      * @param {number} milliseconds - Number of milliseconds since 1/1/1970
-     * @description 
      */
     setDateNumericValue(milliseconds: number): void;
+
     /**
      * Sets the display value of the field.
      * @memberof GlideElement
      * @param {*} value - The value to set for the field.
      */
     setDisplayValue(value: any): void;
+
     /**
      * Adds an error message. Available in Fuji patch 3.
      * @memberof GlideElement
      * @param {string} errorMessage - The error message.
      */
     setError(errorMessage: string): void;
+
     /**
      * Sets the field to the specified phone number.
      * @memberof GlideElement
      * @param {*} phoneNumber - The phone number to set. This can be in either the international or local format.
      * @param {boolean} strict - When true, specifies that the number specified must match the correct format. When false, the system attempts to correct an improperly formatted phone number.
      * @returns {boolean} True if the value was set.
-     * @description 
      */
     setPhoneNumber(phoneNumber: any, strict: boolean): boolean;
+
     /**
      * Sets the value of a field.
      * @memberof GlideElement
      * @param {*} value - Object value to set the field to.
-     * @description 
      */
     setValue(value: any): void;
 }
 
 declare interface IGlideAjax {
     getParameter(name: string): string;
+
     newItem(name: string): IGlideAjaxXml;
 }
 
@@ -460,357 +925,367 @@ declare namespace global {
     export var AbstractAjaxProcessor: IGlideAjax;
 }
 
-//#region Class.create
-
-//#region Base definitions
-
-declare interface ICustomClassBase<B extends ICustomClassBase<B, N>, N extends string> {
-    /**
-     * The type name of the class.
-     * @type {N}
-     * @memberof ICustomClass
-     */
-    type: N;
-}
-
-// #endregion
-
-//#region Prototype definitions
-
 /**
- * Prototype for objects whose constructor has no arguments.
- * @interface ICustomClassPrototype0
- * @template B - The base type shared by the prototype and the object instance.
- * @template P - The type of prototype (self-referencing type)
- * @template N - The value of the name property for objects constructed with this prototype.
+ * Neither this namespace, nor types within it are defined in the server-side ServiceNow scripting environment.
+ * @summary Type definitions for Server-side object definitions.
+ * @namespace $$snClass
  */
-declare interface ICustomClassPrototype0<B extends ICustomClassBase<B, N>, P extends B & ICustomClassPrototype0<B, P, N>, N extends string> extends ICustomClassBase<B, N> {
+declare namespace $$snClass {
     /**
-     * Called by {@see Class#create} to initialize the newly instantiated object
-     * @this {P} The current "this" object.
-     * @memberof ICustomClassPrototype0
+     * Base interface for custom class definitions
+     * @export
+     * @interface ICustomClassBase
+     * @template B - The base class type.
+     * @template N - The name of the custom class type.
      */
-    initialize(this: P): void;
+    export interface ICustomClassBase<B extends ICustomClassBase<B, N>, N extends string> {
+        /**
+         * The type name of the class.
+         * @type {N}
+         * @memberof ICustomClass
+         */
+        type: N;
+    }
+
+    //#region Prototype definitions
+
+    /**
+     * Prototype for objects whose constructor has no arguments.
+     * @interface ICustomClassPrototype0
+     * @template B - The base type shared by the prototype and the object instance.
+     * @template P - The type of prototype (self-referencing type)
+     * @template N - The value of the name property for objects constructed with this prototype.
+     */
+     export interface ICustomClassPrototype0<B extends ICustomClassBase<B, N>, P extends B & ICustomClassPrototype0<B, P, N>, N extends string> extends ICustomClassBase<B, N> {
+        /**
+         * Called by {@see Class#create} to initialize the newly instantiated object
+         * @this {P} The current "this" object.
+         * @memberof ICustomClassPrototype0
+         */
+        initialize(this: P): void;
+    }
+
+    /**
+     * Prototype for objects whose constructor has one argument.
+     * @interface ICustomClassPrototype1
+     * @template B - The base type shared by the prototype and the object instance.
+     * @template P - The type of prototype (self-referencing type)
+     * @template N - The value of the type property for objects constructed with this prototype.
+     * @template A - The argument type.
+     */
+     export interface ICustomClassPrototype1<B extends ICustomClassBase<B, N>, P extends B & ICustomClassPrototype1<B, P, N, A>, N extends string, A> extends ICustomClassBase<B, N> {
+        /**
+         * Called by {@see Class#create} to initialize the newly instantiated object
+         * @this {P} The current "this" object.
+         * @param {A} arg - The argument provided to the constructor.
+         * @memberof ICustomClassPrototype1
+         */
+        initialize(this: P, arg: A): void;
+    }
+
+    /**
+     * Prototype for objects whose constructor has 2 arguments.
+     * @interface ICustomClassPrototype2
+     * @template B - The base type shared by the prototype and the object instance.
+     * @template P - The type of prototype (self-referencing type)
+     * @template N - The value of the type property for objects constructed with this prototype.
+     * @template A0 - The first argument type.
+     * @template A1 - The second argument type.
+     */
+     export interface ICustomClassPrototype2<B extends ICustomClassBase<B, N>, P extends B & ICustomClassPrototype2<B, P, N, A0, A1>, N extends string, A0, A1> extends ICustomClassBase<B, N> {
+        /**
+         * Called by {@see Class#create} to initialize the newly instantiated object
+         * @this {P} The current "this" object.
+         * @param {A0} arg0 - The first argument provided to the constructor.
+         * @param {A1} arg1 - The second argument provided to the constructor.
+         * @memberof ICustomClassPrototype2
+         */
+        initialize(this: P, arg0: A0, arg1: A1): void;
+    }
+
+    /**
+     * Prototype for objects whose constructor has 3 arguments.
+     * @interface ICustomClassPrototype3
+     * @template B - The base type shared by the prototype and the object instance.
+     * @template P - The type of prototype (self-referencing type)
+     * @template N - The value of the type property for objects constructed with this prototype.
+     * @template A0 - The first argument type.
+     * @template A1 - The second argument type.
+     * @template A2 - The third argument type.
+     */
+     export interface ICustomClassPrototype3<B extends ICustomClassBase<B, N>, P extends B & ICustomClassPrototype3<B, P, N, A0, A1, A2>, N extends string, A0, A1, A2> extends ICustomClassBase<B, N> {
+        /**
+         * Called by {@see Class#create} to initialize the newly instantiated object
+         * @this {P} The current "this" object.
+         * @param {A0} arg0 - The first argument provided to the constructor.
+         * @param {A1} arg1 - The second argument provided to the constructor.
+         * @param {A2} arg2 - The third argument provided to the constructor.
+         * @memberof ICustomClassPrototype3
+         */
+        initialize(this: P, arg0: A0, arg1: A1, arg2: A2): void;
+    }
+
+    /**
+     * Prototype for objects whose constructor has 4 arguments.
+     * @interface ICustomClassPrototype4
+     * @template B - The base type shared by the prototype and the object instance.
+     * @template P - The type of prototype (self-referencing type)
+     * @template N - The value of the type property for objects constructed with this prototype.
+     * @template A0 - The first argument type.
+     * @template A1 - The second argument type.
+     * @template A2 - The third argument type.
+     * @template A3 - The fourth argument type.
+     */
+     export interface ICustomClassPrototype4<B extends ICustomClassBase<B, N>, P extends B & ICustomClassPrototype4<B, P, N, A0, A1, A2, A3>, N extends string, A0, A1, A2, A3> extends ICustomClassBase<B, N> {
+        /**
+         * Called by {@see Class#create} to initialize the newly instantiated object
+         * @this {P} The current "this" object.
+         * @param {A0} arg0 - The first argument provided to the constructor.
+         * @param {A1} arg1 - The second argument provided to the constructor.
+         * @param {A2} arg2 - The third argument provided to the constructor.
+         * @param {A3} arg3 - The fourth argument provided to the constructor.
+         * @memberof ICustomClassPrototype4
+         */
+        initialize(this: P, arg0: A0, arg1: A1, arg2: A2, arg3: A3): void;
+    }
+
+    /**
+     * Prototype for objects whose constructor has a variable nubmer of arguments.
+     * @interface ICustomClassPrototypeN
+     * @template B - The base type shared by the prototype and the object instance.
+     * @template P - The type of prototype (self-referencing type)
+     * @template N - The value of the type property for objects constructed with this prototype.
+     */
+     export interface ICustomClassPrototypeN<B extends ICustomClassBase<B, N>, P extends B & ICustomClassPrototypeN<B, P, N>, N extends string> extends ICustomClassBase<B, N> {
+        /**
+         * Called by {@see Class#create} to initialize the newly instantiated object
+         * @this {P} The current "this" object.
+         * @param {...any[]} args- The arguments provided to the constructor.
+         * @memberof ICustomClassPrototypeN
+         */
+        initialize(this: P, ...args: any[]): void;
+    }
+
+    // #endregion
+
+    //#region Constructor definitions
+
+    /**
+     * A class constructor that has no arguments.
+     * @interface CustomClassConstructor0
+     * @template B - The base type shared by the prototype and the object instance.
+     * @template P - The type of prototype.
+     * @template I - The constructed object type.
+     */
+     export interface CustomClassConstructor0<B extends ICustomClassBase<B, string>, P extends B & ICustomClassPrototype0<B, P, string>, I extends B> {
+        /**
+         * Creates an instance of CustomClassConstructor0.
+         * @param {A} arg - The constructor argument.
+         * @memberof CustomClassConstructor0
+         */
+        new(): I;
+
+        /**
+         * Creates an instance of CustomClassConstructor0.
+         * @param {A} arg - The constructor argument.
+         * @memberof CustomClassConstructor0
+         */
+        (): I;
+
+        /**
+         * The prototype that will be used to create the new object.
+         * @type {P}
+         * @memberof CustomClassConstructor0
+         */
+        prototype: P;
+    }
+
+    /**
+     * A class constructor that has 1 argument.
+     * @interface CustomClassConstructor1
+     * @template B - The base type shared by the prototype and the object instance.
+     * @template P - The type of prototype.
+     * @template I - The constructed object type.
+     * @template A - The constructor argument type.
+     */
+     export interface CustomClassConstructor1<B extends ICustomClassBase<B, string>, P extends B & ICustomClassPrototype1<B, P, string, A>, I extends B, A> {
+        /**
+         * Creates an instance of CustomClassConstructor1.
+         * @param {A} arg - The constructor argument.
+         * @memberof CustomClassConstructor1
+         * @returns {I} - The new object instance.
+         */
+        new(arg: A): I;
+
+        /**
+         * Creates an instance of CustomClassConstructor1.
+         * @param {A} arg - The constructor argument.
+         * @memberof CustomClassConstructor1
+         * @returns {I} - The new object instance.
+         */
+        (arg: A): I;
+
+        /**
+         * The prototype that will be used to create the new object.
+         * @type {P}
+         * @memberof CustomClassConstructor1
+         */
+        prototype: P;
+    }
+
+    /**
+     * A class constructor that has 2 arguments.
+     * @interface CustomClassConstructor2
+     * @template B - The base type shared by the prototype and the object instance.
+     * @template P - The type of prototype.
+     * @template I - The constructed object type.
+     * @template A0 - The argument type for the first constructor argument.
+     * @template A1 - The argument type for the second constructor argument.
+     */
+     export interface CustomClassConstructor2<B extends ICustomClassBase<B, string>, P extends B & ICustomClassPrototype2<B, P, string, A0, A1>, I extends B, A0, A1> {
+        /**
+         * Creates an instance of CustomClassConstructor2.
+         * @param {A0} arg0 - The first constructor argument.
+         * @param {A1} arg1 - The second constructor argument.
+         * @memberof CustomClassConstructor2
+         * @returns {I} - The new object instance.
+         */
+        new(arg0: A0, arg1: A1): I;
+
+        /**
+         * Creates an instance of CustomClassConstructor2.
+         * @param {A0} arg0 - The first constructor argument.
+         * @param {A1} arg1 - The second constructor argument.
+         * @memberof CustomClassConstructor2
+         * @returns {I} - The new object instance.
+         */
+        (arg0: A0, arg1: A1): I;
+
+        /**
+         * The prototype that will be used to create the new object.
+         * @type {P}
+         * @memberof CustomClassConstructor2
+         */
+        prototype: P;
+    }
+
+    /**
+     * A class constructor that has 3 arguments.
+     * @interface CustomClassConstructor3
+     * @template B - The base type shared by the prototype and the object instance.
+     * @template P - The type of prototype.
+     * @template I - The constructed object type.
+     * @template A0 - The argument type for the first constructor argument.
+     * @template A1 - The argument type for the second constructor argument.
+     * @template A2 - The argument type for the third constructor argument.
+     */
+     export interface CustomClassConstructor3<B extends ICustomClassBase<B, string>, P extends B & ICustomClassPrototype3<B, P, string, A0, A1, A2>, I extends B, A0, A1, A2> {
+        /**
+         * Creates an instance of CustomClassConstructor3.
+         * @param {A0} arg0 - The first constructor argument.
+         * @param {A1} arg1 - The second constructor argument.
+         * @param {A2} arg2 - The third constructor argument.
+         * @memberof CustomClassConstructor3
+         * @returns {I} - The new object instance.
+         */
+        new(arg0: A0, arg1: A1, arg2: A2): I;
+
+        /**
+         * Creates an instance of CustomClassConstructor3.
+         * @param {A0} arg0 - The first constructor argument.
+         * @param {A1} arg1 - The second constructor argument.
+         * @param {A2} arg2 - The third constructor argument.
+         * @memberof CustomClassConstructor3
+         * @returns {I} - The new object instance.
+         */
+        (arg0: A0, arg1: A1, arg2: A2): I;
+
+        /**
+         * The prototype that will be used to create the new object.
+         * @type {P}
+         * @memberof CustomClassConstructor3
+         */
+        prototype: P;
+    }
+
+    /**
+     * A class constructor that has 4 arguments.
+     * @interface CustomClassConstructor4
+     * @template B - The base type shared by the prototype and the object instance.
+     * @template P - The type of prototype.
+     * @template I - The constructed object type.
+     * @template A0 - The argument type for the first constructor argument.
+     * @template A1 - The argument type for the second constructor argument.
+     * @template A2 - The argument type for the third constructor argument.
+     * @template A3 - The argument type for the fourth constructor argument.
+     */
+     export interface CustomClassConstructor4<B extends ICustomClassBase<B, string>, P extends B & ICustomClassPrototype4<B, P, string, A0, A1, A2, A3>, I extends B, A0, A1, A2, A3> {
+        /**
+         * Creates an instance of CustomClassConstructor4.
+         * @param {A0} arg0 - The first constructor argument.
+         * @param {A1} arg1 - The second constructor argument.
+         * @param {A2} arg2 - The third constructor argument.
+         * @param {A3} arg3 - The fourth constructor argument.
+         * @memberof CustomClassConstructor4
+         * @returns {I} - The new object instance.
+         */
+        new(arg0: A0, arg1: A1, arg2: A2, arg3: A3): I;
+
+        /**
+         * Creates an instance of CustomClassConstructor4.
+         * @param {A0} arg0 - The first constructor argument.
+         * @param {A1} arg1 - The second constructor argument.
+         * @param {A2} arg2 - The third constructor argument.
+         * @param {A3} arg3 - The fourth constructor argument.
+         * @memberof CustomClassConstructor4
+         * @returns {I} - The new object instance.
+         */
+        (arg0: A0, arg1: A1, arg2: A2, arg3: A3): I;
+
+        /**
+         * The prototype that will be used to create the new object.
+         * @type {P}
+         * @memberof CustomClassConstructor4
+         */
+        prototype: P;
+    }
+
+    /**
+     * A class constructor that has a variable number arguments.
+     * @interface CustomClassConstructorN
+     * @template B - The base type shared by the prototype and the object instance.
+     * @template P - The type of prototype.
+     * @template I - The constructed object type.
+     *
+     */
+     export interface CustomClassConstructorN<B extends ICustomClassBase<B, string>, P extends B & ICustomClassPrototypeN<B, P, string>, I extends B> {
+        /**
+         * Creates an instance of CustomClassConstructorN.
+         * @param {...any[]} args - The constructor arguments.
+         * @memberof CustomClassConstructorN
+         * @returns {I} - The new object instance.
+         */
+        new(...args: any[]): I;
+
+        /**
+         * Creates an instance of CustomClassConstructorN.
+         * @param {...any[]} args - The constructor arguments.
+         * @memberof CustomClassConstructorN
+         * @returns {I} - The new object instance.
+         */
+        (): I;
+
+        /**
+         * The prototype that will be used to create the new object.
+         * @type {P}
+         * @memberof CustomClassConstructorN
+         */
+        prototype: P;
+    }
+
+    // #endregion
 }
 
-/**
- * Prototype for objects whose constructor has one argument.
- * @interface ICustomClassPrototype1
- * @template B - The base type shared by the prototype and the object instance.
- * @template P - The type of prototype (self-referencing type)
- * @template N - The value of the type property for objects constructed with this prototype.
- * @template A - The argument type.
- */
-declare interface ICustomClassPrototype1<B extends ICustomClassBase<B, N>, P extends B & ICustomClassPrototype1<B, P, N, A>, N extends string, A> extends ICustomClassBase<B, N> {
-    /**
-     * Called by {@see Class#create} to initialize the newly instantiated object
-     * @this {P} The current "this" object.
-     * @param {A} arg - The argument provided to the constructor.
-     * @memberof ICustomClassPrototype1
-     */
-    initialize(this: P, arg: A): void;
-}
-
-/**
- * Prototype for objects whose constructor has 2 arguments.
- * @interface ICustomClassPrototype2
- * @template B - The base type shared by the prototype and the object instance.
- * @template P - The type of prototype (self-referencing type)
- * @template N - The value of the type property for objects constructed with this prototype.
- * @template A0 - The first argument type.
- * @template A1 - The second argument type.
- */
-declare interface ICustomClassPrototype2<B extends ICustomClassBase<B, N>, P extends B & ICustomClassPrototype2<B, P, N, A0, A1>, N extends string, A0, A1> extends ICustomClassBase<B, N> {
-    /**
-     * Called by {@see Class#create} to initialize the newly instantiated object
-     * @this {P} The current "this" object.
-     * @param {A0} arg0 - The first argument provided to the constructor.
-     * @param {A1} arg1 - The second argument provided to the constructor.
-     * @memberof ICustomClassPrototype2
-     */
-    initialize(this: P, arg0: A0, arg1: A1): void;
-}
-
-/**
- * Prototype for objects whose constructor has 3 arguments.
- * @interface ICustomClassPrototype3
- * @template B - The base type shared by the prototype and the object instance.
- * @template P - The type of prototype (self-referencing type)
- * @template N - The value of the type property for objects constructed with this prototype.
- * @template A0 - The first argument type.
- * @template A1 - The second argument type.
- * @template A2 - The third argument type.
- */
-declare interface ICustomClassPrototype3<B extends ICustomClassBase<B, N>, P extends B & ICustomClassPrototype3<B, P, N, A0, A1, A2>, N extends string, A0, A1, A2> extends ICustomClassBase<B, N> {
-    /**
-     * Called by {@see Class#create} to initialize the newly instantiated object
-     * @this {P} The current "this" object.
-     * @param {A0} arg0 - The first argument provided to the constructor.
-     * @param {A1} arg1 - The second argument provided to the constructor.
-     * @param {A2} arg2 - The third argument provided to the constructor.
-     * @memberof ICustomClassPrototype3
-     */
-    initialize(this: P, arg0: A0, arg1: A1, arg2: A2): void;
-}
-
-/**
- * Prototype for objects whose constructor has 4 arguments.
- * @interface ICustomClassPrototype4
- * @template B - The base type shared by the prototype and the object instance.
- * @template P - The type of prototype (self-referencing type)
- * @template N - The value of the type property for objects constructed with this prototype.
- * @template A0 - The first argument type.
- * @template A1 - The second argument type.
- * @template A2 - The third argument type.
- * @template A3 - The fourth argument type.
- */
-declare interface ICustomClassPrototype4<B extends ICustomClassBase<B, N>, P extends B & ICustomClassPrototype4<B, P, N, A0, A1, A2, A3>, N extends string, A0, A1, A2, A3> extends ICustomClassBase<B, N> {
-    /**
-     * Called by {@see Class#create} to initialize the newly instantiated object
-     * @this {P} The current "this" object.
-     * @param {A0} arg0 - The first argument provided to the constructor.
-     * @param {A1} arg1 - The second argument provided to the constructor.
-     * @param {A2} arg2 - The third argument provided to the constructor.
-     * @param {A3} arg3 - The fourth argument provided to the constructor.
-     * @memberof ICustomClassPrototype4
-     */
-    initialize(this: P, arg0: A0, arg1: A1, arg2: A2, arg3: A3): void;
-}
-
-/**
- * Prototype for objects whose constructor has a variable nubmer of arguments.
- * @interface ICustomClassPrototypeN
- * @template B - The base type shared by the prototype and the object instance.
- * @template P - The type of prototype (self-referencing type)
- * @template N - The value of the type property for objects constructed with this prototype.
- */
-declare interface ICustomClassPrototypeN<B extends ICustomClassBase<B, N>, P extends B & ICustomClassPrototypeN<B, P, N>, N extends string> extends ICustomClassBase<B, N> {
-    /**
-     * Called by {@see Class#create} to initialize the newly instantiated object
-     * @this {P} The current "this" object.
-     * @param {...any[]} args- The arguments provided to the constructor.
-     * @memberof ICustomClassPrototypeN
-     */
-    initialize(this: P, ...args: any[]): void;
-}
-
-// #endregion
-
-//#region Constructor definitions
-
-/**
- * A class constructor that has no arguments.
- * @interface CustomClassConstructor0
- * @template B - The base type shared by the prototype and the object instance.
- * @template P - The type of prototype.
- * @template I - The constructed object type.
- */
-declare interface CustomClassConstructor0<B extends ICustomClassBase<B, string>, P extends B & ICustomClassPrototype0<B, P, string>, I extends B> {
-    /**
-     * Creates an instance of CustomClassConstructor0.
-     * @param {A} arg - The constructor argument.
-     * @memberof CustomClassConstructor0
-     */
-    new(): I;
-    
-    /**
-     * Creates an instance of CustomClassConstructor0.
-     * @param {A} arg - The constructor argument.
-     * @memberof CustomClassConstructor0
-     */
-    (): I;
-    
-    /**
-     * The prototype that will be used to create the new object.
-     * @type {P}
-     * @memberof CustomClassConstructor0
-     */
-    prototype: P;
-}
-
-/**
- * A class constructor that has 1 argument.
- * @interface CustomClassConstructor1
- * @template B - The base type shared by the prototype and the object instance.
- * @template P - The type of prototype.
- * @template I - The constructed object type.
- * @template A - The constructor argument type.
- */
-declare interface CustomClassConstructor1<B extends ICustomClassBase<B, string>, P extends B & ICustomClassPrototype1<B, P, string, A>, I extends B, A> {
-    /**
-     * Creates an instance of CustomClassConstructor1.
-     * @param {A} arg - The constructor argument.
-     * @memberof CustomClassConstructor1
-     * @returns {I} - The new object instance.
-     */
-    new(arg: A): I;
-    
-    /**
-     * Creates an instance of CustomClassConstructor1.
-     * @param {A} arg - The constructor argument.
-     * @memberof CustomClassConstructor1
-     * @returns {I} - The new object instance.
-     */
-    (arg: A): I;
-    
-    /**
-     * The prototype that will be used to create the new object.
-     * @type {P}
-     * @memberof CustomClassConstructor1
-     */
-    prototype: P;
-}
-
-/**
- * A class constructor that has 2 arguments.
- * @interface CustomClassConstructor2
- * @template B - The base type shared by the prototype and the object instance.
- * @template P - The type of prototype.
- * @template I - The constructed object type.
- * @template A0 - The argument type for the first constructor argument.
- * @template A1 - The argument type for the second constructor argument.
- */
-declare interface CustomClassConstructor2<B extends ICustomClassBase<B, string>, P extends B & ICustomClassPrototype2<B, P, string, A0, A1>, I extends B, A0, A1> {
-    /**
-     * Creates an instance of CustomClassConstructor2.
-     * @param {A0} arg0 - The first constructor argument.
-     * @param {A1} arg1 - The second constructor argument.
-     * @memberof CustomClassConstructor2
-     * @returns {I} - The new object instance.
-     */
-    new(arg0: A0, arg1: A1): I;
-    
-    /**
-     * Creates an instance of CustomClassConstructor2.
-     * @param {A0} arg0 - The first constructor argument.
-     * @param {A1} arg1 - The second constructor argument.
-     * @memberof CustomClassConstructor2
-     * @returns {I} - The new object instance.
-     */
-    (arg0: A0, arg1: A1): I;
-    
-    /**
-     * The prototype that will be used to create the new object.
-     * @type {P}
-     * @memberof CustomClassConstructor2
-     */
-    prototype: P;
-}
-
-/**
- * A class constructor that has 3 arguments.
- * @interface CustomClassConstructor3
- * @template B - The base type shared by the prototype and the object instance.
- * @template P - The type of prototype.
- * @template I - The constructed object type.
- * @template A0 - The argument type for the first constructor argument.
- * @template A1 - The argument type for the second constructor argument.
- * @template A2 - The argument type for the third constructor argument.
- */
-declare interface CustomClassConstructor3<B extends ICustomClassBase<B, string>, P extends B & ICustomClassPrototype3<B, P, string, A0, A1, A2>, I extends B, A0, A1, A2> {
-    /**
-     * Creates an instance of CustomClassConstructor3.
-     * @param {A0} arg0 - The first constructor argument.
-     * @param {A1} arg1 - The second constructor argument.
-     * @param {A2} arg2 - The third constructor argument.
-     * @memberof CustomClassConstructor3
-     * @returns {I} - The new object instance.
-     */
-    new(arg0: A0, arg1: A1, arg2: A2): I;
-    
-    /**
-     * Creates an instance of CustomClassConstructor3.
-     * @param {A0} arg0 - The first constructor argument.
-     * @param {A1} arg1 - The second constructor argument.
-     * @param {A2} arg2 - The third constructor argument.
-     * @memberof CustomClassConstructor3
-     * @returns {I} - The new object instance.
-     */
-    (arg0: A0, arg1: A1, arg2: A2): I;
-    
-    /**
-     * The prototype that will be used to create the new object.
-     * @type {P}
-     * @memberof CustomClassConstructor3
-     */
-    prototype: P;
-}
-
-/**
- * A class constructor that has 4 arguments.
- * @interface CustomClassConstructor4
- * @template B - The base type shared by the prototype and the object instance.
- * @template P - The type of prototype.
- * @template I - The constructed object type.
- * @template A0 - The argument type for the first constructor argument.
- * @template A1 - The argument type for the second constructor argument.
- * @template A2 - The argument type for the third constructor argument.
- * @template A3 - The argument type for the fourth constructor argument.
- */
-declare interface CustomClassConstructor4<B extends ICustomClassBase<B, string>, P extends B & ICustomClassPrototype4<B, P, string, A0, A1, A2, A3>, I extends B, A0, A1, A2, A3> {
-    /**
-     * Creates an instance of CustomClassConstructor4.
-     * @param {A0} arg0 - The first constructor argument.
-     * @param {A1} arg1 - The second constructor argument.
-     * @param {A2} arg2 - The third constructor argument.
-     * @param {A3} arg3 - The fourth constructor argument.
-     * @memberof CustomClassConstructor4
-     * @returns {I} - The new object instance.
-     */
-    new(arg0: A0, arg1: A1, arg2: A2, arg3: A3): I;
-
-    /**
-     * Creates an instance of CustomClassConstructor4.
-     * @param {A0} arg0 - The first constructor argument.
-     * @param {A1} arg1 - The second constructor argument.
-     * @param {A2} arg2 - The third constructor argument.
-     * @param {A3} arg3 - The fourth constructor argument.
-     * @memberof CustomClassConstructor4
-     * @returns {I} - The new object instance.
-     */
-    (arg0: A0, arg1: A1, arg2: A2, arg3: A3): I;
-    
-    /**
-     * The prototype that will be used to create the new object.
-     * @type {P}
-     * @memberof CustomClassConstructor4
-     */
-    prototype: P; 
-}
-
-/**
- * A class constructor that has a variable number arguments.
- * @interface CustomClassConstructorN
- * @template B - The base type shared by the prototype and the object instance.
- * @template P - The type of prototype.
- * @template I - The constructed object type.
- */
-declare interface CustomClassConstructorN<B extends ICustomClassBase<B, string>, P extends B & ICustomClassPrototypeN<B, P, string>, I extends B> {
-    /**
-     * Creates an instance of CustomClassConstructorN.
-     * @param {...any[]} args - The constructor arguments.
-     * @memberof CustomClassConstructorN
-     * @returns {I} - The new object instance.
-     */
-    new(...args: any[]): I;
-    
-    /**
-     * Creates an instance of CustomClassConstructorN.
-     * @param {...any[]} args - The constructor arguments.
-     * @memberof CustomClassConstructorN
-     * @returns {I} - The new object instance.
-     */
-    (): I;
-
-    /**
-     * The prototype that will be used to create the new object.
-     * @type {P}
-     * @memberof CustomClassConstructorN
-     */
-    prototype: P;
-}
-
-// #endregion
 interface Object {
     /** The initial value of Object.prototype.constructor is the standard built-in Object constructor. */
     constructor: Function;
@@ -848,22 +1323,21 @@ interface Object {
 declare var Class: {
     /**
      * Creates a ServiceNow-compatible object constructor.
-     * @template B - The base type shared by the prototype and the object instance.
+     * @template B - The base type shared for the prototype and the object instance.
      * @template C - The constructor type.
      * @returns {C} - The ServiceNow-compatible object constructor.
      */
-    create<B extends ICustomClassBase<B, string>, C extends CustomClassConstructor0<B, any, any> | CustomClassConstructor1<B, any, any, any> |
-        CustomClassConstructor2<B, any, any, any, any> | CustomClassConstructor3<B, any, any, any, any, any> | CustomClassConstructor4<B, any, any, any, any, any, any> |
-        CustomClassConstructorN<B, any, any>>(): C;
-    create2<C extends CustomClassConstructor0<any, ICustomClassPrototype0<any, any, string>, ICustomClassPrototype0<any, any, string>> |
-        CustomClassConstructor1<any, ICustomClassPrototype1<any, any, string, any>, ICustomClassPrototype1<any, any, string, any>, any> |
-        CustomClassConstructor2<any, ICustomClassPrototype2<any, any, string, any, any>, ICustomClassPrototype2<any, any, string, any, any>, any, any> |
-        CustomClassConstructor3<any, ICustomClassPrototype3<any, any, string, any, any, any>, ICustomClassPrototype3<any, any, string, any, any, any>, any, any, any> |
-        CustomClassConstructor4<any, ICustomClassPrototype4<any, any, string, any, any, any, any>, ICustomClassPrototype4<any, any, string, any, any, any, any>, any, any, any, any> |
-        CustomClassConstructorN<any, ICustomClassPrototypeN<any, any, string>, ICustomClassPrototypeN<any, any, string>>>(): C;
-};
+    create<B extends $$snClass.ICustomClassBase<B, string>, C extends $$snClass.CustomClassConstructor0<B, any, any> | $$snClass.CustomClassConstructor1<B, any, any, any> |
+        $$snClass.CustomClassConstructor2<B, any, any, any, any> | $$snClass.CustomClassConstructor3<B, any, any, any, any, any> | $$snClass.CustomClassConstructor4<B, any, any, any, any, any, any> |
+        $$snClass.CustomClassConstructorN<B, any, any>>(): C;
 
-// #endregion
+    create2<C extends $$snClass.CustomClassConstructor0<any, $$snClass.ICustomClassPrototype0<any, any, string>, $$snClass.ICustomClassPrototype0<any, any, string>> |
+        $$snClass.CustomClassConstructor1<any, $$snClass.ICustomClassPrototype1<any, any, string, any>, $$snClass.ICustomClassPrototype1<any, any, string, any>, any> |
+        $$snClass.CustomClassConstructor2<any, $$snClass.ICustomClassPrototype2<any, any, string, any, any>, $$snClass.ICustomClassPrototype2<any, any, string, any, any>, any, any> |
+        $$snClass.CustomClassConstructor3<any, $$snClass.ICustomClassPrototype3<any, any, string, any, any, any>, $$snClass.ICustomClassPrototype3<any, any, string, any, any, any>, any, any, any> |
+        $$snClass.CustomClassConstructor4<any, $$snClass.ICustomClassPrototype4<any, any, string, any, any, any, any>, $$snClass.ICustomClassPrototype4<any, any, string, any, any, any, any>, any, any, any, any> |
+        $$snClass.CustomClassConstructorN<any, $$snClass.ICustomClassPrototypeN<any, any, string>, $$snClass.ICustomClassPrototypeN<any, any, string>>>(): C;
+};
 
 /**
  * Query operator values that can be used for string value comparisons.
@@ -881,9 +1355,13 @@ declare type NumberQueryOperator = "=" | "!=" | ">" | ">=" | "<" | "<=";
 declare type QueryOperator = StringQueryOperator | NumberQueryOperator;
 
 /**
- * GlideAggregate enables you to easily create database aggregation queries.
+ * The scoped GlideAggregate class is an extension of GlideRecord and provides database aggregation (COUNT, SUM, MIN, MAX, AVG) queries.
+ * This functionality can be helpful when creating customized reports or in calculations for calculated fields.
+ * The GlideAggregate class works only on number fields.When you use GlideAggregate on currency or price fields, you are working with the reference currency value.
+ * Be sure to convert the aggregate values to the user's session currency for display.
+ * Because the conversion rate between the currency or price value (displayed value) and its reference currency value (aggregation value) might change, the result may not be what the user expects.
+ * @summary GlideAggregate enables you to easily create database aggregation queries.
  * @class GlideAggregate
- * @description The scoped GlideAggregate class is an extension of GlideRecord and provides database aggregation (COUNT, SUM, MIN, MAX, AVG) queries. This functionality can be helpful when creating customized reports or in calculations for calculated fields. The GlideAggregate class works only on number fields.When you use GlideAggregate on currency or price fields, you are working with the reference currency value. Be sure to convert the aggregate values to the user's session currency for display. Because the conversion rate between the currency or price value (displayed value) and its reference currency value (aggregation value) might change, the result may not be what the user expects.
  */
 declare class GlideAggregate extends GlideRecord {
     /**
@@ -892,6 +1370,7 @@ declare class GlideAggregate extends GlideRecord {
      * @param {string} tableName - Name of the table.
      */
     constructor(tableName: string);
+
     /**
      * Adds an aggregate.
      * @memberof GlideAggregate
@@ -899,6 +1378,7 @@ declare class GlideAggregate extends GlideRecord {
      * @param {string} [name] - Name of the column to aggregate. Null is the default.
      */
     addAggregate(agg: string, name?: string): void;
+
     /**
      * Adds a trend for a field.
      * @memberof GlideAggregate
@@ -906,6 +1386,7 @@ declare class GlideAggregate extends GlideRecord {
      * @param {string} timeInterval - The time interval for the trend. The following choices are available: Year, Quarter, Date, Week, DayOfWeek, Hour, Value.
      */
     addTrend(fieldName: string, timeInterval: string): void;
+
     /**
      * Gets the value of an aggregate from the current record.
      * @memberof GlideAggregate
@@ -914,19 +1395,21 @@ declare class GlideAggregate extends GlideRecord {
      * @returns {string} The value of the aggregate.
      */
     getAggregate(agg: string, name?: string): string;
+
     /**
      * Gets the query necessary to return the current aggregate.
      * @memberof GlideAggregate
      * @returns {string} The encoded query to get the aggregate.
      */
     getAggregateEncodedQuery(): string;
+
     /**
      * Provides the name of a field to use in grouping the aggregates.
      * @memberof GlideAggregate
      * @param {string} name - Name of the field.
-     * @description 
      */
     groupBy(name: string): void;
+
     /**
      * Orders the aggregates based on the specified aggregate and field.
      * @memberof GlideAggregate
@@ -934,6 +1417,7 @@ declare class GlideAggregate extends GlideRecord {
      * @param {string} fieldName - Name of the field to aggregate.
      */
     orderByAggregate(agg: string, fieldName: string): void;
+
     /**
      * Sets whether the results are to be grouped.
      * @memberof GlideAggregate
@@ -948,6 +1432,7 @@ declare class GlideAggregate extends GlideRecord {
  */
 declare class GlideQueryCondition {
     protected constructor();
+
     /**
      * Adds an AND condition to the current condition.
      * @param {string} name The name of a field.
@@ -956,6 +1441,7 @@ declare class GlideQueryCondition {
      * @returns {GlideQueryCondition} A reference to a GlideQueryConditon that was added to the GlideRecord.
      */
     addCondition(name: string, oper: QueryOperator, value: any): GlideQueryCondition;
+
     /**
      * Adds an AND condition to the current condition. Assumes the equals operator.
      * @param {string} name The name of a field.
@@ -963,6 +1449,7 @@ declare class GlideQueryCondition {
      * @returns {GlideQueryCondition} A reference to a GlideQueryConditon that was added to the GlideRecord.
      */
     addCondition(name: string, value: any): GlideQueryCondition;
+
     /**
      * Adds an AND condition to the current condition.
      * @param {GlideQueryCondition} queryCondition Condition to add.
@@ -977,6 +1464,7 @@ declare class GlideQueryCondition {
      * @returns {GlideQueryCondition} A reference to a GlideQueryConditon that was added to the GlideRecord.
      */
     addOrCondition(name: string, oper: QueryOperator, value: any): GlideQueryCondition;
+
     /**
      * Adds an OR condition to the current condition. Assumes the equals operator.
      * @param {string} name The name of a field.
@@ -984,6 +1472,7 @@ declare class GlideQueryCondition {
      * @returns {GlideQueryCondition} A reference to a GlideQueryConditon that was added to the GlideRecord.
      */
     addOrCondition(name: string, value: any): GlideQueryCondition;
+
     /**
      * Adds an OR condition to the current condition. Assumes the equals operator.
      * @param {GlideQueryCondition} queryCondition Condition to add.
@@ -1002,6 +1491,7 @@ declare class GlideDate {
      * @constructor
      */
     constructor();
+
     /**
      * Gets the date in the specified date format.
      * @memberof GlideDate
@@ -1009,54 +1499,63 @@ declare class GlideDate {
      * @returns {string} the date in the specified format.
      */
     getByFormat(format: string): string;
+
     /**
      * Gets the day of the month stored by the GlideDate object, expressed in the UTC time zone.
      * @memberof GlideDate
      * @returns {number} The day of the month in the UTC time zone, from 1 to 31.
      */
     getDayOfMonthNoTZ(): number;
+
     /**
      * Gets the date in the current user's display format and time zone.
      * @memberof GlideDate
      * @returns {string} The date in the user's format and time zone. Keep in mind when designing business rules or script includes that this method may return values in different formats for different users.
      */
     getDisplayValue(): string;
+
     /**
      * Gets the display value in the internal format (yyyy-MM-dd).
      * @memberof GlideDate
      * @returns {string} The date values for the GlideDate object in the current user's time zone and the internal time format of yyyy-MM-dd.
      */
     getDisplayValueInternal(): string;
+
     /**
      * Gets the month stored by the GlideDate object, expressed in the UTC time zone.
      * @memberof GlideDate
      * @returns {number} The numerical value of the month from 1 to 12.
      */
     getMonthNoTZ(): number;
+
     /**
      * Gets the date value stored in the database by the GlideDate object in the internal format, yyyy-MM-dd, and the system time zone, UTC by default.
      * @memberof GlideDate
      * @returns {string} The date value in the internal format and system time zone.
      */
     getValue(): string;
+
     /**
      * Gets the year stored by the GlideDate object, expressed in the UTC time zone.
      * @memberof GlideDate
      * @returns {number} The numerical value of the year.
      */
     getYearNoTZ(): number;
+
     /**
      * Sets a date value using the current user's display format and time zone.
      * @memberof GlideDate
      * @param {string} asDisplayed - The date in the current user's display format and time zone. The parameter must be formatted using the current user's preferred display format, such as yyyy-MM-dd.
      */
     setDisplayValue(asDisplayed: string): void;
+
     /**
      * Sets the date of the GlideDate object.
      * @memberof GlideDate
      * @param {string} o - The date and time to use.
      */
     setValue(o: string): void;
+
     /**
      * Gets the duration difference between two GlideDate values.
      * @memberof GlideDate
@@ -1068,9 +1567,10 @@ declare class GlideDate {
 }
 
 /**
- * The scoped GlideDateTime class provides methods for performing operations on GlideDateTime objects, such as instantiating GlideDateTime objects or working with glide_date_time fields.
+ * Use the GlideDateTime methods to perform date-time operations, such as instantiating a GlideDateTime object, performing date-time calculations, formatting a date-time,
+ * or converting between date-time formats.
+ * @summary Represents a scoped glide DateTime value.
  * @class GlideDateTime
- * @description Use the GlideDateTime methods to perform date-time operations, such as instantiating a GlideDateTime object, performing date-time calculations, formatting a date-time, or converting between date-time formats.
  */
 declare class GlideDateTime {
     /**
@@ -1079,83 +1579,105 @@ declare class GlideDateTime {
      * @param {GlideTime} gd - The GlideTime object to add.
      */
     add(gd: GlideTime): void;
+
     /**
      * Adds the specified number of milliseconds to the current GlideDateTime object.
      * @memberof GlideDateTime
      * @param {number} milliseconds - The number of milliseconds to add.
      */
     add(milliseconds: number): void;
+
     /**
      * Instantiates a new GlideDateTime object with the current date and time in Greenwich Mean Time (GMT).
      * @constructor
      */
     constructor();
+
     /**
      * Instantiates a new GlideDateTime object set to the time of the GlideDateTime object passed in the parameter.
      * @constructor
      * @param {GlideDateTime} g - The GlideDateTime object to use for setting the time of the new object.
      */
     constructor(g: GlideDateTime);
+
     /**
      * Instantiates a new GlideDateTime object from a date and time value in the UTC time zone specified with the format yyyy-MM-dd HH:mm:ss.
      * @constructor
      * @param {string} value - A UTC date and time using the internal format yyyy-MM-dd HH:mm:ss.
      */
     constructor(value: string);
+
     /**
-     * Adds a specified number of days to the current GlideDateTime object. A negative parameter subtracts days. The method determines the local date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts days using the local date and time values.
+     * Adds a specified number of days to the current GlideDateTime object. A negative parameter subtracts days.
+     * The method determines the local date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts days using the local date and time values.
      * @memberof GlideDateTime
      * @param {number} days - The number of days to add. Use a negative value to subtract.
      */
     addDaysLocalTime(days: number): void;
+
     /**
-     * Adds a specified number of days to the current GlideDateTime object. A negative parameter subtracts days. The method determines the UTC date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts days using the UTC date and time values.
+     * Adds a specified number of days to the current GlideDateTime object. A negative parameter subtracts days.
+     * The method determines the UTC date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts days using the UTC date and time values.
      * @memberof GlideDateTime
      * @param {number} days - The number of days to add. Use a negative number to subtract.
      */
     addDaysUTC(days: number): void;
+
     /**
-     * Adds a specified number of months to the current GlideDateTime object. A negative parameter subtracts months. The method determines the local date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts months using the local date and time values.
+     * Adds a specified number of months to the current GlideDateTime object. A negative parameter subtracts months.
+     * The method determines the local date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts months using the local date and time values.
      * @memberof GlideDateTime
      * @param {number} months - The number of months to add. use a negative value to subtract.
      */
     addMonthsLocalTime(months: number): void;
+
     /**
-     * Adds a specified number of months to the current GlideDateTime object. A negative parameter subtracts months. The method determines the UTC date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts months using the UTC date and time values.
+     * Adds a specified number of months to the current GlideDateTime object. A negative parameter subtracts months.
+     * The method determines the UTC date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts months using the UTC date and time values.
      * @memberof GlideDateTime
      * @param {number} months - The number of months to add. Use a negative value to subtract.
      */
     addMonthsUTC(months: number): void;
+
     /**
      * Adds the specified number of seconds to the current GlideDateTime object.
      * @memberof GlideDateTime
      * @param {number} seconds - The number of seconds to add.
      */
     addSeconds(seconds: number): void;
+
     /**
-     * Adds a specified number of weeks to the current GlideDateTime object. A negative parameter subtracts weeks. The method determines the local date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts weeks using the local date and time values.
+     * Adds a specified number of weeks to the current GlideDateTime object. A negative parameter subtracts weeks.
+     * The method determines the local date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts weeks using the local date and time values.
      * @memberof GlideDateTime
      * @param {number} weeks - The number of weeks to add. Use a negative value to subtract.
      */
     addWeeksLocalTime(weeks: number): void;
+
     /**
-     * Adds a specified number of weeks to the current GlideDateTime object. A negative parameter subtracts weeks. The method determines the UTC date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts weeks using the UTC date and time values.
+     * Adds a specified number of weeks to the current GlideDateTime object. A negative parameter subtracts weeks.
+     * The method determines the UTC date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts weeks using the UTC date and time values.
      * @memberof GlideDateTime
      * @param {number} weeks - The number of weeks to add. Use a negative value to subtract.
      */
     addWeeksUTC(weeks: number): void;
+
     /**
-     * Adds a specified number of years to the current GlideDateTime object. A negative parameter subtracts years. The method determines the local date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts years using the local date and time values.
+     * Adds a specified number of years to the current GlideDateTime object. A negative parameter subtracts years.
+     * The method determines the local date and time equivalent to the value stored by the GlideDateTime object, then adds or subtracts years using the local date and time values.
      * @memberof GlideDateTime
      * @param {number} years - The number of years to add. Use a negative value to subtract.
      */
     addYearsLocalTime(years: number): void;
+
     /**
-     * Adds a specified number of years to the current GlideDateTime object. A negative parameter subtracts years. The date and time value stored by GlideDateTime object is interpreted as being in the UTC time zone.
+     * Adds a specified number of years to the current GlideDateTime object. A negative parameter subtracts years.
+     * The date and time value stored by GlideDateTime object is interpreted as being in the UTC time zone.
      * @memberof GlideDateTime
      * @param {number} years - The number of years to add. Use a negative value to subtract.
      */
     addYearsUTC(years: number): void;
+
     /**
      * Determines if the GlideDateTime object occurs after the specified GlideDateTime.
      * @memberof GlideDateTime
@@ -1163,6 +1685,7 @@ declare class GlideDateTime {
      * @returns {boolean} Returns true if the GlideDateTime object's time is after the time specified by the parameter.
      */
     after(gdt: GlideDateTime): boolean;
+
     /**
      * Determines if the GlideDateTime object occurs before the specified GlideDateTime.
      * @memberof GlideDateTime
@@ -1170,6 +1693,7 @@ declare class GlideDateTime {
      * @returns {boolean} Returns true if the GlideDateTime object's time is before the time specified by the parameter.
      */
     before(gdt: GlideDateTime): boolean;
+
     /**
      * Compares two date and time objects to determine whether they are equivalent or one occurs before or after the other.
      * @memberof GlideDateTime
@@ -1177,6 +1701,7 @@ declare class GlideDateTime {
      * @returns {number} 0 = Dates are equal1 = The object's date is after the date specified in the parameter-1 = The object's date is before the date specified in the parameter.
      */
     compareTo(o: any): number;
+
     /**
      * Compares a datetime with an existing value for equality.
      * @memberof GlideDateTime
@@ -1184,174 +1709,206 @@ declare class GlideDateTime {
      * @returns {boolean} Returns true if they are equal; otherwise, false.
      */
     equals(dateTime: GlideDateTime | string): boolean;
+
     /**
      * Gets the date stored by the GlideDateTime object, expressed in the standard format, yyyy-MM-dd, and the system time zone, UTC by default.
      * @memberof GlideDateTime
      * @returns {GlideDate} The date in the system time zone.
      */
     getDate(): GlideDate;
+
     /**
      * Gets the day of the month stored by the GlideDateTime object, expressed in the current user's time zone.
      * @memberof GlideDateTime
      * @returns {number} The day of the month in the user's time zone, from 1 to 31.
      */
     getDayOfMonthLocalTime(): number;
+
     /**
      * Gets the day of the month stored by the GlideDateTime object, expressed in the UTC time zone.
      * @memberof GlideDateTime
      * @returns {number} The day of the month in the UTC time zone, from 1 to 31.
      */
     getDayOfMonthUTC(): number;
+
     /**
      * Gets the day of the week stored by the GlideDateTime object, expressed in the user's time zone.
      * @memberof GlideDateTime
      * @returns {number} The day of week value, in the user's time zone, from 1 to 7. Monday equals 1, Sunday equals 7.
      */
     getDayOfWeekLocalTime(): number;
+
     /**
      * Gets the day of the week stored by the GlideDateTime object, expressed in the UTC time zone.
      * @memberof GlideDateTime
      * @returns {number} The day of week value from 1 to 7. Monday equals 1, Sunday equals 7.
      */
     getDayOfWeekUTC(): number;
+
     /**
      * Gets the number of days in the month stored by the GlideDateTime object, expressed in the current user's time zone.
      * @memberof GlideDateTime
      * @returns {number} The number of days in the current month in the user's time zone.
      */
     getDaysInMonthLocalTime(): number;
+
     /**
      * Gets the number of days in the month stored by the GlideDateTime object, expressed in the UTC time zone.
      * @memberof GlideDateTime
      * @returns {number} The number of days in the month stored by the GlideDateTime object, expressed in the UTC time zone.
      */
     getDaysInMonthUTC(): number;
+
     /**
      * Gets the date and time value in the current user's display format and time zone.
      * @memberof GlideDateTime
-     * @returns {string} The date and time in the user's format and time zone. Keep in mind when designing business rules or script includes that this method may return values in different formats for different users.
+     * @returns {string} The date and time in the user's format and time zone.
+     * Keep in mind when designing business rules or script includes that this method may return values in different formats for different users.
      */
     getDisplayValue(): string;
+
     /**
      * Gets the display value in the internal format (yyyy-MM-dd HH:mm:ss).
      * @memberof GlideDateTime
      * @returns {string} The date and time values for the GlideDateTime object in the current user's time zone and the internal date and time format of yyyy-MM-dd HH:mm:ss.
      */
     getDisplayValueInternal(): string;
+
     /**
      * Gets the amount of time that daylight saving time is offset.
      * @memberof GlideDateTime
      * @returns {number} Amount of time, in milliseconds, that daylight saving is offset. Returns 0 if there is no offset or if the time is not during daylight saving time.
      */
     getDSTOffset(): number;
+
     /**
      * Gets the current error message.
      * @memberof GlideDateTime
      * @returns {string} The error message.
      */
     getErrorMsg(): string;
+
     /**
      * Returns the object's time in the local time zone and in the internal format.
      * @memberof GlideDateTime
      * @returns {string} The object's time in the local time zone and the internal format.
      */
     getInternalFormattedLocalTime(): string;
+
     /**
      * Gets the date stored by the GlideDateTime object, expressed in the standard format, yyyy-MM-dd, and the current user's time zone.
      * @memberof GlideDateTime
      * @returns {GlideDate} The date in the user's time zone.
      */
     getLocalDate(): GlideDate;
+
     /**
      * Returns a GlideTime object that represents the time portion of the GlideDateTime object in the user's time zone.
      * @memberof GlideDateTime
      * @returns {GlideTime} The time in the user's time zone.
      */
     getLocalTime(): GlideTime;
+
     /**
      * Gets the month stored by the GlideDateTime object, expressed in the current user's time zone.
      * @memberof GlideDateTime
      * @returns {number} The numerical value of the month.
      */
     getMonthLocalTime(): number;
+
     /**
      * Gets the month stored by the GlideDateTime object, expressed in the UTC time zone.
      * @memberof GlideDateTime
      * @returns {number} The numerical value of the month.
      */
     getMonthUTC(): number;
+
     /**
      * Gets the number of milliseconds since January 1, 1970, 00:00:00 GMT.
      * @memberof GlideDateTime
      * @returns {number} The number of milliseconds since January 1, 1970, 00:00:00 GMT.
      */
     getNumericValue(): number;
+
     /**
      * Returns a GlideTime object that represents the time portion of the GlideDateTime object.
      * @memberof GlideDateTime
      * @returns {GlideTime} The Unix duration stamp in system format based on GMT time.
      */
     getTime(): GlideTime;
+
     /**
      * Gets the time zone offset in milliseconds.
      * @memberof GlideDateTime
      * @returns {number} The number of milliseconds of time zone offset.
      */
     getTZOffset(): number;
+
     /**
      * Returns the object's time in the local time zone and in the user's format.
      * @memberof GlideDateTime
      * @returns {string} The object's time in the local time zone and in the user's format.
      */
     getUserFormattedLocalTime(): string;
+
     /**
      * Gets the date and time value stored by the GlideDateTime object in the internal format, yyyy-MM-dd HH:mm:ss, and the system time zone, UTC by default.
      * @memberof GlideDateTime
      * @returns {string} The date and time value in the internal format and system time zone.
      */
     getValue(): string;
+
     /**
-     * Gets the number of the week stored by the GlideDateTime object, expressed in the current user's time zone. All weeks begin on Sunday. The first week of the year is the week that contains at least one day of the new year. The week beginning Sunday 2015-12-27 is considered the first week of 2016 as that week contains January 1 and 2.
+     * Gets the number of the week stored by the GlideDateTime object, expressed in the current user's time zone. All weeks begin on Sunday.
+     * The first week of the year is the week that contains at least one day of the new year. The week beginning Sunday 2015-12-27 is considered the first week of 2016 as that week contains January 1 and 2.
      * @memberof GlideDateTime
      * @returns {number} The number of the current week in local time. The highest week number in a year is either 52 or 53.
      */
     getWeekOfYearLocalTime(): number;
+
     /**
-     * Gets the number of the week stored by the GlideDateTime object, expressed in the UTC time zone. All weeks begin on Sunday. The first week of the year is the week that contains at least one day of the new year. The week beginning Sunday 2015-12-27 is considered the first week of 2016 as that week contains January 1 and 2.
+     * Gets the number of the week stored by the GlideDateTime object, expressed in the UTC time zone. All weeks begin on Sunday.
+     * The first week of the year is the week that contains at least one day of the new year. The week beginning Sunday 2015-12-27 is considered the first week of 2016 as that week contains January 1 and 2.
      * @memberof GlideDateTime
      * @returns {number} The number of the current week in UTC time. The highest week number in a year is either 52 or 53.
      */
     getWeekOfYearUTC(): number;
+
     /**
      * Gets the year stored by the GlideDateTime object, expressed in the current user's time zone.
      * @memberof GlideDateTime
      * @returns {number} Four-digit year value in the user's time zone.
      */
     getYearLocalTime(): number;
+
     /**
      * Gets the year stored by the GlideDateTime object, expressed in the UTC time zone.
      * @memberof GlideDateTime
      * @returns {number} 4-digit year value in the UTC time zone.
      */
     getYearUTC(): number;
+
     /**
      * Determines if an object's date is set.
      * @memberof GlideDateTime
      * @returns {boolean} True if the object date is set; otherwise, returns false.
      */
     hasDate(): boolean;
+
     /**
      * Determines if an object's time uses a daylight saving offset.
      * @memberof GlideDateTime
      * @returns {boolean} True if the time is daylight saving; otherwise, returns false.
      */
     isDST(): boolean;
+
     /**
      * Determines if a value is a valid date and time.
      * @memberof GlideDateTime
      * @returns {boolean} True if value is valid; otherwise, returns false.
      */
     isValid(): boolean;
+
     /**
      * Determines if the GlideDateTime object occurs on or after the specified GlideDateTime.
      * @memberof GlideDateTime
@@ -1359,6 +1916,7 @@ declare class GlideDateTime {
      * @returns {boolean} Returns true if the GlideDateTime object's time is on or after the time specified by the parameter.
      */
     onOrAfter(gdt: GlideDateTime): boolean;
+
     /**
      * Determines if the GlideDateTime object occurs on or before the specified GlideDateTime.
      * @memberof GlideDateTime
@@ -1366,80 +1924,105 @@ declare class GlideDateTime {
      * @returns {boolean} Returns true if the GlideDateTime object's time is on or before the time specified by the parameter.
      */
     onOrBefore(gdt: GlideDateTime): boolean;
+
     /**
      * Sets the day of the month to a specified value in the current user's time zone.
      * @memberof GlideDateTime
      * @param {number} day - The day of month to change to, from 1 to 31. If this value is greater than the maximum number of days in the month, the value is set to the last day of the month.
      */
     setDayOfMonthLocalTime(day: number): void;
+
     /**
      * Sets the day of the month to a specified value in the UTC time zone.
      * @memberof GlideDateTime
      * @param {number} day - The day of month to change to, from 1 to 31. If this value is greater than the maximum number of days in the month, the value is set to the last day of the month.
      */
     setDayOfMonthUTC(day: number): void;
+
     /**
      * Sets a date and time value using the current user's display format and time zone.
      * @memberof GlideDateTime
-     * @param {string} asDisplayed - The date and time in the current user's display format and time zone. The parameter must be formatted using the current user's preferred display format, such as MM-dd-yyyy HH:mm:ss. To assign the current date and time to a variable in a workflow script, use variable.setDisplayValue(gs.nowDateTime);.
+     * @param {string} asDisplayed - The date and time in the current user's display format and time zone. The parameter must be formatted using the current user's preferred display format,
+     * such as MM-dd-yyyy HH:mm:ss. To assign the current date and time to a variable in a workflow script, use variable.setDisplayValue(gs.nowDateTime);.
      */
     setDisplayValue(asDisplayed: string): void;
+
     /**
-     * Sets a date and time value using the current user's time zone and the specified date and time format. This method throws a runtime exception if the date and time format used in the�value�parameter does not match the�format�parameter. You can retrieve the error message by calling getErrorMsg() on the GlideDateTime object after the exception is caught.
+     * Sets a date and time value using the current user's time zone and the specified date and time format.
+     * This method throws a runtime exception if the date and time format used in the value parameter does not match the format parameter. You can retrieve the error message
+     * by calling getErrorMsg() on the GlideDateTime object after the exception is caught.
      * @memberof GlideDateTime
      * @param {string} value - The date and time in the current user's time zone.
      * @param {string} format - The date and time format to use to parse the value parameter.
      */
     setDisplayValue(value: string, format: string): void;
+
     /**
      * Sets a date and time value using the internal format (yyyy-MM-dd HH:mm:ss) and the current user's time zone.
      * @memberof GlideDateTime
      * @param {string} value - The date and time in internal format.
      */
     setDisplayValueInternal(value: string): void;
+
     /**
      * Sets the date and time of the current object using an existing GlideDateTime object. This method is equivalent to instantiating a new object with a GlideDateTime parameter.
      * @memberof GlideDateTime
      * @param {GlideDateTime} g - The object to use for setting the datetime value.
      */
     setGlideDateTime(g: GlideDateTime): void;
+
     /**
      * Sets the month stored by the GlideDateTime object to the specified value using the current user's time zone.
      * @memberof GlideDateTime
      * @param {number} month - The month to change to.
      */
     setMonthLocalTime(month: number): void;
+
     /**
      * Sets the month stored by the GlideDateTime object to the specified value using the UTC time zone.
      * @memberof GlideDateTime
      * @param {number} month - The month to change to.
      */
     setMonthUTC(month: number): void;
+
     /**
      * Sets the date and time of the GlideDateTime object.
      * @memberof GlideDateTime
-     * @param {string} o - The date and time to use. This parameter may be one of several types:A string in the UTC time zone and the internal format of yyyy-MM-dd HH:mm:ss. Sets the value of the object to the specified date and time. Using the method this way is equivalent to instantiating a new GlideDateTime object using the GlideDateTime(String value) constructor. If the date and time format used does not match the internal format, the method attempts to set the date and time using other available formats. Resolving the date and time this way can lead to inaccurate data due to ambiguity in the day and month values. When using a non-standard date and time format, use etValueUTC(String dt, String format) instead.A GlideDateTime object. Sets the value of the object to the date and time stored by the GlideDateTime passed in the parameter. Using the method this way is equivalent to instantiating a new GlideDateTime object using the GlideDateTime(GlideDateTime g) constructor.A JavaScript Number. Sets the value of the object using the Number value as milliseconds past January 1, 1970 00:00:00 GMT.
+     * @param {string} o - The date and time to use. This parameter may be one of several types:A string in the UTC time zone and the internal format of yyyy-MM-dd HH:mm:ss.
+     * Sets the value of the object to the specified date and time. Using the method this way is equivalent to instantiating a new GlideDateTime object using the GlideDateTime(String value) constructor.
+     * If the date and time format used does not match the internal format, the method attempts to set the date and time using other available formats.
+     * Resolving the date and time this way can lead to inaccurate data due to ambiguity in the day and month values. When using a non-standard date and time format,
+     * use etValueUTC(String dt, String format) instead.
+     * A GlideDateTime object: Sets the value of the object to the date and time stored by the GlideDateTime passed in the parameter.
+     * Using the method this way is equivalent to instantiating a new GlideDateTime object using the GlideDateTime(GlideDateTime g) constructor.
+     * A JavaScript Number: Sets the value of the object using the Number value as milliseconds past January 1, 1970 00:00:00 GMT.
      */
     setValue(o: string): void;
+
     /**
-     * Sets a date and time value using the UTC time zone and the specified date and time format. This method throws a runtime exception if the date and time format used in the�dt�parameter does not match the�format�parameter. You can retrieve the error message by calling�getErrorMsg()�on the GlideDateTime object after the exception is caught.
+     * Sets a date and time value using the UTC time zone and the specified date and time format.
+     * This method throws a runtime exception if the date and time format used in the dt parameter does not match the format parameter.
+     * You can retrieve the error message by calling getErrorMsg() on the GlideDateTime object after the exception is caught.
      * @memberof GlideDateTime
      * @param {string} dt - The date and time to use.
      * @param {string} format - The date and time format to use.
      */
     setValueUTC(dt: string, format: string): void;
+
     /**
      * Sets the year stored by the GlideDateTime object to the specified value using the current user's time zone.
      * @memberof GlideDateTime
      * @param {number} year - The year to change to.
      */
     setYearLocalTime(year: number): void;
+
     /**
      * Sets the year stored by the GlideDateTime object to the specified value using the UTC time zone.
      * @memberof GlideDateTime
      * @param {number} year - The year to change to.
      */
     setYearUTC(year: number): void;
+
     /**
      * Gets the duration difference between two GlideDateTime values.
      * @memberof GlideDateTime
@@ -1448,18 +2031,21 @@ declare class GlideDateTime {
      * @returns {GlideDuration} The duration between the two values.
      */
     subtract(Start: GlideDateTime, End: GlideDateTime): GlideDuration;
+
     /**
      * Subtracts a specified amount of time from the current GlideDateTime object.
      * @memberof GlideDateTime
      * @param {GlideTime} time - The time value to subtract.
      */
     subtract(time: GlideTime): void;
+
     /**
      * Subtracts the specified number of milliseconds from the GlideDateTime object.
      * @memberof GlideDateTime
      * @param {number} milliseconds - The number of milliseconds to subtract.
      */
     subtract(milliseconds: number): void;
+
     /**
      * Gets the date and time value stored by the GlideDateTime object in the internal format, yyyy-MM-dd HH:mm:ss, and the system time zone, UTC by default. This method is equivalent to getValue().
      * @memberof GlideDateTime
@@ -1469,9 +2055,9 @@ declare class GlideDateTime {
 }
 
 /**
- * The scoped GlideDuration class provides methods for working with spans of time or durations.
+ * GlideDuration objects store the duration as a date and time from January 1, 1970, 00:00:00. As a result, setValue() and getValue() use the scoped GlideDateTime object for parameters and return values.
+ * @summary The scoped GlideDuration class provides methods for working with spans of time or durations.
  * @class GlideDuration
- * @description GlideDuration objects store the duration as a date and time from January 1, 1970, 00:00:00. As a result, setValue() and getValue() use the scoped GlideDateTime object for parameters and return values.
  */
 declare class GlideDuration {
     /**
@@ -1481,29 +2067,34 @@ declare class GlideDuration {
      * @returns {GlideDuration} The sum of the current and the added duration.
      */
     add(duration: GlideDuration): GlideDuration;
+
     /**
      * Instantiates a GlideDuration object.
      * @constructor
      */
     constructor();
+
     /**
      * Instantiates a GlideDuration object by cloning the value of another GlideDuration object.
      * @constructor
      * @param {GlideDuration} another - Another scoped GlideDuration object.
      */
     constructor(another: GlideDuration);
+
     /**
      * Instantiates a GlideDuration object with the specified duration.
      * @constructor
      * @param {number} milliseconds - The duration value in milliseconds.
      */
     constructor(milliseconds: number);
+
     /**
      * Instantiates a GlideDuration object with the specified display value.
      * @constructor
      * @param {string} displayValue - The display value.
      */
     constructor(displayValue: string);
+
     /**
      * Gets the duration in the specified format.
      * @memberof GlideDuration
@@ -1511,50 +2102,56 @@ declare class GlideDuration {
      * @returns {string} The current duration in the specified format.
      */
     getByFormat(format: string): string;
+
     /**
      * Gets the number of days.
      * @memberof GlideDuration
      * @returns {number} The number of days.
      */
     getDayPart(): number;
+
     /**
      * Gets the display value of the duration in number of days, hours, and minutes.
      * @memberof GlideDuration
      * @returns {string} The number of days, hours, and minutes.
      */
     getDisplayValue(): string;
+
     /**
      * Gets the duration value in "d HH:mm:ss" format.
      * @memberof GlideDuration
      * @returns {string} The duration value.
      */
     getDurationValue(): string;
+
     /**
      * Gets the rounded number of days. If the time part is more than 12 hours, the return value is rounded up. Otherwise, it is rounded down.
      * @memberof GlideDuration
      * @returns {number} The day part, rounded.
      */
     getRoundedDayPart(): number;
+
     /**
      * Gets the internal value of the GlideDuration object.
      * @memberof GlideDuration
      * @returns {string} The duration in the object's internal format, which is the date and time from January 1, 1970, 00:00:00.
-     * @description 
      */
     getValue(): string;
+
     /**
      * Sets the display value.
      * @memberof GlideDuration
      * @param {string} asDisplayed - The duration in "d HH:mm:ss" format.
      */
     setDisplayValue(asDisplayed: string): void;
+
     /**
      * Sets the internal value of the GlideDuration object.
      * @memberof GlideDuration
      * @param {*} o - The duration in the object's internal format, which is the date and time from January 1, 1970, 00:00:00.
-     * @description 
      */
     setValue(o: any): void;
+
     /**
      * Subtracts the specified duration from the current duration.
      * @memberof GlideDuration
@@ -1573,12 +2170,14 @@ declare class GlideTime {
      * @constructor
      */
     constructor();
+
     /**
      * Instantiates a GlideTime object with the specified time.
      * @constructor
      * @param {number} milliseconds - The datetime in milliseconds.
      */
     constructor(milliseconds: number);
+
     /**
      * Gets the time in the specified format.
      * @memberof GlideTime
@@ -1586,79 +2185,91 @@ declare class GlideTime {
      * @returns {string} The time in the specified format.
      */
     getByFormat(format: string): string;
+
     /**
      * Gets the time in the current user's display format and time zone.
      * @memberof GlideTime
      * @returns {string} The time in the user's format and time zone.
-     * @description 
      */
     getDisplayValue(): string;
+
     /**
      * Gets the display value in the current user's time zone and the internal format (HH:mm:ss).
      * @memberof GlideTime
      * @returns {string} The time value for the GlideTime object in the current user's time zone and the internal time format of HH:mm:ss.
      */
     getDisplayValueInternal(): string;
+
     /**
      * Returns the hours part of the time using the local time zone.
      * @memberof GlideTime
      * @returns {number} The hours using the local time zone.
      */
     getHourLocalTime(): number;
+
     /**
      * Returns the hours part of the time using the local time zone. The number of hours is based on a 24 hour clock.
      * @memberof GlideTime
      * @returns {number} The hours using the local time zone. The number of hours is based on a 24 hour clock.
      */
     getHourOfDayLocalTime(): number;
+
     /**
      * Returns the hours part of the time using the UTC time zone. The number of hours is based on a 24 hour clock.
      * @memberof GlideTime
      * @returns {number} The hours using the UTC time zone. The number of hours is based on a 24 hour clock.
      */
     getHourOfDayUTC(): number;
+
     /**
      * Returns the hours part of the time using the UTC time zone. The number of hours is based on a 12 hour clock. Noon and midnight are represented by 0, not 12.
      * @memberof GlideTime
      * @returns {number} The hours using the UTC time zone. The number of hours is based on a 12 hour clock. Noon and midnight are represented by 0, not 12.
      */
     getHourUTC(): number;
+
     /**
      * Returns the number of minutes using the local time zone.
      * @memberof GlideTime
      * @returns {number} The number of minutes using the local time zone.
      */
     getMinutesLocalTime(): number;
+
     /**
      * Returns the number of minutes in the hour based on the UTC time zone.
      * @memberof GlideTime
      * @returns {number} The number of minutes in the hour using the UTC time zone.
      */
     getMinutesUTC(): number;
+
     /**
      * Returns the number of seconds in the current minute.
      * @memberof GlideTime
      * @returns {number} The number of seconds in the minute.
      */
     getSeconds(): number;
+
     /**
      * Gets the time value stored in the database by the GlideTime object in the internal format, HH:mm:ss, and the system time zone.
      * @memberof GlideTime
      * @returns {string} The time value in the internal fomat and system time zone.
      */
     getValue(): string;
+
     /**
      * Sets a time value using the current user's display format and time zone.
      * @memberof GlideTime
      * @param {string} asDisplayed - The time in the current user's display format and time zone. The parameter must be formatted using the current user's preferred display format, such as HH:mm:ss.
      */
     setDisplayValue(asDisplayed: string): void;
+
     /**
      * Sets the time of the GlideTime object in the internal time zone.
      * @memberof GlideTime
      * @param {string} o - The time in hh:mm:ss format.
      */
     setValue(o: string): void;
+
     /**
      * Gets the duration difference between two GlideTime object values.
      * @memberof GlideTime
@@ -1674,8 +2285,9 @@ declare class GlideTime {
  * @class GlideElement
  */
 declare class GlideElement extends $$element.StringBased<string, GlideElement, string> { protected constructor(); }
+
 declare class GlideElementBoolean extends Packages.java.lang.Boolean implements $$element.IValueSpecific<boolean, GlideElementBoolean, $$rhino.BooleanString> {
-    protected constructor(); 
+    protected constructor();
 
     /**
      * Determines if the user's role permits the creation of new records in this field.
@@ -1683,63 +2295,68 @@ declare class GlideElementBoolean extends Packages.java.lang.Boolean implements 
      * @returns {boolean} True if the field can be created, false otherwise.
      */
     canCreate(): boolean;
+
     /**
      * Indicates whether the user's role permits them to read the associated GlideRecord.
      * @memberof GlideElementBoolean
      * @returns {boolean} True if the field can be read, false otherwise.
      */
     canRead(): boolean;
+
     /**
      * Determines whether the user's role permits them to write to the associated GlideRecord.
      * @memberof GlideElementBoolean
      * @returns {boolean} True if the user can write to the field, false otherwise.
      */
     canWrite(): boolean;
+
     /**
      * Determines if the current field has been modified. This functionality is available for all available data types, except Journal fields.
      * @memberof GlideElementBoolean
      * @returns {boolean} True if the fields have been changed, false if the field has not.
-     * @description 
      */
     changes(): boolean;
+
     /**
      * Determines if the previous value of the current field matches the specified object.
      * @memberof GlideElementBoolean
      * @param {$$rhino.Nilable<$$property.Boolean>} o - An object value to check against the previous value of the current field.
      * @returns {boolean} True if the previous value matches, false if it does not.
-     * @description 
      */
     changesFrom(o: $$rhino.Nilable<$$property.Boolean>): boolean;
+
     /**
      * Determines if the new value of a field, after a change, matches the specified object.
      * @memberof GlideElementBoolean
      * @param {$$rhino.Nilable<$$property.Boolean>} o - An object value to check against the new value of the current field.
      * @returns {boolean} True if the previous value matches, false if it does not.
-     * @description 
      */
     changesTo(o: $$rhino.Nilable<$$property.Boolean>): boolean;
+
     /**
-     * Returns the number of milliseconds since January 1, 1970, 00:00:00 GMT for a duration field. Does not require the creation of a GlideDateTime object because the duration field is already a GlideDateTime object.
+     * Returns the number of milliseconds since January 1, 1970, 00:00:00 GMT for a duration field. Does not require the creation of a GlideDateTime object because the duration field is already
+     * a GlideDateTime object.
      * @memberof GlideElementBoolean
      * @returns {number} Number of milliseconds since January 1, 1970, 00:00:00 GMT.
      */
     dateNumericValue(): number;
+
     /**
      * Returns the value of the specified attribute from the dictionary.
      * @memberof GlideElementBoolean
      * @param {string} attributeName - Attribute name
      * @returns {string} Attribute value.
-     * @description 
      */
     getAttribute(attributeName: string): string;
+
     /**
      * Returns the Boolean value of the specified attribute from the dictionary.
      * @memberof GlideElementBoolean
      * @param {string} attributeName - Attribute name
      * @returns {boolean} Boolean value of the attribute. Returns false if the attribute does not exist.
-     * @description 
      */
     getBooleanAttribute(attributeName: string): boolean;
+
     /**
      * Generates a choice list for a field.
      * @memberof GlideElementBoolean
@@ -1747,19 +2364,21 @@ declare class GlideElementBoolean extends Packages.java.lang.Boolean implements 
      * @returns {Array<*>} An array list of choices.
      */
     getChoices(dependent?: string): any[];
+
     /**
      * Returns the choice label for the current choice.
      * @memberof GlideElementBoolean
      * @returns {string} The selected choice's label.
-     * @description 
      */
     getChoiceValue(): string;
+
     /**
      * Returns the clear text value for Password (2 way encrypted) fields in scoped applications.
      * @memberof GlideElementBoolean
      * @returns {string} The clear text password.
      */
     getDecryptedValue(): string;
+
     /**
      * Gets the formatted display value of the field.
      * @memberof GlideElementBoolean
@@ -1767,18 +2386,21 @@ declare class GlideElementBoolean extends Packages.java.lang.Boolean implements 
      * @returns {string} The display value of the field.
      */
     getDisplayValue(maxCharacters?: number): string;
+
     /**
      * Returns the element's descriptor.
      * @memberof GlideElementBoolean
      * @returns {GlideElementDescriptor} Element's descriptor.
      */
     getED(): GlideElementDescriptor;
+
     /**
      * Returns the phone number in international format.
      * @memberof GlideElementBoolean
      * @returns {string} The phone number in international format.
      */
     getGlobalDisplayValue(): string;
+
     /**
      * Returns the HTML value of a field.
      * @memberof GlideElementBoolean
@@ -1786,91 +2408,118 @@ declare class GlideElementBoolean extends Packages.java.lang.Boolean implements 
      * @returns {string} HTML value for the field.
      */
     getHTMLValue(maxChars?: number): string;
+
     /**
      * Returns either the most recent journal entry or all journal entries.
      * @memberof GlideElementBoolean
      * @param {number} mostRecent - If 1, returns the most recent entry. If -1, returns all journal entries.
-     * @returns {string} For the most recent entry, returns a string that contains the field label, timestamp, and user display name of the journal entry.For all journal entries, returns the same information for all journal entries ever entered as a single string with each entry delimited by "\n\n".
+     * @returns {string} For the most recent entry, returns a string that contains the field label, timestamp, and user display name of the journal entry.
+     * For all journal entries, returns the same information for all journal entries ever entered as a single string with each entry delimited by "\n\n".
      */
     getJournalEntry(mostRecent: number): string;
+
     /**
      * Returns the object label.
      * @memberof GlideElementBoolean
      * @returns {string} Object label.
      */
     getLabel(): string;
+
     /**
      * Returns the name of the field.
      * @memberof GlideElementBoolean
      * @returns {string} Field name.
      */
     getName(): string;
+
     /**
      * Returns the name of the table on which the field resides.
      * @memberof GlideElementBoolean
      * @returns {string} Name of the table. The returned value may be different from the table Class that the record is in. See Tables and Classes in the product documentation.
      */
     getTableName(): string;
+
     /**
      * Determines if a field is null.
      * @memberof GlideElementBoolean
      * @returns {boolean} True if the field is null or an empty string, false if not.
      */
     nil(): boolean;
+
     /**
      * Sets the value of a date/time element to the specified number of milliseconds since January 1, 1970 00:00:00 GMT.
      * @memberof GlideElementBoolean
      * @param {number} milliseconds - Number of milliseconds since 1/1/1970
-     * @description 
      */
     setDateNumericValue(milliseconds: number): void;
+
     /**
      * Sets the display value of the field.
      * @memberof GlideElementBoolean
      * @param {*} value - The value to set for the field.
      */
     setDisplayValue(value: any): void;
+
     /**
      * Adds an error message. Available in Fuji patch 3.
      * @memberof GlideElementBoolean
      * @param {string} errorMessage - The error message.
      */
     setError(errorMessage: string): void;
+
     /**
      * Sets the field to the specified phone number.
      * @memberof GlideElementBoolean
      * @param {*} phoneNumber - The phone number to set. This can be in either the international or local format.
      * @param {boolean} strict - When true, specifies that the number specified must match the correct format. When false, the system attempts to correct an improperly formatted phone number.
      * @returns {boolean} True if the value was set.
-     * @description 
      */
     setPhoneNumber(phoneNumber: any, strict: boolean): boolean;
+
     /**
      * Sets the value of a field.
      * @memberof GlideElementBoolean
      * @param {$$rhino.Nilable<$$property.Boolean>} value - Object value to set the field to.
-     * @description 
      */
     setValue(value: $$rhino.Nilable<$$property.Boolean>): void;
 }
+
 declare class GlideElementBreakdownElement extends $$element.StringBased<string, GlideElementBreakdownElement, string> { protected constructor(); }
+
 declare class GlideElementCompressed extends $$element.StringBased<string, GlideElementCompressed, string> { protected constructor(); }
+
 declare class GlideElementConditions extends $$element.StringBased<string, GlideElementConditions, string> { protected constructor(); }
+
 declare class GlideElementCounter extends $$element.StringBased<number, GlideElementCounter, string> { protected constructor(); }
+
 declare class GlideElementCurrency extends $$element.StringBased<string, GlideElementCurrency, string> { protected constructor(); }
+
 declare class GlideElementDataObject extends $$element.StringBased<string, GlideElementDataObject, string> { protected constructor(); }
+
 declare class GlideElementDocumentation extends $$element.StringBased<string, GlideElementDocumentation, string> { protected constructor(); }
+
 declare class GlideElementDocumentId extends $$element.StringBased<string, GlideElementDocumentId, string> { protected constructor(); }
+
 declare class GlideElementDomainId extends $$element.StringBased<string, GlideElementDomainId, string> { protected constructor(); }
+
 declare class GlideElementFullUTF8 extends $$element.StringBased<string, GlideElementFullUTF8, string> { protected constructor(); }
+
 declare class GlideElementGlideObject extends $$element.StringBased<string, GlideElementGlideObject, string> { protected constructor(); }
+
 declare class GlideElementGlideVar extends $$element.StringBased<string, GlideElementGlideVar, string> { protected constructor(); }
+
 declare class GlideElementIcon extends $$element.StringBased<string, GlideElementIcon, string> { protected constructor(); }
+
 declare class GlideElementInternalType extends $$element.StringBased<string, GlideElementInternalType, string> { protected constructor(); }
+
 declare class GlideElementNameValue extends $$element.StringBased<string, GlideElementNameValue, string> { protected constructor(); }
+
 declare class GlideElementNumeric extends $$element.StringBased<number, GlideElementNumeric, string> implements $$element.IValueSpecific<number, GlideElementNumeric, string> { protected constructor(); }
+
 declare class GlideElementPassword extends $$element.StringBased<string, GlideElementPassword, string> { protected constructor(); }
+
 declare class GlideElementPassword2 extends $$element.StringBased<string, GlideElementPassword2, string> { protected constructor(); }
+
 declare class GlideElementPrice extends $$element.StringBased<number, GlideElementPrice, string> { protected constructor();  }
 
 /**
@@ -1879,7 +2528,7 @@ declare class GlideElementPrice extends $$element.StringBased<number, GlideEleme
  * @todo Verify whether Packages.com.glide.script.glide_elements.GlideReference exists
  */
 declare class GlideElementReference extends $$element.StringBased<string, GlideElementReference, string> implements $$element.IReference<IGlideTableProperties, GlideRecord>, IGlideTableProperties {
-    protected constructor(); 
+    protected constructor();
     /**
      * Created by
      * @type {$$property.Element}
@@ -1888,23 +2537,23 @@ declare class GlideElementReference extends $$element.StringBased<string, GlideE
     sys_created_by: $$property.Element;
 
     /**
-     * Created
+     * Created field. Internal type is "glide_date_time"
+     * @summary Created
      * @type {$$property.GlideObject}
      * @memberof GlideElementReference
-     * @description Internal type is "glide_date_time"
      */
     sys_created_on: $$property.GlideObject;
 
     /**
-     * Sys ID
+     * Sys ID field. Internal type is "GUID"
+     * @summary Sys ID
      * @type {$$property.Element}
      * @memberof GlideElementReference
-     * @description Internal type is "GUID"
      */
     sys_id: $$property.Element;
 
     /**
-     * Updates
+     * Updates Count
      * @type {$$property.Numeric}
      * @memberof GlideElementReference
      */
@@ -1918,72 +2567,94 @@ declare class GlideElementReference extends $$element.StringBased<string, GlideE
     sys_updated_by: $$property.Element;
 
     /**
-     * Updated
+     * Updated field. Internal type is "glide_date_time"
+     * @summary Updated
      * @type {$$property.GlideObject}
      * @memberof GlideElementReference
-     * @description Internal type is "glide_date_time"
      */
     sys_updated_on: $$property.GlideObject;
+
     /**
      * Gets the table name for a reference element.
      * @memberof GlideElementReference
      * @returns {string} The table name of the reference.
      */
     getReferenceTable(): string;
+
     /**
      * Returns a GlideRecord object for a given reference element.
      * @memberof GlideElementReference
      * @returns {GlideRecord} A GlideRecord object.
-     * @description
      */
     getRefRecord(): GlideRecord | null | undefined;
+
     /**
      * Determines if the previous value of the current field matches the specified object.
      * @memberof GlideElementReference
      * @param {GlideRecord | $$rhino.Nilable<$$property.Reference>} o - An object value to check against the previous value of the current field.
      * @returns {boolean} True if the previous value matches, false if it does not.
-     * @description 
      */
     changesFrom(o: GlideRecord | $$rhino.Nilable<$$property.Reference>): boolean;
+
     /**
      * Determines if the new value of a field, after a change, matches the specified object.
      * @memberof GlideElementReference
      * @param {GlideRecord | $$rhino.Nilable<$$property.Reference>} o - An object value to check against the new value of the current field.
      * @returns {boolean} True if the previous value matches, false if it does not.
-     * @description 
      */
     changesTo(o: GlideRecord | $$rhino.Nilable<$$property.Reference>): boolean;
+
     /**
      * Sets the value of a field.
      * @memberof GlideElementReference
      * @param {GlideRecord | $$rhino.Nilable<$$property.Reference>} value - Object value to set the field to.
-     * @description
      */
     setValue(value: GlideRecord | $$rhino.Nilable<$$property.Reference>): void;
 }
 
 declare class GlideElementScript extends $$element.StringBased<string, GlideElementScript, string> { protected constructor(); }
+
 declare class GlideElementShortFieldName extends $$element.StringBased<string, GlideElementShortFieldName, string> { protected constructor(); }
+
 declare class GlideElementShortTableName extends $$element.StringBased<string, GlideElementShortTableName, string> { protected constructor(); }
+
 declare class GlideElementSourceId extends $$element.StringBased<string, GlideElementSourceId, string> { protected constructor(); }
+
 declare class GlideElementSourceName extends $$element.StringBased<string, GlideElementSourceName, string> { protected constructor(); }
+
 declare class GlideElementSourceTable extends $$element.StringBased<string, GlideElementSourceTable, string> { protected constructor(); }
+
 declare class GlideElementSysClassName extends $$element.StringBased<string, GlideElementSysClassName, string> { protected constructor(); }
+
 declare class GlideElementTranslatedField extends $$element.StringBased<string, GlideElementTranslatedField, string> { protected constructor(); }
+
 declare class GlideElementTranslatedHTML extends $$element.StringBased<string, GlideElementTranslatedHTML, string> { protected constructor(); }
+
 declare class GlideElementTranslatedText extends $$element.StringBased<string, GlideElementTranslatedText, string> { protected constructor(); }
+
 declare class GlideElementURL extends $$element.StringBased<string, GlideElementURL, string> { protected constructor(); }
+
 declare class GlideElementUserImage extends $$element.StringBased<string, GlideElementUserImage, string> { protected constructor(); }
+
 declare class GlideElementVariableConditions extends $$element.StringBased<string, GlideElementVariableConditions, string> { protected constructor(); }
+
 declare class GlideElementVariables extends $$element.StringBased<string, GlideElementVariables, string> { protected constructor(); }
+
 declare class GlideElementWikiText extends $$element.StringBased<string, GlideElementWikiText, string> { protected constructor(); }
+
 declare class GlideElementWorkflow extends $$element.StringBased<string, GlideElementWorkflow, string> { protected constructor(); }
+
 declare class GlideElementWorkflowConditions extends $$element.StringBased<string, GlideElementWorkflowConditions, string> { protected constructor(); }
 
 /**
- * Scoped GlideRecord is used for database operations.
+ * A GlideRecord contains both records and fields. For information about GlideRecordSecure, which is a class inherited from GlideRecord that performs the same functions as GlideRecord, and also enforces ACLs,
+ * see the GlideServer APIs .Always test queries on a sub-production instance prior to deploying them on a production instance.
+ * An incorrectly constructed encoded query, such as including an invalid field name, produces an invalid query.
+ * When the invalid query is run, the invalid part of the query condition is dropped, and the results are based on the valid part of the query, which may return all records from the table.
+ * Using an insert(), update(), deleteRecord(), or deleteMultiple() method on bad query results can result in data loss.
+ * You can set the glide.invalid_query.returns_no_rows system property to true to have queries with invalid encoded queries return no records.
+ * @summary Scoped GlideRecord is used for database operations.
  * @class GlideRecord
- * @description A GlideRecord contains both records and fields. For information about GlideRecordSecure, which is a class inherited from GlideRecord that performs the same functions as GlideRecord, and also enforces ACLs, see the GlideServer APIs .Always test queries on a sub-production instance prior to deploying them on a production instance. An incorrectly constructed encoded query, such as including an invalid field name, produces an invalid query. When the invalid query is run, the invalid part of the query condition is dropped, and the results are based on the valid part of the query, which may return all records from the table. Using an insert(), update(), deleteRecord(), or deleteMultiple() method on bad query results can result in data loss.You can set the glide.invalid_query.returns_no_rows system property to true to have queries with invalid encoded queries return no records.
  */
 declare class GlideRecord implements IGlideTableProperties, $$element.IDbObject {
     /**
@@ -1994,18 +2665,18 @@ declare class GlideRecord implements IGlideTableProperties, $$element.IDbObject 
     sys_created_by: $$property.Element;
 
     /**
-     * Created
+     * Created field. Internal type is "glide_date_time"
+     * @summary Created
      * @type {$$property.GlideObject}
      * @memberof GlideRecord
-     * @description Internal type is "glide_date_time"
      */
     sys_created_on: $$property.GlideObject;
 
     /**
-     * Sys ID
+     * Sys ID field. Internal type is "GUID"
+     * @summary Sys ID
      * @type {$$property.Element}
      * @memberof GlideRecord
-     * @description Internal type is "GUID"
      */
     sys_id: $$property.Element;
 
@@ -2024,38 +2695,41 @@ declare class GlideRecord implements IGlideTableProperties, $$element.IDbObject 
     sys_updated_by: $$property.Element;
 
     /**
-     * Updated
+     * Updated field. Internal type is "glide_date_time"
+     * @summary Updated
      * @type {$$property.GlideObject}
      * @memberof GlideRecord
-     * @description Internal type is "glide_date_time"
      */
     sys_updated_on: $$property.GlideObject;
+
     /**
      * Adds a filter to return active records.
      * @memberof GlideRecord
      * @returns {GlideQueryCondition} Filter to return active records.
      */
     addActiveQuery(): GlideQueryCondition;
+
     /**
      * Adds an encoded query to other queries that may have been set.
      * @memberof GlideRecord
      * @param {string} query - An encoded query string.
-     * @description 
      */
     addEncodedQuery(query: string): void;
+
     /**
      * Applies a pre-defined GlideDBFunctionBuilder object to a record.
      * @memberof GlideRecord
      * @param {*} function - A GlideDBFunctionBuilder object that defines a SQL operation.
-     * @description 
      */
     addFunction(functionBuilder: any): void;
+
     /**
      * Creates an instance of the GlideRecord class for the specified table.
      * @constructor
      * @param {string} tableName - The table to be used.
      */
     constructor(tableName: string);
+
     /**
      * Adds a filter to return records based on a relationship in a related table.
      * @memberof GlideRecord
@@ -2063,39 +2737,42 @@ declare class GlideRecord implements IGlideTableProperties, $$element.IDbObject 
      * @param {*} [primaryField] - If other than sys_id, the primary field
      * @param {*} [joinTableField] - If other than sys_id, the field that joins the tables.
      * @returns {GlideQueryCondition} A filter that lists records where the relationships match.
-     * @description 
      */
     addJoinQuery(joinTable: string, primaryField?: any, joinTableField?: any): GlideQueryCondition;
+
     /**
      * A filter that specifies records where the value of the field passed in the parameter is not null.
      * @memberof GlideRecord
      * @param {string} fieldName - Name of the field to check.
      * @returns {GlideQueryCondition} A filter that specifies records where the value of the field passed in the parameter is not null.
-     * @description 
      */
     addNotNullQuery(fieldName: string): GlideQueryCondition;
+
     /**
      * Adds a filter to return records where the value of the specified field is null.
      * @memberof GlideRecord
      * @param {string} fieldName - Name of the field to check.
      * @returns {GlideQueryCondition} Query condition added to the GlideRecord.
-     * @description 
      */
     addNullQuery(fieldName: string): GlideQueryCondition;
+
     /**
      * Provides the ability to build a request, which when executed, returns the rows from the specified table, that match the request.
      * @memberof GlideRecord
      */
     addQuery(): GlideQueryCondition;
+
     /**
      * Provides the ability to build a request, which when executed, returns the rows from the specified table, that match the request.
      * @memberof GlideRecord
      * @param {string} name - Table field name.
-     * @param {string} operator - Query operator. The available values are dependent on the data type of the value parameter.Numbers:=!=&gt;&gt;=&lt;&lt;=Strings (must be in upper case):=!=INNOT INSTARTSWITHENDSWITHCONTAINSDOES NOT CONTAININSTANCEOF
+     * @param {string} operator - Query operator. The available values are dependent on the data type of the value parameter.
+     *                            Numbers:=!=&gt;&gt;=&lt;&lt;=Strings (must be in upper case):=!=INNOT INSTARTSWITHENDSWITHCONTAINSDOES NOT CONTAININSTANCEOF
      * @param {*} value - Value on which to query (not case-sensitive).
      * @returns {GlideQueryCondition} The query condition that was added to the GlideRecord.
      */
     addQuery(name: string, operator: string, value: any): GlideQueryCondition;
+
     /**
      * Provides the ability to build a request, which when executed, returns the rows from the specified table, that match the request.
      * @memberof GlideRecord
@@ -2104,38 +2781,43 @@ declare class GlideRecord implements IGlideTableProperties, $$element.IDbObject 
      * @returns {GlideQueryCondition} The query condition that was added to the GlideRecord.
      */
     addQuery(name: string, value: any): GlideQueryCondition;
+
     /**
      * Adds a filter to return records using an encoded query string.
      * @memberof GlideRecord
      * @param {string} encodedQuery - Encoded query string.
      * @returns {GlideQueryCondition} The query condition added to the GlideRecord.
-     * @description 
      */
     addQuery(encodedQuery: string): GlideQueryCondition;
+
     /**
      * Determines if the Access Control Rules, which include the user's roles, permit inserting new records in this table.
      * @memberof GlideRecord
      * @returns {boolean} True if the user's roles permit creation of new records in this table.
      */
     canCreate(): boolean;
+
     /**
      * Determines if the Access Control Rules, which include the user's roles, permit deleting records in this table.
      * @memberof GlideRecord
      * @returns {boolean} Flag that indicates whether the user's roles permit deletions of records in this table.Valid values:true: Deletions permittedfalse: Deletions are not permitted.
      */
     canDelete(): boolean;
+
     /**
      * Determines if the Access Control Rules, which include the user's roles, permit reading records in this table.
      * @memberof GlideRecord
      * @returns {boolean} Flag that indicates whether the user's roles permit reading of records in this table.Valid values:true: Reading permittedfalse: Reading is not permitted.
      */
     canRead(): boolean;
+
     /**
      * Determines if the Access Control Rules, which include the user's roles, permit editing records in this table.
      * @memberof GlideRecord
      * @returns {boolean} Flag that indicates whether the user's roles permit writing of records in this table.Valid values:true: Writing permittedfalse: Writing is not permitted.
      */
     canWrite(): boolean;
+
     /**
      * Sets a range of rows to be returned by subsequent queries.
      * @memberof GlideRecord
@@ -2144,35 +2826,37 @@ declare class GlideRecord implements IGlideTableProperties, $$element.IDbObject 
      * @param {boolean} forceCount - If true, the getRowCount() method will return all possible records.
      */
     chooseWindow(firstRow: number, lastRow: number, forceCount: boolean): void;
+
     /**
      * Deletes multiple records that satisfy the query condition.
      * @memberof GlideRecord
-     * @description 
      */
     deleteMultiple(): void;
+
     /**
      * Deletes the current record.
      * @memberof GlideRecord
      * @returns {boolean} Flag that indicates whether the record was successfully deleted.Valid values:true: Record was deleted.false: No record was found to delete.
      */
     deleteRecord(): boolean;
+
     /**
      * Returns the specified record in an instantiated GlideRecord object.
      * @memberof GlideRecord
      * @param {$$property.Element} sys_id - sys_id to match.
      * @returns {boolean} Flag that indicates whether the requested record was located - true: Record was found; false: Record was not found.
-     * @description 
      */
     get(sys_id: $$property.Element): boolean;
+
     /**
      * Returns the specified record in an instantiated GlideRecord object.
      * @memberof GlideRecord
      * @param {GLIDE.String} name - Name of the instantiated GlideRecord column to search for the specified value parameter.
      * @param {*} value - Value to match.
      * @returns {boolean} Flag that indicates whether the requested record was located.true: Record was foundfalse: Record was not found.
-     * @description 
      */
     get(name: $$rhino.String, value: any): boolean;
+
     /**
      * Returns the dictionary attributes for the specified field.
      * @memberof GlideRecord
@@ -2180,24 +2864,28 @@ declare class GlideRecord implements IGlideTableProperties, $$element.IDbObject 
      * @returns {string} Dictionary attributes.
      */
     getAttribute(fieldName: string): string;
+
     /**
      * Returns the table's label.
      * @memberof GlideRecord
      * @returns {string} Table's label.
      */
     getClassDisplayValue(): string;
+
     /**
      * Retrieves the display value for the current record.
      * @memberof GlideRecord
      * @returns {string} The display value for the current record.
      */
     getDisplayValue(): string;
+
     /**
      * Returns the element's descriptor.
      * @memberof GlideRecord
      * @returns {GlideElementDescriptor} Element's descriptor.
      */
     getED(): GlideElementDescriptor;
+
     /**
      * Retrieves the GlideElement object for the specified field.
      * @memberof GlideRecord
@@ -2205,24 +2893,28 @@ declare class GlideRecord implements IGlideTableProperties, $$element.IDbObject 
      * @returns {GlideElement} The GlideElement for the specified column of the current record.
      */
     getElement(columnName: string): GlideElement;
+
     /**
      * Retrieves the query condition of the current result set as an encoded query string.
      * @memberof GlideRecord
      * @returns {string} The encoded query as a string.
      */
     getEncodedQuery(): string;
+
     /**
      * Returns the field's label.
      * @memberof GlideRecord
      * @returns {string} Field's label.
      */
     getLabel(): string;
+
     /**
      * Retrieves the last error message. If there is no last error message, null is returned.
      * @memberof GlideRecord
      * @returns {string} The last error message as a string.
      */
     getLastErrorMessage(): string;
+
     /**
      * Retrieves a link to the current record.
      * @memberof GlideRecord
@@ -2230,30 +2922,35 @@ declare class GlideRecord implements IGlideTableProperties, $$element.IDbObject 
      * @returns {string} A link to the current record as a string.
      */
     getLink(noStack: boolean): string;
+
     /**
      * Retrieves the class name for the current record.
      * @memberof GlideRecord
      * @returns {string} The class name.
      */
     getRecordClassName(): string;
+
     /**
      * Retrieves the number of rows in the query result.
      * @memberof GlideRecord
      * @returns {number} Number of rows.
      */
     getRowCount(): number;
+
     /**
      * Retrieves the name of the table associated with the GlideRecord.
      * @memberof GlideRecord
      * @returns {string} The table name.
      */
     getTableName(): string;
+
     /**
      * Gets the primary key of the record, which is usually the sys_id unless otherwise specified.
      * @memberof GlideRecord
      * @returns {string} The unique primary key as a String, or null if the key is null.
      */
     getUniqueValue(): string;
+
     /**
      * Retrieves the string value of an underlying element in a field.
      * @memberof GlideRecord
@@ -2261,85 +2958,98 @@ declare class GlideRecord implements IGlideTableProperties, $$element.IDbObject 
      * @returns {string} The value of the field.
      */
     getValue(name: string): string;
+
     /**
      * Determines if there are any more records in the GlideRecord object.
      * @memberof GlideRecord
      * @returns {boolean} True if there are more records in the query result set.
      */
     hasNext(): boolean;
+
     /**
      * Creates an empty record suitable for population before an insert.
      * @memberof GlideRecord
      */
     initialize(): void;
+
     /**
      * Inserts a new record using the field values that have been set for the current record.
      * @memberof GlideRecord
      * @returns {string} Unique ID of the inserted record, or null if the record is not inserted.
      */
     insert(): string;
+
     /**
      * Checks to see if the current database action is to be aborted.
      * @memberof GlideRecord
      * @returns {boolean} Flag that indicates whether the current database action is to be aborted.Valid values:true: Action is to be aborted.false: Action is not to be aborted.
-     * @description 
      */
     isActionAborted(): boolean;
+
     /**
      * Checks if the current record is a new record that has not yet been inserted into the database.
      * @memberof GlideRecord
      * @returns {boolean} True if the record is new and has not been inserted into the database.
      */
     isNewRecord(): boolean;
+
     /**
      * Determines if the table exists.
      * @memberof GlideRecord
      * @returns {boolean} True if table is valid or if record was successfully retrieved. False if table is invalid or record was not successfully retrieved.
      */
     isValid(): boolean;
+
     /**
      * Determines if the specified field is defined in the current table.
      * @memberof GlideRecord
-     * @param {string} columnName - The name of the the field.
+     * @param {string} columnName - The name of the field.
      * @returns {boolean} True if the field is defined for the current table.
      */
     isValidField(columnName: string): boolean;
+
     /**
      * Determines if a record was actually returned by the query/get record operation.
      * @memberof GlideRecord
-     * @returns {boolean} Flag that indicates whether a record was actually returned by the query/get operation.Valid values:true: Record returned by query/get operation.false: End of record set, no record returned.
+     * @returns {boolean} Flag that indicates whether a record was actually returned by the query/get operation.
+     *                    Valid values: true = Record returned by query/get operation; false = End of record set, no record returned.
      */
     isValidRecord(): boolean;
+
     /**
      * Creates a new GlideRecord record, sets the default values for the fields, and assigns a unique ID to the record.
      * @memberof GlideRecord
      */
     newRecord(): void;
+
     /**
      * Moves to the next record in the GlideRecord object.
      * @memberof GlideRecord
      * @returns {boolean} Flag that indicates if there is a "next" record in the GlideRecord.Valid values:true: Move to the next record was successful.false: No more records in the result set.
-     * @description 
      */
     next(): boolean;
+
     /**
      * Retrieves the current operation being performed, such as insert, update, or delete.
      * @memberof GlideRecord
      * @returns {string} The current operation.
      */
     operation(): string;
+
     /**
      * Specifies an orderBy column.
      * @memberof GlideRecord
      * @param {string} name - The column name used to order the records in this GlideRecord object.
      */
     orderBy(name: string): void;
+
     /**
      * Specifies a decending orderBy column.
      * @memberof GlideRecord
      * @param {string} name - The column name to be used to order the records in a GlideRecord object.
      */
     orderByDesc(name: string): void;
+
     /**
      * Runs the query against the table based on the filters specified by addQuery, addEncodedQuery, etc.
      * @memberof GlideRecord
@@ -2347,43 +3057,49 @@ declare class GlideRecord implements IGlideTableProperties, $$element.IDbObject 
      * @param {*} value - Value to query for.
      */
     query(field: any, value: any): void;
+
     /**
      * Runs the query against the table based on the filters specified by addQuery, addEncodedQuery, etc.
      * @memberof GlideRecord
      */
     query(): void;
+
     /**
      * Sets a flag to indicate if the next database action (insert, update, delete) is to be aborted. This is often used in business rules.
      * @memberof GlideRecord
      * @param {boolean} b - True to abort the next action. False if the action is to be allowed.
      */
     setAbortAction(b: boolean): void;
+
     /**
      * Sets the limit for number of records are fetched by the GlideRecord query.
      * @memberof GlideRecord
      * @param {number} maxNumRecords - The maximum number of records to fetch.
      */
     setLimit(maxNumRecords: number): void;
+
     /**
      * Sets sys_id value for the current record.
      * @memberof GlideRecord
      * @param {string} guid - The GUID to be assigned to the current record.
      */
     setNewGuidValue(guid: string): void;
+
     /**
      * Sets the value of the field with the specified name to the specified value.
      * @memberof GlideRecord
      * @param {string} name - Name of the field.
      * @param {*} value - The value to assign to the field.
-     * @description 
      */
     setValue(name: string, value: any): void;
+
     /**
      * Enables or disables the running of business rules, script engines, and audit.
      * @memberof GlideRecord
      * @param {boolean} enable - If true (default), enables business rules. If false, disables business rules.
      */
     setWorkflow(enable: boolean): void;
+
     /**
      * Updates the GlideRecord with any changes that have been made. If the record does not already exist, it is inserted.
      * @memberof GlideRecord
@@ -2391,112 +3107,119 @@ declare class GlideRecord implements IGlideTableProperties, $$element.IDbObject 
      * @returns {string} The sys_id of the new or updated record. Returns null if the update fails.
      */
     update(reason?: string): string;
+
     /**
      * Updates each GlideRecord in a stated query with a specified set of changes.
      * @memberof GlideRecord
-     * @description 
      */
     updateMultiple(): void;
+
     /**
      * Moves to the next record in the GlideRecord. Provides the same functionality as next(), it is intended to be used in cases where the GlideRecord has a column named next.
      * @memberof GlideRecord
      * @returns {boolean} True if there are more records in the query set.
      */
     _next(): boolean;
+
     /**
      * Identical to query(). This method is intended to be used on tables where there is a column named query, which would interfere with using the query() method.
      * @memberof GlideRecord
      * @param {*} name - Column name on which to query
      * @param {*} value - Value for which to query
-     * @description 
      */
     _query(name: any, value: any): void;
 }
 
 /**
- * The scoped GlideElementDescriptor API provides information about individual fields.
+ * There is no constructor for this class. Use the GlideElement getED() method to obtain a ElementDescriptor object.
+ * @summary The scoped GlideElementDescriptor API provides information about individual fields.
  * @class GlideElementDescriptor
- * @description There is no constructor for this class. Use the GlideElement getED() method to obtain a ElementDescriptor object.
  */
 declare class GlideElementDescriptor {
     protected constructor();
+
     /**
      * Returns the encryption type used for attachments on the element's table.
      * @memberof GlideElementDescriptor
      * @returns {string | Packages.java.lang.String} The encryption type used on attachments. Returns null if attachments on the element's table are not being encrypted.
-     * @description 
      */
     getAttachmentEncryptionType(): string | Packages.java.lang.String;
+
     /**
      * Returns the element's encryption type.
      * @memberof GlideElementDescriptor
      * @returns {string | Packages.java.lang.String} The element's encryption type. Returns null if the element is not encrypted.
-     * @description 
      */
     getEncryptionType(): string | Packages.java.lang.String;
+
     /**
      * Returns the element's internal data type.
      * @memberof GlideElementDescriptor
      * @returns {string | Packages.java.lang.String} The element's internal data type.
      */
     getInternalType(): string | Packages.java.lang.String;
+
     /**
      * Returns the element's label.
      * @memberof GlideElementDescriptor
      * @returns {string | Packages.java.lang.String} The element's label.
      */
     getLabel(): string | Packages.java.lang.String;
+
     /**
      * Returns the element's length.
      * @memberof GlideElementDescriptor
      * @returns {number} The element's size.
      */
     getLength(): number;
+
     /**
      * Returns the element's name.
      * @memberof GlideElementDescriptor
      * @returns {string} The element's name.
      */
     getName(): string | Packages.java.lang.String;
+
     /**
      * Returns the element's plural label.
      * @memberof GlideElementDescriptor
      * @returns {string} The element's plural label.
      */
     getPlural(): string | Packages.java.lang.String;
+
     /**
      * Returns true if an encrypted attachment has been added to the table.
      * @memberof GlideElementDescriptor
      * @returns {boolean} Returns true if an encrypted attachment has been added to the table.
-     * @description 
      */
     hasAttachmentsEncrypted(): boolean;
+
     /**
      * Returns true if the element is an automatically generated or system field.
      * @memberof GlideElementDescriptor
      * @returns {boolean} True if the element is automatically generated or a system field.
-     * @description 
      */
     isAutoOrSysID(): boolean;
+
     /**
      * Returns true if the element is defined as a dropdown choice in its dictionary definition.
      * @memberof GlideElementDescriptor
-     * @returns {boolean} Returns true if the element is defined as a dropdown choice. Returns true even if there are no entries defined in the choice table. The last choice type, suggestion, does not return true.
-     * @description 
+     * @returns {boolean} Returns true if the element is defined as a dropdown choice. Returns true even if there are no entries defined in the choice table.
+     * The last choice type, suggestion, does not return true.
      */
     isChoiceTable(): boolean;
+
     /**
      * Returns true if an element is encrypted.
      * @memberof GlideElementDescriptor
      * @returns {boolean} Returns true if the element is encrypted, false otherwise.
-     * @description 
      */
     isEdgeEncrypted(): boolean;
+
     /**
      * Returns true if the element is a virtual element.
      * @memberof GlideElementDescriptor
      * @returns {boolean} Returns true if the element is a virtual element.
-     * @description 
      */
     isVirtual(): boolean;
 }
@@ -2509,6 +3232,7 @@ declare class GlideEmail {
      * @param {string} address - The recipient's email address.
      */
     addAddress(type: string, address: string): void;
+
     /**
      * Adds the recipient to either the cc or bcc list, but uses the display name instead of the address when showing the recipient.
      * @memberof GlideEmail
@@ -2517,53 +3241,64 @@ declare class GlideEmail {
      * @param {string} displayName - The name to be shown instead of the email address.
      */
     addAddress(type: string, address: string, displayName: string): void;
+
     /**
-     * 
-     * @param address 
+     *
+     * @param address
      */
     addRecipient(address: string): void;
+
     /**
      * Instantiates a scoped GlideEmail object.
      * @constructor
      * @param {string} [body] Body of message
      */
     constructor(body?: string);
+
     /**
-     * 
+     *
      */
     getSMSText(): string;
+
     /**
      * Returns the email's subject line.
      * @memberof GlideEmail
      * @returns {string} The email's subject line.
      */
     getSubject(): string;
+
     getTextBody(): string;
+
     /**
      * Returns the email's watermark.
      * @memberof GlideEmail
      * @returns {string} The email's watermark.
      */
     getWatermark(): string;
+
     /**
      * Sets the body of the email.
      * @memberof GlideEmail
      * @param {string} bodyText - The body of the email.
      */
     setBody(bodyText: string): void;
+
     /**
      * Sets the sender's address.
      * @memberof GlideEmail
      * @param {string} address - The sender's email address.
      */
     setFrom(address: string): void;
+
     setRecipients(recipients: string): void;
+
     /**
      * Sets the reply to address.
      * @memberof GlideEmail
      * @param {string} address - The reply to email address.
      */
     setReplyTo(address: string): void;
+
     /**
      * Sets the email's subject line.
      * @memberof GlideEmail
@@ -2577,12 +3312,13 @@ declare class EmailWatermark {
 }
 
 /**
- * The scoped GlideEmailOutbound class implements the email object for scoped applications.
+ * You can use the GlideEmailOutbound methods with the email global object available in mail scripts.The email object behaves identically for global and scoped applications.
+ * @summary The scoped GlideEmailOutbound class implements the email object for scoped applications.
  * @class GlideEmailOutbound
-* @description You can use the GlideEmailOutbound methods with the email global object available in mail scripts.The email object behaves identically for global and scoped applications.
  */
 declare class EmailOutbound extends GlideEmail {
     constructor(actionType_OR_action?: string | GlideRecord, m?: EmailWatermark);
+
     save(): void;
 }
 
@@ -2597,60 +3333,70 @@ declare class GlideTableHierarchy {
      * @param {string} tableName - The name of the table.
      */
     constructor(tableName: string);
+
     /**
      * Returns an array of strings containing all tables that extend the current table and includes the current table.
      * @memberof GlideTableHierarchy
      * @returns {Array<*>} An array of strings containing the tables in the hierarchy that includes the current table.
      */
     getAllExtensions(): any[];
+
     /**
      * Returns the parent class.
      * @memberof GlideTableHierarchy
      * @returns {string} The parent class.
      */
     getBase(): string;
+
     /**
      * Returns an array of strings containing all classes in the hierarchy of the current table.
      * @memberof GlideTableHierarchy
      * @returns {Array<*>} An array of strings of the classes in the hierarchy.
      */
     getHierarchy(): any[];
+
     /**
      * Returns the table's name.
      * @memberof GlideTableHierarchy
      * @returns {string} The table's name.
      */
     getName(): string;
+
     /**
      * Returns the top level class in the hierarchy.
      * @memberof GlideTableHierarchy
      * @returns {string} The root class.
      */
     getRoot(): string;
+
     /**
      * Returns an array of strings containing all tables that extend the current table.
      * @memberof GlideTableHierarchy
      * @returns {Array<*>} An array of strings containing the tables that extend the current table.
      */
     getTableExtensions(): any[];
+
     /**
      * Returns an array of strings of the table names in the hierarchy.
      * @memberof GlideTableHierarchy
      * @returns {Array<*>} An array of strings containing the names of tables in the hierarchy.
      */
     getTables(): any[];
+
     /**
      * Returns true of this class has been extended.
      * @memberof GlideTableHierarchy
      * @returns {boolean} True if the current table has extensions.
      */
     hasExtensions(): boolean;
+
     /**
      * Returns true if this is a base class.
      * @memberof GlideTableHierarchy
      * @returns {boolean} True if the current table has no parent and has extensions.
      */
     isBaseClass(): boolean;
+
     /**
      * Returns true if this table is not in a hierarchy.
      * @memberof GlideTableHierarchy
@@ -2660,24 +3406,28 @@ declare class GlideTableHierarchy {
 }
 
 /**
- * The scoped Workflow API provides methods that can be used in an activity definition script.
+ * There are no constructors for creating an instance of a scoped workflow object. Instead, use the global workflow object available in activity scripts.
+ * This workflow object is available in any script location inside a workflow.
+ * @summary The scoped Workflow API provides methods that can be used in an activity definition script.
  * @class Workflow
- * @description There are no constructors for creating an instance of a scoped workflow object. Instead, use the global workflow object available in activity scripts. This workflow object is available in any script location inside a workflow.
  */
 declare class Workflow {
     protected constructor();
+
     /**
      * Returns the workflow variables.
      * @memberof Workflow
      * @param {*} inputs - Workflow variables as name value pairs.
      */
     inputs(inputs: any): any;
+
     /**
      * Returns the workflow's result.
      * @memberof Workflow
      * @param {string} result - Workflow results
      */
     result(result: string): any;
+
     /**
      * Adds a debug message to the log.
      * @memberof Workflow
@@ -2686,6 +3436,7 @@ declare class Workflow {
      * @returns {string} The message added to the log.
      */
     debug(message: string, args: any): string;
+
     /**
      * Adds an error message to the log.
      * @memberof Workflow
@@ -2694,6 +3445,7 @@ declare class Workflow {
      * @returns {string} The logged message.
      */
     error(message: string, args: any): string;
+
     /**
      * Returns the specified variable's value.
      * @memberof Workflow
@@ -2701,6 +3453,7 @@ declare class Workflow {
      * @returns {*} The variable's value.
      */
     getVariable(name: string): any;
+
     /**
      * Adds an informational message to the log.
      * @memberof Workflow
@@ -2709,30 +3462,35 @@ declare class Workflow {
      * @returns {string} The message that is logged.
      */
     info(message: string, args: any): string;
+
     /**
      * Returns the workflow name.
      * @memberof Workflow
      * @returns {string} The workflow name.
      */
     name(): string;
+
     /**
      * Removes the specified variable from the workflow.
      * @memberof Workflow
      * @param {string} name - The variable name
      */
     removeVariable(name: string): void;
+
     /**
      * Returns the workflow's scratchpad object.
      * @memberof Workflow
      * @returns {*} The scratchpad object.
      */
     scratchpad(): any;
+
     /**
      * Sets the workflow's result.
      * @memberof Workflow
      * @param {string} result - The workflow's result
      */
     setResult(result: string): void;
+
     /**
      * Sets the specified variable to the specified value.
      * @memberof Workflow
@@ -2740,6 +3498,7 @@ declare class Workflow {
      * @param {*} value - The value to be assigned to the variable.
      */
     setVariable(name: string, value: any): void;
+
     /**
      * Adds a warning message to the log.
      * @memberof Workflow
@@ -2752,99 +3511,115 @@ declare class Workflow {
 
 /**
  * The scoped GlideSystem (referred to by the variable name 'gs' in any server-side JavaScript) API provides a number of convenient methods to get information about the system, the current logged in user, etc.
+ * Many of the GlideSystem methods facilitate the easy inclusion of dates in query ranges, and are most often used in filters and reporting.
+ * @summary Object referenced by the {@link gs} global variable.
  * @class GlideSystem
- * @description Many of the GlideSystem methods facilitate the easy inclusion of dates in query ranges, and are most often used in filters and reporting.
  */
 declare class GlideSystem {
     protected constructor();
+
     /**
      * Adds an error message for the current session.
      * @memberof GlideSystem
      * @param {*} message - The message to add.
      */
     addErrorMessage(message: any): void;
+
     /**
      * Adds an info message for the current session. This method is not supported for asynchronous business rules.
      * @memberof GlideSystem
      * @param {*} message - An info message object.
      */
     addInfoMessage(message: any): void;
+
     /**
      * Returns an ASCII string from the specified base64 string.
      * @memberof GlideSystem
      * @param {string} source - A base64 encoded string.
-     * @returns {string} The decoded string..
+     * @returns {string} The decoded string.
      */
     base64Decode(source: string): string;
+
     /**
      * Creates a base64 string from the specified string.
      * @memberof GlideSystem
      * @param {string} source - The string to be encoded.
-     * @returns {string} The base64 string..
+     * @returns {string} The base64 string.
      */
     base64Encode(source: string): string;
+
     /**
      * Returns the date and time for the beginning of last month in GMT.
      * @memberof GlideSystem
      * @returns {string} GMT beginning of last month, in the format yyyy-mm-dd hh:mm:ss.
      */
     beginningOfLastMonth(): string;
+
     /**
      * Returns the date and time for the beginning of last week in GMT.
      * @memberof GlideSystem
      * @returns {string} GMT beginning of last week, in the format yyyy-mm-dd hh:mm:ss.
      */
     beginningOfLastWeek(): string;
+
     /**
      * Returns the date and time for the beginning of next month in GMT.
      * @memberof GlideSystem
      * @returns {string} GMT beginning of next month, in the format yyyy-mm-dd hh:mm:ss.
      */
     beginningOfNextMonth(): string;
+
     /**
      * Returns the date and time for the beginning of next week in GMT.
      * @memberof GlideSystem
-     * @returns {string} The GMT beginning of next week, in the format yyyy-mm-dd hh:mm:ss..
+     * @returns {string} The GMT beginning of next week, in the format yyyy-mm-dd hh:mm:ss.
      */
     beginningOfNextWeek(): string;
+
     /**
      * Returns the date and time for the beginning of next year in GMT.
      * @memberof GlideSystem
      * @returns {string} GMT beginning of next year, in the format yyyy-mm-dd hh:mm:ss.
      */
     beginningOfNextYear(): string;
+
     /**
      * Returns the date and time for the beginning of this month in GMT.
      * @memberof GlideSystem
      * @returns {string} GMT beginning of this month, in the format yyyy-mm-dd hh:mm:ss.
      */
     beginningOfThisMonth(): string;
+
     /**
      * Returns the date and time for the beginning of this quarter in GMT.
      * @memberof GlideSystem
      * @returns {string} GMT beginning of this quarter, in the format yyyy-mm-dd hh:mm:ss.
      */
     beginningOfThisQuarter(): string;
+
     /**
      * Returns the date and time for the beginning of this week in GMT.
      * @memberof GlideSystem
      * @returns {string} GMT beginning of this week, in the format yyyy-mm-dd hh:mm:ss.
      */
     beginningOfThisWeek(): string;
+
     /**
      * Returns the date and time for the beginning of this year in GMT.
      * @memberof GlideSystem
      * @returns {string} GMT beginning of this year, in the format yyyy-mm-dd hh:mm:ss.
      */
     beginningOfThisYear(): string;
+
     /**
      * Generates a date and time for the specified date in GMT.
      * @memberof GlideSystem
      * @param {string} date - Format: yyyy-mm-dd
      * @param {string} range - Start, end, or a time in the 24 hour format hh:mm:ss.
-     * @returns {string} A date and time in the format yyyy-mm-dd hh:mm:ss. If range is start, the returned value is yyyy-mm-dd 00:00:00; If range is end the return value is yyyy-mm-dd 23:59:59..
+     * @returns {string} A date and time in the format yyyy-mm-dd hh:mm:ss. If range is start, the returned value is yyyy-mm-dd 00:00:00; If range is end the return value is yyyy-mm-dd 23:59:59.
      */
     dateGenerate(date: string, range: string): string;
+
     /**
      * Returns the date and time for a specified number of days ago.
      * @memberof GlideSystem
@@ -2852,6 +3627,7 @@ declare class GlideSystem {
      * @returns {string} GMT in the format yyyy-mm-dd hh:mm:ss.
      */
     daysAgo(days: number): string;
+
     /**
      * Returns the date and time for the end of the day a specified number of days ago.
      * @memberof GlideSystem
@@ -2859,6 +3635,7 @@ declare class GlideSystem {
      * @returns {string} GMT end of the day in the format yyyy-mm-dd hh:mm:ss.
      */
     daysAgoEnd(days: number): string;
+
     /**
      * Returns the date and time for the beginning of the day a specified number of days ago.
      * @memberof GlideSystem
@@ -2866,6 +3643,7 @@ declare class GlideSystem {
      * @returns {string} GMT start of the day in the format yyyy-mm-dd hh:mm:ss.
      */
     daysAgoStart(days: string): string;
+
     /**
      * Writes a debug message to the system log.
      * @memberof GlideSystem
@@ -2877,66 +3655,77 @@ declare class GlideSystem {
      * @param {*} [param5] - Fifth variable argument.
      */
     debug(message: string, param1?: any, param2?: any, param3?: any, param4?: any, param5?: any): void;
+
     /**
      * Returns the date and time for the end of last month in GMT.
      * @memberof GlideSystem
      * @returns {string} GMT end of last month, in the format yyyy-mm-dd hh:mm:ss.
      */
     endOfLastMonth(): string;
+
     /**
      * Returns the date and time for the end of last week in GMT.
      * @memberof GlideSystem
      * @returns {string} GMT end of last week, in the format yyyy-mm-dd hh:mm:ss.
      */
     endOfLastWeek(): string;
+
     /**
      * Returns the date and time for the end of last year in GMT.
      * @memberof GlideSystem
      * @returns {string} GMT in format yyyy-mm-dd hh:mm:ss.
      */
     endOfLastYear(): string;
+
     /**
      * Returns the date and time for the end of next month in GMT.
      * @memberof GlideSystem
      * @returns {string} GMT in the format yyyy-mm-dd hh:mm:ss.
      */
     endOfNextMonth(): string;
+
     /**
      * Returns the date and time for the end of next week in GMT.
      * @memberof GlideSystem
      * @returns {string} GMT in the format yyyy-mm-dd hh:mm:ss.
      */
     endOfNextWeek(): string;
+
     /**
      * Returns the date and time for the end of next year in GMT.
      * @memberof GlideSystem
      * @returns {string} GMT in the format yyyy-mm-dd hh:mm:ss.
      */
     endOfNextYear(): string;
+
     /**
      * Returns the date and time for the end of this month in GMT.
      * @memberof GlideSystem
      * @returns {string} GMT in the format yyyy-mm-dd hh:mm:ss.
      */
     endOfThisMonth(): string;
+
     /**
      * Returns the date and time for the end of this quarter in GMT.
      * @memberof GlideSystem
      * @returns {string} GMT in the format yyyy-mm-dd hh:mm:ss.
      */
     endOfThisQuarter(): string;
+
     /**
      * Returns the date and time for the end of this week in GMT.
      * @memberof GlideSystem
      * @returns {string} GMT in the format yyyy-mm-dd hh:mm:ss.
      */
     endOfThisWeek(): string;
+
     /**
      * Returns the date and time for the end of this year in GMT.
      * @memberof GlideSystem
      * @returns {string} GMT in the format yyyy-mm-dd hh:mm:ss.
      */
     endOfThisYear(): string;
+
     /**
      * Writes an error message to the system log.
      * @memberof GlideSystem
@@ -2946,9 +3735,9 @@ declare class GlideSystem {
      * @param {*} [param3] - Third variable argument.
      * @param {*} [param4] - Fourth variable argument.
      * @param {*} [param5] - Fifth variable argument.
-     * @description 
      */
     error(message: string, param1?: any, param2?: any, param3?: any, param4?: any, param5?: any): void;
+
     /**
      * Queues an event for the event manager.
      * @memberof GlideSystem
@@ -2959,6 +3748,7 @@ declare class GlideSystem {
      * @param {string} [queue] - Name of the queue.
      */
     eventQueue(name: string, instance: any, parm1?: string, parm2?: string, queue?: string): void;
+
     /**
      * Queues an event for the event manager at a specified date and time.
      * @memberof GlideSystem
@@ -2966,140 +3756,158 @@ declare class GlideSystem {
      * @param {*} instance - GlideRecord object, such as "current".
      * @param {string} [parm1] - Saved with the instance if specified.
      * @param {string} [parm2] - Saved with the instance if specified.
-     * @param {*} [expiration] - Date and time to process this event..
+     * @param {*} [expiration] - Date and time to process this event.
      */
     eventQueueScheduled(name: string, instance: any, parm1?: string, parm2?: string, expiration?: any): void;
+
     /**
      * Executes a job for a scoped application.
      * @memberof GlideSystem
      * @param {GlideRecord} job - The job to be run.
-     * @returns {string} Returns the sysID of the scheduled job. Returns null if the job is global..
-     * @description 
+     * @returns {string} Returns the sysID of the scheduled job. Returns null if the job is global.
      */
     executeNow(job: GlideRecord): string;
+
     /**
      * Generates a GUID that can be used when a unique identifier is required.
      * @memberof GlideSystem
-     * @returns {string} A 32-character hexadecimal GUID..
+     * @returns {string} A 32-character hexadecimal GUID.
      */
     generateGUID(): string;
+
     /**
      * Gets the caller scope name; returns null if there is no caller.
      * @memberof GlideSystem
-     * @returns {string} The caller's scope name, or null if there is no caller..
+     * @returns {string} The caller's scope name, or null if there is no caller.
      */
     getCallerScopeName(): string;
+
     /**
      * Gets a string representing the cache version for a CSS file.
      * @memberof GlideSystem
-     * @returns {string} The CSS cache version..
+     * @returns {string} The CSS cache version.
      */
     getCssCacheVersionString(): string;
+
     /**
      * Gets the ID of the current application as set using the Application Picker.
      * @memberof GlideSystem
-     * @returns {string} The current application's sys_id, or global in none is set..
+     * @returns {string} The current application's sys_id, or global in none is set.
      */
     getCurrentApplicationId(): string;
+
     /**
      * Gets the name of the current scope.
      * @memberof GlideSystem
-     * @returns {string} The current scope name..
+     * @returns {string} The current scope name.
      */
     getCurrentScopeName(): string;
+
     /**
      * Returns the list of error messages for the session that were added by addErrorMessage().
      * @memberof GlideSystem
      * @returns {string} List of error messages.
      */
     getErrorMessages(): string;
+
     /**
      * Retrieves a message from UI messages that has HTML special characters, and replaces them with escape sequences. For example, &amp; becomes &amp;amp;.
      * @memberof GlideSystem
      * @param {string} id - ID of the message.
      * @param {any[]} [args] - List of strings or other values defined by java.text.MessageFormat, which allows you to produce language-neutral messages for display to users.
-     * @returns {string} The UI message with HTML special characters replaced with escape sequences..
+     * @returns {string} The UI message with HTML special characters replaced with escape sequences.
      */
     getEscapedMessage(id: string, args?: any[]): string;
+
     /**
      * Retrieves a message from UI messages.
      * @memberof GlideSystem
      * @param {string} id - The ID of the message.
      * @param {any[]} [args] - A list of strings or other values defined by java.text.MessageFormat, which allows you to produce language-neutral messages for display to users.
-     * @returns {string} The UI message..
+     * @returns {string} The UI message.
      */
     getMessage(id: string, args?: any[]): string;
+
     /**
      * Gets the value of a Glide property. If the property is not found, returns an alternate value.
      * @memberof GlideSystem
      * @param {string} key - The key for the property whose value should be returned.
      * @param {*} [alt] -  Alternate object to return if the property is not found.
-     * @returns {string} The value of the Glide property, or the alternate object defined above..
+     * @returns {string} The value of the Glide property, or the alternate object defined above.
      */
     getProperty(key: string, alt?: any): string;
+
     /**
      * Gets a reference to the current Glide session.
      * @memberof GlideSystem
-     * @returns {string} A reference for the current session..
+     * @returns {string} A reference for the current session.
      */
     getSession(): string;
+
     /**
      * Retrieves the GlideSession session ID.
      * @memberof GlideSystem
-     * @returns {string} The session ID..
+     * @returns {string} The session ID.
      */
     getSessionID(): string;
+
     /**
      * This method is no longer available. Instead, use gs.getSession().getSessionToken().
      * @memberof GlideSystem
-     * @returns {string} The session token..
+     * @returns {string} The session token.
      */
     getSessionToken(): string;
+
     /**
      * Returns the name of the time zone associated with the current user.
      * @memberof GlideSystem
-     * @returns {string} The time zone name..
-     * @description 
+     * @returns {string} The time zone name.
      */
     getTimeZoneName(): string;
+
     /**
      * Gets the current URI for the session.
      * @memberof GlideSystem
-     * @returns {string} The URI..
+     * @returns {string} The URI.
      */
     getUrlOnStack(): string;
+
     /**
      * Returns a reference to the scoped GlideUser object for the current user.
      * @memberof GlideSystem
-     * @returns {GlideUser} Reference to a scoped user object..
-     * @description 
+     * @returns {GlideUser} Reference to a scoped user object.
      */
     getUser(): GlideUser;
+
     /**
      * Gets the display name of the current user.
      * @memberof GlideSystem
-     * @returns {string} The name field of the current user. Returns Abel Tuter, as opposed to abel.tuter..
+     * @returns {string} The name field of the current user. Returns Abel Tuter, as opposed to abel.tuter.
      */
     getUserDisplayName(): string;
+
     /**
      * Gets the sys_id of the current user.
      * @memberof GlideSystem
-     * @returns {string} The sys_id of the current user..
+     * @returns {string} The sys_id of the current user.
      */
     getUserID(): string;
+
     /**
      * Gets the user name, or user id, of the current user.
      * @memberof GlideSystem
-     * @returns {string} The user name of the current user..
+     * @returns {string} The user name of the current user.
      */
     getUserName(): string;
+
     /**
      * Determines if the current user has the specified role.
      * @memberof GlideSystem
      * @param {*} role - The role to check.
-     * @returns {boolean} True if the user had the role. Returns true for users with the administrator role..
+     * @returns {boolean} True if the user had the role. Returns true for users with the administrator role.
      */
     hasRole(role: any): boolean;
+
     /**
      * Returns the date and time for a specified number of hours ago.
      * @memberof GlideSystem
@@ -3107,6 +3915,7 @@ declare class GlideSystem {
      * @returns {string} GMT in the format yyyy-mm-dd hh:mm:ss.
      */
     hoursAgo(hours: number): string;
+
     /**
      * Returns the date and time for the end of the hour a specified number of hours ago.
      * @memberof GlideSystem
@@ -3114,6 +3923,7 @@ declare class GlideSystem {
      * @returns {string} GMT in the format yyyy-mm-dd hh:mm:ss.
      */
     hoursAgoEnd(hours: number): string;
+
     /**
      * Returns the date and time for the start of the hour a specified number of hours ago.
      * @memberof GlideSystem
@@ -3121,13 +3931,15 @@ declare class GlideSystem {
      * @returns {string} GMT in the format yyyy-mm-dd hh:mm:ss.
      */
     hoursAgoStart(hours: number): string;
+
     /**
      * Provides a safe way to call from the sandbox, allowing only trusted scripts to be included.
      * @memberof GlideSystem
      * @param {string} name - The name fo the script to include.
-     * @returns {boolean} True if the include worked..
+     * @returns {boolean} True if the include worked.
      */
     include(name: string): boolean;
+
     /**
      * Writes an info message to the system log.
      * @memberof GlideSystem
@@ -3139,31 +3951,35 @@ declare class GlideSystem {
      * @param {*} [param5] - Fifth variable argument.
      */
     info(message: string, param1?: any, param2?: any, param3?: any, param4?: any, param5?: any): void;
+
     /**
      * Determines if debugging is active for a specific scope.
      * @memberof GlideSystem
-     * @returns {boolean} True if either session debugging is active or the log level is set to debug for the specified scope..
+     * @returns {boolean} True if either session debugging is active or the log level is set to debug for the specified scope.
      */
     isDebugging(): boolean;
+
     /**
      * Checks if the current session is interactive. An example of an interactive session is when a user logs in normally. An example of a non-interactive session is using a SOAP request to retrieve data.
      * @memberof GlideSystem
-     * @returns {boolean} True if the session is interactive..
+     * @returns {boolean} True if the session is interactive.
      */
     isInteractive(): boolean;
+
     /**
      * Determines if the current user is currently logged in.
      * @memberof GlideSystem
-     * @returns {boolean} True if the current user is logged in..
+     * @returns {boolean} True if the current user is logged in.
      */
     isLoggedIn(): boolean;
+
     /**
      * You can determine if a request comes from a mobile device.
      * @memberof GlideSystem
-     * @returns {boolean} True if the request comes from a mobile device; otherwise, false..
-     * @description 
+     * @returns {boolean} True if the request comes from a mobile device; otherwise, false.
      */
     isMobile(): boolean;
+
     /**
      * Returns the date and time for the end of the minute a specified number of minutes ago.
      * @memberof GlideSystem
@@ -3171,6 +3987,7 @@ declare class GlideSystem {
      * @returns {string} GMT in the format yyyy-mm-dd hh:mm:ss.
      */
     minutesAgoEnd(minutes: number): string;
+
     /**
      * Returns the date and time for the start of the minute a specified number of minutes ago.
      * @memberof GlideSystem
@@ -3178,6 +3995,7 @@ declare class GlideSystem {
      * @returns {string} GMT in the format yyyy-mm-dd hh:mm:ss.
      */
     minutesAgoStart(minutes: number): string;
+
     /**
      * Returns the date and time for a specified number of months ago.
      * @memberof GlideSystem
@@ -3185,6 +4003,7 @@ declare class GlideSystem {
      * @returns {string} GMT on today's date of the specified month, in the format yyyy-mm-dd hh:mm:ss.
      */
     monthsAgo(months: number): string;
+
     /**
      * Returns the date and time for the start of the month a specified number of months ago.
      * @memberof GlideSystem
@@ -3192,13 +4011,15 @@ declare class GlideSystem {
      * @returns {string} GMT start of the month the specified number of months ago, in the format yyyy-mm-dd hh:mm:ss.
      */
     monthsAgoStart(months: number): string;
+
     /**
      * Queries an object and returns true if the object is null, undefined, or contains an empty string.
      * @memberof GlideSystem
      * @param {*} o - The object to be checked.
-     * @returns {boolean} True if the object is null, undefined, or contains an empty string; otherwise, returns false..
+     * @returns {boolean} True if the object is null, undefined, or contains an empty string; otherwise, returns false.
      */
     nil(o: any): boolean;
+
     /**
      * Returns the date and time for the last day of the quarter for a specified number of quarters ago.
      * @memberof GlideSystem
@@ -3206,6 +4027,7 @@ declare class GlideSystem {
      * @returns {string} GMT end of the quarter that was the specified number of quarters ago, in the format yyyy-mm-dd hh:mm:ss.
      */
     quartersAgoEnd(quarters: number): string;
+
     /**
      * Returns the date and time for the first day of the quarter for a specified number of quarters ago.
      * @memberof GlideSystem
@@ -3213,42 +4035,47 @@ declare class GlideSystem {
      * @returns {string} GMT end of the month that was the specified number of quarters ago, in the format yyyy-mm-dd hh:mm:ss.
      */
     quartersAgoStart(quarters: number): string;
+
     /**
      * Sets the specified key to the specified value if the property is within the script's scope.
      * @memberof GlideSystem
      * @param {string} key - The key for the property to be set.
      * @param {string} value - The value of the property to be set.
      * @param {string} description - A description of the property.
-     * @description 
      */
     setProperty(key: string, value: string, description: string): void;
+
     /**
      * Sets the redirect URI for this transaction, which then determines the next page the user will see.
      * @memberof GlideSystem
      * @param {*} o - URI object or URI string to set as the redirect
      */
     setRedirect(o: any): void;
+
     /**
      * Determines if a database table exists.
      * @memberof GlideSystem
      * @param {string} name - Name of the table to check for existence.
-     * @returns {boolean} True if the table exists. False if the table was not found..
+     * @returns {boolean} True if the table exists. False if the table was not found.
      */
     tableExists(name: string): boolean;
+
     /**
      * Replaces UTF-8 encoded characters with ASCII characters.
      * @memberof GlideSystem
      * @param {string} url - A string with UTF-8 percent (%) encoded characters.
-     * @returns {string} A string with encoded characters replaced with ASCII characters..
+     * @returns {string} A string with encoded characters replaced with ASCII characters.
      */
     urlDecode(url: string): string;
+
     /**
      * Encodes non-ASCII characters, unsafe ASCII characters, and spaces so the returned string can be used on the Internet. Uses UTF-8 encoding. Uses percent (%) encoding.
      * @memberof GlideSystem
      * @param {string} url - The string to be encoded.
-     * @returns {string} A string with non-ASCII characters, unsafe ASCII characters, and spaces encoded..
+     * @returns {string} A string with non-ASCII characters, unsafe ASCII characters, and spaces encoded.
      */
     urlEncode(url: string): string;
+
     /**
      * Writes a warning message to the system log.
      * @memberof GlideSystem
@@ -3260,20 +4087,23 @@ declare class GlideSystem {
      * @param {*} [param5] - Fifth variable argument.
      */
     warn(message: string, param1?: any, param2?: any, param3?: any, param4?: any, param5?: any): void;
+
     /**
      * Takes an XML string and returns a JSON object.
      * @memberof GlideSystem
      * @param {string} xmlString - The XML string to be converted.
-     * @returns {*} A JSON object representing the XML string. Null if unable to process the XML string..
+     * @returns {*} A JSON object representing the XML string. Null if unable to process the XML string.
      */
     xmlToJSON(xmlString: string): any;
+
     /**
      * Returns a date and time for a certain number of years ago.
      * @memberof GlideSystem
      * @param {number} years - An integer number of years
-     * @returns {string} GMT beginning of the year that is the specified number of years ago, in the format yyyy-mm-dd hh:mm:ss..
+     * @returns {string} GMT beginning of the year that is the specified number of years ago, in the format yyyy-mm-dd hh:mm:ss.
      */
     yearsAgo(years: number): string;
+
     /**
      * Returns yesterday's time (24 hours ago).
      * @memberof GlideSystem
@@ -3287,100 +4117,100 @@ declare class GlideUser {
      * Returns the current user's company sys_id.
      * @memberof GlideUser
      * @returns {string} Company sys_id.
-     * @description 
      */
     getCompanyID(): string;
+
     /**
      * Returns the current user's display name.
      * @memberof GlideUser
      * @returns {string} User's display name.
-     * @description 
      */
     getDisplayName(): string;
+
     /**
      * Returns the display value of the user's session domain.
      * @memberof GlideUser
-     * @returns {string} The display value of the user's session domain..
-     * @description 
+     * @returns {string} The display value of the user's session domain.
      */
     getDomainDisplayValue(): string;
+
     /**
      * Returns the user's email address.
      * @memberof GlideUser
      * @returns {string} User's email address.
-     * @description 
      */
     getEmail(): string;
+
     /**
      * Returns the user's first name.
      * @memberof GlideUser
      * @returns {string} User's first name.
-     * @description 
      */
     getFirstName(): string;
+
     /**
      * Returns the sys_id of the current user.
      * @memberof GlideUser
      * @returns {string} User's sys_id.
-     * @description 
      */
     getID(): string;
+
     /**
      * Returns the user's last name.
      * @memberof GlideUser
      * @returns {string} User's last name.
-     * @description 
      */
     getLastName(): string;
+
     /**
      * Returns an iterator containing the list of all groups to which the user belongs. Only active groups are returned.
      * @memberof GlideUser
-     * @returns {Packages.java.util.Iterator<$$rhino.String>} A list of sys_ids for the active groups to which the user belongs..
-     * @description 
+     * @returns {Packages.java.util.Iterator<$$rhino.String>} A list of sys_ids for the active groups to which the user belongs.
      */
     getMyGroups(): Packages.java.util.Iterator<$$rhino.String>;
+
     /**
      * Returns the user ID, or login name, of the current user.
      * @memberof GlideUser
-     * @returns {string} User ID or login name..
-     * @description 
+     * @returns {string} User ID or login name.
      */
     getName(): string;
+
     /**
      * Returns a list of roles that includes explicitly granted roles, inherited roles, and roles acquired by group membership.
      * @memberof GlideUser
      * @returns {Array<*>} List of all roles available to the user.
-     * @description 
      */
     getRoles(): any[];
+
     /**
      * Returns the user object associated with the passed-in user ID (sys_id in sys_user) or user_name.
      * @memberof GlideUser
      * @param {string} id - Unique ID (sys_id) or user_name of the desired user record.
-     * @returns {*} User object associated with the specified sys_id or user_name..
+     * @returns {*} User object associated with the specified sys_id or user_name.
      */
     getUserByID(id: string): any;
+
     /**
      * Returns the list of roles explicitly granted to the user.
      * @memberof GlideUser
      * @returns {Array<*>} List of roles explicitly assigned to the user.
-     * @description 
      */
     getUserRoles(): any[];
+
     /**
      * Determines if the current user has the specified role.
      * @memberof GlideUser
      * @param {string} role - Role to check
-     * @returns {boolean} True if the user has the role..
-     * @description 
+     * @returns {boolean} True if the user has the role.
      */
     hasRole(role: string): boolean;
+
     /**
      * Determines if the current user is a member of the specified group.
      * @memberof GlideUser
      * @param {string} group - Group to check
-     * @returns {boolean} True if the user is a member of the group..
-     * @description 
+     * @returns {boolean} True if the user is a member of the group.
      */
     isMemberOf(group: string): boolean;
 }
@@ -3392,130 +4222,275 @@ declare class GlideUser {
 declare type TaskAppproval = "not requested" | "cancelled" | "requested" | "duplicate" | "not_required" | "approved" | "rejected";
 
 /**
- * email=Email; endpoint_security=Endpoint Security; ids_ips=IDS/IPS; network_monitoring=Network Monitoring; phone=Phone; self-service=Self-service; siem=SIEM; virtual_agent=Virtual Agent; vulnerability_response=Vulnerability Response; walk-in=Walk-in
+ * email=Email; endpoint_security=Endpoint Security; ids_ips=IDS/IPS; network_monitoring=Network Monitoring; phone=Phone; self-service=Self-service; siem=SIEM; virtual_agent=Virtual Agent;
+ *      vulnerability_response=Vulnerability Response; walk-in=Walk-in
  * @type {("email" | "endpoint_security" | "ids_ips" | "network_monitoring" | "phone" | "self-service" | "siem" | "virtual_agent" | "vulnerability_response" | "walk-in")}
  */
 declare type TaskContactType = "email" | "endpoint_security" | "ids_ips" | "network_monitoring" | "phone" | "self-service" | "siem" | "virtual_agent" | "vulnerability_response" | "walk-in";
 
 /**
- *
+ * Task escalation numeric values.
+ * @type {(0 | 1 | 2 | 3)} TaskEscalationValue
  */
 declare type TaskEscalationValue = 0 | 1 | 2 | 3;
+
+/**
+ * JavaScript string values to represent task escalation values.
+ * @type {("0" | "1" | "2" | "3)} TaskEscalationString
+ */
 declare type TaskEscalationString = "0" | "1" | "2" | "3";
+
+/**
+ * Task escalation values.
+ * @type {(TaskEscalationValue | TaskEscalationString)} TaskEscalation
+ */
 declare type TaskEscalation = TaskEscalationValue | TaskEscalationString;
 
 /**
- *
- * @description 1="1 - High"; 2="2 - Medium"; 3="3 - Low"
+ * Represents a numeric 3-value scale (1="1 - High"; 2="2 - Medium"; 3="3 - Low").
+ * @summary 3-Value scale for task records.
+ * @type {(1 | 2 | 3)} Task3ScaleValue
  */
 declare type Task3ScaleValue = 1 | 2 | 3;
+
+/**
+ * Represents a 3-value string scale ("1"="1 - High"; "2"="2 - Medium"; "3"="3 - Low").
+ * @summary 3-Value scale for task records.
+ * @type {("1" | "2" | "3")} Task3ScaleString
+ */
 declare type Task3ScaleString = "1" | "2" | "3";
+
+/**
+ * Represents a 3-value scale (1="1 - High"; 2="2 - Medium"; 3="3 - Low").
+ * @summary 3-Value scale for task records.
+ * @type {(Task3ScaleValue | Task3ScaleString)} Task3Scale
+ */
 declare type Task3Scale = Task3ScaleValue | Task3ScaleString;
 
 /**
- *
+ * Represents a numeric priority value (1="1 - Critical"; 2="2 - High"; 3="3 - Medium"; 4="4 - Low"; 5="5 - Planning").
+ * @summary 5-scale value for task priority.
+ * @type {(1 | 2 | 3)} Task3ScaleValue
  */
 declare type TaskPriorityValue = 1 | 2 | 3 | 4 | 5;
+
+/**
+ * Represents a numeric priority value ("1"="1 - Critical"; "2"="2 - High"; "3"="3 - Medium"; "4"="4 - Low"; "5"="5 - Planning").
+ * @summary 5-scale value for task priority.
+ * @type {("1" | "2" | "3" | "4" | "5")} TaskPriorityString
+ */
 declare type TaskPriorityString = "1" | "2" | "3" | "4" | "5";
+
+/**
+ * Represents a task priority value (1="1 - Critical"; 2="2 - High"; 3="3 - Medium"; 4="4 - Low"; 5="5 - Planning").
+ * @summary 5-scale value for task priority.
+ * @type {(TaskPriorityValue | TaskPriorityString)} TaskPriority
+ */
 declare type TaskPriority = TaskPriorityValue | TaskPriorityString;
 
 /**
- *
- * @description -5="Pending"; 1="Open"; 2="Work in Progress"; 3="Closed Complete"; 4="Closed Incomplete"; 7="Closed Skipped"
+ * Represents a numeric task state value (-5="Pending"; 1="Open"; 2="Work in Progress"; 3="Closed Complete"; 4="Closed Incomplete"; 7="Closed Skipped").
+ * @summary Task state value.
+ * @type {(-5 | 1 | 2 | 3 | 4 | 7)} TaskPriority
  */
 declare type TaskStateValue = -5 | 1 | 2 | 3 | 4 | 7;
+
+/**
+ * Represents a task state string value ("-5"="Pending"; "1"="Open"; "2"="Work in Progress"; "3"="Closed Complete"; "4"="Closed Incomplete"; "7"="Closed Skipped").
+ * @summary Task state value.
+ * @type {("-5" | "1" | "2" | "3" | "4" | "7")} TaskPriority
+ */
 declare type TaskStateString = "-5" | "1" | "2" | "3" | "4" | "7";
+
+/**
+ * Represents a task state value (-5="Pending"; 1="Open"; 2="Work in Progress"; 3="Closed Complete"; 4="Closed Incomplete"; 7="Closed Skipped").
+ * @summary Task state value.
+ * @type {(TaskStateValue | TaskStateString)} TaskState
+ */
 declare type TaskState = TaskStateValue | TaskStateString;
 
 /**
- *
- * @type {("Solved (Work Around)" | "Solved (Permanently)" | "Solved Remotely (Work Around)" | "Solved Remotely (Permanently)" | "Not Solved (Not Reproducible)" | "Not Solved (Too Costly)" | "Closed/Resolved by Caller")}
+ * Represents an incident close code value.
+ * @type {("Solved (Work Around)" | "Solved (Permanently)" | "Solved Remotely (Work Around)" | "Solved Remotely (Permanently)" | "Not Solved (Not Reproducible)" | "Not Solved (Too Costly)" |
+ *      "Closed/Resolved by Caller")}
  */
-declare type IncidentCloseCode = "Solved (Work Around)" | "Solved (Permanently)" | "Solved Remotely (Work Around)" | "Solved Remotely (Permanently)" | "Not Solved (Not Reproducible)" | "Not Solved (Too Costly)" | "Closed/Resolved by Caller";
+declare type IncidentCloseCode = "Solved (Work Around)" | "Solved (Permanently)" | "Solved Remotely (Work Around)" | "Solved Remotely (Permanently)" | "Not Solved (Not Reproducible)" |
+    "Not Solved (Too Costly)" | "Closed/Resolved by Caller";
 
 /**
- *
- * @description 1="Awaiting Caller"; 5="Awaiting Change"; 3="Awaiting Problem"; 4="Awaiting Vendor"
+ * Represents a numeric incident on-hold reason value (1="Awaiting Caller"; 5="Awaiting Change"; 3="Awaiting Problem"; 4="Awaiting Vendor").
+ * @summary Incident on-hold reason value
+ * @type {(1 | 5 | 3 | 4)} IncidentHoldReasonValue
  */
 declare type IncidentHoldReasonValue = 1 | 5 | 3 | 4;
+
+/**
+ * Represents an incident on-hold reason string value ("1"="Awaiting Caller"; "5"="Awaiting Change"; "3"="Awaiting Problem"; "4"="Awaiting Vendor").
+ * @summary Incident on-hold reason value
+ * @type {("1" | "5" | "3" | "4")} IncidentHoldReasonString
+ */
 declare type IncidentHoldReasonString = "1" | "5" | "3" | "4";
+
+/**
+ * Represents an incident on-hold reason value (1="Awaiting Caller"; 5="Awaiting Change"; 3="Awaiting Problem"; 4="Awaiting Vendor").
+ * @summary Incident on-hold reason value
+ * @type {(IncidentHoldReasonValue | IncidentHoldReasonString)} IncidentHoldReason
+ */
 declare type IncidentHoldReason = IncidentHoldReasonValue | IncidentHoldReasonString;
 
 /**
- *
- * @description 1="New"; 2="In Progress"; 3="On Hold"; 6="Resolved"; 7="Closed"; 8="Canceled"
+ * Represents a numeric incident state value (1="New"; 2="In Progress"; 3="On Hold"; 6="Resolved"; 7="Closed"; 8="Canceled").
+ * @summary Incident state value.
+ * @type {(1 | 2 | 3 | 6 | 7 | 8)} IncidentStateValue
  */
 declare type IncidentStateValue = 1 | 2 | 3 | 6 | 7 | 8;
+
+/**
+ * Represents an incident state string value ("1"="New"; "2"="In Progress"; "3"="On Hold"; "6"="Resolved"; "7"="Closed"; "8"="Canceled").
+ * @summary Incident state value.
+ * @type {("1" | "2" | "3" | "6" | "7" | "8")} IncidentStateString
+ */
 declare type IncidentStateString = "1" | "2" | "3" | "6" | "7" | "8";
+
+/**
+ * Represents an incident state value (1="New"; 2="In Progress"; 3="On Hold"; 6="Resolved"; 7="Closed"; 8="Canceled").
+ * @summary Incident state value.
+ * @type {(IncidentStateValue | IncidentStateString)} IncidentState
+ */
 declare type IncidentState = IncidentStateValue | IncidentStateString;
 
 /**
- *
+ * Numeric incident notify value.
+ * @type {(1 | 2 | 3)} IncidentNotifyValue
  */
 declare type IncidentNotifyValue = 1 | 2 | 3;
+
+/**
+ * Incident notify string value.
+ * @type {("1" | "2" | "3")} IncidentNotifyString
+ */
 declare type IncidentNotifyString = "1" | "2" | "3";
+
+/**
+ * Incident notify value.
+ * @type {(IncidentNotifyValue | IncidentNotifyString)} IncidentNotify
+ */
 declare type IncidentNotify = IncidentNotifyValue | IncidentNotifyString;
 
 /**
- *
- * @description 1="Success"; 2="Fail"
+ * Represents a numeric change review status value (1="Success"; 2="Fail").
+ * @summary Change review status value.
+ * @type {(1 | 2)} ChangeReviewStatusValue
  */
 declare type ChangeReviewStatusValue = 1 | 2;
+
+/**
+ * Represents a change review status string value ("1"="Success"; "2"="Fail").
+ * @summary Change review status value.
+ * @type {("1" | "2")} ChangeReviewStatusString
+ */
 declare type ChangeReviewStatusString = "1" | "2";
+
+/**
+ * Represents a change review status value (1="Success"; 2="Fail").
+ * @summary Change review status value.
+ * @type {(ChangeReviewStatusValue | ChangeReviewStatusString)} ChangeReviewStatus
+ */
 declare type ChangeReviewStatus = ChangeReviewStatusValue | ChangeReviewStatusString;
 
 /**
- *
- * @description 2="High"; 3="Moderate"; 4="Low"
+ * Represents a numeric change risk value (2="High"; 3="Moderate"; 4="Low").
+ * @summary Change risk value.
+ * @type {(2 | 3 | 4)} ChangeRiskValue
  */
 declare type ChangeRiskValue = 2 | 3 | 4;
+
+/**
+ * Represents a change risk string value ("2"="High"; "3"="Moderate"; "4"="Low").
+ * @summary Change risk value.
+ * @type {("2" | "3" | "4")} ChangeRiskString
+ */
 declare type ChangeRiskString = "2" | "3" | "4";
+
+/**
+ * Represents a change risk value (2="High"; 3="Moderate"; 4="Low").
+ * @summary Change risk value.
+ * @type {(ChangeRiskValue | ChangeRiskString)} ChangeRisk
+ */
 declare type ChangeRisk = ChangeRiskValue | ChangeRiskString;
 
 /**
- *
- * @description 1="Massive"; 2="Large"; 3="Medium"; 4="Small"; 5="Tiny"
+ * Represents a change scope value (1="Massive"; 2="Large"; 3="Medium"; 4="Small"; 5="Tiny").
+ * @summary Change scope value.
+ * @type {(1 | 2 | 3 | 4 | 5)} ChangeScopeValue
  */
 declare type ChangeScopeValue = 1 | 2 | 3 | 4 | 5;
+
+/**
+ * Represents a change scope value (1="Massive"; 2="Large"; 3="Medium"; 4="Small"; 5="Tiny").
+ * @summary Change scope value.
+ * @type {("1" | "2" | "3" | "4" | "5")} ChangeScopeString
+ */
 declare type ChangeScopeString = "1" | "2" | "3" | "4" | "5";
+
+/**
+ * Represents a change scope value (1="Massive"; 2="Large"; 3="Medium"; 4="Small"; 5="Tiny").
+ * @summary Change scope value.
+ * @type {(ChangeScopeValue | ChangeScopeString)} ChangeScope
+ */
 declare type ChangeScope = ChangeScopeValue | ChangeScopeString;
 
 /**
- *
+ * Change type value.
+ * @type {("standard" | "normal" | "emergency")} IncidentHoldReason
  */
 declare type ChangeType = "standard" | "normal" | "emergency";
 
 /**
- *
+ * Represents a change close code ("successful"="Successful"; "successful_issues"="Successful with issues"; "unsuccessful"="Unsuccessful").
+ * @summary Change close code.
  * @type {("successful" | "successful_issues" | "unsuccessful")}
- * @description "successful"="Successful"; "successful_issues"="Successful with issues"; "unsuccessful"="Unsuccessful"
  */
 declare type ChangeCloseCode = "successful" | "successful_issues" | "unsuccessful";
 
 /**
- *
- * @description 1="Open"; 3="Pending Change"; 2="Known Error"; 4="Closed/Resolved"
+ * Reprsents a problem state value (1="Open"; 3="Pending Change"; 2="Known Error"; 4="Closed/Resolved").
+ * @summary Problem state value.
+ * @type {(1 | 3 | 2 | 4)} ProblemStateValue
  */
 declare type ProblemStateValue = 1 | 3 | 2 | 4;
+
+/**
+ * Reprsents a problem state value (1="Open"; 3="Pending Change"; 2="Known Error"; 4="Closed/Resolved").
+ * @summary Problem state value.
+ * @type {("1" | "3" | "2" | "4")} ProblemStateString
+ */
 declare type ProblemStateString = "1" | "3" | "2" | "4";
+
+/**
+ * Reprsents a problem state value (1="Open"; 3="Pending Change"; 2="Known Error"; 4="Closed/Resolved").
+ * @summary Problem state value.
+ * @type {(ProblemStateValue | ProblemStateString)} ProblemState
+ */
 declare type ProblemState = ProblemStateValue | ProblemStateString;
 
 /**
- *
+ * Glide progress worker state value.
  * @type {("starting" | "running" | "complete" | "cancelled" | "unknown")}
  */
 declare type GlideProgressWorkerState = "starting" | "running" | "complete" | "cancelled" | "unknown";
 
 /**
- *
+ * Glide worker process completion code.
  * @type {("success" | "cancelled" | "error")}
  */
 declare type GlideProgressWorkerCompletionCode = "success" | "cancelled" | "error";
 
 /**
- *
+ * Represents a request state value ("requested"="Pending Approval"; "in_process"="Approved"; "closed_complete"="Closed Complete"; "closed_incomplete"="Closed Incomplete"; "closed_cancelled"="Closed Cancelled";
+ *      "closed_rejected"="Closed Rejected"; "closed_skipped"="Closed Skipped").
+ * @summary Request state value.
  * @type {("requested" | "in_process" | "closed_complete" | "closed_incomplete" | "closed_cancelled" | "closed_rejected" | "closed_skipped")}
- * @description "requested"="Pending Approval"; "in_process"="Approved"; "closed_complete"="Closed Complete"; "closed_incomplete"="Closed Incomplete"; "closed_cancelled"="Closed Cancelled"; "closed_rejected"="Closed Rejected"; "closed_skipped"="Closed Skipped"
  */
 declare type IRequestState = "requested" | "in_process" | "closed_complete" | "closed_incomplete" | "closed_cancelled" | "closed_rejected" | "closed_skipped";
 
@@ -3539,10 +4514,10 @@ declare interface IGlideTableProperties {
     sys_created_on: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Sys ID
+     * Sys ID field. Internal type is "GUID".
+     * @summary Sys ID.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof IGlideTablePropertiesFields
-     * @description Internal type is "GUID"
      */
     sys_id: $$rhino.Nilable<$$property.Element>;
 
@@ -3596,10 +4571,10 @@ declare interface sys_metadataFields extends IExtendedGlideTableProperties {
     sys_name: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Package
+     * Package reference field. Refers to sys_package (Package).
+     * @summary Package.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_packageFields, sys_packageGlideRecord>>}
      * @memberof sys_metadataFields
-     * @description Refers to sys_package (Package)
      */
     sys_package: $$rhino.Nilable<$$property.generic.Reference<sys_packageFields, sys_packageGlideRecord>>;
 
@@ -3611,10 +4586,10 @@ declare interface sys_metadataFields extends IExtendedGlideTableProperties {
     sys_policy: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Application
+     * Application reference field. Refers to sys_scope (Application).
+     * @summary Application.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_scopeFields, sys_scopeGlideRecord>>}
      * @memberof sys_metadataFields
-     * @description Refers to sys_scope (Application)
      */
     sys_scope: $$rhino.Nilable<$$property.generic.Reference<sys_scopeFields, sys_scopeGlideRecord>>;
 
@@ -3625,6 +4600,7 @@ declare interface sys_metadataFields extends IExtendedGlideTableProperties {
      */
     sys_update_name: $$rhino.Nilable<$$property.Element>;
 }
+
 declare type sys_metadataGlideRecord = GlideRecord & sys_metadataFields;
 
 /**
@@ -3732,10 +4708,10 @@ declare interface sys_db_objectFields extends sys_metadataFields {
     name: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Auto number
+     * Auto number field. Refers to sys_number (Number).
+     * @summary Auto number.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_numberFields, sys_numberGlideRecord>>}
      * @memberof sys_db_objectFields
-     * @description Refers to sys_number (Number)
      */
     number_ref: $$rhino.Nilable<$$property.generic.Reference<sys_numberFields, sys_numberGlideRecord>>;
 
@@ -3754,10 +4730,10 @@ declare interface sys_db_objectFields extends sys_metadataFields {
     read_access: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Extends table
+     * Table being extended. Refers to sys_db_object (Table).
+     * @summary Extends table.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_db_objectFields, sys_db_objectGlideRecord>>}
      * @memberof sys_db_objectFields
-     * @description Refers to sys_db_object (Table)
      */
     super_class: $$rhino.Nilable<$$property.generic.Reference<sys_db_objectFields, sys_db_objectGlideRecord>>;
 
@@ -3783,10 +4759,10 @@ declare interface sys_db_objectFields extends sys_metadataFields {
     update_access: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * User role
+     * User roles field. Refers to sys_user_role (Role).
+     * @summary User role.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_user_roleFields, sys_user_roleGlideRecord>>}
      * @memberof sys_db_objectFields
-     * @description Refers to sys_user_role (Role)
      */
     user_role: $$rhino.Nilable<$$property.generic.Reference<sys_user_roleFields, sys_user_roleGlideRecord>>;
 
@@ -3797,6 +4773,7 @@ declare interface sys_db_objectFields extends sys_metadataFields {
      */
     ws_access: $$rhino.Nilable<$$property.Boolean>;
 }
+
 declare type sys_db_objectGlideRecord = sys_metadataGlideRecord & sys_db_objectFields;
 
 /**
@@ -3946,18 +4923,18 @@ declare interface sys_dictionaryFields extends sys_metadataFields {
     dynamic_creation_script: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Dynamic default value
+     * Dynamic default value field. Refers to sys_filter_option_dynamic (Dynamic Filter Options).
+     * @summary Dynamic default value.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof sys_dictionaryFields
-     * @description Refers to sys_filter_option_dynamic (Dynamic Filter Options)
      */
     dynamic_default_value: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
     /**
-     * Dynamic ref qual
+     * Dynamic ref qual field. Refers to sys_filter_option_dynamic (Dynamic Filter Options).
+     * @summary Dynamic ref qual.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof sys_dictionaryFields
-     * @description Refers to sys_filter_option_dynamic (Dynamic Filter Options)
      */
     dynamic_ref_qual: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -3997,10 +4974,10 @@ declare interface sys_dictionaryFields extends sys_metadataFields {
     function_field: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Type
+     * Type field. Refers to sys_glide_object (Field class).
+     * @summary Type.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_glide_objectFields, sys_glide_objectGlideRecord>>}
      * @memberof sys_dictionaryFields
-     * @description Refers to sys_glide_object (Field class)
      */
     internal_type: $$rhino.Nilable<$$property.generic.Reference<sys_glide_objectFields, sys_glide_objectGlideRecord>>;
 
@@ -4054,10 +5031,10 @@ declare interface sys_dictionaryFields extends sys_metadataFields {
     read_roles: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Reference
+     * Reference field. Refers to sys_db_object (Table).
+     * @summary Reference.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_db_objectFields, sys_db_objectGlideRecord>>}
      * @memberof sys_dictionaryFields
-     * @description Refers to sys_db_object (Table)
      */
     reference: $$rhino.Nilable<$$property.generic.Reference<sys_db_objectFields, sys_db_objectGlideRecord>>;
 
@@ -4194,6 +5171,7 @@ declare interface sys_dictionaryFields extends sys_metadataFields {
      */
     xml_view: $$rhino.Nilable<$$property.Boolean>;
 }
+
 declare type sys_dictionaryGlideRecord = sys_metadataGlideRecord & sys_dictionaryFields;
 
 /**
@@ -4258,6 +5236,7 @@ declare interface sys_glide_objectFields extends sys_metadataFields {
      */
     visible: $$rhino.Nilable<$$property.Boolean>;
 }
+
 declare type sys_glide_objectGlideRecord = sys_metadataGlideRecord & sys_glide_objectFields;
 
 /**
@@ -4267,10 +5246,10 @@ declare type sys_glide_objectGlideRecord = sys_metadataGlideRecord & sys_glide_o
  */
 declare interface sys_numberFields extends sys_metadataFields {
     /**
-     * Table
+     * Table field. Refers to sys_db_object (Table).
+     * @summary Table.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_db_objectFields, sys_db_objectGlideRecord>>}
      * @memberof sys_numberFields
-     * @description Refers to sys_db_object (Table)
      */
     category: $$rhino.Nilable<$$property.generic.Reference<sys_db_objectFields, sys_db_objectGlideRecord>>;
 
@@ -4295,6 +5274,7 @@ declare interface sys_numberFields extends sys_metadataFields {
      */
     prefix: $$rhino.Nilable<$$property.Element>;
 }
+
 declare type sys_numberGlideRecord = sys_metadataGlideRecord & sys_numberFields;
 
 /**
@@ -4380,6 +5360,7 @@ declare interface sys_choiceFields extends IGlideTableProperties {
      */
     value: $$rhino.Nilable<$$property.Element>;
 }
+
 declare type sys_choiceGlideRecord = GlideRecord & sys_choiceFields;
 
 /**
@@ -4514,6 +5495,7 @@ declare interface sys_dictionary_overrideFields extends sys_metadataFields {
      */
     reference_qual_override: $$rhino.Nilable<$$property.Boolean>;
 }
+
 declare type sys_dictionary_overrideGlideRecord = sys_metadataGlideRecord & sys_dictionary_overrideFields;
 
 /**
@@ -4585,6 +5567,7 @@ declare interface sys_packageFields extends IExtendedGlideTableProperties {
      */
     version: $$rhino.Nilable<$$property.Element>;
 }
+
 declare type sys_packageGlideRecord = GlideRecord & sys_packageFields;
 
 /**
@@ -4670,6 +5653,7 @@ declare interface sys_scopeFields extends sys_packageFields {
      */
     vendor_prefix: $$rhino.Nilable<$$property.Element>;
 }
+
 declare type sys_scopeGlideRecord = sys_packageGlideRecord & sys_scopeFields;
 
 /**
@@ -4679,10 +5663,10 @@ declare type sys_scopeGlideRecord = sys_packageGlideRecord & sys_scopeFields;
  */
 declare interface sys_user_roleFields extends sys_metadataFields {
     /**
-     * Assignable by
+     * Assignable by field. Refers to sys_user_role (Role).
+     * @summary Assignable by.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_user_roleFields, sys_user_roleGlideRecord>>}
      * @memberof sys_user_roleFields
-     * @description Refers to sys_user_role (Role)
      */
     assignable_by: $$rhino.Nilable<$$property.generic.Reference<sys_user_roleFields, sys_user_roleGlideRecord>>;
 
@@ -4708,10 +5692,10 @@ declare interface sys_user_roleFields extends sys_metadataFields {
     elevated_privilege: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Encryption context
+     * Encryption context field. Refers to sys_encryption_context (Encryption Context)
+     * @summary Encryption context
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_encryption_contextFields, sys_encryption_contextGlideRecord>>}
      * @memberof sys_user_roleFields
-     * @description Refers to sys_encryption_context (Encryption Context)
      */
     encryption_context: $$rhino.Nilable<$$property.generic.Reference<sys_encryption_contextFields, sys_encryption_contextGlideRecord>>;
 
@@ -4757,6 +5741,7 @@ declare interface sys_user_roleFields extends sys_metadataFields {
      */
     suffix: $$rhino.Nilable<$$property.Element>;
 }
+
 declare type sys_user_roleGlideRecord = sys_metadataGlideRecord & sys_user_roleFields;
 
 /**
@@ -4786,6 +5771,7 @@ declare interface sys_encryption_contextFields extends sys_metadataFields {
      */
     type: $$rhino.Nilable<$$property.Element>;
 }
+
 declare type sys_encryption_contextGlideRecord = sys_metadataGlideRecord & sys_encryption_contextFields;
 
 /**
@@ -4801,6 +5787,7 @@ declare interface sys_calendarFields extends sys_metadataFields {
      */
     name: $$rhino.Nilable<$$property.Element>;
 }
+
 declare type sys_calendarGlideRecord = sys_metadataGlideRecord & sys_calendarFields;
 
 /**
@@ -4810,10 +5797,10 @@ declare type sys_calendarGlideRecord = sys_metadataGlideRecord & sys_calendarFie
  */
 declare interface slaFields extends IGlideTableProperties {
     /**
-     * Accountable user
+     * Accountable user field. Refers to sys_user (User).
+     * @summary Accountable user
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof slaFields
-     * @description Refers to sys_user (User)
      */
     accountable_user: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -4825,26 +5812,26 @@ declare interface slaFields extends IGlideTableProperties {
     active: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Avail pct
+     * Avail pct field. Internal type is "decimal".
+     * @summary Avail pct.
      * @type {$$rhino.Nilable<$$property.Numeric>}
      * @memberof slaFields
-     * @description Internal type is "decimal"
      */
     avail_pct: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Begins
+     * Begins field. Internal type is "glide_date".
+     * @summary Begins.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof slaFields
-     * @description Internal type is "glide_date"
      */
     begins: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Business lead
+     * Business lead field. Refers to sys_user (User).
+     * @summary Business lead.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof slaFields
-     * @description Refers to sys_user (User)
      */
     business_lead: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -4856,66 +5843,66 @@ declare interface slaFields extends IGlideTableProperties {
     business_unit: $$rhino.Nilable<$$property.generic.Element<("Operations" | "Sales")>>;
 
     /**
-     * Calendar
+     * Calendar field. Refers to sys_calendar (Calendar).
+     * @summary Calendar.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_calendarFields, sys_calendarGlideRecord>>}
      * @memberof slaFields
-     * @description Refers to sys_calendar (Calendar)
      */
     calendar: $$rhino.Nilable<$$property.generic.Reference<sys_calendarFields, sys_calendarGlideRecord>>;
 
     /**
-     * Change procedures
+     * Change procedures field. Internal type is "html".
+     * @summary Change procedures.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof slaFields
-     * @description Internal type is "html"
      */
     change_procedures: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Consultant user
+     * Consultant user field. Refers to sys_user (User).
+     * @summary Consultant user.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof slaFields
-     * @description Refers to sys_user (User)
      */
     consultant_user: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
     /**
-     * Contract
+     * Contract field. Refers to ast_contract (Contract).
+     * @summary Contract.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof slaFields
-     * @description Refers to ast_contract (Contract)
      */
     contract: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
     /**
-     * Department
+     * Department field. Refers to cmn_department (Department).
+     * @summary Department.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmn_departmentFields, cmn_departmentGlideRecord>>}
      * @memberof slaFields
-     * @description Refers to cmn_department (Department)
      */
     department: $$rhino.Nilable<$$property.generic.Reference<cmn_departmentFields, cmn_departmentGlideRecord>>;
 
     /**
-     * Description
+     * Description field. Internal type is "html".
+     * @summary Description.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof slaFields
-     * @description Internal type is "html"
      */
     description: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Disaster recovery
+     * Disaster recovery field. Internal type is "html".
+     * @summary Disaster recovery.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof slaFields
-     * @description Internal type is "html"
      */
     disaster_recovery: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Ends
+     * Ends field. Internal type is "glide_date".
+     * @summary Ends.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof slaFields
-     * @description Internal type is "glide_date"
      */
     ends: $$rhino.Nilable<$$property.GlideObject>;
 
@@ -4927,26 +5914,26 @@ declare interface slaFields extends IGlideTableProperties {
     functional_area: $$rhino.Nilable<$$property.generic.Element<("Data Management" | "Network" | "Security")>>;
 
     /**
-     * Incident procedures
+     * Incident procedures field. Internal type is "html".
+     * @summary Incident procedures.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof slaFields
-     * @description Internal type is "html"
      */
     incident_procedures: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Informed user
+     * Informed user field. Refers to sys_user (User).
+     * @summary Informed user.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof slaFields
-     * @description Refers to sys_user (User)
      */
     informed_user: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
     /**
-     * Maintenance
+     * Maintenance field. Refers to sys_calendar (Calendar).
+     * @summary Maintenance.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_calendarFields, sys_calendarGlideRecord>>}
      * @memberof slaFields
-     * @description Refers to sys_calendar (Calendar)
      */
     maintenance: $$rhino.Nilable<$$property.generic.Reference<sys_calendarFields, sys_calendarGlideRecord>>;
 
@@ -4958,18 +5945,18 @@ declare interface slaFields extends IGlideTableProperties {
     name: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Next review
+     * Next review field. Internal type is "glide_date".
+     * @summary Next review.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof slaFields
-     * @description Internal type is "glide_date"
      */
     next_review: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Notes
+     * Notes field. Internal type is "html".
+     * @summary Notes.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof slaFields
-     * @description Internal type is "html"
      */
     notes: $$rhino.Nilable<$$property.Element>;
 
@@ -4981,42 +5968,42 @@ declare interface slaFields extends IGlideTableProperties {
     number: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Reponsibilities
+     * Reponsibilities field. Internal type is "html".
+     * @summary Reponsibilities.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof slaFields
-     * @description Internal type is "html"
      */
     reponsibilities: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Response time
+     * Response time field. Internal type is "decimal".
+     * @summary Response time.
      * @type {$$rhino.Nilable<$$property.Numeric>}
      * @memberof slaFields
-     * @description Internal type is "decimal"
      */
     response_time: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Responsible user
+     * Responsible user field. Refers to sys_user (User).
+     * @summary Responsible user.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof slaFields
-     * @description Refers to sys_user (User)
      */
     responsible_user: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
     /**
-     * Security notes
+     * Security notes field. Internal type is "html".
+     * @summary Security notes.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof slaFields
-     * @description Internal type is "html"
      */
     security_notes: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Service goals
+     * Service goals field. Internal type is "html".
+     * @summary Service goals.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof slaFields
-     * @description Internal type is "html"
      */
     service_goals: $$rhino.Nilable<$$property.Element>;
 
@@ -5028,37 +6015,38 @@ declare interface slaFields extends IGlideTableProperties {
     short_description: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Signatures
+     * Signatures field. Internal type is "html".
+     * @summary Signatures.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof slaFields
-     * @description Internal type is "html"
      */
     signatures: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Technical lead
+     * Technical lead field. Refers to sys_user (User).
+     * @summary Technical lead.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof slaFields
-     * @description Refers to sys_user (User)
      */
     technical_lead: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
     /**
-     * Transaction load
+     * Transaction load field. Internal type is "decimal".
+     * @summary Transaction load.
      * @type {$$rhino.Nilable<$$property.Numeric>}
      * @memberof slaFields
-     * @description Internal type is "decimal"
      */
     transaction_load: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Users
+     * Users field. Refers to sys_user_group (Group).
+     * @summary Users.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_user_groupFields, sys_user_groupGlideRecord>>}
      * @memberof slaFields
-     * @description Refers to sys_user_group (Group)
      */
     users: $$rhino.Nilable<$$property.generic.Reference<sys_user_groupFields, sys_user_groupGlideRecord>>;
 }
+
 declare type slaGlideRecord = GlideRecord & slaFields;
 
 /**
@@ -5075,18 +6063,18 @@ declare interface taskFields extends IExtendedGlideTableProperties {
     active: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Activity due
+     * Activity due field. Internal type is "due_date".
+     * @summary Activity due.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof taskFields
-     * @description Internal type is "due_date"
      */
     activity_due: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Additional assignee list
+     * Additional assignee list field. Internal type is "glide_list".
+     * @summary Additional assignee list.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof taskFields
-     * @description Internal type is "glide_list"
      */
     additional_assignee_list: $$rhino.Nilable<IGlideElement>;
 
@@ -5098,10 +6086,10 @@ declare interface taskFields extends IExtendedGlideTableProperties {
     approval: $$rhino.Nilable<$$property.generic.Element<TaskAppproval>>;
 
     /**
-     * Approval history
+     * Approval history field. Internal type is "journal".
+     * @summary Approval history.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof taskFields
-     * @description Internal type is "journal"
      */
     approval_history: $$rhino.Nilable<IGlideElement>;
 
@@ -5113,42 +6101,42 @@ declare interface taskFields extends IExtendedGlideTableProperties {
     approval_set: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Assigned to
+     * Assigned to field. Refers to sys_user (User).
+     * @summary Assigned to.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof taskFields
-     * @description Refers to sys_user (User)
      */
     assigned_to: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
     /**
-     * Assignment group
+     * Assignment group field. Refers to sys_user_group (Group).
+     * @summary Assignment group.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_user_groupFields, sys_user_groupGlideRecord>>}
      * @memberof taskFields
-     * @description Refers to sys_user_group (Group)
      */
     assignment_group: $$rhino.Nilable<$$property.generic.Reference<sys_user_groupFields, sys_user_groupGlideRecord>>;
 
     /**
-     * Business duration
+     * Business duration field. Internal type is "glide_duration".
+     * @summary Business duration.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof taskFields
-     * @description Internal type is "glide_duration"
      */
     business_duration: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Business service
+     * Business service field. Refers to cmdb_ci_service (Business Service).
+     * @summary Business service.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmdb_ci_serviceFields, cmdb_ci_serviceGlideRecord>>}
      * @memberof taskFields
-     * @description Refers to cmdb_ci_service (Business Service)
      */
     business_service: $$rhino.Nilable<$$property.generic.Reference<cmdb_ci_serviceFields, cmdb_ci_serviceGlideRecord>>;
 
     /**
-     * Duration
+     * Duration field. Internal type is "glide_duration".
+     * @summary Duration.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof taskFields
-     * @description Internal type is "glide_duration"
      */
     calendar_duration: $$rhino.Nilable<$$property.GlideObject>;
 
@@ -5160,10 +6148,10 @@ declare interface taskFields extends IExtendedGlideTableProperties {
     closed_at: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Closed by
+     * Closed by field. Refers to sys_user (User).
+     * @summary Closed by.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof taskFields
-     * @description Refers to sys_user (User)
      */
     closed_by: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -5175,34 +6163,34 @@ declare interface taskFields extends IExtendedGlideTableProperties {
     close_notes: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Configuration item
+     * Configuration item field. Refers to cmdb_ci (Configuration Item).
+     * @summary Configuration item.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmdb_ciFields, cmdb_ciGlideRecord>>}
      * @memberof taskFields
-     * @description Refers to cmdb_ci (Configuration Item)
      */
     cmdb_ci: $$rhino.Nilable<$$property.generic.Reference<cmdb_ciFields, cmdb_ciGlideRecord>>;
 
     /**
-     * Additional comments
+     * Additional comments field. Internal type is "journal_input".
+     * @summary Additional comments.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof taskFields
-     * @description Internal type is "journal_input"
      */
     comments: $$rhino.Nilable<IGlideElement>;
 
     /**
-     * Comments and Work notes
+     * Comments and Work notes field. Internal type is "journal_list".
+     * @summary Comments and Work notes.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof taskFields
-     * @description Internal type is "journal_list"
      */
     comments_and_work_notes: $$rhino.Nilable<IGlideElement>;
 
     /**
-     * Company
+     * Company field. Refers to core_company (Company).
+     * @summary Company.
      * @type {$$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>}
      * @memberof taskFields
-     * @description Refers to core_company (Company)
      */
     company: $$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>;
 
@@ -5214,10 +6202,10 @@ declare interface taskFields extends IExtendedGlideTableProperties {
     contact_type: $$rhino.Nilable<$$property.generic.Element<TaskContactType>>;
 
     /**
-     * Contract
+     * Contract field. Refers to ast_contract (Contract).
+     * @summary Contract.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof taskFields
-     * @description Refers to ast_contract (Contract)
      */
     contract: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -5236,18 +6224,18 @@ declare interface taskFields extends IExtendedGlideTableProperties {
     correlation_id: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * delivery_plan
+     * delivery_plan field. Refers to sc_cat_item_delivery_plan (Execution Plan).
+     * @summary delivery_plan.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof taskFields
-     * @description Refers to sc_cat_item_delivery_plan (Execution Plan)
      */
     delivery_plan: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
     /**
-     * Delivery task
+     * Delivery task field. Refers to sc_cat_item_delivery_task (Execution Plan Task).
+     * @summary Delivery task.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof taskFields
-     * @description Refers to sc_cat_item_delivery_task (Execution Plan Task)
      */
     delivery_task: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -5287,10 +6275,10 @@ declare interface taskFields extends IExtendedGlideTableProperties {
     follow_up: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Group list
+     * Group list field. Internal type is "glide_list".
+     * @summary Group list.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof taskFields
-     * @description Internal type is "glide_list"
      */
     group_list: $$rhino.Nilable<IGlideElement>;
 
@@ -5309,10 +6297,10 @@ declare interface taskFields extends IExtendedGlideTableProperties {
     knowledge: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Location
+     * Location field. Refers to cmn_location (Location).
+     * @summary Location.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmn_locationFields, cmn_locationGlideRecord>>}
      * @memberof taskFields
-     * @description Refers to cmn_location (Location)
      */
     location: $$rhino.Nilable<$$property.generic.Reference<cmn_locationFields, cmn_locationGlideRecord>>;
 
@@ -5338,10 +6326,10 @@ declare interface taskFields extends IExtendedGlideTableProperties {
     opened_at: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Opened by
+     * Opened by field. Refers to sys_user (User).
+     * @summary Opened by.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof taskFields
-     * @description Refers to sys_user (User)
      */
     opened_by: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -5353,10 +6341,10 @@ declare interface taskFields extends IExtendedGlideTableProperties {
     order: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Parent
+     * Parent field. Refers to task (Task).
+     * @summary Parent.
      * @type {$$rhino.Nilable<$$property.generic.Reference<taskFields, taskGlideRecord>>}
      * @memberof taskFields
-     * @description Refers to task (Task)
      */
     parent: $$rhino.Nilable<$$property.generic.Reference<taskFields, taskGlideRecord>>;
 
@@ -5375,18 +6363,18 @@ declare interface taskFields extends IExtendedGlideTableProperties {
     reassignment_count: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Rejection goto
+     * Rejection goto field. Refers to task (Task).
+     * @summary Rejection goto.
      * @type {$$rhino.Nilable<$$property.generic.Reference<taskFields, taskGlideRecord>>}
      * @memberof taskFields
-     * @description Refers to task (Task)
      */
     rejection_goto: $$rhino.Nilable<$$property.generic.Reference<taskFields, taskGlideRecord>>;
 
     /**
-     * Service offering
+     * Service offering field. Refers to service_offering (Service Offering).
+     * @summary Service offering.
      * @type {$$rhino.Nilable<$$property.generic.Reference<service_offeringFields, service_offeringGlideRecord>>}
      * @memberof taskFields
-     * @description Refers to service_offering (Service Offering)
      */
     service_offering: $$rhino.Nilable<$$property.generic.Reference<service_offeringFields, service_offeringGlideRecord>>;
 
@@ -5398,18 +6386,18 @@ declare interface taskFields extends IExtendedGlideTableProperties {
     short_description: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Skills
+     * Skills field. Internal type is "glide_list".
+     * @summary Skills.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof taskFields
-     * @description Internal type is "glide_list"
      */
     skills: $$rhino.Nilable<IGlideElement>;
 
     /**
-     * SLA due
+     * SLA due field. Internal type is "due_date".
+     * @summary SLA due.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof taskFields
-     * @description Internal type is "due_date"
      */
     sla_due: $$rhino.Nilable<$$property.GlideObject>;
 
@@ -5428,34 +6416,34 @@ declare interface taskFields extends IExtendedGlideTableProperties {
     sys_domain: $$rhino.Nilable<$$property.DomainId>;
 
     /**
-     * Domain Path
+     * Domain Path field. Internal type is "domain_path".
+     * @summary Domain Path.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof taskFields
-     * @description Internal type is "domain_path"
      */
     sys_domain_path: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Time worked
+     * Time worked field. Internal type is "timer".
+     * @summary Time worked.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof taskFields
-     * @description Internal type is "timer"
      */
     time_worked: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Upon approval
+     * Upon approval field ("proceed"="Proceed to Next Task"; "do_nothing"="Wait for a User to Close this task").
+     * @summary Upon approval.
      * @type {$$rhino.Nilable<$$property.generic.Element<("proceed" | "do_nothing")>>}
      * @memberof taskFields
-     * @description "proceed"="Proceed to Next Task"; "do_nothing"="Wait for a User to Close this task"
      */
     upon_approval: $$rhino.Nilable<$$property.generic.Element<("proceed" | "do_nothing")>>;
 
     /**
-     * Upon reject
+     * Upon reject field ("cancel"="Cancel all future Tasks"; "goto"="Go to a previous Task").
+     * @summary Upon reject.
      * @type {$$rhino.Nilable<$$property.generic.Element<("cancel" | "goto")>>}
      * @memberof taskFields
-     * @description "cancel"="Cancel all future Tasks"; "goto"="Go to a previous Task"
      */
     upon_reject: $$rhino.Nilable<$$property.generic.Element<("cancel" | "goto")>>;
 
@@ -5467,10 +6455,10 @@ declare interface taskFields extends IExtendedGlideTableProperties {
     urgency: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * User input
+     * User input field. Internal type is "user_input".
+     * @summary User input.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof taskFields
-     * @description Internal type is "user_input"
      */
     user_input: $$rhino.Nilable<IGlideElement>;
 
@@ -5482,18 +6470,18 @@ declare interface taskFields extends IExtendedGlideTableProperties {
     variables: $$rhino.Nilable<$$property.Variables>;
 
     /**
-     * Watch list
+     * Watch list field. Internal type is "glide_list".
+     * @summary Watch list.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof taskFields
-     * @description Internal type is "glide_list"
      */
     watch_list: $$rhino.Nilable<IGlideElement>;
 
     /**
-     * Workflow activity
+     * Workflow activity field. Refers to wf_activity (Workflow Activity).
+     * @summary Workflow activity.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof taskFields
-     * @description Refers to wf_activity (Workflow Activity)
      */
     wf_activity: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -5505,18 +6493,18 @@ declare interface taskFields extends IExtendedGlideTableProperties {
     work_end: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Work notes
+     * Work notes field. Internal type is "journal_input".
+     * @summary Work notes.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof taskFields
-     * @description Internal type is "journal_input"
      */
     work_notes: $$rhino.Nilable<IGlideElement>;
 
     /**
-     * Work notes list
+     * Work notes list field. Internal type is "glide_list".
+     * @summary Work notes list.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof taskFields
-     * @description Internal type is "glide_list"
      */
     work_notes_list: $$rhino.Nilable<IGlideElement>;
 
@@ -5527,6 +6515,7 @@ declare interface taskFields extends IExtendedGlideTableProperties {
      */
     work_start: $$rhino.Nilable<$$property.GlideObject>;
 }
+
 declare type taskGlideRecord = GlideRecord & taskFields;
 
 /**
@@ -5550,10 +6539,10 @@ declare interface incidentFields extends taskFields {
     calendar_stc: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Caller
+     * Caller field. Refers to sys_user (User).
+     * @summary Caller.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof incidentFields
-     * @description Refers to sys_user (User)
      */
     caller_id: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -5565,10 +6554,10 @@ declare interface incidentFields extends taskFields {
     category: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Caused by Change
+     * Caused by Change field. Refers to change_request (Change Request).
+     * @summary Caused by Change.
      * @type {$$rhino.Nilable<$$property.generic.Reference<change_requestFields, change_requestGlideRecord>>}
      * @memberof incidentFields
-     * @description Refers to change_request (Change Request)
      */
     caused_by: $$rhino.Nilable<$$property.generic.Reference<change_requestFields, change_requestGlideRecord>>;
 
@@ -5608,26 +6597,26 @@ declare interface incidentFields extends taskFields {
     notify: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Parent Incident
+     * Parent Incident field. Refers to incident (Incident).
+     * @summary Parent Incident.
      * @type {$$rhino.Nilable<$$property.generic.Reference<incidentFields, incidentGlideRecord>>}
      * @memberof incidentFields
-     * @description Refers to incident (Incident)
      */
     parent_incident: $$rhino.Nilable<$$property.generic.Reference<incidentFields, incidentGlideRecord>>;
 
     /**
-     * Problem
+     * Problem field. Refers to problem (Problem).
+     * @summary Problem.
      * @type {$$rhino.Nilable<$$property.generic.Reference<problemFields, problemGlideRecord>>}
      * @memberof incidentFields
-     * @description Refers to problem (Problem)
      */
     problem_id: $$rhino.Nilable<$$property.generic.Reference<problemFields, problemGlideRecord>>;
 
     /**
-     * Last reopened by
+     * Last reopened by field. Refers to sys_user (User).
+     * @summary Last reopened by.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof incidentFields
-     * @description Refers to sys_user (User)
      */
     reopened_by: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -5653,18 +6642,18 @@ declare interface incidentFields extends taskFields {
     resolved_at: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Resolved by
+     * Resolved by field. Refers to sys_user (User).
+     * @summary Resolved by.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof incidentFields
-     * @description Refers to sys_user (User)
      */
     resolved_by: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
     /**
-     * Change Request
+     * Change Request field. Refers to change_request (Change Request).
+     * @summary Change Request.
      * @type {$$rhino.Nilable<$$property.generic.Reference<change_requestFields, change_requestGlideRecord>>}
      * @memberof incidentFields
-     * @description Refers to change_request (Change Request)
      */
     rfc: $$rhino.Nilable<$$property.generic.Reference<change_requestFields, change_requestGlideRecord>>;
 
@@ -5690,10 +6679,10 @@ declare interface incidentFields extends taskFields {
     u_is_mission_related: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Network
+     * Network field. Refers to x_44813_phys_net_network (Physical Network).
+     * @summary Network.
      * @type {$$rhino.Nilable<$$property.generic.Reference<x_44813_phys_net_networkFields, x_44813_phys_net_networkGlideRecord>>}
      * @memberof incidentFields
-     * @description Refers to x_44813_phys_net_network (Physical Network)
      */
     u_network: $$rhino.Nilable<$$property.generic.Reference<x_44813_phys_net_networkFields, x_44813_phys_net_networkGlideRecord>>;
 
@@ -5704,6 +6693,7 @@ declare interface incidentFields extends taskFields {
      */
     u_vip_priority: $$rhino.Nilable<$$property.Boolean>;
 }
+
 declare type incidentGlideRecord = taskGlideRecord & incidentFields;
 
 /**
@@ -5720,18 +6710,18 @@ declare interface change_requestFields extends taskFields {
     backout_plan: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * CAB date
+     * CAB date field. Internal type is "glide_date".
+     * @summary CAB date.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof change_requestFields
-     * @description Internal type is "glide_date"
      */
     cab_date: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * CAB delegate
+     * CAB delegate field. Refers to sys_user (User).
+     * @summary CAB delegate.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof change_requestFields
-     * @description Refers to sys_user (User)
      */
     cab_delegate: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -5764,10 +6754,10 @@ declare interface change_requestFields extends taskFields {
     change_plan: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * CI class
+     * CI class field. Internal type is "table_name".
+     * @summary CI class.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof change_requestFields
-     * @description Internal type is "table_name"
      */
     ci_class: $$rhino.Nilable<$$property.Element>;
 
@@ -5828,10 +6818,10 @@ declare interface change_requestFields extends taskFields {
     on_hold_reason: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * On Hold Change Tasks
+     * On Hold Change Tasks field. Internal type is "glide_list".
+     * @summary On Hold Change Tasks.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof change_requestFields
-     * @description Internal type is "glide_list"
      */
     on_hold_task: $$rhino.Nilable<IGlideElement>;
 
@@ -5864,10 +6854,10 @@ declare interface change_requestFields extends taskFields {
     production_system: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Proposed change
+     * Proposed change field. Internal type is "template_value".
+     * @summary Proposed change.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof change_requestFields
-     * @description Internal type is "template_value"
      */
     proposed_change: $$rhino.Nilable<IGlideElement>;
 
@@ -5879,10 +6869,10 @@ declare interface change_requestFields extends taskFields {
     reason: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Requested by
+     * Requested by field. Refers to sys_user (User).
+     * @summary Requested by.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof change_requestFields
-     * @description Refers to sys_user (User)
      */
     requested_by: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -5901,10 +6891,10 @@ declare interface change_requestFields extends taskFields {
     review_comments: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Review date
+     * Review date field. Internal type is "glide_date".
+     * @summary Review date.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof change_requestFields
-     * @description Internal type is "glide_date"
      */
     review_date: $$rhino.Nilable<$$property.GlideObject>;
 
@@ -5951,10 +6941,10 @@ declare interface change_requestFields extends taskFields {
     start_date: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Standard Change Template version
+     * Standard Change Template version field. Refers to std_change_producer_version (Standard Change Template Version).
+     * @summary Standard Change Template version.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof change_requestFields
-     * @description Refers to std_change_producer_version (Standard Change Template Version)
      */
     std_change_producer_version: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -5972,6 +6962,7 @@ declare interface change_requestFields extends taskFields {
      */
     type: $$rhino.Nilable<$$property.Element>;
 }
+
 declare type change_requestGlideRecord = taskGlideRecord & change_requestFields;
 
 /**
@@ -5981,10 +6972,10 @@ declare type change_requestGlideRecord = taskGlideRecord & change_requestFields;
  */
 declare interface change_taskFields extends taskFields {
     /**
-     * Change request
+     * Change request field. Refers to change_request (Change Request).
+     * @summary Change request.
      * @type {$$rhino.Nilable<$$property.generic.Reference<change_requestFields, change_requestGlideRecord>>}
      * @memberof change_taskFields
-     * @description Refers to change_request (Change Request)
      */
     change_request: $$rhino.Nilable<$$property.generic.Reference<change_requestFields, change_requestGlideRecord>>;
 
@@ -6003,10 +6994,9 @@ declare interface change_taskFields extends taskFields {
     close_code: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Created from
+     * Created from value.
      * @type {$$rhino.Nilable<$$property.generic.Element<("workflow" | "manual")>>}
      * @memberof change_taskFields
-     * @description "workflow"=""; "manual"=""
      */
     created_from: $$rhino.Nilable<$$property.generic.Element<("workflow" | "manual")>>;
 
@@ -6038,6 +7028,7 @@ declare interface change_taskFields extends taskFields {
      */
     planned_start_date: $$rhino.Nilable<$$property.GlideObject>;
 }
+
 declare type change_taskGlideRecord = taskGlideRecord & change_taskFields;
 
 /**
@@ -6082,21 +7073,22 @@ declare interface problemFields extends taskFields {
     review_outcome: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Change request
+     * Change request field. Refers to change_request (Change Request).
+     * @summary Change request.
      * @type {$$rhino.Nilable<$$property.generic.Reference<change_requestFields, change_requestGlideRecord>>}
      * @memberof problemFields
-     * @description Refers to change_request (Change Request)
      */
     rfc: $$rhino.Nilable<$$property.generic.Reference<change_requestFields, change_requestGlideRecord>>;
 
     /**
-     * Workaround
+     * Workaround field. Internal type is "journal_input".
+     * @summary Workaround.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof problemFields
-     * @description Internal type is "journal_input"
      */
     work_around: $$rhino.Nilable<IGlideElement>;
 }
+
 declare type problemGlideRecord = taskGlideRecord & problemFields;
 
 /**
@@ -6106,13 +7098,14 @@ declare type problemGlideRecord = taskGlideRecord & problemFields;
  */
 declare interface problem_taskFields extends taskFields {
     /**
-     * Problem
+     * Problem field. Refers to problem (Problem).
+     * @summary Problem.
      * @type {$$rhino.Nilable<$$property.generic.Reference<problemFields, problemGlideRecord>>}
      * @memberof problem_taskFields
-     * @description Refers to problem (Problem)
      */
     problem: $$rhino.Nilable<$$property.generic.Reference<problemFields, problemGlideRecord>>;
 }
+
 declare type problem_taskGlideRecord = taskGlideRecord & problem_taskFields;
 
 /**
@@ -6136,26 +7129,26 @@ declare interface sys_userFields extends IGlideTableProperties {
     active: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Work agent status
+     * Work agent status field. Internal type is "choice".
+     * @summary Work agent status.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof sys_userFields
-     * @description Internal type is "choice"
      */
     agent_status: $$rhino.Nilable<IGlideElement>;
 
     /**
-     * Average Daily FTE Hours/Hours Per Person Day
+     * Average Daily FTE Hours/Hours Per Person Day field. Internal type is "decimal".
+     * @summary Average Daily FTE Hours/Hours Per Person Day.
      * @type {$$rhino.Nilable<$$property.Numeric>}
      * @memberof sys_userFields
-     * @description Internal type is "decimal"
      */
     average_daily_fte: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Building
+     * Building field. Refers to cmn_building (Building).
+     * @summary Building.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmn_buildingFields, cmn_buildingGlideRecord>>}
      * @memberof sys_userFields
-     * @description Refers to cmn_building (Building)
      */
     building: $$rhino.Nilable<$$property.generic.Reference<cmn_buildingFields, cmn_buildingGlideRecord>>;
 
@@ -6181,18 +7174,18 @@ declare interface sys_userFields extends IGlideTableProperties {
     city: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Company
+     * Company field. Refers to core_company (Company).
+     * @summary Company.
      * @type {$$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>}
      * @memberof sys_userFields
-     * @description Refers to core_company (Company)
      */
     company: $$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>;
 
     /**
-     * Cost center
+     * Cost center field. Refers to cmn_cost_center (Cost Center).
+     * @summary Cost center.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof sys_userFields
-     * @description Refers to cmn_cost_center (Cost Center)
      */
     cost_center: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -6211,18 +7204,18 @@ declare interface sys_userFields extends IGlideTableProperties {
     date_format: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Default perspective
+     * Default perspective field. Refers to sys_perspective (Menu List).
+     * @summary Default perspective.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof sys_userFields
-     * @description Refers to sys_perspective (Menu List)
      */
     default_perspective: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
     /**
-     * Department
+     * Department field. Refers to cmn_department (Department).
+     * @summary Department.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmn_departmentFields, cmn_departmentGlideRecord>>}
      * @memberof sys_userFields
-     * @description Refers to cmn_department (Department)
      */
     department: $$rhino.Nilable<$$property.generic.Reference<cmn_departmentFields, cmn_departmentGlideRecord>>;
 
@@ -6234,10 +7227,10 @@ declare interface sys_userFields extends IGlideTableProperties {
     edu_status: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Email
+     * Email field. Internal type is "email".
+     * @summary Email.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof sys_userFields
-     * @description Internal type is "email"
      */
     email: $$rhino.Nilable<$$property.Element>;
 
@@ -6284,10 +7277,10 @@ declare interface sys_userFields extends IGlideTableProperties {
     geolocation_tracked: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Home phone
+     * Home phone field. Internal type is "ph_number".
+     * @summary Home phone.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof sys_userFields
-     * @description Internal type is "ph_number"
      */
     home_phone: $$rhino.Nilable<$$property.Element>;
 
@@ -6306,10 +7299,10 @@ declare interface sys_userFields extends IGlideTableProperties {
     introduction: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Last login
+     * Last login field. Internal type is "glide_date".
+     * @summary Last login.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof sys_userFields
-     * @description Internal type is "glide_date"
      */
     last_login: $$rhino.Nilable<$$property.GlideObject>;
 
@@ -6349,26 +7342,26 @@ declare interface sys_userFields extends IGlideTableProperties {
     last_position_update: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Latitude
+     * Latitude field. Internal type is "float".
+     * @summary Latitude.
      * @type {$$rhino.Nilable<$$property.Numeric>}
      * @memberof sys_userFields
-     * @description Internal type is "float"
      */
     latitude: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * LDAP server
+     * LDAP server field. Refers to ldap_server_config (LDAP server).
+     * @summary LDAP server.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof sys_userFields
-     * @description Refers to ldap_server_config (LDAP server)
      */
     ldap_server: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
     /**
-     * Location
+     * Location field. Refers to cmn_location (Location).
+     * @summary Location.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmn_locationFields, cmn_locationGlideRecord>>}
      * @memberof sys_userFields
-     * @description Refers to cmn_location (Location)
      */
     location: $$rhino.Nilable<$$property.generic.Reference<cmn_locationFields, cmn_locationGlideRecord>>;
 
@@ -6380,18 +7373,18 @@ declare interface sys_userFields extends IGlideTableProperties {
     locked_out: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Longitude
+     * Longitude field. Internal type is "float".
+     * @summary Longitude.
      * @type {$$rhino.Nilable<$$property.Numeric>}
      * @memberof sys_userFields
-     * @description Internal type is "float"
      */
     longitude: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Manager
+     * Manager field. Refers to sys_user (User).
+     * @summary Manager.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof sys_userFields
-     * @description Refers to sys_user (User)
      */
     manager: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -6403,10 +7396,10 @@ declare interface sys_userFields extends IGlideTableProperties {
     middle_name: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Mobile phone
+     * Mobile phone field. Internal type is "ph_number".
+     * @summary Mobile phone.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof sys_userFields
-     * @description Internal type is "ph_number"
      */
     mobile_phone: $$rhino.Nilable<$$property.Element>;
 
@@ -6425,10 +7418,10 @@ declare interface sys_userFields extends IGlideTableProperties {
     notification: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * On schedule
+     * On schedule field. Internal type is "choice".
+     * @summary On schedule.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof sys_userFields
-     * @description Internal type is "choice"
      */
     on_schedule: $$rhino.Nilable<IGlideElement>;
 
@@ -6440,10 +7433,10 @@ declare interface sys_userFields extends IGlideTableProperties {
     password_needs_reset: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Black phone
+     * Black phone field. Internal type is "ph_number".
+     * @summary Black phone.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof sys_userFields
-     * @description Internal type is "ph_number"
      */
     phone: $$rhino.Nilable<$$property.Element>;
 
@@ -6462,18 +7455,18 @@ declare interface sys_userFields extends IGlideTableProperties {
     preferred_language: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Roles
+     * Roles field. Internal type is "user_roles".
+     * @summary Roles.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof sys_userFields
-     * @description Internal type is "user_roles"
      */
     roles: $$rhino.Nilable<IGlideElement>;
 
     /**
-     * Schedule
+     * Schedule field. Refers to cmn_schedule (Schedule).
+     * @summary Schedule.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmn_scheduleFields, cmn_scheduleGlideRecord>>}
      * @memberof sys_userFields
-     * @description Refers to cmn_schedule (Schedule)
      */
     schedule: $$rhino.Nilable<$$property.generic.Reference<cmn_scheduleFields, cmn_scheduleGlideRecord>>;
 
@@ -6492,10 +7485,10 @@ declare interface sys_userFields extends IGlideTableProperties {
     state: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Street
+     * Street field. Internal type is "multi_two_lines".
+     * @summary Street.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof sys_userFields
-     * @description Internal type is "multi_two_lines"
      */
     street: $$rhino.Nilable<IGlideElement>;
 
@@ -6514,10 +7507,10 @@ declare interface sys_userFields extends IGlideTableProperties {
     sys_domain: $$rhino.Nilable<$$property.DomainId>;
 
     /**
-     * Domain Path
+     * Domain Path field. Internal type is "domain_path".
+     * @summary Domain Path.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof sys_userFields
-     * @description Internal type is "domain_path"
      */
     sys_domain_path: $$rhino.Nilable<$$property.Element>;
 
@@ -6529,10 +7522,10 @@ declare interface sys_userFields extends IGlideTableProperties {
     time_format: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Time sheet policy
+     * Time sheet policy field. Refers to time_sheet_policy (Time Sheet Policy).
+     * @summary Time sheet policy.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof sys_userFields
-     * @description Refers to time_sheet_policy (Time Sheet Policy)
      */
     time_sheet_policy: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -6606,6 +7599,7 @@ declare interface sys_userFields extends IGlideTableProperties {
      */
     zip: $$rhino.Nilable<$$property.Element>;
 }
+
 declare type sys_userGlideRecord = GlideRecord & sys_userFields;
 
 /**
@@ -6622,26 +7616,26 @@ declare interface sys_user_groupFields extends IGlideTableProperties {
     active: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Average Daily FTE Hours/Hours Per Person Day
+     * Average Daily FTE Hours/Hours Per Person Day field. Internal type is "decimal".
+     * @summary Average Daily FTE Hours/Hours Per Person Day.
      * @type {$$rhino.Nilable<$$property.Numeric>}
      * @memberof sys_user_groupFields
-     * @description Internal type is "decimal"
      */
     average_daily_fte: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Cost center
+     * Cost center field. Refers to cmn_cost_center (Cost Center).
+     * @summary Cost center.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof sys_user_groupFields
-     * @description Refers to cmn_cost_center (Cost Center)
      */
     cost_center: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
     /**
-     * Default assignee
+     * Default assignee field. Refers to sys_user (User).
+     * @summary Default assignee.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof sys_user_groupFields
-     * @description Refers to sys_user (User)
      */
     default_assignee: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -6653,10 +7647,10 @@ declare interface sys_user_groupFields extends IGlideTableProperties {
     description: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Group email
+     * Group email field. Internal type is "email".
+     * @summary Group email.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof sys_user_groupFields
-     * @description Internal type is "email"
      */
     email: $$rhino.Nilable<$$property.Element>;
 
@@ -6682,10 +7676,10 @@ declare interface sys_user_groupFields extends IGlideTableProperties {
     include_members: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Manager
+     * Manager field. Refers to sys_user (User).
+     * @summary Manager.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof sys_user_groupFields
-     * @description Refers to sys_user (User)
      */
     manager: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -6697,10 +7691,10 @@ declare interface sys_user_groupFields extends IGlideTableProperties {
     name: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Parent
+     * Parent field. Refers to sys_user_group (Group).
+     * @summary Parent.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_user_groupFields, sys_user_groupGlideRecord>>}
      * @memberof sys_user_groupFields
-     * @description Refers to sys_user_group (Group)
      */
     parent: $$rhino.Nilable<$$property.generic.Reference<sys_user_groupFields, sys_user_groupGlideRecord>>;
 
@@ -6712,10 +7706,10 @@ declare interface sys_user_groupFields extends IGlideTableProperties {
     points: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Roles
+     * Roles field. Internal type is "user_roles".
+     * @summary Roles.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof sys_user_groupFields
-     * @description Internal type is "user_roles"
      */
     roles: $$rhino.Nilable<IGlideElement>;
 
@@ -6727,21 +7721,22 @@ declare interface sys_user_groupFields extends IGlideTableProperties {
     source: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Type
+     * Type field. Internal type is "glide_list".
+     * @summary Type.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof sys_user_groupFields
-     * @description Internal type is "glide_list"
      */
     type: $$rhino.Nilable<IGlideElement>;
 
     /**
-     * Vendors
+     * Vendors field. Internal type is "glide_list".
+     * @summary Vendors.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof sys_user_groupFields
-     * @description Internal type is "glide_list"
      */
     vendors: $$rhino.Nilable<IGlideElement>;
 }
+
 declare type sys_user_groupGlideRecord = GlideRecord & sys_user_groupFields;
 
 /**
@@ -6779,10 +7774,10 @@ declare interface cmn_scheduleFields extends IGlideTableProperties {
     name: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Parent
+     * Parent field. Refers to cmn_schedule (Schedule).
+     * @summary Parent.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmn_scheduleFields, cmn_scheduleGlideRecord>>}
      * @memberof cmn_scheduleFields
-     * @description Refers to cmn_schedule (Schedule)
      */
     parent: $$rhino.Nilable<$$property.generic.Reference<cmn_scheduleFields, cmn_scheduleGlideRecord>>;
 
@@ -6807,6 +7802,7 @@ declare interface cmn_scheduleFields extends IGlideTableProperties {
      */
     type: $$rhino.Nilable<$$property.Element>;
 }
+
 declare type cmn_scheduleGlideRecord = GlideRecord & cmn_scheduleFields;
 
 /**
@@ -6823,18 +7819,18 @@ declare interface cmn_locationFields extends IGlideTableProperties {
     city: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Company
+     * Company field. Refers to core_company (Company).
+     * @summary Company.
      * @type {$$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>}
      * @memberof cmn_locationFields
-     * @description Refers to core_company (Company)
      */
     company: $$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>;
 
     /**
-     * Contact
+     * Contact field. Refers to sys_user (User).
+     * @summary Contact.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof cmn_locationFields
-     * @description Refers to sys_user (User)
      */
     contact: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -6860,10 +7856,10 @@ declare interface cmn_locationFields extends IGlideTableProperties {
     full_name: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Latitude
+     * Latitude field. Internal type is "float".
+     * @summary Latitude.
      * @type {$$rhino.Nilable<$$property.Numeric>}
      * @memberof cmn_locationFields
-     * @description Internal type is "float"
      */
     latitude: $$rhino.Nilable<$$property.Numeric>;
 
@@ -6875,10 +7871,10 @@ declare interface cmn_locationFields extends IGlideTableProperties {
     lat_long_error: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Longitude
+     * Longitude field. Internal type is "float".
+     * @summary Longitude.
      * @type {$$rhino.Nilable<$$property.Numeric>}
      * @memberof cmn_locationFields
-     * @description Internal type is "float"
      */
     longitude: $$rhino.Nilable<$$property.Numeric>;
 
@@ -6890,10 +7886,10 @@ declare interface cmn_locationFields extends IGlideTableProperties {
     name: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Parent
+     * Parent field. Refers to cmn_location (Location).
+     * @summary Parent.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmn_locationFields, cmn_locationGlideRecord>>}
      * @memberof cmn_locationFields
-     * @description Refers to cmn_location (Location)
      */
     parent: $$rhino.Nilable<$$property.generic.Reference<cmn_locationFields, cmn_locationGlideRecord>>;
 
@@ -6905,10 +7901,10 @@ declare interface cmn_locationFields extends IGlideTableProperties {
     phone: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Phone territory
+     * Phone territory field. Refers to sys_phone_territory (Sys Phone Territory).
+     * @summary Phone territory.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof cmn_locationFields
-     * @description Refers to sys_phone_territory (Sys Phone Territory)
      */
     phone_territory: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -6927,10 +7923,10 @@ declare interface cmn_locationFields extends IGlideTableProperties {
     stock_room: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Street
+     * Street field. Internal type is "multi_two_lines".
+     * @summary Street.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof cmn_locationFields
-     * @description Internal type is "multi_two_lines"
      */
     street: $$rhino.Nilable<IGlideElement>;
 
@@ -6948,6 +7944,7 @@ declare interface cmn_locationFields extends IGlideTableProperties {
      */
     zip: $$rhino.Nilable<$$property.Element>;
 }
+
 declare type cmn_locationGlideRecord = GlideRecord & cmn_locationFields;
 
 /**
@@ -6957,10 +7954,10 @@ declare type cmn_locationGlideRecord = GlideRecord & cmn_locationFields;
  */
 declare interface cmn_departmentFields extends IGlideTableProperties {
     /**
-     * Business unit
+     * Business unit field. Refers to business_unit (Business Unit).
+     * @summary Business unit.
      * @type {$$rhino.Nilable<$$property.generic.Reference<business_unitFields, business_unitGlideRecord>>}
      * @memberof cmn_departmentFields
-     * @description Refers to business_unit (Business Unit)
      */
     business_unit: $$rhino.Nilable<$$property.generic.Reference<business_unitFields, business_unitGlideRecord>>;
 
@@ -6972,26 +7969,26 @@ declare interface cmn_departmentFields extends IGlideTableProperties {
     code: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Company
+     * Company field. Refers to core_company (Company).
+     * @summary Company.
      * @type {$$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>}
      * @memberof cmn_departmentFields
-     * @description Refers to core_company (Company)
      */
     company: $$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>;
 
     /**
-     * Cost center
+     * Cost center field. Refers to cmn_cost_center (Cost Center).
+     * @summary Cost center.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof cmn_departmentFields
-     * @description Refers to cmn_cost_center (Cost Center)
      */
     cost_center: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
     /**
-     * Department head
+     * Department head field. Refers to sys_user (User).
+     * @summary Department head.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof cmn_departmentFields
-     * @description Refers to sys_user (User)
      */
     dept_head: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -7024,21 +8021,22 @@ declare interface cmn_departmentFields extends IGlideTableProperties {
     name: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Parent
+     * Parent field. Refers to cmn_department (Department).
+     * @summary Parent.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmn_departmentFields, cmn_departmentGlideRecord>>}
      * @memberof cmn_departmentFields
-     * @description Refers to cmn_department (Department)
      */
     parent: $$rhino.Nilable<$$property.generic.Reference<cmn_departmentFields, cmn_departmentGlideRecord>>;
 
     /**
-     * Primary contact
+     * Primary contact field. Refers to sys_user (User).
+     * @summary Primary contact.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof cmn_departmentFields
-     * @description Refers to sys_user (User)
      */
     primary_contact: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 }
+
 declare type cmn_departmentGlideRecord = GlideRecord & cmn_departmentFields;
 
 /**
@@ -7083,10 +8081,10 @@ declare interface core_companyFields extends IGlideTableProperties {
     city: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Contact
+     * Contact field. Refers to sys_user (User).
+     * @summary Contact.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof core_companyFields
-     * @description Refers to sys_user (User)
      */
     contact: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -7105,34 +8103,34 @@ declare interface core_companyFields extends IGlideTableProperties {
     customer: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Discount
+     * Discount field. Internal type is "decimal".
+     * @summary Discount.
      * @type {$$rhino.Nilable<$$property.Numeric>}
      * @memberof core_companyFields
-     * @description Internal type is "decimal"
      */
     discount: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Fax phone
+     * Fax phone field. Internal type is "ph_number".
+     * @summary Fax phone.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof core_companyFields
-     * @description Internal type is "ph_number"
      */
     fax_phone: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Fiscal year
+     * Fiscal year field. Internal type is "glide_date".
+     * @summary Fiscal year.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof core_companyFields
-     * @description Internal type is "glide_date"
      */
     fiscal_year: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Latitude
+     * Latitude field. Internal type is "float".
+     * @summary Latitude.
      * @type {$$rhino.Nilable<$$property.Numeric>}
      * @memberof core_companyFields
-     * @description Internal type is "float"
      */
     latitude: $$rhino.Nilable<$$property.Numeric>;
 
@@ -7144,10 +8142,10 @@ declare interface core_companyFields extends IGlideTableProperties {
     lat_long_error: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Longitude
+     * Longitude field. Internal type is "float".
+     * @summary Longitude.
      * @type {$$rhino.Nilable<$$property.Numeric>}
      * @memberof core_companyFields
-     * @description Internal type is "float"
      */
     longitude: $$rhino.Nilable<$$property.Numeric>;
 
@@ -7187,18 +8185,18 @@ declare interface core_companyFields extends IGlideTableProperties {
     num_employees: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Parent
+     * Parent field. Refers to core_company (Company).
+     * @summary Parent.
      * @type {$$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>}
      * @memberof core_companyFields
-     * @description Refers to core_company (Company)
      */
     parent: $$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>;
 
     /**
-     * Phone
+     * Phone field. Internal type is "ph_number".
+     * @summary Phone.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof core_companyFields
-     * @description Internal type is "ph_number"
      */
     phone: $$rhino.Nilable<$$property.Element>;
 
@@ -7259,18 +8257,18 @@ declare interface core_companyFields extends IGlideTableProperties {
     stock_symbol: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Street
+     * Street field. Internal type is "multi_two_lines".
+     * @summary Street.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof core_companyFields
-     * @description Internal type is "multi_two_lines"
      */
     street: $$rhino.Nilable<IGlideElement>;
 
     /**
-     * Theme
+     * Theme field. Refers to sys_ui_theme (Theme).
+     * @summary Theme.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof core_companyFields
-     * @description Refers to sys_ui_theme (Theme)
      */
     theme: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -7282,18 +8280,18 @@ declare interface core_companyFields extends IGlideTableProperties {
     vendor: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Vendor manager
+     * Vendor manager field. Internal type is "glide_list".
+     * @summary Vendor manager.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof core_companyFields
-     * @description Internal type is "glide_list"
      */
     vendor_manager: $$rhino.Nilable<IGlideElement>;
 
     /**
-     * Vendor type
+     * Vendor type field. Internal type is "glide_list".
+     * @summary Vendor type.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof core_companyFields
-     * @description Internal type is "glide_list"
      */
     vendor_type: $$rhino.Nilable<IGlideElement>;
 
@@ -7311,6 +8309,7 @@ declare interface core_companyFields extends IGlideTableProperties {
      */
     zip: $$rhino.Nilable<$$property.Element>;
 }
+
 declare type core_companyGlideRecord = GlideRecord & core_companyFields;
 
 /**
@@ -7320,10 +8319,10 @@ declare type core_companyGlideRecord = GlideRecord & core_companyFields;
  */
 declare interface cmn_buildingFields extends IGlideTableProperties {
     /**
-     * Contact
+     * Contact field. Refers to sys_user (User).
+     * @summary Contact.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof cmn_buildingFields
-     * @description Refers to sys_user (User)
      */
     contact: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -7335,10 +8334,10 @@ declare interface cmn_buildingFields extends IGlideTableProperties {
     floors: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Location
+     * Location field. Refers to cmn_location (Location).
+     * @summary Location.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmn_locationFields, cmn_locationGlideRecord>>}
      * @memberof cmn_buildingFields
-     * @description Refers to cmn_location (Location)
      */
     location: $$rhino.Nilable<$$property.generic.Reference<cmn_locationFields, cmn_locationGlideRecord>>;
 
@@ -7356,6 +8355,7 @@ declare interface cmn_buildingFields extends IGlideTableProperties {
      */
     notes: $$rhino.Nilable<$$property.Element>;
 }
+
 declare type cmn_buildingGlideRecord = GlideRecord & cmn_buildingFields;
 
 /**
@@ -7365,26 +8365,26 @@ declare type cmn_buildingGlideRecord = GlideRecord & cmn_buildingFields;
  */
 declare interface business_unitFields extends IGlideTableProperties {
     /**
-     * Business Unit Head
+     * Business Unit Head field. Refers to sys_user (User).
+     * @summary Business Unit Head.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof business_unitFields
-     * @description Refers to sys_user (User)
      */
     bu_head: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
     /**
-     * Company
+     * Company field. Refers to core_company (Company).
+     * @summary Company.
      * @type {$$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>}
      * @memberof business_unitFields
-     * @description Refers to core_company (Company)
      */
     company: $$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>;
 
     /**
-     * Description
+     * Description field. Internal type is "wide_text".
+     * @summary Description.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof business_unitFields
-     * @description Internal type is "wide_text"
      */
     description: $$rhino.Nilable<$$property.Element>;
 
@@ -7403,10 +8403,10 @@ declare interface business_unitFields extends IGlideTableProperties {
     name: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Parent
+     * Parent field. Refers to business_unit (Business Unit).
+     * @summary Parent.
      * @type {$$rhino.Nilable<$$property.generic.Reference<business_unitFields, business_unitGlideRecord>>}
      * @memberof business_unitFields
-     * @description Refers to business_unit (Business Unit)
      */
     parent: $$rhino.Nilable<$$property.generic.Reference<business_unitFields, business_unitGlideRecord>>;
 
@@ -7418,13 +8418,14 @@ declare interface business_unitFields extends IGlideTableProperties {
     sys_domain: $$rhino.Nilable<$$property.DomainId>;
 
     /**
-     * Domain Path
+     * Domain Path field. Internal type is "domain_path".
+     * @summary Domain Path.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof business_unitFields
-     * @description Internal type is "domain_path"
      */
     sys_domain_path: $$rhino.Nilable<$$property.Element>;
 }
+
 declare type business_unitGlideRecord = GlideRecord & business_unitFields;
 
 /**
@@ -7462,10 +8463,10 @@ declare interface sys_progress_workerFields extends IGlideTableProperties {
     output_summary: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Queued Time
+     * Queued Time field. Internal type is "glide_duration".
+     * @summary Queued Time.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof sys_progress_workerFields
-     * @description Internal type is "glide_duration"
      */
     queued_time: $$rhino.Nilable<$$property.GlideObject>;
 
@@ -7491,21 +8492,22 @@ declare interface sys_progress_workerFields extends IGlideTableProperties {
     state_code: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Total Execute Time
+     * Total Execute Time field. Internal type is "glide_duration".
+     * @summary Total Execute Time.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof sys_progress_workerFields
-     * @description Internal type is "glide_duration"
      */
     total_execute_time: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Total Run Time
+     * Total Run Time field. Internal type is "glide_duration".
+     * @summary Total Run Time.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof sys_progress_workerFields
-     * @description Internal type is "glide_duration"
      */
     total_run_time: $$rhino.Nilable<$$property.GlideObject>;
 }
+
 declare type sys_progress_workerGlideRecord = GlideRecord & sys_progress_workerFields;
 
 /**
@@ -7515,10 +8517,10 @@ declare type sys_progress_workerGlideRecord = GlideRecord & sys_progress_workerF
  */
 declare interface sys_attachmentFields extends IGlideTableProperties {
     /**
-     * Average image color
+     * Average image color field. Internal type is "color".
+     * @summary Average image color.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof sys_attachmentFields
-     * @description Internal type is "color"
      */
     average_image_color: $$rhino.Nilable<IGlideElement>;
 
@@ -7544,10 +8546,10 @@ declare interface sys_attachmentFields extends IGlideTableProperties {
     content_type: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Encryption context
+     * Encryption context field. Refers to sys_encryption_context (Encryption Context).
+     * @summary Encryption context.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_encryption_contextFields, sys_encryption_contextGlideRecord>>}
      * @memberof sys_attachmentFields
-     * @description Refers to sys_encryption_context (Encryption Context)
      */
     encryption_context: $$rhino.Nilable<$$property.generic.Reference<sys_encryption_contextFields, sys_encryption_contextGlideRecord>>;
 
@@ -7573,18 +8575,18 @@ declare interface sys_attachmentFields extends IGlideTableProperties {
     image_width: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Size bytes
+     * Size bytes field. Internal type is "longint".
+     * @summary Size bytes.
      * @type {$$rhino.Nilable<$$property.Numeric>}
      * @memberof sys_attachmentFields
-     * @description Internal type is "longint"
      */
     size_bytes: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Size compressed
+     * Size compressed field. Internal type is "longint".
+     * @summary Size compressed.
      * @type {$$rhino.Nilable<$$property.Numeric>}
      * @memberof sys_attachmentFields
-     * @description Internal type is "longint"
      */
     size_compressed: $$rhino.Nilable<$$property.Numeric>;
 
@@ -7603,13 +8605,14 @@ declare interface sys_attachmentFields extends IGlideTableProperties {
     table_name: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Table sys ID
+     * Table sys ID field. Internal type is "char".
+     * @summary Table sys ID.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof sys_attachmentFields
-     * @description Internal type is "char"
      */
     table_sys_id: $$rhino.Nilable<$$property.Element>;
 }
+
 declare type sys_attachmentGlideRecord = GlideRecord & sys_attachmentFields;
 
 /**
@@ -7717,10 +8720,10 @@ declare interface v_pluginFields extends IGlideTableProperties {
     provider: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Requires
+     * Requires field. Internal type is "glide_list".
+     * @summary Requires.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof v_pluginFields
-     * @description Internal type is "glide_list"
      */
     requires: $$rhino.Nilable<IGlideElement>;
 
@@ -7766,6 +8769,7 @@ declare interface v_pluginFields extends IGlideTableProperties {
      */
     version: $$rhino.Nilable<$$property.Element>;
 }
+
 declare type v_pluginGlideRecord = GlideRecord & v_pluginFields;
 
 /**
@@ -7810,10 +8814,10 @@ declare interface sc_categoryFields extends sys_metadataFields {
     homepage_image: $$rhino.Nilable<$$property.UserImage>;
 
     /**
-     * Homepage renderer
+     * Homepage renderer field. Refers to sc_homepage_renderer (Homepage Category Renderer).
+     * @summary Homepage renderer.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof sc_categoryFields
-     * @description Refers to sc_homepage_renderer (Homepage Category Renderer)
      */
     homepage_renderer: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -7825,18 +8829,18 @@ declare interface sc_categoryFields extends sys_metadataFields {
     icon: $$rhino.Nilable<$$property.UserImage>;
 
     /**
-     * Image
+     * Image field. Internal type is "image".
+     * @summary Image.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof sc_categoryFields
-     * @description Internal type is "image"
      */
     image: $$rhino.Nilable<IGlideElement>;
 
     /**
-     * Location
+     * Location field. Refers to cmn_location (Location).
+     * @summary Location.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmn_locationFields, cmn_locationGlideRecord>>}
      * @memberof sc_categoryFields
-     * @description Refers to cmn_location (Location)
      */
     location: $$rhino.Nilable<$$property.generic.Reference<cmn_locationFields, cmn_locationGlideRecord>>;
 
@@ -7855,18 +8859,18 @@ declare interface sc_categoryFields extends sys_metadataFields {
     mobile_picture: $$rhino.Nilable<$$property.UserImage>;
 
     /**
-     * Mobile Subcategory Render Type
+     * Mobile Subcategory Render Type field. "list"=""; "card"="".
+     * @summary Mobile Subcategory Render Type.
      * @type {$$rhino.Nilable<$$property.generic.Element<("list" | "card")>>}
      * @memberof sc_categoryFields
-     * @description "list"=""; "card"=""
      */
     mobile_subcategory_render_type: $$rhino.Nilable<$$property.generic.Element<("list" | "card")>>;
 
     /**
-     * Module link
+     * Module link field. Refers to sys_app_module (Module).
+     * @summary Module link.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof sc_categoryFields
-     * @description Refers to sys_app_module (Module)
      */
     module: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -7878,26 +8882,26 @@ declare interface sc_categoryFields extends sys_metadataFields {
     order: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Parent
+     * Parent field. Refers to sc_category (Category).
+     * @summary Parent.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sc_categoryFields, sc_categoryGlideRecord>>}
      * @memberof sc_categoryFields
-     * @description Refers to sc_category (Category)
      */
     parent: $$rhino.Nilable<$$property.generic.Reference<sc_categoryFields, sc_categoryGlideRecord>>;
 
     /**
-     * Roles
+     * Roles field. Internal type is "user_roles".
+     * @summary Roles.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof sc_categoryFields
-     * @description Internal type is "user_roles"
      */
     roles: $$rhino.Nilable<IGlideElement>;
 
     /**
-     * Catalog
+     * Catalog field. Refers to sc_catalog (Catalog).
+     * @summary Catalog.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sc_catalogFields, sc_catalogGlideRecord>>}
      * @memberof sc_categoryFields
-     * @description Refers to sc_catalog (Catalog)
      */
     sc_catalog: $$rhino.Nilable<$$property.generic.Reference<sc_catalogFields, sc_catalogGlideRecord>>;
 
@@ -7915,6 +8919,7 @@ declare interface sc_categoryFields extends sys_metadataFields {
      */
     title: $$rhino.Nilable<$$property.TranslatedText>;
 }
+
 declare type sc_categoryGlideRecord = sys_metadataGlideRecord & sc_categoryFields;
 
 /**
@@ -7931,10 +8936,10 @@ declare interface sc_catalogFields extends sys_metadataFields {
     active: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Background Color
+     * Background Color field. Internal type is "color".
+     * @summary Background Color.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof sc_catalogFields
-     * @description Internal type is "color"
      */
     background_color: $$rhino.Nilable<IGlideElement>;
 
@@ -7967,10 +8972,10 @@ declare interface sc_catalogFields extends sys_metadataFields {
     desktop_image: $$rhino.Nilable<$$property.UserImage>;
 
     /**
-     * Editors
+     * Editors field. Internal type is "glide_list".
+     * @summary Editors.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof sc_catalogFields
-     * @description Internal type is "glide_list"
      */
     editors: $$rhino.Nilable<IGlideElement>;
 
@@ -7982,10 +8987,10 @@ declare interface sc_catalogFields extends sys_metadataFields {
     enable_wish_list: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Manager
+     * Manager field. Refers to sys_user (User).
+     * @summary Manager.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof sc_catalogFields
-     * @description Refers to sys_user (User)
      */
     manager: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -7996,6 +9001,7 @@ declare interface sc_catalogFields extends sys_metadataFields {
      */
     title: $$rhino.Nilable<$$property.TranslatedField>;
 }
+
 declare type sc_catalogGlideRecord = sys_metadataGlideRecord & sc_catalogFields;
 
 /**
@@ -8012,10 +9018,9 @@ declare interface sc_cat_itemFields extends sys_metadataFields {
     active: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Availability
+     * Availability field.
      * @type {$$rhino.Nilable<$$property.generic.Element<("on_both" | "on_desktop" | "on_mobile")>>}
      * @memberof sc_cat_itemFields
-     * @description "on_both"=""; "on_desktop"=""; "on_mobile"=""
      */
     availability: $$rhino.Nilable<$$property.generic.Element<("on_both" | "on_desktop" | "on_mobile")>>;
 
@@ -8027,34 +9032,34 @@ declare interface sc_cat_itemFields extends sys_metadataFields {
     billable: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Category
+     * Category. field. Category field. Refers to sc_category (Category).
+     * @summary Category.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sc_categoryFields, sc_categoryGlideRecord>>}
      * @memberof sc_cat_itemFields
-     * @description Refers to sc_category (Category)
      */
     category: $$rhino.Nilable<$$property.generic.Reference<sc_categoryFields, sc_categoryGlideRecord>>;
 
     /**
-     * Cost
+     * Cost field. Internal type is "decimal".
+     * @summary Cost.
      * @type {$$rhino.Nilable<$$property.Numeric>}
      * @memberof sc_cat_itemFields
-     * @description Internal type is "decimal"
      */
     cost: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Cart
+     * Cart field. Refers to sys_ui_macro (Macro).
+     * @summary Cart.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof sc_cat_itemFields
-     * @description Refers to sys_ui_macro (Macro)
      */
     custom_cart: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
     /**
-     * Execution Plan
+     * Execution Plan field. Refers to sc_cat_item_delivery_plan (Execution Plan).
+     * @summary Execution Plan.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof sc_cat_itemFields
-     * @description Refers to sc_cat_item_delivery_plan (Execution Plan)
      */
     delivery_plan: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -8066,10 +9071,10 @@ declare interface sc_cat_itemFields extends sys_metadataFields {
     delivery_plan_script: $$rhino.Nilable<$$property.Script>;
 
     /**
-     * Delivery time
+     * Delivery time field. Internal type is "glide_duration".
+     * @summary Delivery time.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof sc_cat_itemFields
-     * @description Internal type is "glide_duration"
      */
     delivery_time: $$rhino.Nilable<$$property.GlideObject>;
 
@@ -8088,10 +9093,10 @@ declare interface sc_cat_itemFields extends sys_metadataFields {
     entitlement_script: $$rhino.Nilable<$$property.Script>;
 
     /**
-     * Fulfillment group
+     * Fulfillment group field. Refers to sys_user_group (Group).
+     * @summary Fulfillment group.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_user_groupFields, sys_user_groupGlideRecord>>}
      * @memberof sc_cat_itemFields
-     * @description Refers to sys_user_group (Group)
      */
     group: $$rhino.Nilable<$$property.generic.Reference<sys_user_groupFields, sys_user_groupGlideRecord>>;
 
@@ -8117,10 +9122,10 @@ declare interface sc_cat_itemFields extends sys_metadataFields {
     ignore_price: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Image
+     * Image field. Internal type is "image".
+     * @summary Image.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof sc_cat_itemFields
-     * @description Internal type is "image"
      */
     image: $$rhino.Nilable<IGlideElement>;
 
@@ -8132,10 +9137,10 @@ declare interface sc_cat_itemFields extends sys_metadataFields {
     list_price: $$rhino.Nilable<$$property.Currency>;
 
     /**
-     * Location
+     * Location field. Refers to cmn_location (Location).
+     * @summary Location.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmn_locationFields, cmn_locationGlideRecord>>}
      * @memberof sc_cat_itemFields
-     * @description Refers to cmn_location (Location)
      */
     location: $$rhino.Nilable<$$property.generic.Reference<cmn_locationFields, cmn_locationGlideRecord>>;
 
@@ -8161,18 +9166,17 @@ declare interface sc_cat_itemFields extends sys_metadataFields {
     mobile_picture: $$rhino.Nilable<$$property.UserImage>;
 
     /**
-     *  Mobile Picture Type
+     * Mobile Picture Type field.
      * @type {$$rhino.Nilable<$$property.generic.Element<("use_desktop_picture" | "use_mobile_picture" | "use_no_picture")>>}
      * @memberof sc_cat_itemFields
-     * @description "use_desktop_picture"=""; "use_mobile_picture"=""; "use_no_picture"=""
      */
     mobile_picture_type: $$rhino.Nilable<$$property.generic.Element<("use_desktop_picture" | "use_mobile_picture" | "use_no_picture")>>;
 
     /**
-     * Model
+     * Model field. Refers to cmdb_model (Product Model).
+     * @summary Model.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmdb_modelFields, cmdb_modelGlideRecord>>}
      * @memberof sc_cat_itemFields
-     * @description Refers to cmdb_model (Product Model)
      */
     model: $$rhino.Nilable<$$property.generic.Reference<cmdb_modelFields, cmdb_modelGlideRecord>>;
 
@@ -8240,10 +9244,10 @@ declare interface sc_cat_itemFields extends sys_metadataFields {
     order: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Ordered item link
+     * Ordered item link field. Refers to sc_ordered_item_link (Ordered Item Link).
+     * @summary Ordered item link.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof sc_cat_itemFields
-     * @description Refers to sc_ordered_item_link (Ordered Item Link)
      */
     ordered_item_link: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -8255,10 +9259,10 @@ declare interface sc_cat_itemFields extends sys_metadataFields {
     picture: $$rhino.Nilable<$$property.UserImage>;
 
     /**
-     * Preview link
+     * Preview link field. Internal type is "catalog_preview".
+     * @summary Preview link.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof sc_cat_itemFields
-     * @description Internal type is "catalog_preview"
      */
     preview: $$rhino.Nilable<IGlideElement>;
 
@@ -8270,10 +9274,9 @@ declare interface sc_cat_itemFields extends sys_metadataFields {
     price: $$rhino.Nilable<$$property.Price>;
 
     /**
-     * Recurring Price Frequency
+     * Recurring Price Frequency field.
      * @type {$$rhino.Nilable<$$property.generic.Element<("daily" | "weekly" | "weekly2" | "monthly" | "monthly2" | "quarterly" | "semiannual" | "yearly")>>}
      * @memberof sc_cat_itemFields
-     * @description "daily"=""; "weekly"=""; "weekly2"=""; "monthly"=""; "monthly2"=""; "quarterly"=""; "semiannual"=""; "yearly"=""
      */
     recurring_frequency: $$rhino.Nilable<$$property.generic.Element<("daily" | "weekly" | "weekly2" | "monthly" | "monthly2" | "quarterly" | "semiannual" | "yearly")>>;
 
@@ -8285,26 +9288,26 @@ declare interface sc_cat_itemFields extends sys_metadataFields {
     recurring_price: $$rhino.Nilable<$$property.Price>;
 
     /**
-     * Roles
+     * Roles field. Internal type is "user_roles".
+     * @summary Roles.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof sc_cat_itemFields
-     * @description Internal type is "user_roles"
      */
     roles: $$rhino.Nilable<IGlideElement>;
 
     /**
-     * Catalogs
+     * Catalogs field. Internal type is "glide_list".
+     * @summary Catalogs.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof sc_cat_itemFields
-     * @description Internal type is "glide_list"
      */
     sc_catalogs: $$rhino.Nilable<IGlideElement>;
 
     /**
-     * Created from item design
+     * Created from item design field. Refers to sc_ic_item_staging (Item).
+     * @summary Created from item design.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof sc_cat_itemFields
-     * @description Refers to sc_ic_item_staging (Item)
      */
     sc_ic_item_staging: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -8337,10 +9340,10 @@ declare interface sc_cat_itemFields extends sys_metadataFields {
     start_closed: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Template
+     * Template field. Refers to sys_template (Template).
+     * @summary Template.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof sc_cat_itemFields
-     * @description Refers to sys_template (Template)
      */
     template: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -8348,7 +9351,6 @@ declare interface sc_cat_itemFields extends sys_metadataFields {
      * Type
      * @type {$$rhino.Nilable<$$property.generic.Element<("item" | "task" | "bundle" | "template" | "package")>>}
      * @memberof sc_cat_itemFields
-     * @description "item"=""; "task"=""; "bundle"=""; "template"=""; "package"=""
      */
     type: $$rhino.Nilable<$$property.generic.Element<("item" | "task" | "bundle" | "template" | "package")>>;
 
@@ -8360,10 +9362,10 @@ declare interface sc_cat_itemFields extends sys_metadataFields {
     use_sc_layout: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Vendor
+     * Vendor field. Refers to core_company (Company).
+     * @summary Vendor.
      * @type {$$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>}
      * @memberof sc_cat_itemFields
-     * @description Refers to core_company (Company)
      */
     vendor: $$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>;
 
@@ -8389,13 +9391,14 @@ declare interface sc_cat_itemFields extends sys_metadataFields {
     visible_standalone: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Workflow
+     * Workflow field. Refers to wf_workflow (Workflow).
+     * @summary Workflow.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof sc_cat_itemFields
-     * @description Refers to wf_workflow (Workflow)
      */
     workflow: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 }
+
 declare type sc_cat_itemGlideRecord = sys_metadataGlideRecord & sc_cat_itemFields;
 
 /**
@@ -8426,18 +9429,18 @@ declare interface sc_requestFields extends taskFields {
     price: $$rhino.Nilable<$$property.Currency>;
 
     /**
-     * Requested for date
+     * Requested for date field. Internal type is "glide_date".
+     * @summary Requested for date.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof sc_requestFields
-     * @description Internal type is "glide_date"
      */
     requested_date: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Requested for
+     * Requested for field. Refers to sys_user (User).
+     * @summary Requested for.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof sc_requestFields
-     * @description Refers to sys_user (User)
      */
     requested_for: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -8476,6 +9479,7 @@ declare interface sc_requestFields extends taskFields {
      */
     stage: $$rhino.Nilable<GlideElementWorkflow>;
 }
+
 declare type sc_requestGlideRecord = taskGlideRecord & sc_requestFields;
 
 /**
@@ -8499,26 +9503,26 @@ declare interface sc_req_itemFields extends taskFields {
     billable: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Item
+     * Item field. Refers to sc_cat_item (Catalog Item).
+     * @summary Item.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sc_cat_itemFields, sc_cat_itemGlideRecord>>}
      * @memberof sc_req_itemFields
-     * @description Refers to sc_cat_item (Catalog Item)
      */
     cat_item: $$rhino.Nilable<$$property.generic.Reference<sc_cat_itemFields, sc_cat_itemGlideRecord>>;
 
     /**
-     * Configuration item
+     * Configuration item field. Refers to cmdb_ci (Configuration Item).
+     * @summary Configuration item.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmdb_ciFields, cmdb_ciGlideRecord>>}
      * @memberof sc_req_itemFields
-     * @description Refers to cmdb_ci (Configuration Item)
      */
     configuration_item: $$rhino.Nilable<$$property.generic.Reference<cmdb_ciFields, cmdb_ciGlideRecord>>;
 
     /**
-     * Context
+     * Context field. Refers to wf_context (Workflow context).
+     * @summary Context.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof sc_req_itemFields
-     * @description Refers to wf_context (Workflow context)
      */
     context: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -8530,10 +9534,10 @@ declare interface sc_req_itemFields extends taskFields {
     estimated_delivery: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Order Guide
+     * Order Guide field. Refers to sc_cat_item_guide (Order guide).
+     * @summary Order Guide.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof sc_req_itemFields
-     * @description Refers to sc_cat_item_guide (Order guide)
      */
     order_guide: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -8566,10 +9570,10 @@ declare interface sc_req_itemFields extends taskFields {
     received: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Recurring Price Frequency
+     * Recurring Price Frequency field. Internal type is "choice".
+     * @summary Recurring Price Frequency.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof sc_req_itemFields
-     * @description Internal type is "choice"
      */
     recurring_frequency: $$rhino.Nilable<IGlideElement>;
 
@@ -8581,18 +9585,18 @@ declare interface sc_req_itemFields extends taskFields {
     recurring_price: $$rhino.Nilable<$$property.Price>;
 
     /**
-     * Request
+     * Request field. Refers to sc_request (Request).
+     * @summary Request.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sc_requestFields, sc_requestGlideRecord>>}
      * @memberof sc_req_itemFields
-     * @description Refers to sc_request (Request)
      */
     request: $$rhino.Nilable<$$property.generic.Reference<sc_requestFields, sc_requestGlideRecord>>;
 
     /**
-     * Catalog
+     * Catalog field. Refers to sc_catalog (Catalog).
+     * @summary Catalog.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sc_catalogFields, sc_catalogGlideRecord>>}
      * @memberof sc_req_itemFields
-     * @description Refers to sc_catalog (Catalog)
      */
     sc_catalog: $$rhino.Nilable<$$property.generic.Reference<sc_catalogFields, sc_catalogGlideRecord>>;
 
@@ -8610,6 +9614,7 @@ declare interface sc_req_itemFields extends taskFields {
      */
     stage: $$rhino.Nilable<GlideElementWorkflow>;
 }
+
 declare type sc_req_itemGlideRecord = taskGlideRecord & sc_req_itemFields;
 
 /**
@@ -8626,29 +9631,30 @@ declare interface sc_taskFields extends taskFields {
     calendar_stc: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Request
+     * Request field. Refers to sc_request (Request).
+     * @summary Request.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sc_requestFields, sc_requestGlideRecord>>}
      * @memberof sc_taskFields
-     * @description Refers to sc_request (Request)
      */
     request: $$rhino.Nilable<$$property.generic.Reference<sc_requestFields, sc_requestGlideRecord>>;
 
     /**
-     * Request item
+     * Request item field. Refers to sc_req_item (Requested Item).
+     * @summary Request item.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sc_req_itemFields, sc_req_itemGlideRecord>>}
      * @memberof sc_taskFields
-     * @description Refers to sc_req_item (Requested Item)
      */
     request_item: $$rhino.Nilable<$$property.generic.Reference<sc_req_itemFields, sc_req_itemGlideRecord>>;
 
     /**
-     * Catalog
+     * Catalog field. Refers to sc_catalog (Catalog).
+     * @summary Catalog.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sc_catalogFields, sc_catalogGlideRecord>>}
      * @memberof sc_taskFields
-     * @description Refers to sc_catalog (Catalog)
      */
     sc_catalog: $$rhino.Nilable<$$property.generic.Reference<sc_catalogFields, sc_catalogGlideRecord>>;
 }
+
 declare type sc_taskGlideRecord = taskGlideRecord & sc_taskFields;
 
 /**
@@ -8658,18 +9664,18 @@ declare type sc_taskGlideRecord = taskGlideRecord & sc_taskFields;
  */
 declare interface service_offeringFields extends cmdb_ci_serviceFields {
     /**
-     * Billing
+     * Billing field. "monthly"=""; "weekly"=""; "yearly"="".
+     * @summary Billing.
      * @type {$$rhino.Nilable<$$property.generic.Element<("monthly" | "weekly" | "yearly")>>}
      * @memberof service_offeringFields
-     * @description "monthly"=""; "weekly"=""; "yearly"=""
      */
     billing: $$rhino.Nilable<$$property.generic.Element<("monthly" | "weekly" | "yearly")>>;
 
     /**
-     * Contract
+     * Contract field. Refers to ast_contract (Contract).
+     * @summary Contract.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof service_offeringFields
-     * @description Refers to ast_contract (Contract)
      */
     contract: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -8688,13 +9694,14 @@ declare interface service_offeringFields extends cmdb_ci_serviceFields {
     price: $$rhino.Nilable<$$property.Price>;
 
     /**
-     * Technical contact
+     * Technical contact field. Refers to sys_user (User).
+     * @summary Technical contact.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof service_offeringFields
-     * @description Refers to sys_user (User)
      */
     technical_contact: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 }
+
 declare type service_offeringGlideRecord = cmdb_ci_serviceGlideRecord & service_offeringFields;
 
 /**
@@ -8725,10 +9732,10 @@ declare interface cmdb_model_categoryFields extends IGlideTableProperties {
     allow_pre_allocation: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Asset class
+     * Asset class field. Internal type is "table_name".
+     * @summary Asset class.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof cmdb_model_categoryFields
-     * @description Internal type is "table_name"
      */
     asset_class: $$rhino.Nilable<$$property.Element>;
 
@@ -8740,10 +9747,10 @@ declare interface cmdb_model_categoryFields extends IGlideTableProperties {
     bundle: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * CI class
+     * CI class field. Internal type is "table_name".
+     * @summary CI class.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof cmdb_model_categoryFields
-     * @description Internal type is "table_name"
      */
     cmdb_ci_class: $$rhino.Nilable<$$property.Element>;
 
@@ -8761,6 +9768,7 @@ declare interface cmdb_model_categoryFields extends IGlideTableProperties {
      */
     name: $$rhino.Nilable<$$property.Element>;
 }
+
 declare type cmdb_model_categoryGlideRecord = GlideRecord & cmdb_model_categoryFields;
 
 /**
@@ -8770,10 +9778,10 @@ declare type cmdb_model_categoryGlideRecord = GlideRecord & cmdb_model_categoryF
  */
 declare interface cmdb_m2m_model_componentFields extends IGlideTableProperties {
     /**
-     * Component
+     * Component field. Refers to cmdb_model (Product Model).
+     * @summary Component.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmdb_modelFields, cmdb_modelGlideRecord>>}
      * @memberof cmdb_m2m_model_componentFields
-     * @description Refers to cmdb_model (Product Model)
      */
     child: $$rhino.Nilable<$$property.generic.Reference<cmdb_modelFields, cmdb_modelGlideRecord>>;
 
@@ -8785,21 +9793,22 @@ declare interface cmdb_m2m_model_componentFields extends IGlideTableProperties {
     master: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Model category of component
+     * Model category of component field. Refers to cmdb_model_category (Model Category).
+     * @summary Model category of component.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmdb_model_categoryFields, cmdb_model_categoryGlideRecord>>}
      * @memberof cmdb_m2m_model_componentFields
-     * @description Refers to cmdb_model_category (Model Category)
      */
     model_category: $$rhino.Nilable<$$property.generic.Reference<cmdb_model_categoryFields, cmdb_model_categoryGlideRecord>>;
 
     /**
-     * Bundle
+     * Bundle field. Refers to cmdb_model (Product Model).
+     * @summary Bundle.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmdb_modelFields, cmdb_modelGlideRecord>>}
      * @memberof cmdb_m2m_model_componentFields
-     * @description Refers to cmdb_model (Product Model)
      */
     parent: $$rhino.Nilable<$$property.generic.Reference<cmdb_modelFields, cmdb_modelGlideRecord>>;
 }
+
 declare type cmdb_m2m_model_componentGlideRecord = GlideRecord & cmdb_m2m_model_componentFields;
 
 /**
@@ -8816,10 +9825,9 @@ declare interface cmdb_modelFields extends IGlideTableProperties {
     acquisition_method: $$rhino.Nilable<$$property.generic.Element<("Both" | "Buy" | "Lease")>>;
 
     /**
-     * Asset tracking strategy
+     * Asset tracking strategy field.
      * @type {$$rhino.Nilable<$$property.generic.Element<("leave_to_category" | "track_as_consumable" | "do_not_track")>>}
      * @memberof cmdb_modelFields
-     * @description "leave_to_category"=""; "track_as_consumable"=""; "do_not_track"=""
      */
     asset_tracking_strategy: $$rhino.Nilable<$$property.generic.Element<("leave_to_category" | "track_as_consumable" | "do_not_track")>>;
 
@@ -8852,10 +9860,10 @@ declare interface cmdb_modelFields extends IGlideTableProperties {
     cmdb_ci_class: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Model categories
+     * Model categories field. Internal type is "glide_list".
+     * @summary Model categories.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof cmdb_modelFields
-     * @description Internal type is "glide_list"
      */
     cmdb_model_category: $$rhino.Nilable<IGlideElement>;
 
@@ -8874,10 +9882,10 @@ declare interface cmdb_modelFields extends IGlideTableProperties {
     cost: $$rhino.Nilable<$$property.Price>;
 
     /**
-     * Depreciation
+     * Depreciation field. Refers to cmdb_depreciation (Depreciation).
+     * @summary Depreciation.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof cmdb_modelFields
-     * @description Refers to cmdb_depreciation (Depreciation)
      */
     depreciation: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -8896,10 +9904,10 @@ declare interface cmdb_modelFields extends IGlideTableProperties {
     display_name: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Expenditure type
+     * Expenditure type field. "capex"=""; "opex"="".
+     * @summary Expenditure type.
      * @type {$$rhino.Nilable<$$property.generic.Element<("capex" | "opex")>>}
      * @memberof cmdb_modelFields
-     * @description "capex"=""; "opex"=""
      */
     expenditure_type: $$rhino.Nilable<$$property.generic.Element<("capex" | "opex")>>;
 
@@ -8918,18 +9926,18 @@ declare interface cmdb_modelFields extends IGlideTableProperties {
     full_name: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Main component
+     * Main component field. Refers to cmdb_m2m_model_component (Model Component).
+     * @summary Main component.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmdb_m2m_model_componentFields, cmdb_m2m_model_componentGlideRecord>>}
      * @memberof cmdb_modelFields
-     * @description Refers to cmdb_m2m_model_component (Model Component)
      */
     main_component: $$rhino.Nilable<$$property.generic.Reference<cmdb_m2m_model_componentFields, cmdb_m2m_model_componentGlideRecord>>;
 
     /**
-     * Manufacturer
+     * Manufacturer field. Refers to core_company (Company).
+     * @summary Manufacturer.
      * @type {$$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>}
      * @memberof cmdb_modelFields
-     * @description Refers to core_company (Company)
      */
     manufacturer: $$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>;
 
@@ -8948,10 +9956,10 @@ declare interface cmdb_modelFields extends IGlideTableProperties {
     name: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Owner
+     * Owner field. Refers to sys_user (User).
+     * @summary Owner.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof cmdb_modelFields
-     * @description Refers to sys_user (User)
      */
     owner: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -8970,10 +9978,10 @@ declare interface cmdb_modelFields extends IGlideTableProperties {
     power_consumption: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Product Catalog Item
+     * Product Catalog Item field. Refers to sc_cat_item (Catalog Item).
+     * @summary Product Catalog Item.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sc_cat_itemFields, sc_cat_itemGlideRecord>>}
      * @memberof cmdb_modelFields
-     * @description Refers to sc_cat_item (Catalog Item)
      */
     product_catalog_item: $$rhino.Nilable<$$property.generic.Reference<sc_cat_itemFields, sc_cat_itemGlideRecord>>;
 
@@ -9033,6 +10041,7 @@ declare interface cmdb_modelFields extends IGlideTableProperties {
      */
     weight: $$rhino.Nilable<$$property.Numeric>;
 }
+
 declare type cmdb_modelGlideRecord = GlideRecord & cmdb_modelFields;
 
 /**
@@ -9045,7 +10054,6 @@ declare interface alm_assetFields extends IGlideTableProperties {
      * Acquisition method
      * @type {$$rhino.Nilable<$$property.generic.Element<("purchase" | "lease" | "rental" | "loan")>>}
      * @memberof alm_assetFields
-     * @description "purchase"=""; "lease"=""; "rental"=""; "loan"=""
      */
     acquisition_method: $$rhino.Nilable<$$property.generic.Element<("purchase" | "lease" | "rental" | "loan")>>;
 
@@ -9071,18 +10079,18 @@ declare interface alm_assetFields extends IGlideTableProperties {
     assigned: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Assigned to
+     * Assigned to field. Refers to sys_user (User).
+     * @summary Assigned to.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to sys_user (User)
      */
     assigned_to: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
     /**
-     * Beneficiary
+     * Beneficiary field. Refers to core_company (Company).
+     * @summary Beneficiary.
      * @type {$$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to core_company (Company)
      */
     beneficiary: $$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>;
 
@@ -9101,10 +10109,10 @@ declare interface alm_assetFields extends IGlideTableProperties {
     checked_out: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Configuration Item
+     * Configuration Item field. Refers to cmdb_ci (Configuration Item).
+     * @summary Configuration Item.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmdb_ciFields, cmdb_ciGlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to cmdb_ci (Configuration Item)
      */
     ci: $$rhino.Nilable<$$property.generic.Reference<cmdb_ciFields, cmdb_ciGlideRecord>>;
 
@@ -9116,10 +10124,10 @@ declare interface alm_assetFields extends IGlideTableProperties {
     comments: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Company
+     * Company field. Refers to core_company (Company).
+     * @summary Company.
      * @type {$$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to core_company (Company)
      */
     company: $$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>;
 
@@ -9131,10 +10139,10 @@ declare interface alm_assetFields extends IGlideTableProperties {
     cost: $$rhino.Nilable<$$property.Currency>;
 
     /**
-     * Cost center
+     * Cost center field. Refers to cmn_cost_center (Cost Center).
+     * @summary Cost center.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to cmn_cost_center (Cost Center)
      */
     cost_center: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -9146,10 +10154,10 @@ declare interface alm_assetFields extends IGlideTableProperties {
     delivery_date: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Department
+     * Department field. Refers to cmn_department (Department).
+     * @summary Department.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmn_departmentFields, cmn_departmentGlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to cmn_department (Department)
      */
     department: $$rhino.Nilable<$$property.generic.Reference<cmn_departmentFields, cmn_departmentGlideRecord>>;
 
@@ -9161,10 +10169,10 @@ declare interface alm_assetFields extends IGlideTableProperties {
     depreciated_amount: $$rhino.Nilable<$$property.Currency>;
 
     /**
-     * Depreciation
+     * Depreciation field. Refers to cmdb_depreciation (Depreciation).
+     * @summary Depreciation.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to cmdb_depreciation (Depreciation)
      */
     depreciation: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -9204,10 +10212,9 @@ declare interface alm_assetFields extends IGlideTableProperties {
     due_in: $$rhino.Nilable<$$property.generic.Element<("1 Day" | "1 Hour" | "1 Week")>>;
 
     /**
-     * Expenditure type
+     * Expenditure type field.
      * @type {$$rhino.Nilable<$$property.generic.Element<("capex" | "opex")>>}
      * @memberof alm_assetFields
-     * @description "capex"=""; "opex"=""
      */
     expenditure_type: $$rhino.Nilable<$$property.generic.Element<("capex" | "opex")>>;
 
@@ -9229,7 +10236,6 @@ declare interface alm_assetFields extends IGlideTableProperties {
      * State
      * @type {$$rhino.Nilable<$$property.generic.Element<("2" | "6" | "9" | "1" | "10" | "3" | "7" | "8")>>}
      * @memberof alm_assetFields
-     * @description "2"=""; "6"=""; "9"=""; "1"=""; "10"=""; "3"=""; "7"=""; "8"=""
      */
     install_status: $$rhino.Nilable<$$property.generic.Element<("2" | "6" | "9" | "1" | "10" | "3" | "7" | "8")>>;
 
@@ -9255,34 +10261,34 @@ declare interface alm_assetFields extends IGlideTableProperties {
     lease_id: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Location
+     * Location field. Refers to cmn_location (Location).
+     * @summary Location.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmn_locationFields, cmn_locationGlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to cmn_location (Location)
      */
     location: $$rhino.Nilable<$$property.generic.Reference<cmn_locationFields, cmn_locationGlideRecord>>;
 
     /**
-     * Managed by
+     * Managed by field. Refers to sys_user (User).
+     * @summary Managed by.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to sys_user (User)
      */
     managed_by: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
     /**
-     * Model
+     * Model field. Refers to cmdb_model (Product Model).
+     * @summary Model.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmdb_modelFields, cmdb_modelGlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to cmdb_model (Product Model)
      */
     model: $$rhino.Nilable<$$property.generic.Reference<cmdb_modelFields, cmdb_modelGlideRecord>>;
 
     /**
-     * Model category
+     * Model category field. Refers to cmdb_model_category (Model Category).
+     * @summary Model category.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmdb_model_categoryFields, cmdb_model_categoryGlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to cmdb_model_category (Model Category)
      */
     model_category: $$rhino.Nilable<$$property.generic.Reference<cmdb_model_categoryFields, cmdb_model_categoryGlideRecord>>;
 
@@ -9308,18 +10314,18 @@ declare interface alm_assetFields extends IGlideTableProperties {
     order_date: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Owned by
+     * Owned by field. Refers to sys_user (User).
+     * @summary Owned by.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to sys_user (User)
      */
     owned_by: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
     /**
-     * Parent
+     * Parent field. Refers to alm_asset (Asset).
+     * @summary Parent.
      * @type {$$rhino.Nilable<$$property.generic.Reference<alm_assetFields, alm_assetGlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to alm_asset (Asset)
      */
     parent: $$rhino.Nilable<$$property.generic.Reference<alm_assetFields, alm_assetGlideRecord>>;
 
@@ -9338,18 +10344,18 @@ declare interface alm_assetFields extends IGlideTableProperties {
     pre_allocated: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Purchased
+     * Purchased field. Internal type is "glide_date".
+     * @summary Purchased.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof alm_assetFields
-     * @description Internal type is "glide_date"
      */
     purchase_date: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Purchase order line
+     * Purchase order line field. Refers to proc_po_item (Purchase order line items).
+     * @summary Purchase order line.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to proc_po_item (Purchase order line items)
      */
     purchase_line: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -9361,18 +10367,18 @@ declare interface alm_assetFields extends IGlideTableProperties {
     quantity: $$rhino.Nilable<$$property.Numeric>;
 
     /**
-     * Receiving line
+     * Receiving line field. Refers to proc_rec_slip_item (Receiving Slip Line).
+     * @summary Receiving line.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to proc_rec_slip_item (Receiving Slip Line)
      */
     receiving_line: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
     /**
-     * Request line
+     * Request line field. Refers to sc_req_item (Requested Item).
+     * @summary Request line.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sc_req_itemFields, sc_req_itemGlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to sc_req_item (Requested Item)
      */
     request_line: $$rhino.Nilable<$$property.generic.Reference<sc_req_itemFields, sc_req_itemGlideRecord>>;
 
@@ -9384,10 +10390,10 @@ declare interface alm_assetFields extends IGlideTableProperties {
     resale_price: $$rhino.Nilable<$$property.Price>;
 
     /**
-     * Reserved for
+     * Reserved for field. Refers to sys_user (User).
+     * @summary Reserved for.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to sys_user (User)
      */
     reserved_for: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -9399,26 +10405,26 @@ declare interface alm_assetFields extends IGlideTableProperties {
     residual: $$rhino.Nilable<$$property.Currency>;
 
     /**
-     * Residual date
+     * Residual date field. Internal type is "glide_date".
+     * @summary Residual date.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof alm_assetFields
-     * @description Internal type is "glide_date"
      */
     residual_date: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Retired date
+     * Retired date field. Internal type is "glide_date".
+     * @summary Retired date.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof alm_assetFields
-     * @description Internal type is "glide_date"
      */
     retired: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Scheduled retirement
+     * Scheduled retirement field. Internal type is "glide_date".
+     * @summary Scheduled retirement.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof alm_assetFields
-     * @description Internal type is "glide_date"
      */
     retirement_date: $$rhino.Nilable<$$property.GlideObject>;
 
@@ -9444,34 +10450,35 @@ declare interface alm_assetFields extends IGlideTableProperties {
     skip_sync: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Stockroom
+     * Stockroom field. Refers to alm_stockroom (Stockroom).
+     * @summary Stockroom.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to alm_stockroom (Stockroom)
      */
     stockroom: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
     /**
      * Substate
-     * @type {$$rhino.Nilable<$$property.generic.Element<("available" | "disposed" | "lost" | "reserved" | "sold" | "stolen" | "defective" | "donated" | "pending_repair" | "vendor_credit" | "pending_install" | "pending_disposal" | "pending_transfer" | "pre_allocated")>>}
+     * @type {$$rhino.Nilable<$$property.generic.Element<("available" | "disposed" | "lost" | "reserved" | "sold" | "stolen" | "defective" | "donated" | "pending_repair" | "vendor_credit" | "pending_install" |
+     *      "pending_disposal" | "pending_transfer" | "pre_allocated")>>}
      * @memberof alm_assetFields
-     * @description "available"=""; "disposed"=""; "lost"=""; "reserved"=""; "sold"=""; "stolen"=""; "defective"=""; "donated"=""; "pending_repair"=""; "vendor_credit"=""; "pending_install"=""; "pending_disposal"=""; "pending_transfer"=""; "pre_allocated"=""
      */
-    substatus: $$rhino.Nilable<$$property.generic.Element<("available" | "disposed" | "lost" | "reserved" | "sold" | "stolen" | "defective" | "donated" | "pending_repair" | "vendor_credit" | "pending_install" | "pending_disposal" | "pending_transfer" | "pre_allocated")>>;
+    substatus: $$rhino.Nilable<$$property.generic.Element<("available" | "disposed" | "lost" | "reserved" | "sold" | "stolen" | "defective" | "donated" | "pending_repair" | "vendor_credit" | "pending_install" |
+        "pending_disposal" | "pending_transfer" | "pre_allocated")>>;
 
     /**
-     * Supported by
+     * Supported by field. Refers to sys_user (User).
+     * @summary Supported by.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to sys_user (User)
      */
     supported_by: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
     /**
-     * Support group
+     * Support group field. Refers to sys_user_group (Group).
+     * @summary Support group.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_user_groupFields, sys_user_groupGlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to sys_user_group (Group)
      */
     support_group: $$rhino.Nilable<$$property.generic.Reference<sys_user_groupFields, sys_user_groupGlideRecord>>;
 
@@ -9490,37 +10497,38 @@ declare interface alm_assetFields extends IGlideTableProperties {
     sys_domain: $$rhino.Nilable<$$property.DomainId>;
 
     /**
-     * Domain Path
+     * Domain Path field. Internal type is "domain_path".
+     * @summary Domain Path.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof alm_assetFields
-     * @description Internal type is "domain_path"
      */
     sys_domain_path: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Vendor
+     * Vendor field. Refers to core_company (Company).
+     * @summary Vendor.
      * @type {$$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>}
      * @memberof alm_assetFields
-     * @description Refers to core_company (Company)
      */
     vendor: $$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>;
 
     /**
-     * Warranty expiration
+     * Warranty expiration field. Internal type is "glide_date".
+     * @summary Warranty expiration.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof alm_assetFields
-     * @description Internal type is "glide_date"
      */
     warranty_expiration: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Work notes
+     * Work notes field. Internal type is "journal_input".
+     * @summary Work notes.
      * @type {$$rhino.Nilable<IGlideElement>}
      * @memberof alm_assetFields
-     * @description Internal type is "journal_input"
      */
     work_notes: $$rhino.Nilable<IGlideElement>;
 }
+
 declare type alm_assetGlideRecord = GlideRecord & alm_assetFields;
 
 /**
@@ -9530,10 +10538,10 @@ declare type alm_assetGlideRecord = GlideRecord & alm_assetFields;
  */
 declare interface cmdbFields extends IExtendedGlideTableProperties {
     /**
-     * Asset
+     * Asset field. Refers to alm_asset (Asset).
+     * @summary Asset.
      * @type {$$rhino.Nilable<$$property.generic.Reference<alm_assetFields, alm_assetGlideRecord>>}
      * @memberof cmdbFields
-     * @description Refers to alm_asset (Asset)
      */
     asset: $$rhino.Nilable<$$property.generic.Reference<alm_assetFields, alm_assetGlideRecord>>;
 
@@ -9552,18 +10560,18 @@ declare interface cmdbFields extends IExtendedGlideTableProperties {
     assigned: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Assigned to
+     * Assigned to field. Refers to sys_user (User).
+     * @summary Assigned to.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof cmdbFields
-     * @description Refers to sys_user (User)
      */
     assigned_to: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
     /**
-     * Assignment group
+     * Assignment group field. Refers to sys_user_group (Group).
+     * @summary Assignment group.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_user_groupFields, sys_user_groupGlideRecord>>}
      * @memberof cmdbFields
-     * @description Refers to sys_user_group (Group)
      */
     assignment_group: $$rhino.Nilable<$$property.generic.Reference<sys_user_groupFields, sys_user_groupGlideRecord>>;
 
@@ -9582,18 +10590,18 @@ declare interface cmdbFields extends IExtendedGlideTableProperties {
     checked_out: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Company
+     * Company field. Refers to core_company (Company).
+     * @summary Company.
      * @type {$$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>}
      * @memberof cmdbFields
-     * @description Refers to core_company (Company)
      */
     company: $$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>;
 
     /**
-     * Cost
+     * Cost field. Internal type is "float".
+     * @summary Cost.
      * @type {$$rhino.Nilable<$$property.Numeric>}
      * @memberof cmdbFields
-     * @description Internal type is "float"
      */
     cost: $$rhino.Nilable<$$property.Numeric>;
 
@@ -9605,10 +10613,10 @@ declare interface cmdbFields extends IExtendedGlideTableProperties {
     cost_cc: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Cost center
+     * Cost center field. Refers to cmn_cost_center (Cost Center).
+     * @summary Cost center.
      * @type {$$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>}
      * @memberof cmdbFields
-     * @description Refers to cmn_cost_center (Cost Center)
      */
     cost_center: $$rhino.Nilable<$$property.generic.Reference<IGlideTableProperties, GlideRecord>>;
 
@@ -9620,10 +10628,10 @@ declare interface cmdbFields extends IExtendedGlideTableProperties {
     delivery_date: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Department
+     * Department field. Refers to cmn_department (Department).
+     * @summary Department.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmn_departmentFields, cmn_departmentGlideRecord>>}
      * @memberof cmdbFields
-     * @description Refers to cmn_department (Department)
      */
     department: $$rhino.Nilable<$$property.generic.Reference<cmn_departmentFields, cmn_departmentGlideRecord>>;
 
@@ -9656,10 +10664,9 @@ declare interface cmdbFields extends IExtendedGlideTableProperties {
     install_date: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Status
+     * Status field.
      * @type {$$rhino.Nilable<$$property.generic.Element<("100" | "3" | "6" | "1" | "2" | "4" | "5" | "7" | "8")>>}
      * @memberof cmdbFields
-     * @description "100"=""; "3"=""; "6"=""; "1"=""; "2"=""; "4"=""; "5"=""; "7"=""; "8"=""
      */
     install_status: $$rhino.Nilable<$$property.generic.Element<("100" | "3" | "6" | "1" | "2" | "4" | "5" | "7" | "8")>>;
 
@@ -9685,34 +10692,34 @@ declare interface cmdbFields extends IExtendedGlideTableProperties {
     lease_id: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Location
+     * Location field. Refers to cmn_location (Location).
+     * @summary Location.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmn_locationFields, cmn_locationGlideRecord>>}
      * @memberof cmdbFields
-     * @description Refers to cmn_location (Location)
      */
     location: $$rhino.Nilable<$$property.generic.Reference<cmn_locationFields, cmn_locationGlideRecord>>;
 
     /**
-     * Managed by
+     * Managed by field. Refers to sys_user (User).
+     * @summary Managed by.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof cmdbFields
-     * @description Refers to sys_user (User)
      */
     managed_by: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
     /**
-     * Manufacturer
+     * Manufacturer field. Refers to core_company (Company).
+     * @summary Manufacturer.
      * @type {$$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>}
      * @memberof cmdbFields
-     * @description Refers to core_company (Company)
      */
     manufacturer: $$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>;
 
     /**
-     * Model ID
+     * Model ID field. Refers to cmdb_model (Product Model).
+     * @summary Model ID.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmdb_modelFields, cmdb_modelGlideRecord>>}
      * @memberof cmdbFields
-     * @description Refers to cmdb_model (Product Model)
      */
     model_id: $$rhino.Nilable<$$property.generic.Reference<cmdb_modelFields, cmdb_modelGlideRecord>>;
 
@@ -9731,10 +10738,10 @@ declare interface cmdbFields extends IExtendedGlideTableProperties {
     order_date: $$rhino.Nilable<$$property.GlideObject>;
 
     /**
-     * Owned by
+     * Owned by field. Refers to sys_user (User).
+     * @summary Owned by.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof cmdbFields
-     * @description Refers to sys_user (User)
      */
     owned_by: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
@@ -9746,10 +10753,10 @@ declare interface cmdbFields extends IExtendedGlideTableProperties {
     po_number: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Purchased
+     * Purchased field. Internal type is "glide_date".
+     * @summary Purchased.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof cmdbFields
-     * @description Internal type is "glide_date"
      */
     purchase_date: $$rhino.Nilable<$$property.GlideObject>;
 
@@ -9768,18 +10775,18 @@ declare interface cmdbFields extends IExtendedGlideTableProperties {
     skip_sync: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Supported by
+     * Supported by field. Refers to sys_user (User).
+     * @summary Supported by.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>}
      * @memberof cmdbFields
-     * @description Refers to sys_user (User)
      */
     supported_by: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
 
     /**
-     * Support group
+     * Support group field. Refers to sys_user_group (Group).
+     * @summary Support group.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_user_groupFields, sys_user_groupGlideRecord>>}
      * @memberof cmdbFields
-     * @description Refers to sys_user_group (Group)
      */
     support_group: $$rhino.Nilable<$$property.generic.Reference<sys_user_groupFields, sys_user_groupGlideRecord>>;
 
@@ -9791,10 +10798,10 @@ declare interface cmdbFields extends IExtendedGlideTableProperties {
     sys_class_name: $$rhino.Nilable<$$property.SysClassName>;
 
     /**
-     * Sys class path
+     * Sys class path field. Internal type is "sys_class_path".
+     * @summary Sys class path.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof cmdbFields
-     * @description Internal type is "sys_class_path"
      */
     sys_class_path: $$rhino.Nilable<$$property.Element>;
 
@@ -9806,10 +10813,10 @@ declare interface cmdbFields extends IExtendedGlideTableProperties {
     sys_domain: $$rhino.Nilable<$$property.DomainId>;
 
     /**
-     * Domain Path
+     * Domain Path field. Internal type is "domain_path".
+     * @summary Domain Path.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof cmdbFields
-     * @description Internal type is "domain_path"
      */
     sys_domain_path: $$rhino.Nilable<$$property.Element>;
 
@@ -9821,21 +10828,22 @@ declare interface cmdbFields extends IExtendedGlideTableProperties {
     unverified: $$rhino.Nilable<$$property.Boolean>;
 
     /**
-     * Vendor
+     * Vendor field. Refers to core_company (Company).
+     * @summary Vendor.
      * @type {$$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>}
      * @memberof cmdbFields
-     * @description Refers to core_company (Company)
      */
     vendor: $$rhino.Nilable<$$property.generic.Reference<core_companyFields, core_companyGlideRecord>>;
 
     /**
-     * Warranty expiration
+     * Warranty expiration field. Internal type is "glide_date".
+     * @summary Warranty expiration.
      * @type {$$rhino.Nilable<$$property.GlideObject>}
      * @memberof cmdbFields
-     * @description Internal type is "glide_date"
      */
     warranty_expiration: $$rhino.Nilable<$$property.GlideObject>;
 }
+
 declare type cmdbGlideRecord = GlideRecord & cmdbFields;
 
 /**
@@ -9866,10 +10874,10 @@ declare interface cmdb_ciFields extends cmdbFields {
     category: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Approval group
+     * Approval group field. Refers to sys_user_group (Group).
+     * @summary Approval group.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_user_groupFields, sys_user_groupGlideRecord>>}
      * @memberof cmdb_ciFields
-     * @description Refers to sys_user_group (Group)
      */
     change_control: $$rhino.Nilable<$$property.generic.Reference<sys_user_groupFields, sys_user_groupGlideRecord>>;
 
@@ -9944,10 +10952,10 @@ declare interface cmdb_ciFields extends cmdbFields {
     mac_address: $$rhino.Nilable<$$property.Element>;
 
     /**
-     * Maintenance schedule
+     * Maintenance schedule field. Refers to cmn_schedule (Schedule).
+     * @summary Maintenance schedule.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmn_scheduleFields, cmn_scheduleGlideRecord>>}
      * @memberof cmdb_ciFields
-     * @description Refers to cmn_schedule (Schedule)
      */
     maintenance_schedule: $$rhino.Nilable<$$property.generic.Reference<cmn_scheduleFields, cmn_scheduleGlideRecord>>;
 
@@ -9969,15 +10977,14 @@ declare interface cmdb_ciFields extends cmdbFields {
      * Operational status
      * @type {$$rhino.Nilable<$$property.generic.Element<("1" | "2" | "3" | "4" | "5" | "6")>>}
      * @memberof cmdb_ciFields
-     * @description "1"=""; "2"=""; "3"=""; "4"=""; "5"=""; "6"=""
      */
     operational_status: $$rhino.Nilable<$$property.generic.Element<("1" | "2" | "3" | "4" | "5" | "6")>>;
 
     /**
-     * Schedule
+     * Schedule field. Refers to cmn_schedule (Schedule).
+     * @summary Schedule.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmn_scheduleFields, cmn_scheduleGlideRecord>>}
      * @memberof cmdb_ciFields
-     * @description Refers to cmn_schedule (Schedule)
      */
     schedule: $$rhino.Nilable<$$property.generic.Reference<cmn_scheduleFields, cmn_scheduleGlideRecord>>;
 
@@ -10002,6 +11009,7 @@ declare interface cmdb_ciFields extends cmdbFields {
      */
     subcategory: $$rhino.Nilable<$$property.Element>;
 }
+
 declare type cmdb_ciGlideRecord = cmdbGlideRecord & cmdb_ciFields;
 
 /**
@@ -10018,10 +11026,10 @@ declare interface cmdb_ci_serviceFields extends cmdb_ciFields {
     busines_criticality: $$rhino.Nilable<$$property.generic.Element<("1 - most critical" | "2 - somewhat critical" | "3 - less critical" | "4 - not critical")>>;
 
     /**
-     * Parent
+     * Parent field. Refers to cmdb_ci_service (Business Service).
+     * @summary Parent.
      * @type {$$rhino.Nilable<$$property.generic.Reference<cmdb_ci_serviceFields, cmdb_ci_serviceGlideRecord>>}
      * @memberof cmdb_ci_serviceFields
-     * @description Refers to cmdb_ci_service (Business Service)
      */
     parent: $$rhino.Nilable<$$property.generic.Reference<cmdb_ci_serviceFields, cmdb_ci_serviceGlideRecord>>;
 
@@ -10029,7 +11037,6 @@ declare interface cmdb_ci_serviceFields extends cmdb_ciFields {
      * Portfolio status
      * @type {$$rhino.Nilable<$$property.generic.Element<("pipeline" | "catalog" | "retired")>>}
      * @memberof cmdb_ci_serviceFields
-     * @description "pipeline"=""; "catalog"=""; "retired"=""
      */
     portfolio_status: $$rhino.Nilable<$$property.generic.Element<("pipeline" | "catalog" | "retired")>>;
 
@@ -10037,7 +11044,6 @@ declare interface cmdb_ci_serviceFields extends cmdb_ciFields {
      * Price model
      * @type {$$rhino.Nilable<$$property.generic.Element<("fixed" | "per_unit")>>}
      * @memberof cmdb_ci_serviceFields
-     * @description "fixed"=""; "per_unit"=""
      */
     price_model: $$rhino.Nilable<$$property.generic.Element<("fixed" | "per_unit")>>;
 
@@ -10066,23 +11072,23 @@ declare interface cmdb_ci_serviceFields extends cmdb_ciFields {
      * Service status
      * @type {$$rhino.Nilable<$$property.generic.Element<("design" | "requirements" | "definition" | "development" | "analysis" | "buildtestrelease" | "approved" | "operational" | "chartered" | "retiring")>>}
      * @memberof cmdb_ci_serviceFields
-     * @description "design"=""; "requirements"=""; "definition"=""; "development"=""; "analysis"=""; "buildtestrelease"=""; "approved"=""; "operational"=""; "chartered"=""; "retiring"=""
      */
-    service_status: $$rhino.Nilable<$$property.generic.Element<("design" | "requirements" | "definition" | "development" | "analysis" | "buildtestrelease" | "approved" | "operational" | "chartered" | "retiring")>>;
+    service_status: $$rhino.Nilable<$$property.generic.Element<("design" | "requirements" | "definition" | "development" | "analysis" | "buildtestrelease" | "approved" | "operational" | "chartered" |
+        "retiring")>>;
 
     /**
-     * SLA
+     * SLA field. Refers to sla (Agreement).
+     * @summary SLA.
      * @type {$$rhino.Nilable<$$property.generic.Reference<slaFields, slaGlideRecord>>}
      * @memberof cmdb_ci_serviceFields
-     * @description Refers to sla (Agreement)
      */
     sla: $$rhino.Nilable<$$property.generic.Reference<slaFields, slaGlideRecord>>;
 
     /**
-     * Unit description
+     * Unit description field. Internal type is "html".
+     * @summary Unit description.
      * @type {$$rhino.Nilable<$$property.Element>}
      * @memberof cmdb_ci_serviceFields
-     * @description Internal type is "html"
      */
     unit_description: $$rhino.Nilable<$$property.Element>;
 
@@ -10094,10 +11100,10 @@ declare interface cmdb_ci_serviceFields extends cmdb_ciFields {
     used_for: $$rhino.Nilable<$$property.generic.Element<("Production" | "Staging" | "QA" | "Test" | "Development" | "Demonstration" | "Training" | "Disaster recovery")>>;
 
     /**
-     * Users supported
+     * Users supported field. Refers to sys_user_group (Group).
+     * @summary Users supported.
      * @type {$$rhino.Nilable<$$property.generic.Reference<sys_user_groupFields, sys_user_groupGlideRecord>>}
      * @memberof cmdb_ci_serviceFields
-     * @description Refers to sys_user_group (Group)
      */
     user_group: $$rhino.Nilable<$$property.generic.Reference<sys_user_groupFields, sys_user_groupGlideRecord>>;
 
@@ -10108,6 +11114,7 @@ declare interface cmdb_ci_serviceFields extends cmdb_ciFields {
      */
     version: $$rhino.Nilable<$$property.Element>;
 }
+
 declare type cmdb_ci_serviceGlideRecord = cmdb_ciGlideRecord & cmdb_ci_serviceFields;
 
 /**
@@ -10117,6 +11124,7 @@ declare type cmdb_ci_serviceGlideRecord = cmdb_ciGlideRecord & cmdb_ci_serviceFi
  */
 declare interface x_44813_phys_net_networkFields extends cmdb_ciFields {
 }
+
 declare type x_44813_phys_net_networkGlideRecord = cmdb_ciGlideRecord & x_44813_phys_net_networkFields;
 
 /**
@@ -10131,19 +11139,22 @@ declare interface x_44813_sec_clsif_definitionFields extends sys_metadataFields 
 	 * @memberof x_44813_sec_clsif_definitionFields
 	 */
     active: $$property.Boolean;
+
 	/**
 	 * Name
 	 * @type {$$property.Element}
 	 * @memberof x_44813_sec_clsif_definitionFields
 	 */
     name: $$property.Element;
+
 	/**
-	 * Order
+	 * Internal type is integer
+	 * @summary Order
 	 * @type {$$rhino.Nilable<$$property.Numeric>}
 	 * @memberof x_44813_sec_clsif_definitionFields
-	 * @description Internal type is integer
 	 */
     order: $$rhino.Nilable<$$property.Numeric>;
+
 	/**
 	 * Portion Marking
 	 * @type {$$property.Element}
@@ -10151,6 +11162,7 @@ declare interface x_44813_sec_clsif_definitionFields extends sys_metadataFields 
 	 */
     portion_marking: $$property.Element;
 }
+
 declare type x_44813_sec_clsif_definitionGlideRecord = sys_metadataGlideRecord & x_44813_sec_clsif_definitionFields;
 
 declare interface change_request_imacFields extends change_requestFields {
@@ -10195,7 +11207,7 @@ declare interface change_request_imacFields extends change_requestFields {
      * @memberof change_request_imacFields
      */
     move_user: $$rhino.Nilable<$$property.generic.Reference<sys_userFields, sys_userGlideRecord>>;
-    
+
     /**
      * Network component
      * @type {$$property.Boolean}
@@ -10203,6 +11215,7 @@ declare interface change_request_imacFields extends change_requestFields {
      */
     network_component: $$property.Boolean;
 }
+
 declare type change_request_imacGlideRecord = change_requestGlideRecord & change_request_imacFields;
 
 declare interface incident_taskFields extends taskFields {
@@ -10213,22 +11226,28 @@ declare interface incident_taskFields extends taskFields {
      */
     incident: $$rhino.Nilable<$$property.generic.Reference<incidentFields, incidentGlideRecord>>;
 }
+
 declare type incident_taskGlideRecord = taskGlideRecord & incident_taskFields;
 
 declare interface kb_knowledgeFields extends IExtendedGlideTableProperties {
-
 }
+
 declare class GlideJSUtil {
     static isInstanceOf(object: any, typeName: string): boolean;
+
     static isJavaArray(object: any): boolean;
+
     static getJavaClassName(object: any): string;
 }
+
 declare class JSUtil {
     static isJavaObject(object: any): boolean;
 }
+
 declare class GlideRhinoHelper {
     static getNativeFromRhino(object: any): any;
 }
+
 declare class GlideURI {
     constructor();
 
@@ -10259,266 +11278,483 @@ declare class GlideURI {
      */
     toString(path: string): string;
 }
+
 declare class GlideElementEncrypted extends GlideElement {
 	getContextID(): string;
+
 	getContextName(): string;
+
 	setContextID(newContextID: string): boolean;
 }
+
 declare class GlideActionList extends GlideList {
 	constructor(tableName?: string, element?: string);
 }
+
 declare class GlideElementReplicationPayload extends GlideElement {
 }
+
 declare class GlideList {
 	constructor(tableName?: string, element?: string);
-	getIDMap(tableName: string, values: Array<any>): { [key: string]: any; };
+
+	getIDMap(tableName: string, values: Array<any>): Record<string, any>;
+
 	getReference(): string;
+
 	getValues(): Array<any>;
+
 	setValue(o: any): void;
 }
-declare class GlideIntegerTime  {
+
+declare class GlideIntegerTime {
 	constructor(time_OR_cal?: number|any);
+
 	getHour(): number;
+
 	getIntegerTimeValue(): number;
+
 	getMinute(): number;
+
 	getSecond(): number;
+
 	setTime(hours: number, mins: number, secs: number): void;
 }
-declare class GlideIntegerDate  {
+
+declare class GlideIntegerDate {
 	addDays(days: number): void;
+
 	compareTo(otherIntegerDate: any): number;
+
 	constructor(value_OR_year_OR_cal?: number|any, monthOfYear?: number, dayOfMonth?: number);
+
 	daysDiff(end_OR_intDate: GlideIntegerDate|number): number;
+
 	getDisplayValue(): string;
+
 	getValue(): string;
+
 	setValue(o: any): void;
 }
+
 declare class GlideScheduleDateTime {
 	addDays(days: number): void;
+
 	addSeconds(seconds: number): void;
+
 	compareTo(o: any): number;
+
 	constructor(timeZone_OR_gdt_OR_sdt_OR_cal_OR_d_OR_ms_OR_userDateTime?: any|GlideDateTime|GlideScheduleDateTime|number|string, timeZone?: string);
+
 	convertTimeZone(fromTZ: string, toTZ: string): string;
+
 	equals(idt: GlideScheduleDateTime): boolean;
+
 	getCal(): any;
+
 	getDisplayValue(): string;
+
 	getDisplayValueInternal(): string;
+
 	getGlideDateTime(): GlideDateTime;
+
 	getIntegerDate(): GlideIntegerDate;
+
 	getIntegerTime(): GlideIntegerTime;
+
 	getMS(): number;
+
 	getTimeZone(): any;
+
 	getTimeZoneID(): string;
+
 	getValue(): string;
+
 	getValueInternal(): string;
+
 	isFloating(): boolean;
+
 	setBeginningOfDay(): void;
+
 	setCal(cal: any): void;
+
 	setEndOfDay(): void;
+
 	setIncludeZFormat(value: boolean): void;
+
 	setMS(ms: number): void;
+
 	setTimeZone(tz: string): void;
+
 	setValue(o: any): void;
+
 	toString(): string;
 }
-declare class GlideChoiceListSet  {
+
+declare class GlideChoiceListSet {
 	constructor();
+
 	getColumns(): GlideChoiceList;
+
 	getSelected(): GlideChoiceList;
+
 	setColumns(clColumns: GlideChoiceList): void;
+
 	setSelected(clSelected: GlideChoiceList): void;
+
 	sortColumns(): void;
+
 	toXML(): any;
 }
+
 declare class GlideSysList {
 	InsertListElements(fields: Array<any>): void;
+
 	constructor(tableName: string, parentName?: string);
+
 	createDefaultBaseline(): void;
+
 	getAccessList(collectionKey: string): Array<string>;
+
 	getListColumns(): GlideChoiceList;
+
 	getListRecords(): Array<string>;
+
 	getListSet(): GlideChoiceListSet;
+
 	getRecordSet(): GlideRecord;
+
 	getStandardListID(): string;
+
 	isUserList(): boolean;
+
 	save(fields?: string): void;
+
 	saveForUser(fields: string): void;
+
 	setIncludeFormatting(b: boolean): void;
+
 	setReconcileList(b: boolean): void;
+
 	setRelatedParentID(parentID: string): void;
+
 	setRelatedParentName(parentName: string): void;
+
 	setRelationshipID(relationshipID: string): void;
+
 	setUserApplies(b: boolean): void;
 }
-declare class GlideScriptEvaluator  {
+
+declare class GlideScriptEvaluator {
 	constructor();
+
 	evaluateGeneratedString(expression: string, returnError: boolean): any;
+
 	evaluateString(expression: string, returnError_OR_identifierKey: boolean|string, returnError?: boolean): any;
+
 	haveError(): boolean;
+
 	setEnforceSecurity(enforce: boolean): void;
 }
+
 declare class GlideEvaluator extends GlideScriptEvaluator {
 	constructor(inter?: boolean, strict?: boolean);
+
 	static evaluateCondition(condition: string): boolean;
+
 	evaluateString(expression: string, returnError_OR_identifierKey?: boolean|string, returnError?: boolean): any;
-	static evaluateStringWithGlobals(expression: string, globals: { [key: string]: any; }): any;
+
+	static evaluateStringWithGlobals(expression: string, globals: Record<string, any>): any;
+
 	static interpretGeneratedString(expression: string, returnError?: boolean): any;
+
 	static interpretString(expression: string, returnError?: boolean): any;
 }
-declare class GlideLRUCache  {
+
+declare class GlideLRUCache {
 	constructor(initialCapacity?: number, loadFactor?: number);
+
 	get(key: any): any;
 }
+
 declare class GlideController extends GlideEvaluator {
 	constructor(global?: any);
+
 	evaluateAsObject(expression: string, ed?: GlideElementDescriptor): any;
+
 	static exists(name: string): any;
+
 	static getCache(): GlideLRUCache;
+
 	static getGlobal(name: string): any;
+
 	static getSandboxGlobal(name: string): any;
+
 	static putGlobal(name: string, value: any): void;
+
 	static removeGlobal(string_1: string): void;
 }
-declare class GlideChoiceList  {
+
+declare class GlideChoiceList {
 	add(choice_OR_value: GlideChoice|string, label?: string): boolean;
+
 	addAll(cl: GlideChoiceList): void;
+
 	addFirst(value: string, label: string): void;
+
 	addNone(): GlideChoice;
+
 	constructor();
+
 	getChoice(index_OR_value: number|string): GlideChoice;
+
 	static getChoiceList(tableName: string, fieldName: string): GlideChoiceList;
+
 	getChoiceNoTrim(value: string): GlideChoice;
+
 	getLabelOf(value: string): string;
+
 	getNullOverride(gc: GlideController): string;
+
 	getSelectedIndex(): number;
+
 	getSize(): number;
+
 	getValueOf(label: string): string;
+
 	removeChoice(value_OR_i: string|number): GlideChoice;
+
 	removeNone(): void;
+
 	sort(): void;
+
 	toJSON(): any;
+
 	toXML(x: GlideXMLDocument): void;
 }
-declare class GlideXMLDocument  {
+
+declare class GlideXMLDocument {
 	constructor(d_OR_rootName_OR_file?: any|string);
+
 	createCDATAElement(name: string, value: string): any;
+
 	createComment(msg: string): any;
+
 	createElement(name: string, value?: string): any;
+
 	getChildTextByTagName(parent: any, tagName: string): string;
+
 	getDocument(): any;
+
 	getDocumentElement(): any;
+
 	getElementByTagName(tagName: string): any;
+
 	getElementValueByTagName(tagName: string): string;
+
 	importElement(e: any): any;
+
 	importElementToParent(e: any, parent: any): any;
+
 	isNamespaceAware(): boolean;
+
 	isValid(): boolean;
+
 	parse(xml: string): boolean;
+
 	pop(): void;
+
 	selectNodes(xpath: string): any;
+
 	selectSingleNode(xpath_OR_currentNode: string|any, xpath?: string): any;
+
 	selectSingleNodeText(xpath: string): string;
+
 	setAttribute(name: string, value: string): void;
+
 	setCurrent(e: any): void;
+
 	setDocument(document: any|string): void;
+
 	setNamespaceAware(nsAware: boolean): void;
+
 	setText(e: any, text: string): void;
+
 	toIndentedString(): string;
+
 	toString(): string;
 }
+
 declare class GlideElementViewable extends GlideElement {
 	constructor();
+
 	getHTMLValueIntelligently(canWrite: boolean): string;
+
 	getUpdateLink(): string;
 }
+
 declare class GlideElementAudio extends GlideElementViewable {
 	constructor();
+
 	getHTMLValueIntelligently(canWrite: boolean): string;
 }
+
 declare class GlideElementVariable extends GlideElementGlideObject {
 	constructor();
+
 	getDecryptedValue(): string;
 }
+
 declare class GlideActionURL {
 	setRedirectURL(o: any): void;
 }
-declare class GlideChoice  {
+
+declare class GlideChoice {
 	constructor(value: string, label: string, sysId?: string);
+
 	getId(): string;
+
 	getImage(): string;
+
 	getLabel(): string;
+
 	getParameter(name: string): any;
+
 	getSelected(): boolean;
+
 	getValue(): string;
+
 	setId(sysId: string): void;
+
 	setImage(image: string): void;
+
 	setLabel(string_1: string): void;
+
 	setParameter(name: string, value: any): void;
+
 	setSelected(selected: boolean): void;
+
 	setValue(string_1: string): void;
 }
-declare class PhoneNumberFormat  {
+
+declare class PhoneNumberFormat {
 	constructor();
+
 	getGlobalDialingCode(): string;
+
 	getInternationalDialingCode(): string;
+
 	getLocalDialingCode(): string;
+
 	getTerritory(): string;
+
 	isLocalDialingCodeOptional(): boolean;
+
 	isLocalFollowsGlobal(): boolean;
 }
+
 declare class GlideElementPhoneNumber extends GlideElement {
 	constructor();
+
 	getGlobalDialingCode(): string;
+
 	getGlobalDisplayValue(): string;
+
 	getLocalDialingCode(): string;
+
 	getLocalDialingCodeOptionalText(): string;
+
 	getLocalDisplayValue(): string;
+
 	getPartialMatchType(): string;
+
 	getPhoneFormatForLocation(locationSysId: string): PhoneNumberFormat;
+
 	getPhoneFormatForTerritory(territorySysId: string): PhoneNumberFormat;
+
 	getPhoneFormatForUser(userSysId: string): PhoneNumberFormat;
+
 	getPhoneTerritories(): any;
+
 	getTerritory(): string;
+
 	getTerritoryForUser(userSysID: string): string;
+
 	getUsersExitCode(): string;
+
 	getUsersPhoneFormat(): PhoneNumberFormat;
+
 	getUsersTerritory(): string;
+
 	getValue(): string;
+
 	isLocalFollowsGlobal(): boolean;
+
 	isStrict(): boolean;
+
 	isValid(): boolean;
+
 	setAllowNationalEntry(allowNationalEntry: boolean): void;
+
 	setPhoneNumber(value: any, strict: boolean): boolean;
+
 	setPhoneNumberFormat(phoneNumberFormat: PhoneNumberFormat): void;
+
 	setStrict(strict: boolean): void;
 }
+
 declare class GlideElementRelatedTags extends GlideElement {
 	constructor();
+
 	getLabelIds(): string;
+
 	getLabelsAsJson(): string;
 }
-declare class GlideSysAttachment  {
+
+declare class GlideSysAttachment {
 	changeEncryptionContext(sourceTable: string, sourceID: string, attachmentID: string, newEncryptionContextID: string): void;
+
 	constructor(fp_OR_ignoreDomain_OR_sysID?: any|boolean|string, ignoreDomain?: boolean);
+
 	static copy(sourceTable: string, sourceID: string, targetTable: string, targetID: string, targetFieldName?: string): Array<any>;
+
 	deleteAll(gr: GlideRecord): void;
+
 	deleteAttachment(sysID: string): void;
+
 	exists(): boolean;
+
 	fixImageDimensions(reset: boolean): void;
+
 	get(input: GlideRecord, fieldName: string): string;
+
 	getAllAttachments(tableName: string, sys_id: string): GlideRecord;
+
 	static getAttachmentParts(id: string): GlideRecord;
+
 	getAttachments(tableName: string, sys_id: string): GlideRecord;
+
 	getBytes(tableName_OR_gr: string|GlideRecord, sys_id?: string): number;
+
 	getContentStream(sysAttachmentID: string): any;
+
 	getParameter(name: string): any;
+
 	static move(sourceTable: string, sourceID: string, targetTable: string, targetID: string): void;
+
 	renameAttachment(sysID: string, newName: string, initialUpload: boolean): number;
+
 	static selectIcon(sys_ids_string: string): string;
+
 	static selectIconFromGR(gr: GlideRecord): string;
+
 	static selectThumbnail(sys_id: string): string;
+
 	setImageDimensions(sys_id: string, contentType: string): void;
-	write(gr_OR_tableSysID: GlideRecord|string, fieldName_OR_fileName_OR_tableName: string, content_OR_contentType_OR_fileName: string, content_OR_contentType?: string|Array<number>, in_1?: any, domainID?: string): void;
+
+	write(gr_OR_tableSysID: GlideRecord|string, fieldName_OR_fileName_OR_tableName: string, content_OR_contentType_OR_fileName: string, content_OR_contentType?: string|Array<number>, in_1?: any,
+        domainID?: string): void;
+
 	writeContentStream(gr: GlideRecord, fileName: string, contentType: string, is: any): string;
+
 	writeParts(request: any, tableName: string, tableSysID: string, attachmentToRecordAssociations: any): void;
 }

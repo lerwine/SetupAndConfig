@@ -1,22 +1,22 @@
 /**
- * Utility type definitions for RhinoScript environment.
+ * This namespace contains utility type definitions for RhinoScript environment.
+ * Neither this namespace, nor types within it are defined in the server-side ServiceNow scripting environment.
+ * @summary Utility type definitions for RhinoScript environment.
  * @namespace $$rhino
- * @description Neither this namespace, nor types within it are defined in the server-side ServiceNow scripting environment.
  */
 declare namespace $$rhino {
-    
     /**
      * Represents a javascript primitive string value, Java {@link Packages.java.lang.String} object, or a {@link Packages.java.lang.Character} object.
      * @typedef {(string | Packages.java.lang.String | Packages.java.lang.Character)} String
      */
      export type String = string | Packages.java.lang.String | Packages.java.lang.Character;
-    
+
     /**
      * Represents an empty javascript primitive string value or a zero-length {@link Packages.java.lang.String} object.
      * @typedef {(number | Packages.java.lang.Number)} EmptyString
      */
      export type EmptyString = "" | (Packages.java.lang.String & { size(): 0; });
-    
+
     /**
      * Type intersection that includes includes null and undefined values.
      * String types will include empty javascript primitive string values and zero-length {@link Packages.java.lang.String} objects as well.
@@ -24,7 +24,7 @@ declare namespace $$rhino {
      * @template T - The type to include along with null, undefined and {@link EmptyString} values.
      */
     export type Nilable<T> = T extends string ? T | null | undefined | EmptyString : T | null | undefined;
-    
+
     /**
      * Type intersection that includes empty javascript primitive string values and zero-length {@link Packages.java.lang.String} objects.
      * @typedef {(S | EmptyString)} IncludeEmptyString
@@ -38,39 +38,39 @@ declare namespace $$rhino {
      * @template S - Type of value that is to exclude {@link EmptyString} values.
      */
      export type ExcludeEmptyString<S> = S extends EmptyString ? never : S;
-    
+
     /**
      * Conditional type for a value that is neither undefined, null, an empty JavaScript primitive string, nor a zero-length {@link Packages.java.lang.String} object.
      * @typedef {(T extends null | undefined ? never : ExcludeEmptyRhinoString<T>)} ExcludeGlideNil<T>
      * @template T - The type of value that is to exclude null and undefined values as well as {@link EmptyString} values.
      */
     export type ExcludeNil<T> = T extends null | undefined ? never : ExcludeEmptyString<T>;
-    
+
     /**
      * Represents a JavaScript primitive string value to represent a boolean value.
      * @typedef {("true" | "false")} BooleanString
      */
     export type BooleanString = "true" | "false";
-    
+
     /**
      * Represents a primitive JavaScript boolean value or a Java {@link Packages.java.lang.Boolean} object.
      * @typedef {(boolean | Packages.java.lang.Boolean)} Boolean
      */
     export type Boolean = boolean | Packages.java.lang.Boolean;
-    
+
     /**
      * Represents either a primitive JavaScript boolean value, or a Java {@link Packages.java.lang.Boolean} object,
      * or a JavaScript primitive string value that represents a boolean value.
      * @typedef {(boolean | Packages.java.lang.Boolean)} Boolean
      */
     export type BooleanLike = Boolean | BooleanString;
-    
+
     /**
      * Represents a primitive JavaScript number value or a Java {@link Packages.java.lang.Number} object.
      * @typedef {(number | Packages.java.lang.Number)} Number
      */
     export type Number = number | Packages.java.lang.Number;
-    
+
     /**
      * Type intersection for values that can represent a primitive JavaScript number value, a {@link Packages.java.lang.Number} object,
      * or a string representations of a number.
@@ -79,21 +79,21 @@ declare namespace $$rhino {
      * @template S - The JavaScript string type representing a number value.
      */
     export type NumberLike<N extends number, S extends ExcludeEmptyString<string>> = N | Packages.java.lang.Number | S;
-    
+
     /**
      * Represents a javascript array or a {@link Packages.java.util.Collection} object.
      * @typedef {(E[] | Packages.java.util.Collection<E>)} Collection<E>
      * @template E - The element type.
      */
     export type Collection<E> = E[] | Packages.java.util.Collection<E>;
-    
+
     /**
      * Represents a javascript array or a {@link Packages.java.util.List} object.
      * @typedef {(E[] | Packages.java.util.List<E>)} List<E>
      * @template E - The element type.
      */
     export type List<E> = E[] | Packages.java.util.List<E>;
-    
+
     /**
      * Represents a primitive JavaScript string value or a {@link Packages.java.lang.String} object.
      * @typedef {(S | Packages.java.lang.String)} StringValue<S>
@@ -114,15 +114,18 @@ declare namespace $$rhino {
          * @returns {*}
          */
         clone(): any;
+
         /**
          * Increases the capacity of this ArrayList instance, if necessary, to ensure that it can hold at least the number of elements specified by the minimum capacity argument.
          */
         ensureCapacity(minCapacity: Packages.java.lang.Integer): void;
+
         /**
          * Returns the element at the specified position in this list.
          * @returns {E}
          */
         get(index: Packages.java.lang.Integer): E;
+
         /**
          * Trims the capacity of this ArrayList instance to be the list's current size.
          */
@@ -160,7 +163,7 @@ declare namespace Packages {
                  * @memberof {String}
                  */
                 charAt(index: Integer): number;
-                
+
                 /**
                  * Returns the character (Unicode code point) at the specified index.
                  * @param {number} index -
@@ -562,7 +565,7 @@ declare namespace Packages {
              * @class Object
              */
             export class Number extends Object { protected constructor(); }
-            
+
             /**
              * Java Boolean object.
              * @export
@@ -782,6 +785,7 @@ declare namespace Packages {
              */
             export class Double extends Number {
                 protected constructor();
+
                 /**
                  * Returns the value of this Double as a byte (by casting to a byte).
                  * @returns {number}
@@ -853,7 +857,7 @@ declare namespace Packages {
                  * @memberof {Double}
                  */
                 longValue(): number;
-                
+
                 /**
                  * Returns the value of this Double as a short (by casting to a short).
                  * @returns {number}
@@ -1150,56 +1154,66 @@ declare namespace Packages {
                  * Ensures that this collection contains the specified element
                  */
                 add(e: E): boolean;
+
                 /**
                  * Adds all of the elements in the specified collection to this collection.
                  * @returns {boolean}
                  */
                 addAll(c: Collection<E>): boolean;
+
                 /**
                  * Removes all of the elements from this collection.
                  */
                 clear(): void;
+
                 /**
                  * Returns true if this collection contains the specified element.
                  * @returns {boolean}
                  */
                 contains(o: lang.Object): boolean;
+
                 /**
                  * Returns true if this collection contains all of the elements in the specified collection
                  * @returns {boolean}
                  */
                 containsAll(c: Collection<any>): boolean;
+
                 /**
                  * Compares the specified object with this collection for equality.
                  * @returns {boolean}
                  */
                 contains(o: lang.Object): boolean;
+
                 /**
                  * Returns the hash code value for this collection.
                  * @returns {lang.Integer}
                  */
                 hashCode(): lang.Integer;
+
                 /**
                  * Returns true if this collection contains no elements.
                  * @returns {boolean}
                  */
                 isEmpty(): boolean;
+
                 /**
                  * Removes a single instance of the specified element from this collection, if it is present.
                  * @returns {boolean}
                  */
                 remove(o: lang.Object): boolean;
+
                 /**
                  * Removes all of this collection's elements that are also contained in the specified collection.
                  * @returns {boolean}
                  */
                 removeAll(c: Collection<any>): boolean;
+
                 /**
                  * Retains only the elements in this collection that are contained in the specified collection.
                  * @returns {boolean}
                  */
                 retainAll(c: Collection<any>): boolean;
-                
+
                 /**
                  * Returns the number of elements in this list.
                  * @returns {int}
@@ -1299,7 +1313,7 @@ declare namespace Packages {
                  * @returns {boolean}
                  */
                 addAll(index: lang.Integer, c: Collection<E>): boolean;
-                
+
                 /**
                  * Returns true if this list contains all of the elements of the specified collection.
                  * @returns {boolean}
@@ -1317,13 +1331,13 @@ declare namespace Packages {
                  * @returns {E}
                  */
                 get(index: lang.Integer): E;
-                
+
                 /**
                  * Returns the index of the first occurrence of the specified element in this list, or -1 if this list does not contain the element.
                  * @returns {int}
                  */
                 indexOf(o: lang.Object): lang.Integer;
-                
+
                 /**
                  * Returns the index of the last occurrence of the specified element in this list, or -1 if this list does not contain the element.
                  * @returns {int}
@@ -1353,13 +1367,13 @@ declare namespace Packages {
                  * @returns {boolean}
                  */
                 remove(o: lang.Object): boolean;
-                
+
                 /**
                  * Replaces the element at the specified position in this list with the specified element.
                  * @returns {E}
                  */
                 set(index: lang.Integer, element: E): E;
-                
+
                 /**
                  * Returns a view of the portion of this list between the specified fromIndex, inclusive, and toIndex, exclusive.
                  * @returns {List<E>}
@@ -1367,7 +1381,7 @@ declare namespace Packages {
                 subList(fromIndex: lang.Integer, toIndex: lang.Integer): List<E>;
             }
 
-            export class AbstractCollection<E> implements Collection<E>  {
+            export class AbstractCollection<E> implements Collection<E> {
                 protected constructor();
 
                 /**
@@ -1392,25 +1406,25 @@ declare namespace Packages {
                  * @returns {boolean}
                  */
                 contains(o: lang.Object): boolean;
-                
+
                 /**
                  * Returns true if this collection contains all of the elements in the specified collection.
                  * @returns {boolean}
                  */
                 containsAll(c: Collection<any>): boolean;
-                
+
                 /**
                  * Compares the specified object with this collection for equality.
                  * @returns {boolean}
                  */
                 equals(o: lang.Object): boolean;
-                
+
                 /**
                  * Returns the hash code value for this collection.
                  * @returns {lang.Integer}
                  */
                 hashCode(): lang.Integer;
-                
+
                 /**
                  * Returns true if this collection contains no elements.
                  * @returns {boolean}
@@ -1428,31 +1442,31 @@ declare namespace Packages {
                  * @returns {boolean}
                  */
                 remove(o: Object): boolean;
-                
+
                 /**
                  * Removes all of this collection's elements that are also contained in the specified collection.
                  * @returns {boolean}
                  */
                 removeAll(c: Collection<any>): boolean;
-                
+
                 /**
                  * Retains only the elements in this collection that are contained in the specified collection.
                  * @returns {boolean}
                  */
                 retainAll(c: Collection<any>): boolean;
-                
+
                 /**
                  * Returns the number of elements in this collection.
                  * @returns {int}
                  */
                 size(): lang.Integer;
-                
+
                 /**
                  * Returns an array containing all of the elements in this collection.
                  * @returns {$$rhino.IJavaArray<lang.Object>}
                  */
                 toArray(): $$rhino.IJavaArray<lang.Object>;
-                
+
                 /**
                  * Returns an array containing all of the elements in this collection; the runtime type of the returned array is that of the specified array.
                  * @returns {$$rhino.IJavaArray<E>}
@@ -1486,6 +1500,7 @@ declare namespace Packages {
                  * @returns {boolean}
                  */
                 addAll(index: lang.Integer, c: Collection<E>): boolean;
+
                 /**
                  * Returns the index of the first occurrence of the specified element in this list, or -1 if this list does not contain the element.
                  * @returns {int}
@@ -1543,8 +1558,9 @@ declare namespace Packages {
                  * @returns {Object}
                  */
                 clone(): lang.Object;
-                
+
                 //contains(o: Object): boolean;
+
                 /**
                  * Increases the capacity of this ArrayList instance, if necessary, to ensure that it can hold at least the number of elements specified by the minimum capacity argument.
                  */
@@ -1601,7 +1617,7 @@ declare namespace Packages {
                  * Removes all of the mappings from this map.
                  */
                 clear(): void;
-                
+
                 /**
                  * Returns true if this map contains a mapping for the specified key.
                  * @returns {boolean}
@@ -1655,7 +1671,7 @@ declare namespace Packages {
                  * @returns {V}
                  */
                 put(key: K, value: V): V;
-                
+
                 /**
                  * Copies all of the mappings from the specified map to this map.
                  */
@@ -1682,6 +1698,7 @@ declare namespace Packages {
 
             export class AbstractMap<K, V> extends lang.Object implements Map<K, V> {
                 protected constructor();
+
                 /**
                  * Removes all of the mappings from this map.
                  */
@@ -1849,7 +1866,7 @@ declare namespace Packages {
                  */
                 setTime(time: lang.Long): void;
             }
-            
+
             /**
              * Represents a time zone offset, and also figures out daylight savings.
              * @class TimeZone
@@ -1877,7 +1894,8 @@ declare namespace Packages {
                 getDisplayName(): lang.String;
 
                 /**
-                 * Returns a name in the specified style of this TimeZone suitable for presentation to the user in the default locale. If the specified daylight is true, a Daylight Saving Time name is returned (even if this TimeZone doesn't observe Daylight Saving Time). Otherwise, a Standard Time name is returned.
+                 * Returns a name in the specified style of this TimeZone suitable for presentation to the user in the default locale. If the specified daylight is true,
+                 * a Daylight Saving Time name is returned (even if this TimeZone doesn't observe Daylight Saving Time). Otherwise, a Standard Time name is returned.
                  * @param {boolean} daylight
                  * @param {int} style
                  * @memberof TimeZone
@@ -1892,7 +1910,8 @@ declare namespace Packages {
                 getID(): lang.String;
 
                 /**
-                 * Returns the offset of this time zone from UTC at the specified date. If Daylight Saving Time is in effect at the specified date, the offset value is adjusted with the amount of daylight saving.
+                 * Returns the offset of this time zone from UTC at the specified date. If Daylight Saving Time is in effect at the specified date,
+                 * the offset value is adjusted with the amount of daylight saving.
                  * @param {long} date
                  * @returns {int}
                  * @memberof TimeZone

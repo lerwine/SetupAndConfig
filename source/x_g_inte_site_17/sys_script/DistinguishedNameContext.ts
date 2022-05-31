@@ -1,6 +1,6 @@
 /// <reference path="../servicnowCommon.d.ts" />
 
-interface IDistinguishedNameContextBase extends ICustomClassBase<IDistinguishedNameContextBase, "DistinguishedNameContext"> {
+interface IDistinguishedNameContextBase extends $$snClass.ICustomClassBase<IDistinguishedNameContextBase, "DistinguishedNameContext"> {
     /**
      * Has a true value if {@link IDistinguishedNameContextBase#_targetObject} is a sys_user_group; otherwise, false
      *
@@ -64,12 +64,12 @@ interface IDistinguishedNameContextBase extends ICustomClassBase<IDistinguishedN
     isSite17Group(): boolean;
 }
 
-interface IDistinguishedNameContextPrototype extends ICustomClassPrototype1<IDistinguishedNameContextBase, IDistinguishedNameContextPrototype, "DistinguishedNameContext", string | GlideRecord | GlideElementReference>, IDistinguishedNameContextBase {
+interface IDistinguishedNameContextPrototype extends $$snClass.ICustomClassPrototype1<IDistinguishedNameContextBase, IDistinguishedNameContextPrototype, "DistinguishedNameContext", string | GlideRecord | GlideElementReference>, IDistinguishedNameContextBase {
 }
 
 interface IDistinguishedNameContext extends Readonly<IDistinguishedNameContextBase> { }
 
-interface DistinguishedNameContextConstructor extends CustomClassConstructor1<IDistinguishedNameContextBase, IDistinguishedNameContextPrototype, IDistinguishedNameContext, string | GlideRecord | GlideElementReference> {
+interface DistinguishedNameContextConstructor extends $$snClass.CustomClassConstructor1<IDistinguishedNameContextBase, IDistinguishedNameContextPrototype, IDistinguishedNameContext, string | GlideRecord | GlideElementReference> {
     /**
      * Creates a new {@link DistinguishedNameContext} instance.
      * 
