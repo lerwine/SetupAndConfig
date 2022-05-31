@@ -1435,47 +1435,47 @@ declare class GlideQueryCondition {
 
     /**
      * Adds an AND condition to the current condition.
-     * @param {string} name The name of a field.
-     * @param {QueryOperator} oper The operator for the query (=,!=,>,>=,<,<=,IN,NOT IN,STARTSWITH,ENDSWITH,CONTAINS,DOES NOT CONTAIN,INSTANCEOF).
-     * @param {*} value The value to query on.
+     * @param {string} name - The name of a field.
+     * @param {QueryOperator} oper - The operator for the query (=,!=,>,>=,<,<=,IN,NOT IN,STARTSWITH,ENDSWITH,CONTAINS,DOES NOT CONTAIN,INSTANCEOF).
+     * @param {*} value - The value to query on.
      * @returns {GlideQueryCondition} A reference to a GlideQueryConditon that was added to the GlideRecord.
      */
     addCondition(name: string, oper: QueryOperator, value: any): GlideQueryCondition;
 
     /**
      * Adds an AND condition to the current condition. Assumes the equals operator.
-     * @param {string} name The name of a field.
-     * @param {*} value The value of a field.
+     * @param {string} name - The name of a field.
+     * @param {*} value - The value of a field.
      * @returns {GlideQueryCondition} A reference to a GlideQueryConditon that was added to the GlideRecord.
      */
     addCondition(name: string, value: any): GlideQueryCondition;
 
     /**
      * Adds an AND condition to the current condition.
-     * @param {GlideQueryCondition} queryCondition Condition to add.
+     * @param {GlideQueryCondition} queryCondition - Condition to add.
      * @returns {GlideQueryCondition} A reference to a GlideQueryConditon that was added to the GlideRecord.
      */
     addCondition(queryCondition: GlideQueryCondition): GlideQueryCondition
     /**
      * Adds an OR condition to the current condition.
-     * @param {string} name The name of a field.
-     * @param {QueryOperator} oper The operator for the query (=,!=,>,>=,<,<=,IN,NOT IN,STARTSWITH,ENDSWITH,CONTAINS,DOES NOT CONTAIN,INSTANCEOF).
-     * @param {*} value The value to query on.
+     * @param {string} name - The name of a field.
+     * @param {QueryOperator} oper - The operator for the query (=,!=,>,>=,<,<=,IN,NOT IN,STARTSWITH,ENDSWITH,CONTAINS,DOES NOT CONTAIN,INSTANCEOF).
+     * @param {*} value - The value to query on.
      * @returns {GlideQueryCondition} A reference to a GlideQueryConditon that was added to the GlideRecord.
      */
     addOrCondition(name: string, oper: QueryOperator, value: any): GlideQueryCondition;
 
     /**
      * Adds an OR condition to the current condition. Assumes the equals operator.
-     * @param {string} name The name of a field.
-     * @param {*} value The value to query on.
+     * @param {string} name - The name of a field.
+     * @param {*} value - The value to query on.
      * @returns {GlideQueryCondition} A reference to a GlideQueryConditon that was added to the GlideRecord.
      */
     addOrCondition(name: string, value: any): GlideQueryCondition;
 
     /**
      * Adds an OR condition to the current condition. Assumes the equals operator.
-     * @param {GlideQueryCondition} queryCondition Condition to add.
+     * @param {GlideQueryCondition} queryCondition - Condition to add.
      * @returns {GlideQueryCondition} A reference to a GlideQueryConditon that was added to the GlideRecord.
      */
     addOrCondition(queryCondition: GlideQueryCondition): GlideQueryCondition;
