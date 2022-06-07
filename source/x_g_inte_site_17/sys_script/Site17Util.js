@@ -221,7 +221,7 @@ var Site17Util = (function () {
             var gr = new GlideRecord('sys_user');
             gr.addQuery('sys_id', '' + sys_id);
             gr.query();
-            return JSON.stringify(gr.next() && isGroupDN('' + gr.source));
+            return JSON.stringify(gr.next() && isUserDN('' + gr.source));
         },
         isSite17Group: function (sys_id) {
             var gr = new GlideRecord('sys_user_group');

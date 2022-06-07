@@ -284,7 +284,7 @@ const Site17Util: Site17UtilConstructor = (function (): Site17UtilConstructor {
             var gr = new GlideRecord('sys_user');
             gr.addQuery('sys_id', '' + sys_id);
             gr.query();
-            return <"true"|"false">JSON.stringify(gr.next() && isGroupDN('' + (<{ [key: string]: any}>gr).source));
+            return <"true"|"false">JSON.stringify(gr.next() && isUserDN('' + (<{ [key: string]: any}>gr).source));
         },
         
         isSite17Group: function(sys_id): "true"|"false" {
