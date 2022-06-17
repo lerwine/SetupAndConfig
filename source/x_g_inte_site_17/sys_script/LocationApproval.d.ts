@@ -29,7 +29,7 @@ interface ILocationApprovalBase extends $$snClass.ICustomClassBase<ILocationAppr
 }
 interface ILocationApprovalPrototype extends $$snClass.ICustomClassPrototype1<ILocationApprovalBase, ILocationApprovalPrototype, "LocationApproval", GlideRecord | GlideElementReference>, ILocationApprovalBase {
 }
-interface ILocationApproval extends Readonly<ILocationApprovalBase> {
+interface ILocationApproval extends Readonly<ILocationApprovalPrototype> {
 }
 interface LocationApprovalConstructor extends $$snClass.CustomClassConstructor1<ILocationApprovalBase, ILocationApprovalPrototype, ILocationApproval, GlideRecord | GlideElementReference> {
     /**
