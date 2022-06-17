@@ -15,7 +15,7 @@
     <StartupFile>app.ts</StartupFile>
     <StartWebBrowser>False</StartWebBrowser>
     <StartWebBrowser>False</StartWebBrowser>
-    <SearchPath>&#xD;&#xD;
+    <SearchPath>&#xD;&#xD;&#xD;
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -62,6 +62,7 @@
     <Content Include="sys_script_fix\Ensure Schedule Entries.d.ts"/>
     <Content Include="sys_script_fix\Ensure Schedule Entries.js"/>
     <Content Include="sys_script_fix\Ensure Schedule Entries.js.map"/>
+    <Content Include="sys_script\PriorityCalculation.js"/>
   </ItemGroup>
   <ItemGroup>
     <TypeScriptCompile Include="rhino.d.ts"/>
@@ -103,20 +104,20 @@
       </FlavorProperties>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
         <WebProjectProperties>
-          <StartPageUrl>&#xD;&#xD;
+          <StartPageUrl>&#xD;&#xD;&#xD;
           </StartPageUrl>
           <StartAction>CurrentPage</StartAction>
           <AspNetDebugging>True</AspNetDebugging>
           <SilverlightDebugging>False</SilverlightDebugging>
           <NativeDebugging>False</NativeDebugging>
           <SQLDebugging>False</SQLDebugging>
-          <ExternalProgram>&#xD;&#xD;
+          <ExternalProgram>&#xD;&#xD;&#xD;
           </ExternalProgram>
-          <StartExternalURL>&#xD;&#xD;
+          <StartExternalURL>&#xD;&#xD;&#xD;
           </StartExternalURL>
-          <StartCmdLineArguments>&#xD;&#xD;
+          <StartCmdLineArguments>&#xD;&#xD;&#xD;
           </StartCmdLineArguments>
-          <StartWorkingDirectory>&#xD;&#xD;
+          <StartWorkingDirectory>&#xD;&#xD;&#xD;
           </StartWorkingDirectory>
           <EnableENC>False</EnableENC>
           <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
