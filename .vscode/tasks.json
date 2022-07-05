@@ -4,28 +4,35 @@
 		{
 			"type": "typescript",
 			"tsconfig": "source/x_g_inte_site_17/tsconfig.json",
-            "group": {
-                "kind": "build",
-                "isDefault": false
-            },
+			"group": "build",
 			"problemMatcher": [
-                "$tsc"
-            ],
+				"$tsc"
+			],
 			"label": "Build Site 17",
 			"detail": "tsc --build - source/x_g_inte_site_17/tsconfig.json"
 		},
 		{
 			"type": "typescript",
-			"tsconfig": "source/x_44813_mmservices/tsconfig.json",
-            "group": {
-                "kind": "build",
-                "isDefault": true
-            },
+			"tsconfig": "source/x_44813_mmservices/server/tsconfig.json",
+			"group": "build",
 			"problemMatcher": [
-                "$tsc"
-            ],
-			"label": "Build Multimedia Services",
-			"detail": "tsc --build - source/x_44813_mmservices/tsconfig.json"
+				"$tsc"
+			],
+			"label": "Build Multimedia Services Server",
+			"detail": "tsc --build - source/x_44813_mmservices/server/tsconfig.json"
+		},
+		{
+			"type": "typescript",
+			"tsconfig": "source/x_44813_mmservices/client/tsconfig.json",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [
+				"$tsc"
+			],
+			"label": "Build Multimedia Services Client",
+			"detail": "tsc --build - source/x_44813_mmservices/client/tsconfig.json"
 		}
 	]
 }

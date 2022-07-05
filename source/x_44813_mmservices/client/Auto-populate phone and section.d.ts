@@ -1,0 +1,1 @@
+declare function onLoad(): void;
