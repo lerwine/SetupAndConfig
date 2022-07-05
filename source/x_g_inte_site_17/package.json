@@ -1,10 +1,9 @@
 {
   "name": "x-g-inte-site-17",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Site 17 ServiceNow Application",
-  "main": "app.js",
   "author": {
-    "name": ""
+    "name": "Leonard T. Erwine"
   },
   "scripts": {
     "build": "tsc --build",
