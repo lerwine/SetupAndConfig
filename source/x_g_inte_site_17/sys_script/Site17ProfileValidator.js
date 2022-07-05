@@ -1,3 +1,4 @@
+"use strict";
 /// <reference path="../servicnowCommon.d.ts" />
 var ProfileValidator = (function () {
     var profileValidatorConstructor = Class.create();

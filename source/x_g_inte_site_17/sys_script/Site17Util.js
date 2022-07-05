@@ -1,3 +1,4 @@
+"use strict";
 /// <reference path="../servicnowCommon.d.ts" />
 var Site17Util = (function () {
     var site17UtilConstructor = Class.create();

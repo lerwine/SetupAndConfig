@@ -1,3 +1,4 @@
+"use strict";
 /// <reference path="../servicnowCommon.d.ts" />
 var DistinguishedNameContext = (function () {
     var distinguishedNameContextConstructor = Class.create();

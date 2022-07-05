@@ -4,7 +4,10 @@
     "target": "es3",
     "lib": [ "es2015" ],
     "sourceMap": true,
-    "declaration": true
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "removeComments": false
   },
   "exclude": [
     "node_modules"

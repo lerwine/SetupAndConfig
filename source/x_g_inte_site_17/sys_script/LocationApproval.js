@@ -1,3 +1,4 @@
+"use strict";
 /// <reference path="../servicnowCommon.d.ts" />
 var LocationApproval = (function () {
     var locationApprovalConstructor = Class.create();
