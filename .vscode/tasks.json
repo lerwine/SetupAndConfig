@@ -6,13 +6,26 @@
 			"tsconfig": "source/x_g_inte_site_17/tsconfig.json",
             "group": {
                 "kind": "build",
-                "isDefault": true
+                "isDefault": false
             },
 			"problemMatcher": [
                 "$tsc"
             ],
 			"label": "Build Site 17",
 			"detail": "tsc --build - source/x_g_inte_site_17/tsconfig.json"
+		},
+		{
+			"type": "typescript",
+			"tsconfig": "source/x_44813_mmservices/tsconfig.json",
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+			"problemMatcher": [
+                "$tsc"
+            ],
+			"label": "Build Multimedia Services",
+			"detail": "tsc --build - source/x_44813_mmservices/tsconfig.json"
 		}
 	]
 }

@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "module": "none",
+    "target": "es3",
+    "lib": [ "es2015" ],
+    "sourceMap": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "declaration": true,
+    "removeComments": false,
+    "typeRoots": [
+      "../../types/server"
+    ]
+  },
+  "exclude": [
+    "node_modules"
+  ],
+  "compileOnSave": true
+}
