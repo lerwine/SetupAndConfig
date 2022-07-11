@@ -856,7 +856,7 @@ declare interface IGlideElement extends $$element.IDbObject {
 
 declare interface IGlideAjax {
     getParameter(name: string): string;
-
+    setError(error: any): void;
     newItem(name: string): IGlideAjaxXml;
 }
 
@@ -900,7 +900,11 @@ declare namespace $$snClass {
      * @template P - The type of prototype (self-referencing type)
      * @template N - The value of the name property for objects constructed with this prototype.
      */
-     export interface ICustomClassPrototype0<B extends ICustomClassBase<B, N>, P extends B & ICustomClassPrototype0<B, P, N>, N extends string> extends ICustomClassBase<B, N> {
+     export interface ICustomClassPrototype0<
+        B extends ICustomClassBase<B, N>,
+        P extends B & ICustomClassPrototype0<B, P, N>,
+        N extends string
+    > extends ICustomClassBase<B, N> {
         /**
          * Called by {@see Class#create} to initialize the newly instantiated object
          * @this {P} The current "this" object.

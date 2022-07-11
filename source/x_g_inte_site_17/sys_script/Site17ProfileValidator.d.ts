@@ -202,17 +202,17 @@ interface IProfileValidatorBase extends $$snClass.ICustomClassBase<IProfileValid
     /**
      * Gets compliance check information for the user indicated by the 'sysparm_user_id' parameter.
      *
-     * @returns {string} A JSON string containing an {@link IUserProfileComplianceResult} object that describes the result of the compliance check.
+     * @returns {(string | undefined)} A JSON string containing an {@link IUserProfileComplianceResult} object that describes the result of the compliance check.
      * @memberof IProfileValidatorPrototype
      */
-    getUserProfileCompliance(): string;
+    getUserProfileCompliance(): string | undefined;
     /**
      * Gets compliance check notifications for the user indicated by the 'sysparm_user_id' parameter.
      *
-     * @returns {string} A JSON string containing an {@link IUserNotificationsResult} object that contains the compliance notification information.
+     * @returns {(string | undefined)} A JSON string containing an {@link IUserNotificationsResult} object that contains the compliance notification information.
      * @memberof IProfileValidatorPrototype
      */
-    getUserNotifications(): string;
+    getUserNotifications(): string | undefined;
 }
 interface IProfileValidatorPrototype extends $$snClass.ICustomClassPrototype0<IProfileValidatorBase, IProfileValidatorPrototype, "ProfileValidator">, IProfileValidatorBase {
 }

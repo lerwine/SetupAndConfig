@@ -135,18 +135,18 @@ interface DistinguishedNameContextConstructor extends $$snClass.CustomClassConst
             }
         },
 
-        getSourceRecord: function(): GlideRecord { return this._sourceRecord; },
+        getSourceRecord: function(): GlideRecord { return <GlideRecord>this._sourceRecord; },
 
         getTargetObject: function(): GlideRecord | GlideElementReference | undefined { return this._targetobject; },
 
         isGroup: function(): boolean { return this._isGroup; },
         
         isSite17User: function(): boolean {
-            return !this._isGroup && Site17Util.isUserDN('' + (this._isGroup ? this._sourceRecord : this._targetobject).source);
+            return !this._isGroup && Site17Util.isUserDN('' + (this._isGroup ? <sys_userFields><any>this._sourceRecord : <sys_userFields><any>this._targetobject).source);
         },
         
         isSite17Group: function(): boolean {
-            return this._isGroup && Site17Util.isGroupDN('' + (this._isGroup ? this._sourceRecord : this._targetobject).source);
+            return this._isGroup && Site17Util.isGroupDN('' + (this._isGroup ? <sys_userFields><any>this._sourceRecord : <sys_userFields><any>this._targetobject).source);
         },
 
         type: "DistinguishedNameContext"

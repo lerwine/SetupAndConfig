@@ -229,18 +229,18 @@ interface IProfileValidatorBase extends $$snClass.ICustomClassBase<IProfileValid
     /**
      * Gets compliance check information for the user indicated by the 'sysparm_user_id' parameter.
      *
-     * @returns {string} A JSON string containing an {@link IUserProfileComplianceResult} object that describes the result of the compliance check.
+     * @returns {(string | undefined)} A JSON string containing an {@link IUserProfileComplianceResult} object that describes the result of the compliance check.
      * @memberof IProfileValidatorPrototype
      */
-    getUserProfileCompliance(): string;
+    getUserProfileCompliance(): string | undefined;
 
     /**
      * Gets compliance check notifications for the user indicated by the 'sysparm_user_id' parameter.
      *
-     * @returns {string} A JSON string containing an {@link IUserNotificationsResult} object that contains the compliance notification information.
+     * @returns {(string | undefined)} A JSON string containing an {@link IUserNotificationsResult} object that contains the compliance notification information.
      * @memberof IProfileValidatorPrototype
      */
-    getUserNotifications(): string;
+    getUserNotifications(): string | undefined;
 }
 
 interface IProfileValidatorPrototype extends $$snClass.ICustomClassPrototype0<IProfileValidatorBase, IProfileValidatorPrototype, "ProfileValidator">, IProfileValidatorBase {
@@ -360,16 +360,16 @@ const ProfileValidator: ProfileValidatorConstructor = (function (): ProfileValid
             notChecked: 0,
             results: {}
         };
-        var failed = PROFILE_FIELDS.filter(function(value) {
+        var failed: IProfileFieldDefinition[] = PROFILE_FIELDS.filter(function(value) {
             try {
-                if (gs.nil(sys_user[value.name])) {
-                    result.results[value.name] = { label: value.label, passed: false };
+                if (gs.nil((<{[key: string]: any}>sys_user)[value.name])) {
+                    (<{[key: string]: any}>result.results)[value.name] = { label: value.label, passed: false };
                     return true;
                 }
-                result.results[value.name] = { label: value.label, passed: true };
+                (<{[key: string]: any}>result.results)[value.name] = { label: value.label, passed: true };
             } catch (e) {
                 result.notChecked++;
-                result.results[value.name] = {
+                (<{[key: string]: any}>result.results)[value.name] = {
                     label: value.label,
                     message: 'Unexpected exception accessing field',
                     fault: e,
@@ -388,7 +388,7 @@ const ProfileValidator: ProfileValidatorConstructor = (function (): ProfileValid
             else
                 result.message = "All compliance checks were inconclusive due to unexpected errors.";
         } else {
-            var last = failed.pop();
+            var last: IProfileFieldDefinition = <IProfileFieldDefinition>failed.pop();
             if (result.notChecked == 0) {
                 if (failed.length == 0)
                     result.message = last.label + " is not " + last.failAdj + ".";
@@ -414,13 +414,13 @@ const ProfileValidator: ProfileValidatorConstructor = (function (): ProfileValid
                 code: getUserResponse.code,
                 user_id: getUserResponse.user_id,
                 sys_id: getUserResponse.sys_id,
-                message: getUserResponse.message,
+                message: <string>getUserResponse.message,
                 fault: getUserResponse.fault,
                 passed: 0,
                 failed: 0,
                 notChecked: PROFILE_FIELDS.length
             };
-        var result = <IUserProfileComplianceResult>profileValidatorConstructor.checkUserProfileCompliance(getUserResponse.user);
+        var result = <IUserProfileComplianceResult>profileValidatorConstructor.checkUserProfileCompliance(<GlideRecord>getUserResponse.user);
         result.code = 0;
         result.user_id = getUserResponse.user_id;
         result.sys_id = getUserResponse.sys_id;
@@ -435,7 +435,7 @@ const ProfileValidator: ProfileValidatorConstructor = (function (): ProfileValid
                 user_id: getUserResponse.user_id,
                 sys_id: getUserResponse.sys_id,
                 profileCompliance: {
-                    message: getUserResponse.message,
+                    message: <string>getUserResponse.message,
                     passed: 0,
                     failed: 0,
                     notChecked: PROFILE_FIELDS.length,
@@ -446,25 +446,25 @@ const ProfileValidator: ProfileValidatorConstructor = (function (): ProfileValid
             code: 0,
             user_id: getUserResponse.user_id,
             sys_id: getUserResponse.sys_id,
-            profileCompliance: profileValidatorConstructor.checkUserProfileCompliance(getUserResponse.user)
+            profileCompliance: profileValidatorConstructor.checkUserProfileCompliance(<GlideRecord>getUserResponse.user)
         };
     };
 
     profileValidatorConstructor.prototype = Object.extendsObject<IGlideAjax, IProfileValidatorPrototype>(global.AbstractAjaxProcessor, {
         initialize: function() { },
 
-        getUserProfileCompliance: function(): string {
-            var response = profileValidatorConstructor.getUserProfileCompliance(this.getParameter('sysparm_user_id'));
+        getUserProfileCompliance: function(): string | undefined {
+            var response = profileValidatorConstructor.getUserProfileCompliance((<IGlideAjax><any>this).getParameter('sysparm_user_id'));
             if (profileValidatorConstructor.isUserLookupFault(response))
-                this.setError(response);
+            (<IGlideAjax><any>this).setError(response);
             else
                 return JSON.stringify(response);
         },
         
-        getUserNotifications: function(): string {
-            var response = profileValidatorConstructor.getUserNotifications(this.getParameter('sysparm_user_id'));
+        getUserNotifications: function(): string | undefined {
+            var response = profileValidatorConstructor.getUserNotifications((<IGlideAjax><any>this).getParameter('sysparm_user_id'));
             if (profileValidatorConstructor.isUserLookupFault(response))
-                this.setError(response);
+            (<IGlideAjax><any>this).setError(response);
             else
                 return JSON.stringify(response);
         },

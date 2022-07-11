@@ -59,7 +59,7 @@ const Site17Util: Site17UtilConstructor = (function (): Site17UtilConstructor {
     };
 
     function getCaller(target: GlideRecord | GlideElementReference): GlideElementReference | undefined {
-        var caller: GlideElementReference;
+        var caller: GlideElementReference | undefined;
         
         switch ('' + (<{ [key: string]: any}>target).sys_class_name) {
             case 'incident':
@@ -237,7 +237,7 @@ const Site17Util: Site17UtilConstructor = (function (): Site17UtilConstructor {
 
     site17UtilConstructor.isSite17User = function(source: GlideRecord | GlideElementReference | string): boolean {
         if (gs.nil(source)) return false;
-        var gr: GlideRecord | GlideElementReference;
+        var gr: GlideRecord | GlideElementReference | undefined;
         if (source instanceof GlideRecord || source instanceof GlideElement) {
             if (('' + source.getTableName()) == 'sys_user') return isUserDN('' + (<{ [key: string]: any}>source).source);
             gr = getCaller(<GlideElementReference>source);

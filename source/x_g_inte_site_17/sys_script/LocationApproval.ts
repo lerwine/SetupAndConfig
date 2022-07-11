@@ -82,7 +82,7 @@ const LocationApproval: LocationApprovalConstructor = (function (): LocationAppr
         while (gr.next()) {
             if ((<{ [key: string]: any}>gr).type == 'any') {
                 if ((!(gs.nil((<{ [key: string]: any}>gr).company) || gs.nil(company)) && (<{ [key: string]: any}>gr).company.sys_id == company.sys_id) ||
-                    (!(gs.nil((<{ [key: string]: any}>gr).business_unit) || gs.nil(company)) && (<{ [key: string]: any}>gr).business_unit.sys_id == business_unit.sys_id) ||
+                    (!(gs.nil((<{ [key: string]: any}>gr).business_unit) || gs.nil(company)) && (<{ [key: string]: any}>gr).business_unit.sys_id == (<GlideRecord><any>business_unit).sys_id) ||
                     (!(gs.nil((<{ [key: string]: any}>gr).department) || gs.nil(department)) && (<{ [key: string]: any}>gr).department.sys_id == department.sys_id) ||
                     (!(gs.nil((<{ [key: string]: any}>gr).building) || gs.nil(building)) && (<{ [key: string]: any}>gr).building.sys_id == building.sys_id) ||
                     (!(gs.nil((<{ [key: string]: any}>gr).location) || gs.nil(location)) && (<{ [key: string]: any}>gr).company.sys_id == location.sys_id))
@@ -108,21 +108,21 @@ const LocationApproval: LocationApprovalConstructor = (function (): LocationAppr
                     throw new Error("Not a valid task record");
                 this._gliderecord = source;
             } else {
-                this._gliderecord = source.getRefRecord();
+                this._gliderecord = <GlideRecord>source.getRefRecord();
                 if (gs.nil(this._gliderecord)) throw new Error("No glide record referenced");
             }
         },
 
         getCaller: function(): GlideRecord | GlideElement | undefined {
-            return Site17Util.getCaller(this._gliderecord);
+            return Site17Util.getCaller(<GlideRecord>this._gliderecord);
         },
 
         isVip: function(): boolean {
-            return Site17Util.isVip(this._gliderecord);
+            return Site17Util.isVip(<GlideRecord>this._gliderecord);
         },
 
         getDefaultApprovalGroup: function(): GlideElementReference | undefined {
-            return getDefaultApprovalGroup(this.getCaller());
+            return getDefaultApprovalGroup(<GlideRecord>this.getCaller());
         },
 
         type: "LocationApproval"

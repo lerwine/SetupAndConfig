@@ -1779,7 +1779,7 @@ declare namespace Packages {
                  * @param {boolean} daylight
                  * @param {int} style
                  */
-                getDisplayName(daylight: boolean, style: lang.Integer);
+                getDisplayName(daylight: boolean, style: lang.Integer): lang.String;
 
                 /**
                  * Gets the ID of this time zone.
@@ -1823,7 +1823,7 @@ declare namespace Packages {
                  * Sets the time zone ID. This does not change any other data in the time zone object.
                  * @param {string} id
                  */
-                setID(id: lang.String);
+                setID(id: lang.String): void;
 
                 /**S
                  * Queries if this TimeZone uses Daylight Saving Time.
