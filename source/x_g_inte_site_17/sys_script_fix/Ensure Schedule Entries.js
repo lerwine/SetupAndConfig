@@ -1,9 +1,7 @@
-
-
 "use strict";
 // This defines the expected schedule relationships and entries
 var schedules = [{
-        sys_id: "86045f4e1b67c9101497a820f54bcb59", // Site 17 Business Day Facility Hours (0600-1800 weekdays)
+        sys_id: "86045f4e1b67c9101497a820f54bcb59",
         is_holiday: false,
         entries: [{
                 name: "0600 - 1800 Weekdays",
@@ -14,7 +12,7 @@ var schedules = [{
             }],
         child_schedules: [{ /* Site 17 Facility Holidays */ sys_id: 'c7475f021ba7c9101497a820f54bcb04', type: 'include' }]
     }, {
-        sys_id: "96f879351b27c910ec0320efe54bcb47", // Site 17 Core Hours (0900-1400 weekdays)
+        sys_id: "96f879351b27c910ec0320efe54bcb47",
         is_holiday: false,
         entries: [{
                 name: "0900-1400 Weekdays",
@@ -25,7 +23,7 @@ var schedules = [{
             }],
         child_schedules: [{ /* Site 17 Facility Holidays */ sys_id: 'c7475f021ba7c9101497a820f54bcb04', type: 'include' }]
     }, {
-        sys_id: "c7475f021ba7c9101497a820f54bcb04", // Site 17 Facility Holidays
+        sys_id: "c7475f021ba7c9101497a820f54bcb04",
         is_holiday: true,
         entries: [{
                 name: "New Year's Day",
@@ -133,7 +131,7 @@ var schedules = [{
             }],
         child_schedules: []
     }, {
-        sys_id: "cfd2d74e1b67c9101497a820f54bcb2a", // Site 17 Personnel Hours (8 hours on weekdays)
+        sys_id: "cfd2d74e1b67c9101497a820f54bcb2a",
         is_holiday: false,
         entries: [{
                 name: "0800 -1200 Weekdays",
@@ -152,7 +150,7 @@ var schedules = [{
             }],
         child_schedules: [{ /* Site 17 Facility Holidays */ sys_id: 'c7475f021ba7c9101497a820f54bcb04', type: 'include' }]
     }, {
-        sys_id: "c3849f8e1b67c9101497a820f54bcb04", // Site 17 UM/CIV Business Day Facility Hours
+        sys_id: "c3849f8e1b67c9101497a820f54bcb04",
         is_holiday: false,
         entries: [{
                 name: "0600-1800 Weekdays",
@@ -163,7 +161,7 @@ var schedules = [{
             }],
         child_schedules: [{ /* Site 17 UM/CIV Holidays */ sys_id: '46981f421ba7c9101497a820f54bcbff', type: 'include' }]
     }, {
-        sys_id: "79a01f0a1b67c9101497a820f54bcbc9", // Site 17 UM/CIV Core Hours (0900-1400 weekdays)
+        sys_id: "79a01f0a1b67c9101497a820f54bcbc9",
         is_holiday: false,
         entries: [{
                 name: "0900-1400 Weekdays",
@@ -174,7 +172,7 @@ var schedules = [{
             }],
         child_schedules: [{ /* Site 17 UM/CIV Holidays */ sys_id: '46981f421ba7c9101497a820f54bcbff', type: 'include' }]
     }, {
-        sys_id: "46981f421ba7c9101497a820f54bcbff", // Site 17 UM/CIV Holidays
+        sys_id: "46981f421ba7c9101497a820f54bcbff",
         is_holiday: true,
         entries: [{
                 name: "Presidents' Day",
@@ -209,7 +207,7 @@ var schedules = [{
             }],
         child_schedules: [{ /* Site 17 Facility Holidays */ sys_id: 'c7475f021ba7c9101497a820f54bcb04', type: 'include' }]
     }, {
-        sys_id: "5d23974e1b67c9101497a820f54bcbeb", // Site 17 UM/CIV Personnel Hours (8 hours on weekdays)
+        sys_id: "5d23974e1b67c9101497a820f54bcbeb",
         is_holiday: false,
         entries: [{
                 name: "0800 -1200 Weekdays",
