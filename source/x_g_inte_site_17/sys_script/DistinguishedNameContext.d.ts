@@ -1,4 +1,4 @@
-/// <reference path="../servicnowCommon.d.ts" />
+/// <reference path="../../types/server/sn_typings_server_scoped/index.d.ts" />
 interface IDistinguishedNameContextBase extends $$snClass.ICustomClassBase<IDistinguishedNameContextBase, "DistinguishedNameContext"> {
     /**
      * Has a true value if {@link IDistinguishedNameContextBase#_targetObject} is a sys_user_group; otherwise, false

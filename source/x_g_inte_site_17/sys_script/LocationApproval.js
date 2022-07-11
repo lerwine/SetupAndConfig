@@ -1,5 +1,5 @@
 "use strict";
-/// <reference path="../servicnowCommon.d.ts" />
+/// <reference path="../../types/server/sn_typings_server_scoped/index.d.ts" />
 var LocationApproval = (function () {
     var locationApprovalConstructor = Class.create();
     function getDefaultApprovalGroup(source) {
@@ -38,19 +38,19 @@ var LocationApproval = (function () {
             if (source instanceof GlideRecord) {
                 if (source.isNewRecord() || !source.isValidRecord())
                     throw new Error("Not a valid task record");
-                this._gliderecord = source;
+                this._glideRecord = source;
             }
             else {
-                this._gliderecord = source.getRefRecord();
-                if (gs.nil(this._gliderecord))
+                this._glideRecord = source.getRefRecord();
+                if (gs.nil(this._glideRecord))
                     throw new Error("No glide record referenced");
             }
         },
         getCaller: function () {
-            return Site17Util.getCaller(this._gliderecord);
+            return Site17Util.getCaller(this._glideRecord);
         },
         isVip: function () {
-            return Site17Util.isVip(this._gliderecord);
+            return Site17Util.isVip(this._glideRecord);
         },
         getDefaultApprovalGroup: function () {
             return getDefaultApprovalGroup(this.getCaller());

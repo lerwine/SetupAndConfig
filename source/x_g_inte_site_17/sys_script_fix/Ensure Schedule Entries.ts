@@ -323,8 +323,8 @@ for (var s = 0; s < schedules.length; s++) {
         }
     }
     // Ensure child schedules are as expected
-    for (var c = 0; c < cmn_schedule.child_schedules.length; c++) {
-        var child_schedule: IChildScheduleDefinition = cmn_schedule.child_schedules[c];
+    for (var n: number = 0; n < cmn_schedule.child_schedules.length; n++) {
+        var child_schedule: IChildScheduleDefinition = cmn_schedule.child_schedules[n];
         gr = new GlideRecord("cmn_other_schedule");
         gr.addQuery('schedule', cmn_schedule.sys_id);
         gr.addQuery('child_schedule', child_schedule.sys_id);

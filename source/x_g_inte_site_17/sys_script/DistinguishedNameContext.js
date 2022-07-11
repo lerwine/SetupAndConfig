@@ -1,5 +1,5 @@
 "use strict";
-/// <reference path="../servicnowCommon.d.ts" />
+/// <reference path="../../types/server/sn_typings_server_scoped/index.d.ts" />
 var DistinguishedNameContext = (function () {
     var distinguishedNameContextConstructor = Class.create();
     distinguishedNameContextConstructor.prototype = {

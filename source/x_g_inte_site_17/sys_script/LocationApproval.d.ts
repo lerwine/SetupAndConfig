@@ -1,13 +1,5 @@
-/// <reference path="../servicnowCommon.d.ts" />
+/// <reference path="../../types/server/sn_typings_server_scoped/index.d.ts" />
 interface ILocationApprovalBase extends $$snClass.ICustomClassBase<ILocationApprovalBase, "LocationApproval"> {
-    /**
-     * The target {@link GlideRecord}.
-     *
-     * @type {GlideRecord}
-     * @memberof ILocationApprovalBase
-     * @private
-     */
-    _gliderecord?: GlideRecord;
     /**
      * Gets the target user of the target record (ie. caller, requested_for).
      *
@@ -28,10 +20,17 @@ interface ILocationApprovalBase extends $$snClass.ICustomClassBase<ILocationAppr
     getDefaultApprovalGroup(): GlideElementReference | undefined;
 }
 interface ILocationApprovalPrototype extends $$snClass.ICustomClassPrototype1<ILocationApprovalBase, ILocationApprovalPrototype, "LocationApproval", GlideRecord | GlideElementReference>, ILocationApprovalBase {
+    /**
+     * The target {@link GlideRecord}.
+     *
+     * @type {GlideRecord}
+     * @memberof ILocationApprovalPrototype
+     * @private
+     */
+    _glideRecord?: GlideRecord;
 }
-interface ILocationApproval extends Readonly<ILocationApprovalPrototype> {
-}
-interface LocationApprovalConstructor extends $$snClass.CustomClassConstructor1<ILocationApprovalBase, ILocationApprovalPrototype, ILocationApproval, GlideRecord | GlideElementReference> {
+declare type LocationApproval = Readonly<ILocationApprovalPrototype>;
+interface LocationApprovalConstructor extends $$snClass.CustomClassConstructor1<ILocationApprovalBase, ILocationApprovalPrototype, LocationApproval, GlideRecord | GlideElementReference> {
     /**
      * Creates a new {@link LocationApproval} instance.
      *
@@ -40,7 +39,7 @@ interface LocationApprovalConstructor extends $$snClass.CustomClassConstructor1<
      * @memberof LocationApprovalConstructor
      * @returns {ILocationApproval} A new {@link LocationApproval} instance.
      */
-    new (source: GlideRecord | GlideElementReference): ILocationApproval;
+    new (source: GlideRecord | GlideElementReference): LocationApproval;
     /**
      * Creates a new {@link LocationApproval} instance.
      *
@@ -49,7 +48,7 @@ interface LocationApprovalConstructor extends $$snClass.CustomClassConstructor1<
      * @memberof LocationApprovalConstructor
      * @returns {ILocationApproval} A new {@link LocationApproval} instance.
      */
-    (source: GlideRecord | GlideElementReference): ILocationApproval;
+    (source: GlideRecord | GlideElementReference): LocationApproval;
     /**
      * Looks up the default approval group.
      *

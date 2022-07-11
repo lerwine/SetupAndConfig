@@ -1,5 +1,5 @@
 "use strict";
-/// <reference path="../servicnowCommon.d.ts" />
+/// <reference path="../../types/server/sn_typings_server_scoped/index.d.ts" />
 var Site17Util = (function () {
     var site17UtilConstructor = Class.create();
     site17UtilConstructor.isUser = function (target) {

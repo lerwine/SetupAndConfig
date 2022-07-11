@@ -1,4 +1,4 @@
-/// <reference path="../servicnowCommon.d.ts" />
+/// <reference path="../../types/server/sn_typings_server_scoped/index.d.ts" />
 
 interface IProfileFieldDefinition {
     /**
@@ -246,9 +246,9 @@ interface IProfileValidatorBase extends $$snClass.ICustomClassBase<IProfileValid
 interface IProfileValidatorPrototype extends $$snClass.ICustomClassPrototype0<IProfileValidatorBase, IProfileValidatorPrototype, "ProfileValidator">, IProfileValidatorBase {
 }
 
-interface IProfileValidator extends Readonly<IProfileValidatorBase> { }
+declare type ProfileValidator = Readonly<IProfileValidatorBase>;
 
-interface ProfileValidatorConstructor extends $$snClass.CustomClassConstructor0<IProfileValidatorBase, IProfileValidatorPrototype, IProfileValidator> {
+interface ProfileValidatorConstructor extends $$snClass.CustomClassConstructor0<IProfileValidatorBase, IProfileValidatorPrototype, ProfileValidator> {
     /**
      * Indicates whether the user lookup result represents a fatal error.
      *
@@ -450,21 +450,21 @@ const ProfileValidator: ProfileValidatorConstructor = (function (): ProfileValid
         };
     };
 
-    profileValidatorConstructor.prototype = Object.extendsObject<IGlideAjax, IProfileValidatorPrototype>(global.AbstractAjaxProcessor, {
+    profileValidatorConstructor.prototype = Object.extendsObject<IAbstractAjaxProcessor, IProfileValidatorPrototype>(global.AbstractAjaxProcessor, {
         initialize: function() { },
 
-        getUserProfileCompliance: function(): string | undefined {
-            var response = profileValidatorConstructor.getUserProfileCompliance((<IGlideAjax><any>this).getParameter('sysparm_user_id'));
+        getUserProfileCompliance: function(this: IProfileValidatorPrototype & IAbstractAjaxProcessor): string | undefined {
+            var response = profileValidatorConstructor.getUserProfileCompliance(this.getParameter('sysparm_user_id'));
             if (profileValidatorConstructor.isUserLookupFault(response))
-            (<IGlideAjax><any>this).setError(response);
+                this.setError(response);
             else
                 return JSON.stringify(response);
         },
         
-        getUserNotifications: function(): string | undefined {
-            var response = profileValidatorConstructor.getUserNotifications((<IGlideAjax><any>this).getParameter('sysparm_user_id'));
+        getUserNotifications: function(this: IProfileValidatorPrototype & IAbstractAjaxProcessor): string | undefined {
+            var response = profileValidatorConstructor.getUserNotifications(this.getParameter('sysparm_user_id'));
             if (profileValidatorConstructor.isUserLookupFault(response))
-            (<IGlideAjax><any>this).setError(response);
+                this.setError(response);
             else
                 return JSON.stringify(response);
         },
@@ -474,3 +474,5 @@ const ProfileValidator: ProfileValidatorConstructor = (function (): ProfileValid
 
     return profileValidatorConstructor;
 })();
+
+var c: ProfileValidator = new ProfileValidator();

@@ -1,4 +1,4 @@
-/// <reference path="../servicnowCommon.d.ts" />
+/// <reference path="../../types/server/sn_typings_server_scoped/index.d.ts" />
 interface ISite17UtilBase extends $$snClass.ICustomClassBase<ISite17UtilBase, "Site17Util"> {
     isDnContainedBy(sourceDN: string, containerDN: string): "true" | "false";
     getUsersContainerDN(): string;
@@ -12,9 +12,8 @@ interface ISite17UtilBase extends $$snClass.ICustomClassBase<ISite17UtilBase, "S
 }
 interface ISite17UtilPrototype extends $$snClass.ICustomClassPrototype0<ISite17UtilBase, ISite17UtilPrototype, "Site17Util">, ISite17UtilBase {
 }
-interface ISite17Util extends Readonly<ISite17UtilBase> {
-}
-interface Site17UtilConstructor extends $$snClass.CustomClassConstructor0<ISite17UtilBase, ISite17UtilPrototype, ISite17Util> {
+declare type Site17Util = Readonly<ISite17UtilBase>;
+interface Site17UtilConstructor extends $$snClass.CustomClassConstructor0<ISite17UtilBase, ISite17UtilPrototype, Site17Util> {
     isUser(target: GlideRecord | GlideElementReference): boolean;
     isGroup(target: GlideRecord | GlideElementReference): boolean;
     isVip(target: GlideRecord | GlideElementReference): boolean;

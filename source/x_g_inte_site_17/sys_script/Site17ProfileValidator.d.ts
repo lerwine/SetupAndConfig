@@ -1,4 +1,4 @@
-/// <reference path="../servicnowCommon.d.ts" />
+/// <reference path="../../types/server/sn_typings_server_scoped/index.d.ts" />
 interface IProfileFieldDefinition {
     /**
      * The table column name.
@@ -216,9 +216,8 @@ interface IProfileValidatorBase extends $$snClass.ICustomClassBase<IProfileValid
 }
 interface IProfileValidatorPrototype extends $$snClass.ICustomClassPrototype0<IProfileValidatorBase, IProfileValidatorPrototype, "ProfileValidator">, IProfileValidatorBase {
 }
-interface IProfileValidator extends Readonly<IProfileValidatorBase> {
-}
-interface ProfileValidatorConstructor extends $$snClass.CustomClassConstructor0<IProfileValidatorBase, IProfileValidatorPrototype, IProfileValidator> {
+declare type ProfileValidator = Readonly<IProfileValidatorBase>;
+interface ProfileValidatorConstructor extends $$snClass.CustomClassConstructor0<IProfileValidatorBase, IProfileValidatorPrototype, ProfileValidator> {
     /**
      * Indicates whether the user lookup result represents a fatal error.
      *
@@ -261,3 +260,4 @@ interface ProfileValidatorConstructor extends $$snClass.CustomClassConstructor0<
     getUserNotifications(user: GlideRecord | GlideElementReference | string): IUserNotificationsResult;
 }
 declare const ProfileValidator: ProfileValidatorConstructor;
+declare var c: ProfileValidator;

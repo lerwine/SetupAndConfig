@@ -1,5 +1,5 @@
 "use strict";
-/// <reference path="../servicnowCommon.d.ts" />
+/// <reference path="../../types/server/sn_typings_server_scoped/index.d.ts" />
 var ProfileValidator = (function () {
     var profileValidatorConstructor = Class.create();
     var SYSID_RE = /^[\da-f]{32}$/i;
@@ -176,4 +176,5 @@ var ProfileValidator = (function () {
     });
     return profileValidatorConstructor;
 })();
+var c = new ProfileValidator();
 //# sourceMappingURL=Site17ProfileValidator.js.map
