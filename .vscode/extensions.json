@@ -1,0 +1,25 @@
+{
+    "recommendations": [
+        "alefragnani.bookmarks",
+        "formulahendry.auto-close-tag",
+        "hookyqr.jsdoctagcomplete",
+        "oouo-diogo-perdigao.docthis",
+        "donjayamanne.git-extension-pack",
+        "github.vscode-pull-request-github",
+        "mkaufman.htmlhint",
+        "xabikos.javascriptsnippets",
+        "ms-vscode.vscode-typescript-next",
+        "dbaeumer.vscode-eslint",
+        "yzhang.markdown-all-in-one",
+        "shd101wyy.markdown-preview-enhanced",
+        "davidanson.vscode-markdownlint",
+        "quicktype.quicktype",
+        "doggy8088.quicktype-refresh",
+        "ms-vscode.powershell",
+        "wayou.vscode-todo-highlight",
+        "amodio.tsl-problem-matcher",
+        "redhat.vscode-xml",
+        "saposs.xml-toolkit",
+        "DotJoshJohnson.xml"
+    ]
+}
