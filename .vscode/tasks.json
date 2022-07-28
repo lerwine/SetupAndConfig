@@ -5,29 +5,41 @@
 			"label": "Build Site 17",
 			"type": "typescript",
 			"tsconfig": "source/x_g_inte_site_17/tsconfig.json",
-			"options": { "cwd": "${workspaceFolder}/source/x_g_inte_site_17" },
-			"group": "build",
-			"problemMatcher": ["$tsc"],
+			"options": {
+				"cwd": "${workspaceFolder}/source/x_g_inte_site_17"
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [
+				"$tsc"
+			],
 			"detail": "tsc --build - source/x_g_inte_site_17/tsconfig.json"
 		},
 		{
 			"label": "Build Multimedia Services Server",
 			"type": "typescript",
 			"tsconfig": "source/x_44813_mmservices/server/tsconfig.json",
-			"options": { "cwd": "${workspaceFolder}/source/x_44813_mmservices/server" },
-			"group": {
-				"kind": "build",
-				"isDefault": true
+			"options": {
+				"cwd": "${workspaceFolder}/source/x_44813_mmservices/server"
 			},
-			"problemMatcher": ["$tsc"],
+			"group": "build",
+			"problemMatcher": [
+				"$tsc"
+			],
 			"detail": "tsc --build - source/x_44813_mmservices/server/tsconfig.json"
 		},
 		{
 			"type": "typescript",
 			"tsconfig": "source/x_44813_mmservices/client/tsconfig.json",
-			"options": { "cwd": "${workspaceFolder}/source/x_44813_mmservices/client" },
+			"options": {
+				"cwd": "${workspaceFolder}/source/x_44813_mmservices/client"
+			},
 			"group": "build",
-			"problemMatcher": ["$tsc"],
+			"problemMatcher": [
+				"$tsc"
+			],
 			"label": "Build Multimedia Services Client",
 			"detail": "tsc --build - source/x_44813_mmservices/client/tsconfig.json"
 		}

@@ -454,7 +454,7 @@ const ProfileValidator: ProfileValidatorConstructor = (function (): ProfileValid
         initialize: function() { },
 
         getUserProfileCompliance: function(this: IProfileValidatorPrototype & IAbstractAjaxProcessor): string | undefined {
-            var response = profileValidatorConstructor.getUserProfileCompliance(this.getParameter('sysparm_user_id'));
+            var response = profileValidatorConstructor.getUserProfileCompliance('' + this.getParameter('sysparm_user_id'));
             if (profileValidatorConstructor.isUserLookupFault(response))
                 this.setError(response);
             else
@@ -462,7 +462,7 @@ const ProfileValidator: ProfileValidatorConstructor = (function (): ProfileValid
         },
         
         getUserNotifications: function(this: IProfileValidatorPrototype & IAbstractAjaxProcessor): string | undefined {
-            var response = profileValidatorConstructor.getUserNotifications(this.getParameter('sysparm_user_id'));
+            var response = profileValidatorConstructor.getUserNotifications('' + this.getParameter('sysparm_user_id'));
             if (profileValidatorConstructor.isUserLookupFault(response))
                 this.setError(response);
             else

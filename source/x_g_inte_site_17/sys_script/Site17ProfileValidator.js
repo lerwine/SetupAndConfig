@@ -159,14 +159,14 @@ var ProfileValidator = (function () {
     profileValidatorConstructor.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
         initialize: function () { },
         getUserProfileCompliance: function () {
-            var response = profileValidatorConstructor.getUserProfileCompliance(this.getParameter('sysparm_user_id'));
+            var response = profileValidatorConstructor.getUserProfileCompliance('' + this.getParameter('sysparm_user_id'));
             if (profileValidatorConstructor.isUserLookupFault(response))
                 this.setError(response);
             else
                 return JSON.stringify(response);
         },
         getUserNotifications: function () {
-            var response = profileValidatorConstructor.getUserNotifications(this.getParameter('sysparm_user_id'));
+            var response = profileValidatorConstructor.getUserNotifications('' + this.getParameter('sysparm_user_id'));
             if (profileValidatorConstructor.isUserLookupFault(response))
                 this.setError(response);
             else
