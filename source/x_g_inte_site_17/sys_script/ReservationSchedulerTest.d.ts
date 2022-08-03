@@ -1,2 +1,6 @@
-declare namespace sn_atf {
+declare namespace constructorTest {
+}
+declare namespace normalizationFunctionsTest {
+}
+declare namespace getAvailabilitiesInRangeTest {
 }

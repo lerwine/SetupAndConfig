@@ -32,31 +32,31 @@ interface reservationTypeFields extends IExtendedGlideTableProperties {
      */
     assignment_group: sys_user_groupProperty;
     /**
-     * This is the minimum appointment duration. The minimum value is 1 minute, and values are rounded up to the nearest minute.
+     * Minimum Duration
      * @type {$$property.GlideObject}
      * @memberof reservationTypeFields
-     * @summary Minimum Duration
+     * @description
      */
     minimum_duration: $$property.GlideObject;
     /**
-     * This is the maximum appointment duration. This cannot be less than the Minimum Duration, and values are rounded up to the nearest minute.
+     * Maximum Duration
      * @type {$$property.GlideObject}
      * @memberof reservationTypeFields
-     * @summary Maximum Duration
+     * @description This is the maximum appointment duration. This cannot be less than the Minimum Duration, and values are rounded up to the nearest minute.
      */
     maximum_duration: $$property.GlideObject;
     /**
-     * This is the length by which appointment durations can be incremented. The minimum value is 1 minute, and values are rounded up to the nearest minute.
+     * Duration Increment
      * @type {$$property.GlideObject}
      * @memberof reservationTypeFields
-     * @summary Duration Increment
+     * @description This is the length by which appointment durations can be incremented. The minimum value is 1 minute, and values are rounded up to the nearest minute.
      */
     duration_increment: $$property.GlideObject;
     /**
-     * This is the interval at which appointments must be scheduled. The minimum value is 1 minute, and values are rounded up to the nearest minute.
+     * Fixed Start Time Interval
      * @type {$$property.GlideObject}
      * @memberof reservationTypeFields
-     * @summary Fixed Start Time Interval
+     * @description This is the interval at which appointments must be scheduled. The minimum value is 1 minute, and values are rounded up to the nearest minute.
      */
     start_time_interval: $$property.GlideObject;
     /**
@@ -80,7 +80,7 @@ interface ITimeSlot {
 }
 interface IAvailabilitySearcherBase extends $$snClass.ICustomClassBase<IAvailabilitySearcherBase, "AvailabilitySearcher"> {
     getNext(limit?: GlideDateTime): ITimeSlot | undefined;
-    getRange(toDateTime: GlideDateTime): ITimeSlot[];
+    getAvailabilityRanges(toDateTime: GlideDateTime): ITimeSlot[];
 }
 interface IAvailabilitySearcherPrototype extends $$snClass.ICustomClassPrototypeN<IAvailabilitySearcherBase, IAvailabilitySearcherPrototype, "AvailabilitySearcher">, IAvailabilitySearcherBase {
     _schedule: GlideSchedule;
@@ -125,37 +125,44 @@ interface IReservationSchedulerBase extends $$snClass.ICustomClassBase<IReservat
      */
     assignment_group: string;
     /**
-     * This is the minimum appointment duration. The minimum value is 1 minute, and values are rounded up to the nearest minute.
+     * Minimum Duration
      * @type {GlideDuration}
      * @memberof IAppointmentUtilBase
-     * @summary Minimum Duration
+     * @description This is the minimum appointment duration. The minimum value is 1 minute, and values are rounded up to the nearest minute.
      */
     minimum_duration: GlideDuration;
     /**
-     * This is the maximum appointment duration. This cannot be less than the Minimum Duration, and values are rounded up to the nearest minute.
+     * Maximum Duration
      * @type {GlideDuration}
      * @memberof IAppointmentUtilBase
-     * @summary Maximum Duration
+     * @description This is the maximum appointment duration. This cannot be less than the Minimum Duration, and values are rounded up to the nearest minute.
      */
     maximum_duration: GlideDuration;
     /**
-     * This is the length by which appointment durations can be incremented. The minimum value is 1 minute, and values are rounded up to the nearest minute.
-    * @type {GlideDuration}
-    * @memberof IAppointmentUtilBase
-     * @summary Duration Increment
+     * Duration Increment
+     * @type {GlideDuration}
+     * @memberof IAppointmentUtilBase
+     * @description This is the length by which appointment durations can be incremented. The minimum value is 1 minute, and values are rounded up to the nearest minute.
      */
     duration_increment: GlideDuration;
     /**
-     * This is the interval at which appointments must be scheduled. The minimum value is 1 minute, and values are rounded up to the nearest minute.
-    * @type {GlideDuration}
-    * @memberof IAppointmentUtilBase
-     * @summary Fixed Start Time Interval
+     * Fixed Start Time Interval
+     * @type {GlideDuration}
+     * @memberof IAppointmentUtilBase
+     * @description This is the interval at which appointments must be scheduled. The minimum value is 1 minute, and values are rounded up to the nearest minute.
      */
     start_time_interval: GlideDuration;
+    normalizeDuration(value: GlideDuration): number;
+    getNormalizedDuration(value: GlideDuration): GlideDuration;
+    normalizeStartDate(value: GlideDateTime): number;
+    getNormalizedStartDate(value: GlideDateTime): GlideDateTime;
     getNextAvailableTimeSlot(fromDateTime: GlideDateTime, toDateTime?: GlideDateTime, minimumDuration?: GlideDuration, maximumDuration?: GlideDuration): ITimeSlot | undefined;
     getAvailabilitiesInRange(fromDateTime: GlideDateTime, toDateTime: GlideDateTime, minimumDuration?: GlideDuration, maximumDuration?: GlideDuration): ITimeSlot[];
+    isAvailable(startDateTime: GlideDateTime, duration: GlideDuration): boolean;
+    addAppointment(name: string, startDateTime: GlideDateTime, duration: GlideDuration): cmn_schedule_spanGlideRecord | undefined;
 }
 interface IReservationSchedulerPrototype extends $$snClass.ICustomClassPrototype3<IReservationSchedulerBase, IReservationSchedulerPrototype, "ReservationScheduler", reservationTypeGlideRecord | string, boolean, string>, IReservationSchedulerBase {
+    _scheduleId: string;
 }
 declare type ReservationScheduler = Readonly<IReservationSchedulerBase>;
 interface ReservationSchedulerConstructor extends $$snClass.CustomClassConstructor3<IReservationSchedulerBase, IReservationSchedulerPrototype, ReservationScheduler, reservationTypeGlideRecord | string, boolean, string> {
