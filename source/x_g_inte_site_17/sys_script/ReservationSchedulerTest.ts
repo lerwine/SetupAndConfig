@@ -359,7 +359,6 @@ namespace normalizationFunctionsTest {
     }
 
     (function (outputs: sn_atf.ITestStepOutputs, steps: sn_atf.ITestStepsFunc, stepResult: sn_atf.ITestStepResult, assertEqual: sn_atf.IAssertEqualFunc) {
-        stepResult.setOutputMessage(JSON.stringify(steps('8b4ed58697051110d87839000153afae')));
         var schedule_sys_id = '' + steps('8b4ed58697051110d87839000153afae').sys_id;
         var group_sys_id = '' + steps('f70fd5c697051110d87839000153af81').sys_id;
         
@@ -549,7 +548,6 @@ namespace getAvailabilitiesInRangeTest {
     }
 
     (function (outputs: sn_atf.ITestStepOutputs, steps: sn_atf.ITestStepsFunc, stepResult: sn_atf.ITestStepResult, assertEqual: sn_atf.IAssertEqualFunc) {
-        stepResult.setOutputMessage(JSON.stringify(steps('8b4ed58697051110d87839000153afae')));
         var schedule_sys_id = '' + steps('8b4ed58697051110d87839000153afae').sys_id;
 
         // Create "zero" date/time to tomorrow at 00:00

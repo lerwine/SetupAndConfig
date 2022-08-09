@@ -303,7 +303,6 @@ var constructorTest;
 var normalizationFunctionsTest;
 (function (normalizationFunctionsTest) {
     (function (outputs, steps, stepResult, assertEqual) {
-        stepResult.setOutputMessage(JSON.stringify(steps('8b4ed58697051110d87839000153afae')));
         var schedule_sys_id = '' + steps('8b4ed58697051110d87839000153afae').sys_id;
         var group_sys_id = '' + steps('f70fd5c697051110d87839000153af81').sys_id;
         for (var _i = 0, _a = [
@@ -462,7 +461,6 @@ var normalizationFunctionsTest;
 var getAvailabilitiesInRangeTest;
 (function (getAvailabilitiesInRangeTest) {
     (function (outputs, steps, stepResult, assertEqual) {
-        stepResult.setOutputMessage(JSON.stringify(steps('8b4ed58697051110d87839000153afae')));
         var schedule_sys_id = '' + steps('8b4ed58697051110d87839000153afae').sys_id;
         // Create "zero" date/time to tomorrow at 00:00
         var dhz = new GlideDateTime();
