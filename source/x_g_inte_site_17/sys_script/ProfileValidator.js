@@ -175,5 +175,4 @@ var ProfileValidator = (function () {
     });
     return profileValidatorConstructor;
 })();
-var c = new ProfileValidator();
-//# sourceMappingURL=Site17ProfileValidator.js.map
+//# sourceMappingURL=ProfileValidator.js.map

@@ -262,4 +262,3 @@ interface ProfileValidatorConstructor extends $$snClass.CustomAjaxClassConstruct
     getUserNotifications(user: GlideRecord | GlideElementReference | string): IUserNotificationsResult;
 }
 declare const ProfileValidator: ProfileValidatorConstructor;
-declare var c: ProfileValidator;

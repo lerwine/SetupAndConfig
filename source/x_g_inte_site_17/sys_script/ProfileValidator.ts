@@ -474,5 +474,3 @@ const ProfileValidator: ProfileValidatorConstructor = (function (): ProfileValid
 
     return profileValidatorConstructor;
 })();
-
-var c: ProfileValidator = new ProfileValidator();
