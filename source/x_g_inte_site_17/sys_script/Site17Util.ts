@@ -266,10 +266,6 @@ const Site17Util: Site17UtilConstructor = (function (): Site17UtilConstructor {
     };
 
     site17UtilConstructor.prototype = Object.extendsObject<IAbstractAjaxProcessor, ISite17UtilPrototype>(global.AbstractAjaxProcessor, {
-        // initialize: function(this: ISite17UtilPrototype & IAbstractAjaxProcessor, request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController) {
-        //     global.AbstractAjaxProcessor.prototype.initialize.call(this, request, responseXML, gc);
-        // },
-        
         isDnContainedBy: function(sourceDN: string, containerDN: string): "true"|"false" { return <"true"|"false">JSON.stringify(site17UtilConstructor.isDnContainedBy(sourceDN, containerDN)); },
         
         getUsersContainerDN: function() { return JSON.stringify(site17UtilConstructor.getUsersContainerDN()); },

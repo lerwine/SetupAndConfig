@@ -210,9 +210,6 @@ var Site17Util = (function () {
         return gr.next() && isGroupDN('' + gr.source);
     };
     site17UtilConstructor.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
-        // initialize: function(this: ISite17UtilPrototype & IAbstractAjaxProcessor, request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController) {
-        //     global.AbstractAjaxProcessor.prototype.initialize.call(this, request, responseXML, gc);
-        // },
         isDnContainedBy: function (sourceDN, containerDN) { return JSON.stringify(site17UtilConstructor.isDnContainedBy(sourceDN, containerDN)); },
         getUsersContainerDN: function () { return JSON.stringify(site17UtilConstructor.getUsersContainerDN()); },
         getGroupsContainerDN: function () { return JSON.stringify(site17UtilConstructor.getGroupsContainerDN()); },
