@@ -26,7 +26,6 @@ var Site17MMServicesUtil = (function () {
         }).filter(function (value) { return typeof value !== 'undefined'; });
     };
     site17MMServicesUtilConstructor.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
-        initialize: function () { },
         getDefaultMinLeadTimeDays: function () { return Site17MMServicesUtil.getDefaultMinLeadTimeDays(); },
         getDailyHours: function () {
             var dailyHours = site17MMServicesUtilConstructor.getDailyHours();

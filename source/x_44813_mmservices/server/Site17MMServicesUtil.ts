@@ -15,12 +15,12 @@ interface ISite17MMServicesUtilBase extends $$snClass.ICustomClassBase<ISite17MM
     getDailyHours(): void;
 }
 
-interface ISite17MMServicesUtilPrototype extends $$snClass.ICustomClassPrototype0<ISite17MMServicesUtilBase, ISite17MMServicesUtilPrototype, "Site17MMServicesUtil">, ISite17MMServicesUtilBase {
+interface ISite17MMServicesUtilPrototype extends $$snClass.ICustomAjaxClassPrototype<ISite17MMServicesUtilBase, ISite17MMServicesUtilPrototype, "Site17MMServicesUtil">, ISite17MMServicesUtilBase {
 }
 
 declare type Site17MMServicesUtil = Readonly<ISite17MMServicesUtilBase>;
 
-interface Site17MMServicesUtilConstructor extends $$snClass.CustomClassConstructor0<ISite17MMServicesUtilBase, ISite17MMServicesUtilPrototype, Site17MMServicesUtil> {
+interface Site17MMServicesUtilConstructor extends $$snClass.CustomAjaxClassConstructor<ISite17MMServicesUtilBase, ISite17MMServicesUtilPrototype, Site17MMServicesUtil> {
     DATE_PATTERN: RegExp;
     TIME_PATTERN: RegExp;
     LINE_BREAK_PATTERN: RegExp;
@@ -62,8 +62,6 @@ const Site17MMServicesUtil: Site17MMServicesUtilConstructor = (function (): Site
     }
 
     site17MMServicesUtilConstructor.prototype = Object.extendsObject<IAbstractAjaxProcessor, ISite17MMServicesUtilPrototype>(global.AbstractAjaxProcessor, {
-        initialize: function() { },
-
         getDefaultMinLeadTimeDays: function(): number { return Site17MMServicesUtil.getDefaultMinLeadTimeDays(); },
 
         getDailyHours: function(): string {
