@@ -12,12 +12,14 @@ interface ISite17UtilBase extends $$snClass.ICustomClassBase<ISite17UtilBase, "S
     isSite17Group(sys_user_group: string): "true" | "false";
 }
 
-interface ISite17UtilPrototype extends $$snClass.ICustomClassPrototype0<ISite17UtilBase, ISite17UtilPrototype, "Site17Util">, ISite17UtilBase {
+interface ISite17UtilPrototype extends $$snClass.ICustomAjaxClassPrototype<ISite17UtilBase, ISite17UtilPrototype, "Site17Util">, ISite17UtilBase {
 }
 
 declare type Site17Util = Readonly<ISite17UtilBase>;
 
-interface Site17UtilConstructor extends $$snClass.CustomClassConstructor0<ISite17UtilBase, ISite17UtilPrototype, Site17Util> {
+interface Site17UtilConstructor extends $$snClass.CustomAjaxClassConstructor<ISite17UtilBase, ISite17UtilPrototype, Site17Util> {
+    new(request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController): Site17Util;
+    (request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController): Site17Util;
     isUser(target: GlideRecord | GlideElementReference): boolean;
     isGroup(target: GlideRecord | GlideElementReference): boolean;
     isVip(target: GlideRecord | GlideElementReference): boolean;
@@ -264,8 +266,10 @@ const Site17Util: Site17UtilConstructor = (function (): Site17UtilConstructor {
     };
 
     site17UtilConstructor.prototype = Object.extendsObject<IAbstractAjaxProcessor, ISite17UtilPrototype>(global.AbstractAjaxProcessor, {
-        initialize: function() { },
-
+        // initialize: function(this: ISite17UtilPrototype & IAbstractAjaxProcessor, request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController) {
+        //     global.AbstractAjaxProcessor.prototype.initialize.call(this, request, responseXML, gc);
+        // },
+        
         isDnContainedBy: function(sourceDN: string, containerDN: string): "true"|"false" { return <"true"|"false">JSON.stringify(site17UtilConstructor.isDnContainedBy(sourceDN, containerDN)); },
         
         getUsersContainerDN: function() { return JSON.stringify(site17UtilConstructor.getUsersContainerDN()); },

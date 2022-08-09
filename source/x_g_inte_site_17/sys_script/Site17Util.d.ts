@@ -10,10 +10,12 @@ interface ISite17UtilBase extends $$snClass.ICustomClassBase<ISite17UtilBase, "S
     isSite17User(source: string): "true" | "false";
     isSite17Group(sys_user_group: string): "true" | "false";
 }
-interface ISite17UtilPrototype extends $$snClass.ICustomClassPrototype0<ISite17UtilBase, ISite17UtilPrototype, "Site17Util">, ISite17UtilBase {
+interface ISite17UtilPrototype extends $$snClass.ICustomAjaxClassPrototype<ISite17UtilBase, ISite17UtilPrototype, "Site17Util">, ISite17UtilBase {
 }
 declare type Site17Util = Readonly<ISite17UtilBase>;
-interface Site17UtilConstructor extends $$snClass.CustomClassConstructor0<ISite17UtilBase, ISite17UtilPrototype, Site17Util> {
+interface Site17UtilConstructor extends $$snClass.CustomAjaxClassConstructor<ISite17UtilBase, ISite17UtilPrototype, Site17Util> {
+    new (request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController): Site17Util;
+    (request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController): Site17Util;
     isUser(target: GlideRecord | GlideElementReference): boolean;
     isGroup(target: GlideRecord | GlideElementReference): boolean;
     isVip(target: GlideRecord | GlideElementReference): boolean;

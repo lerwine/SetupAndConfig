@@ -157,7 +157,6 @@ var ProfileValidator = (function () {
         };
     };
     profileValidatorConstructor.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
-        initialize: function () { },
         getUserProfileCompliance: function () {
             var response = profileValidatorConstructor.getUserProfileCompliance('' + this.getParameter('sysparm_user_id'));
             if (profileValidatorConstructor.isUserLookupFault(response))

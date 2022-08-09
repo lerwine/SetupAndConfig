@@ -243,12 +243,14 @@ interface IProfileValidatorBase extends $$snClass.ICustomClassBase<IProfileValid
     getUserNotifications(): string | undefined;
 }
 
-interface IProfileValidatorPrototype extends $$snClass.ICustomClassPrototype0<IProfileValidatorBase, IProfileValidatorPrototype, "ProfileValidator">, IProfileValidatorBase {
+interface IProfileValidatorPrototype extends $$snClass.ICustomAjaxClassPrototype<IProfileValidatorBase, IProfileValidatorPrototype, "ProfileValidator">, IProfileValidatorBase {
 }
 
 declare type ProfileValidator = Readonly<IProfileValidatorBase>;
 
-interface ProfileValidatorConstructor extends $$snClass.CustomClassConstructor0<IProfileValidatorBase, IProfileValidatorPrototype, ProfileValidator> {
+interface ProfileValidatorConstructor extends $$snClass.CustomAjaxClassConstructor<IProfileValidatorBase, IProfileValidatorPrototype, ProfileValidator> {
+    new(request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController): ProfileValidator;
+    (request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController): ProfileValidator;
     /**
      * Indicates whether the user lookup result represents a fatal error.
      *
@@ -451,8 +453,6 @@ const ProfileValidator: ProfileValidatorConstructor = (function (): ProfileValid
     };
 
     profileValidatorConstructor.prototype = Object.extendsObject<IAbstractAjaxProcessor, IProfileValidatorPrototype>(global.AbstractAjaxProcessor, {
-        initialize: function() { },
-
         getUserProfileCompliance: function(this: IProfileValidatorPrototype & IAbstractAjaxProcessor): string | undefined {
             var response = profileValidatorConstructor.getUserProfileCompliance('' + this.getParameter('sysparm_user_id'));
             if (profileValidatorConstructor.isUserLookupFault(response))

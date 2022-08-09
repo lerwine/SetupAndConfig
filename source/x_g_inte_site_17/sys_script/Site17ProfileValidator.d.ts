@@ -214,10 +214,12 @@ interface IProfileValidatorBase extends $$snClass.ICustomClassBase<IProfileValid
      */
     getUserNotifications(): string | undefined;
 }
-interface IProfileValidatorPrototype extends $$snClass.ICustomClassPrototype0<IProfileValidatorBase, IProfileValidatorPrototype, "ProfileValidator">, IProfileValidatorBase {
+interface IProfileValidatorPrototype extends $$snClass.ICustomAjaxClassPrototype<IProfileValidatorBase, IProfileValidatorPrototype, "ProfileValidator">, IProfileValidatorBase {
 }
 declare type ProfileValidator = Readonly<IProfileValidatorBase>;
-interface ProfileValidatorConstructor extends $$snClass.CustomClassConstructor0<IProfileValidatorBase, IProfileValidatorPrototype, ProfileValidator> {
+interface ProfileValidatorConstructor extends $$snClass.CustomAjaxClassConstructor<IProfileValidatorBase, IProfileValidatorPrototype, ProfileValidator> {
+    new (request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController): ProfileValidator;
+    (request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController): ProfileValidator;
     /**
      * Indicates whether the user lookup result represents a fatal error.
      *
