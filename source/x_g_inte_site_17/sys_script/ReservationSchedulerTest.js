@@ -2,10 +2,71 @@
 var constructorTest;
 (function (constructorTest) {
     (function (outputs, steps, stepResult, assertEqual) {
-        var schedule_sys_id = '' + steps('8b4ed58697051110d87839000153afae').sys_id;
-        var approval_group_sys_id = '' + steps('cf4c1e1a97411110d87839000153aff6').sys_id;
-        var assignment_group_sys_id = '' + steps('f70fd5c697051110d87839000153af81').sys_id;
-        var defaultTimeZone = gs.getSession().getTimeZoneName();
+        function setFailed(reason, e) {
+            if (gs.nil(e))
+                stepResult.setOutputMessage(reason);
+            else {
+                var m = gs.nil(e.message) ? '' : ((typeof e.message === 'string') ? e.message : '' + e.message).trim();
+                var name = gs.nil(e.name) ? '' : ((typeof e.name === 'string') ? e.name : '' + e.name).trim();
+                var stack = gs.nil(e.stack) ? '' : ((typeof e.stack === 'string') ? e.stack : '' + e.stack).trim();
+                if (m.length > 0) {
+                    if (name.length > 0) {
+                        if (stack.length > 0)
+                            stepResult.setOutputMessage("Unexpected " + name + ": " + reason + "\nMessage: " + m + "\nStack trace:\n" + stack);
+                        else
+                            stepResult.setOutputMessage("Unexpected " + name + ": " + reason + "\nMessage: " + m);
+                    }
+                    else if (stack.length > 0)
+                        stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m + "\nStack trace:\n" + stack);
+                    else
+                        stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m);
+                }
+                else if (name.length > 0)
+                    stepResult.setOutputMessage("Unexpected error: " + ((stack.length > 0) ? reason + "\n" + stack : reason));
+                else if (stack.length > 0)
+                    stepResult.setOutputMessage("Unexpected error: " + reason + "\n" + stack);
+                else if ((m = ('' + e).trim()).length > 0)
+                    stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m);
+                else
+                    stepResult.setOutputMessage("Unexpected error: " + reason);
+            }
+            stepResult.setFailed();
+        }
+        var schedule_sys_id;
+        var approval_group_sys_id;
+        var assignment_group_sys_id;
+        try {
+            var testResult = steps('8b4ed58697051110d87839000153afae');
+            if (gs.nil(testResult))
+                throw new Error("Could not find step results with Sys ID '8b4ed58697051110d87839000153afae'");
+            schedule_sys_id = testResult.sys_id;
+            if (gs.nil(schedule_sys_id))
+                throw new Error("Schedule Sys ID not present in results from step with Sys ID '8b4ed58697051110d87839000153afae'");
+            testResult = steps('cf4c1e1a97411110d87839000153aff6');
+            if (gs.nil(testResult))
+                throw new Error("Could not find step results with Sys ID 'cf4c1e1a97411110d87839000153aff6'");
+            approval_group_sys_id = testResult.sys_id;
+            if (gs.nil(approval_group_sys_id))
+                throw new Error("Approval Group Sys ID not present in results from step with Sys ID '8b4ed58697051110d87839000153afae'");
+            testResult = steps('f70fd5c697051110d87839000153af81');
+            if (gs.nil(testResult))
+                throw new Error("Could not find step results with Sys ID 'f70fd5c697051110d87839000153af81'");
+            assignment_group_sys_id = testResult.sys_id;
+            if (gs.nil(assignment_group_sys_id))
+                throw new Error("Assignment Group Sys ID not present in results from step with Sys ID '8b4ed58697051110d87839000153afae'");
+        }
+        catch (e) {
+            setFailed("Unable to get data from previous steps", e);
+            return;
+        }
+        var defaultTimeZone;
+        try {
+            defaultTimeZone = gs.getSession().getTimeZoneName();
+        }
+        catch (e) {
+            setFailed("Could not determine default time zone", e);
+            return;
+        }
         if (gs.nil(defaultTimeZone)) {
             stepResult.setOutputMessage("Could not determine default time zone");
             stepResult.setFailed();
@@ -135,36 +196,6 @@ var constructorTest;
                 ]
             }
         ];
-        function setFailed(reason, e) {
-            if (gs.nil(e))
-                stepResult.setOutputMessage(reason);
-            else {
-                var m = gs.nil(e.message) ? '' : ((typeof e.message === 'string') ? e.message : '' + e.message).trim();
-                var name = gs.nil(e.name) ? '' : ((typeof e.name === 'string') ? e.name : '' + e.name).trim();
-                var stack = gs.nil(e.stack) ? '' : ((typeof e.stack === 'string') ? e.stack : '' + e.stack).trim();
-                if (m.length > 0) {
-                    if (name.length > 0) {
-                        if (stack.length > 0)
-                            stepResult.setOutputMessage("Unexpected " + name + ": " + reason + "\nMessage: " + m + "\nStack trace:\n" + stack);
-                        else
-                            stepResult.setOutputMessage("Unexpected " + name + ": " + reason + "\nMessage: " + m);
-                    }
-                    else if (stack.length > 0)
-                        stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m + "\nStack trace:\n" + stack);
-                    else
-                        stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m);
-                }
-                else if (name.length > 0)
-                    stepResult.setOutputMessage("Unexpected error: " + ((stack.length > 0) ? reason + "\n" + stack : reason));
-                else if (stack.length > 0)
-                    stepResult.setOutputMessage("Unexpected error: " + reason + "\n" + stack);
-                else if ((m = ('' + e).trim()).length > 0)
-                    stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m);
-                else
-                    stepResult.setOutputMessage("Unexpected error: " + reason);
-            }
-            stepResult.setFailed();
-        }
         for (var _i = 0, parameterSetArray_1 = parameterSetArray; _i < parameterSetArray_1.length; _i++) {
             var parameterSet = parameterSetArray_1[_i];
             var gr = new GlideRecord('x_g_inte_site_17_reservation_type');
