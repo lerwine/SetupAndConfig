@@ -2,36 +2,6 @@
 var constructorTest;
 (function (constructorTest) {
     (function (outputs, steps, stepResult, assertEqual) {
-        function setFailed(reason, e) {
-            if (gs.nil(e))
-                stepResult.setOutputMessage(reason);
-            else {
-                var m = gs.nil(e.message) ? '' : ((typeof e.message === 'string') ? e.message : '' + e.message).trim();
-                var name = gs.nil(e.name) ? '' : ((typeof e.name === 'string') ? e.name : '' + e.name).trim();
-                var stack = gs.nil(e.stack) ? '' : ((typeof e.stack === 'string') ? e.stack : '' + e.stack).trim();
-                if (m.length > 0) {
-                    if (name.length > 0) {
-                        if (stack.length > 0)
-                            stepResult.setOutputMessage("Unexpected " + name + ": " + reason + "\nMessage: " + m + "\nStack trace:\n" + stack);
-                        else
-                            stepResult.setOutputMessage("Unexpected " + name + ": " + reason + "\nMessage: " + m);
-                    }
-                    else if (stack.length > 0)
-                        stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m + "\nStack trace:\n" + stack);
-                    else
-                        stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m);
-                }
-                else if (name.length > 0)
-                    stepResult.setOutputMessage("Unexpected error: " + ((stack.length > 0) ? reason + "\n" + stack : reason));
-                else if (stack.length > 0)
-                    stepResult.setOutputMessage("Unexpected error: " + reason + "\n" + stack);
-                else if ((m = ('' + e).trim()).length > 0)
-                    stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m);
-                else
-                    stepResult.setOutputMessage("Unexpected error: " + reason);
-            }
-            stepResult.setFailed();
-        }
         var schedule_sys_id;
         var approval_group_sys_id;
         var assignment_group_sys_id;
@@ -56,7 +26,7 @@ var constructorTest;
                 throw new Error("Assignment Group Sys ID not present in results from step with Sys ID '8b4ed58697051110d87839000153afae'");
         }
         catch (e) {
-            setFailed("Unable to get data from previous steps", e);
+            AtfHelper.setFailed(stepResult, "Unable to get data from previous steps", e);
             return;
         }
         var defaultTimeZone;
@@ -64,12 +34,11 @@ var constructorTest;
             defaultTimeZone = gs.getSession().getTimeZoneName();
         }
         catch (e) {
-            setFailed("Could not determine default time zone", e);
+            AtfHelper.setFailed(stepResult, "Unexpected exception while getting time zone", e);
             return;
         }
         if (gs.nil(defaultTimeZone)) {
-            stepResult.setOutputMessage("Could not determine default time zone");
-            stepResult.setFailed();
+            AtfHelper.setFailed(stepResult, "Could not determine default time zone");
             return;
         }
         var altTimeZone = (defaultTimeZone == 'US/Pacific') ? 'US/Eastern' : 'US/Pacific';
@@ -213,7 +182,7 @@ var constructorTest;
                     throw new Error("Failed to create test reservation type \"" + parameterSet.parameters.short_description + "\"");
             }
             catch (e) {
-                setFailed("Unable to insert test Reservation Type", e);
+                AtfHelper.setFailed(stepResult, "Unable to insert test Reservation Type", e);
                 return;
             }
             var rs;
@@ -221,7 +190,7 @@ var constructorTest;
                 rs = new ReservationScheduler(gr);
             }
             catch (e) {
-                setFailed("Unable to create instance of ReservationScheduler", e);
+                AtfHelper.setFailed(stepResult, "Unable to create instance of ReservationScheduler", e);
                 return;
             }
             assertEqual({
@@ -410,27 +379,55 @@ var normalizationFunctionsTest;
             }
         ]; _i < _a.length; _i++) {
             var reservationType = _a[_i];
-            var gr = new GlideRecord('x_g_inte_site_17_reservation_type');
-            gr.setValue('short_description', reservationType.short_description);
-            gr.setValue('schedule', schedule_sys_id);
-            gr.setValue('assignment_group', group_sys_id);
-            gr.setValue('duration_increment', reservationType.duration_increment);
-            gr.setValue('minimum_duration', reservationType.minimum_duration);
-            gr.setValue('maximum_duration', reservationType.maximum_duration);
-            gr.setValue('start_time_interval', reservationType.start_time_interval);
-            if (gs.nil(gr.insert()))
-                throw new Error("Failed to create test reservation type \"" + reservationType.short_description + "\"");
-            var rs = new ReservationScheduler(gr);
+            var rs;
+            var gr;
+            try {
+                gr = new GlideRecord('x_g_inte_site_17_reservation_type');
+                gr.setValue('short_description', reservationType.short_description);
+                gr.setValue('schedule', schedule_sys_id);
+                gr.setValue('assignment_group', group_sys_id);
+                gr.setValue('duration_increment', reservationType.duration_increment);
+                gr.setValue('minimum_duration', reservationType.minimum_duration);
+                gr.setValue('maximum_duration', reservationType.maximum_duration);
+                gr.setValue('start_time_interval', reservationType.start_time_interval);
+                if (gs.nil(gr.insert()))
+                    gr = undefined;
+            }
+            catch (e) {
+                AtfHelper.setFailed(stepResult, "Unexpected exception while adding test reservation type \"" + reservationType.short_description + "\"", e);
+                return;
+            }
+            if (gs.nil(gr)) {
+                AtfHelper.setFailed(stepResult, "Failed to add test reservation type \"" + reservationType.short_description + "\"");
+                return;
+            }
+            try {
+                rs = new ReservationScheduler(gr);
+            }
+            catch (e) {
+                AtfHelper.setFailed(stepResult, "Unexpected exception while initializing ReservationScheduler from type \"" + reservationType.short_description + "\"", e);
+                return;
+            }
+            var value;
+            var msg;
             for (var _b = 0, _c = reservationType.durations; _b < _c.length; _b++) {
                 var durationParam = _c[_b];
                 var target = new GlideDuration(durationParam.input);
+                msg = 'normalizeDuration(' + durationParam.input.getNumericValue + ' /* + ' + durationParam.input.getDisplayValue() + '; Reservation Type ' + reservationType.short_description + ' */)';
+                try {
+                    value = rs.normalizeDuration(target);
+                }
+                catch (e) {
+                    AtfHelper.setFailed(stepResult, "Unexpected exception while testing ReservationScheduler." + msg, e);
+                    return;
+                }
                 assertEqual({
-                    name: 'return value of normalizeDuration(' + durationParam.input.getNumericValue + ' /* + ' + durationParam.input.getDisplayValue() + '; Reservation Type ' + reservationType.short_description + ' */)',
+                    name: 'return value of ' + msg,
                     shouldBe: durationParam.returns,
-                    value: rs.normalizeDuration(target)
+                    value: value
                 });
                 assertEqual({
-                    name: 'new duration after normalizeDuration(' + durationParam.input.getNumericValue + ' /* + ' + durationParam.input.getDisplayValue() + '; Reservation Type ' + reservationType.short_description + ' */)',
+                    name: 'new duration after ' + msg,
                     shouldBe: durationParam.expected,
                     value: target
                 });
@@ -440,13 +437,21 @@ var normalizationFunctionsTest;
                 var input = new GlideDateTime(dateParam.input);
                 if (dateParam.offset > 0)
                     input.add(dateParam.offset);
+                msg = 'normalizeStartDate("' + dateParam.input.getDisplayValue() + '" + ' + dateParam.offset + ') /* Reservation Type ' + reservationType.short_description + '*/';
+                try {
+                    value = rs.normalizeStartDate(input);
+                }
+                catch (e) {
+                    AtfHelper.setFailed(stepResult, "Unexpected exception while testing ReservationScheduler." + msg, e);
+                    return;
+                }
                 assertEqual({
-                    name: 'return value of normalizeStartDate("' + dateParam.input.getDisplayValue() + '" + ' + dateParam.offset + ') /* Reservation Type ' + reservationType.short_description + '*/',
+                    name: 'return value of ' + msg,
                     shouldBe: dateParam.returns,
-                    value: rs.normalizeStartDate(input)
+                    value: value
                 });
                 assertEqual({
-                    name: 'new date/time after normalizeStartDate("' + dateParam.input.getDisplayValue() + '" + ' + dateParam.offset + ') /* Reservation Type ' + reservationType.short_description + '*/',
+                    name: 'new date/time after ' + msg,
                     shouldBe: dateParam.expected,
                     value: input
                 });
@@ -457,68 +462,12 @@ var normalizationFunctionsTest;
 var getAvailabilitiesInRangeTest;
 (function (getAvailabilitiesInRangeTest) {
     (function (outputs, steps, stepResult, assertEqual) {
-        // #region Create appointment schedule
-        var scheduleGlideRecord = new GlideRecord('cmn_schedule');
-        scheduleGlideRecord.newRecord();
-        scheduleGlideRecord.setValue('name', 'Test Appointment Schedule');
-        if (gs.nil(scheduleGlideRecord.insert()))
-            throw new Error("Failed to create test appointment schedule");
-        // #endregion
-        // #region Create and add child schedule
-        var childScheduleGlideRecord = new GlideRecord('cmn_schedule');
-        childScheduleGlideRecord.newRecord();
-        childScheduleGlideRecord.setValue('name', 'Test Holiday Schedule');
-        if (gs.nil(childScheduleGlideRecord.insert()))
-            throw new Error("Failed to create test child schedule");
-        var gr = new GlideRecord('cmn_other_schedule');
-        gr.newRecord();
-        gr.setValue('child_schedule', childScheduleGlideRecord);
-        gr.setValue('schedule', scheduleGlideRecord);
-        gr.setValue('type', 'include');
-        if (gs.nil(gr.insert()))
-            throw new Error("Failed to create child schedule relationship");
-        // #endregion
-        // Create "zero" date/time to today at 00:00
+        stepResult.setOutputMessage(JSON.stringify(steps('8b4ed58697051110d87839000153afae')));
+        var schedule_sys_id = '' + steps('8b4ed58697051110d87839000153afae').sys_id;
+        // Create "zero" date/time to tomorrow at 00:00
         var dhz = new GlideDateTime();
         dhz.setDisplayValue(dhz.getDate().getDisplayValue() + ' 00:00:00');
-        // #region Add recurring entry for off-hours 16:00:00 to 09:00:00 the following day
-        gr = new GlideRecord('cmn_schedule_span');
-        gr.newRecord();
-        gr.setValue('schedule', scheduleGlideRecord);
-        gr.setValue('all_day', false);
-        gr.setValue('name', 'Off Hours');
-        gr.setValue('repeat_type', 'daily');
-        gr.setValue('show_as', 'busy');
-        var dateTime = new GlideDateTime(dhz);
-        dateTime.setDisplayValue(dateTime.getDate().getDisplayValue() + ' 16:00:00');
-        gr.setValue('start_date_time', new GlideScheduleDateTime(dateTime).getValue());
-        dateTime.addDaysLocalTime(1);
-        dateTime.setDisplayValue(dateTime.getDate().getDisplayValue() + ' 09:00:00');
-        gr.setValue('end_date_time', new GlideScheduleDateTime(dateTime).getValue());
-        if (gs.nil(gr.insert()))
-            throw new Error("Failed to create off-hours schedule entry");
-        // #endregion
-        // #region Add single entry for holiday day after tomorrow from 00:00:00 to 23:59:59
-        gr = new GlideRecord('cmn_schedule_span');
-        gr.newRecord();
-        gr.setValue('schedule', childScheduleGlideRecord);
-        gr.setValue('all_day', true);
-        gr.setValue('name', 'Party Time');
-        gr.setValue('repeat_type', 'yearly');
-        gr.setValue('show_as', 'busy');
-        gr.setValue('type', 'exclude');
-        dateTime.addDaysLocalTime(1);
-        dateTime.setDisplayValue(dateTime.getDate().getDisplayValue() + ' 00:00:00');
-        gr.setValue('start_date_time', new GlideScheduleDateTime(dateTime).getValue());
-        dateTime.setDisplayValue(dateTime.getDate().getDisplayValue() + ' 23:59:59');
-        gr.setValue('end_date_time', new GlideScheduleDateTime(dateTime).getValue());
-        if (gs.nil(gr.insert()))
-            throw new Error("Failed to create holiday schedule entry");
-        // #endregion
-        // Shift "zero" date to tomorrow
-        dhz.setDisplayValue(dhz.getDate().getDisplayValue() + ' 00:00:00');
         dhz.addDaysLocalTime(1);
-        // #region Add appointments for tomorrow
         var appointmentTimes = [
             { name: 'First Appointment', start: new GlideTime(60300000) /* 11:45 */, duration: new GlideDuration('00:15:00') },
             { name: 'Second Appointment', start: new GlideTime(61200000) /* 12:00 */, duration: new GlideDuration('00:15:00') },
@@ -526,23 +475,8 @@ var getAvailabilitiesInRangeTest;
         ];
         for (var _i = 0, appointmentTimes_1 = appointmentTimes; _i < appointmentTimes_1.length; _i++) {
             var a = appointmentTimes_1[_i];
-            gr = new GlideRecord('cmn_schedule_span');
-            gr.newRecord();
-            gr.setValue('schedule', scheduleGlideRecord);
-            gr.setValue('all_day', false);
-            gr.setValue('name', a.name);
-            gr.setValue('show_as', 'busy');
-            dateTime = new GlideDateTime(dhz);
-            dateTime.add(a.start);
-            gr.setValue('start_date_time', new GlideScheduleDateTime(dateTime).getValue());
-            dateTime.add(a.duration);
-            gr.setValue('end_date_time', new GlideScheduleDateTime(dateTime).getValue());
-            gr.setValue('type', 'appointment');
-            if (gs.nil(gr.insert()))
-                throw new Error("Failed to create appointment schedule entry \"" + a.name + "\"");
+            // TODO: Do tests
         }
-        // #endregion
-        stepResult.setFailed();
     })(outputs, steps, stepResult, assertEqual);
 })(getAvailabilitiesInRangeTest || (getAvailabilitiesInRangeTest = {}));
 //# sourceMappingURL=ReservationSchedulerTest.js.map
