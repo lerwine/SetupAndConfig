@@ -2,9 +2,12 @@ interface IReservationSchedulerAjaxBase extends $$snClass.ICustomClassBase<IRese
     getNextAvailableTimeSlot(): void;
     getAvailabilitiesInRange(): void;
 }
-interface IReservationSchedulerAjaxPrototype extends $$snClass.ICustomClassPrototype0<IReservationSchedulerAjaxBase, IReservationSchedulerAjaxPrototype, "ReservationSchedulerAjax">, IReservationSchedulerAjaxBase {
+interface IReservationSchedulerAjaxPrototype extends $$snClass.ICustomAjaxClassPrototype<IReservationSchedulerAjaxBase, IReservationSchedulerAjaxPrototype, "ReservationSchedulerAjax">, IReservationSchedulerAjaxBase {
+    _scheduler?: ReservationScheduler;
 }
 declare type ReservationSchedulerAjax = Readonly<IReservationSchedulerAjaxBase>;
-interface ReservationSchedulerAjaxConstructor extends $$snClass.CustomClassConstructor0<IReservationSchedulerAjaxBase, IReservationSchedulerAjaxPrototype, ReservationSchedulerAjax> {
+interface ReservationSchedulerAjaxConstructor extends $$snClass.CustomAjaxClassConstructor<IReservationSchedulerAjaxBase, IReservationSchedulerAjaxPrototype, ReservationSchedulerAjax> {
+    new (request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController): ProfileValidator;
+    (request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController): ProfileValidator;
 }
 declare const ReservationSchedulerAjax: ReservationSchedulerAjaxConstructor;

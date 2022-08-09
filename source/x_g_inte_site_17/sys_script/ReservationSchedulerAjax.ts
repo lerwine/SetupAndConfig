@@ -3,22 +3,69 @@ interface IReservationSchedulerAjaxBase extends $$snClass.ICustomClassBase<IRese
     getAvailabilitiesInRange(): void;
 }
 
-interface IReservationSchedulerAjaxPrototype extends $$snClass.ICustomClassPrototype0<IReservationSchedulerAjaxBase, IReservationSchedulerAjaxPrototype, "ReservationSchedulerAjax">, IReservationSchedulerAjaxBase {
+interface IReservationSchedulerAjaxPrototype extends $$snClass.ICustomAjaxClassPrototype<IReservationSchedulerAjaxBase, IReservationSchedulerAjaxPrototype, "ReservationSchedulerAjax">, IReservationSchedulerAjaxBase {
+    _scheduler?: ReservationScheduler;
 }
 
 declare type ReservationSchedulerAjax = Readonly<IReservationSchedulerAjaxBase>;
 
-interface ReservationSchedulerAjaxConstructor extends $$snClass.CustomClassConstructor0<IReservationSchedulerAjaxBase, IReservationSchedulerAjaxPrototype, ReservationSchedulerAjax> {
+interface ReservationSchedulerAjaxConstructor extends $$snClass.CustomAjaxClassConstructor<IReservationSchedulerAjaxBase, IReservationSchedulerAjaxPrototype, ReservationSchedulerAjax> {
+    new(request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController): ProfileValidator;
+    (request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController): ProfileValidator;
 }
 
 const ReservationSchedulerAjax: ReservationSchedulerAjaxConstructor = (function (): ReservationSchedulerAjaxConstructor {
-
     var reservationschedulerajaxConstructor: ReservationSchedulerAjaxConstructor = Class.create();
 
     reservationschedulerajaxConstructor.prototype = Object.extendsObject<IAbstractAjaxProcessor, IReservationSchedulerAjaxPrototype>(global.AbstractAjaxProcessor, {
-        initialize: function(): void { },
-        
+        initialize(this: IAbstractAjaxProcessor & IReservationSchedulerAjaxPrototype, request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController) {
+            global.AbstractAjaxProcessor.prototype.initialize.call(this, request, responseXML, gc);
+            
+            var value: $$rhino.String = this.getParameter("sys_parm_allow_inactive");
+            var tz : string | undefined;
+            var allowInactive: boolean | undefined;
+            if (!gs.nil(value)) {
+                tz = ('' + value).trim().toLowerCase();
+                switch (tz) {
+                    case 'true':
+                        allowInactive = true;
+                        break;
+                    case 'false':
+                        allowInactive = false;
+                        break;
+                    default:
+                        var i = parseInt(tz);
+                        if (!isNaN(i))
+                            allowInactive = i != 0;
+                        break;
+                }
+            }
+            value = this.getParameter("sys_time_zone");
+            if (gs.nil(value))
+                tz = undefined;
+            else
+                tz = '' + value;
+            value = this.getParameter("sys_parm_type");
+            if (gs.nil(value))
+                this.setError('Appointment Type Sys ID (sys_parm_type) not provided.');
+            else {
+                try {
+                    if (typeof tz !== 'undefined')
+                        this._scheduler = new ReservationScheduler('' + value, allowInactive, tz);
+                    else if (typeof allowInactive !== 'undefined')
+                        this._scheduler = new ReservationScheduler('' + value, allowInactive);
+                    else
+                        this._scheduler = new ReservationScheduler('' + value);
+                }
+                catch(e) {
+                    this.setError(e);
+                }
+            } 
+        },
+
         getNextAvailableTimeSlot: function(this: IAbstractAjaxProcessor & IReservationSchedulerAjaxPrototype): void {
+            if (typeof this._scheduler === 'undefined')
+                return;
             var fromDateTime: GlideDateTime = new GlideDateTime(<string>this.getParameter("sys_parm_from"));
             var toDateTime: GlideDateTime | undefined;
             var value: $$rhino.String = this.getParameter("sys_parm_duration");
@@ -26,14 +73,9 @@ const ReservationSchedulerAjax: ReservationSchedulerAjaxConstructor = (function 
             value = this.getParameter("sys_parm_duration");
             var duration: GlideDuration | undefined;
             if (!gs.nil(value)) duration = new GlideDuration(parseInt('' + value) * 60000);
-            value = this.getParameter('sys_parm_type');
-            if (gs.nil(value)) {
-                this.setError('Appointment Type Sys ID (sys_parm_type) not provided.');
-                return;
-            }
             var availability: ITimeSlot | undefined;
             try {
-                availability = new ReservationScheduler('' + value).getNextAvailableTimeSlot(fromDateTime, toDateTime, duration);
+                availability = this._scheduler.getNextAvailableTimeSlot(fromDateTime, toDateTime, duration);
             } catch (e) {
                 this.setError(e);
                 return;
@@ -49,19 +91,16 @@ const ReservationSchedulerAjax: ReservationSchedulerAjaxConstructor = (function 
         },
 
         getAvailabilitiesInRange: function(this: IAbstractAjaxProcessor & IReservationSchedulerAjaxPrototype): void {
+            if (typeof this._scheduler === 'undefined')
+                return;
             var fromDateTime: GlideDateTime = new GlideDateTime(<string>this.getParameter("sys_parm_from"));
             var toDateTime: GlideDateTime = new GlideDateTime(<string>this.getParameter("sys_parm_to"));
             var value: $$rhino.String = this.getParameter("sys_parm_duration");
             var duration: GlideDuration | undefined;
             if (!gs.nil(value)) duration = new GlideDuration(parseInt('' + value) * 60000);
-            value = this.getParameter('sys_parm_type');
-            if (gs.nil(value)) {
-                this.setError('Appointment Type Sys ID (sys_parm_type) not provided.');
-                return;
-            }
             var availabilities: ITimeSlot[]
             try {
-                availabilities = new ReservationScheduler('' + value).getAvailabilitiesInRange(fromDateTime, toDateTime, duration);
+                availabilities = this._scheduler.getAvailabilitiesInRange(fromDateTime, toDateTime, duration);
             } catch (e) {
                 this.setError(e);
                 return;
