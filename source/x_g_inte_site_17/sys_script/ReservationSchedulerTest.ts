@@ -8,7 +8,7 @@ namespace constructorTest {
         allowInactive?: boolean;
         timeZone?: string;
         expectedTimeZone: string;
-        getExpectedErrorMessage?: { (sys_id: string, short_description: string, pv: IReservationTypeInputParameters): string; }
+        getExpectedErrorMessage?: { (sys_id: string, pv: IReservationTypeInputParameters): string; }
     }
 
     interface IReservationTypeParameterValues {
@@ -48,9 +48,8 @@ namespace constructorTest {
         }
         var altTimeZone: string = (defaultTimeZone == 'US/Pacific') ? 'US/Eastern' : 'US/Pacific';
         var gdt = new GlideDateTime();
-        var altTzOffset = new GlideDateTime(new GlideScheduleDateTime(gdt).convertTimeZone(defaultTimeZone, altTimeZone)).getNumericValue() - gdt.getNumericValue();
-        function getExpectedInactiveTypeErrorMessage(sys_id: string, short_description: string, pv: IReservationTypeInputParameters): string {
-            return "Reservation Type \"" + short_description + "\" (" + sys_id + ", " + JSON.stringify(pv) + ") is inactive.";
+        function getExpectedInactiveTypeErrorMessage(sys_id: string, pv: IReservationTypeInputParameters): string {
+            return "Reservation Type \"" + pv.short_description + "\" (" + sys_id + ", " + JSON.stringify(pv) + ") is inactive.";
         }
         var parameterSetArray: IReservationTypeParameterSet[] = [
             {
@@ -182,118 +181,147 @@ namespace constructorTest {
                 gr.setValue('minimum_duration', new GlideDuration(parameterSet.parameters.minimum_duration_ms));
                 gr.setValue('maximum_duration', new GlideDuration(parameterSet.parameters.maximum_duration_ms));
                 gr.setValue('start_time_interval', new GlideDuration(parameterSet.parameters.start_time_interval_ms));
-                if (gs.nil(gr.insert())) throw new Error("Failed to create test reservation type \"" + parameterSet.parameters.short_description + "\"");
+                if (gs.nil(gr.insert())) throw new Error('Failed to create test reservation type (' + JSON.stringify(parameterSet.parameters) + ')');
             } catch (e) {
-                atfHelper.setFailed("Unable to insert test Reservation Type", e);
+                atfHelper.setFailed('Unable to insert test Reservation Type (' + JSON.stringify(parameterSet.parameters) + ')', e);
             }
             var rs: x_g_inte_site_17.ReservationScheduler;
-            try { rs = new x_g_inte_site_17.ReservationScheduler(<x_g_inte_site_17.reservationTypeGlideRecord>gr); } catch (e) {
-                atfHelper.setFailed("Unable to create instance of ReservationScheduler", e);
-                return;
-            }
-            assertEqual({
-                name: 'short_description not nil',
-                shouldBe: false,
-                value: gs.nil(rs.short_description)
-            });
-            assertEqual({
-                name: 'short_description value',
-                shouldBe: parameterSet.expected.short_description,
-                value: rs.short_description
-            });
-            assertEqual({
-                name: 'schedule not nil',
-                shouldBe: false,
-                value: gs.nil(rs.schedule)
-            });
-            assertEqual({
-                name: 'assignment_group not nil',
-                shouldBe: false,
-                value: gs.nil(rs.assignment_group)
-            });
-            assertEqual({
-                name: 'assignment_group value',
-                shouldBe: assignment_group_sys_id,
-                value: rs.assignment_group
-            });
-            if (parameterSet.parameters.approval_group_empty)
+            for (var cps of parameterSet.constructorParameterSets) {
+                var msg = ' (' + JSON.stringify(parameterSet.parameters) + '; ' + JSON.stringify(cps) + ')'
+                try {
+                    if (gs.nil(cps.timeZone)) {
+                        if (gs.nil(cps.allowInactive))
+                            rs = new x_g_inte_site_17.ReservationScheduler(<x_g_inte_site_17.reservationTypeGlideRecord>gr);
+                        else
+                            rs = new x_g_inte_site_17.ReservationScheduler(<x_g_inte_site_17.reservationTypeGlideRecord>gr, cps.allowInactive);
+                    } else
+                        rs = new x_g_inte_site_17.ReservationScheduler(<x_g_inte_site_17.reservationTypeGlideRecord>gr, cps.allowInactive, cps.timeZone);
+                } catch (e) {
+                    if (gs.nil(cps.getExpectedErrorMessage)) {
+                        atfHelper.setFailed('Unable to create instance of ReservationScheduler' + msg, e);
+                        return;
+                    }
+                    assertEqual({
+                        name: 'Error Message' + msg,
+                        shouldBe: cps.getExpectedErrorMessage('' + gr.sys_id, parameterSet.parameters),
+                        value: (<Error>e).message
+                    });
+                    continue;
+                }
                 assertEqual({
-                    name: 'approval_group nil',
-                    shouldBe: true,
-                    value: gs.nil(rs.approval_group)
-                });
-            else {
-                assertEqual({
-                    name: 'approval_group not nil',
+                    name: 'timeZone not nil' + msg,
                     shouldBe: false,
-                    value: gs.nil(rs.approval_group)
+                    value: gs.nil(rs.timeZone)
                 });
                 assertEqual({
-                    name: 'approval_group value',
-                    shouldBe: approval_group_sys_id,
-                    value: rs.approval_group
+                    name: 'short_description value' + msg,
+                    shouldBe: parameterSet.expected.short_description,
+                    value: rs.timeZone
+                });
+                assertEqual({
+                    name: 'short_description not nil' + msg,
+                    shouldBe: false,
+                    value: gs.nil(rs.short_description)
+                });
+                assertEqual({
+                    name: 'short_description value' + msg,
+                    shouldBe: parameterSet.expected.short_description,
+                    value: rs.short_description
+                });
+                assertEqual({
+                    name: 'schedule not nil' + msg,
+                    shouldBe: false,
+                    value: gs.nil(rs.schedule)
+                });
+                assertEqual({
+                    name: 'assignment_group not nil' + msg,
+                    shouldBe: false,
+                    value: gs.nil(rs.assignment_group)
+                });
+                assertEqual({
+                    name: 'assignment_group value' + msg,
+                    shouldBe: assignment_group_sys_id,
+                    value: rs.assignment_group
+                });
+                if (parameterSet.parameters.approval_group_empty)
+                    assertEqual({
+                        name: 'approval_group nil' + msg,
+                        shouldBe: true,
+                        value: gs.nil(rs.approval_group)
+                    });
+                else {
+                    assertEqual({
+                        name: 'approval_group not nil' + msg,
+                        shouldBe: false,
+                        value: gs.nil(rs.approval_group)
+                    });
+                    assertEqual({
+                        name: 'approval_group value' + msg,
+                        shouldBe: approval_group_sys_id,
+                        value: rs.approval_group
+                    });
+                }
+                assertEqual({
+                    name: 'duration_increment not nil' + msg,
+                    shouldBe: false,
+                    value: gs.nil(rs.duration_increment)
+                });
+                assertEqual({
+                    name: 'duration_increment is valid' + msg,
+                    shouldBe: true,
+                    value: rs.duration_increment.isValid()
+                });
+                assertEqual({
+                    name: 'duration_increment value' + msg,
+                    shouldBe: new GlideDuration(parameterSet.expected.duration_increment_ms),
+                    value: rs.duration_increment
+                });
+                assertEqual({
+                    name: 'minimum_duration not nil' + msg,
+                    shouldBe: false,
+                    value: gs.nil(rs.minimum_duration)
+                });
+                assertEqual({
+                    name: 'minimum_duration is valid' + msg,
+                    shouldBe: true,
+                    value: rs.minimum_duration.isValid()
+                });
+                assertEqual({
+                    name: 'minimum_duration value' + msg,
+                    shouldBe: new GlideDuration(parameterSet.expected.minimum_duration_ms),
+                    value: rs.minimum_duration
+                });
+                assertEqual({
+                    name: 'maximum_duration not nil' + msg,
+                    shouldBe: false,
+                    value: gs.nil(rs.maximum_duration)
+                });
+                assertEqual({
+                    name: 'maximum_duration is valid' + msg,
+                    shouldBe: true,
+                    value: rs.maximum_duration.isValid()
+                });
+                assertEqual({
+                    name: 'maximum_duration value' + msg,
+                    shouldBe: new GlideDuration(parameterSet.expected.maximum_duration_ms),
+                    value: rs.maximum_duration
+                });
+                assertEqual({
+                    name: 'start_time_interval not nil' + msg,
+                    shouldBe: false,
+                    value: gs.nil(rs.start_time_interval)
+                });
+                assertEqual({
+                    name: 'start_time_interval is valid' + msg,
+                    shouldBe: true,
+                    value: rs.start_time_interval.isValid()
+                });
+                assertEqual({
+                    name: 'start_time_interval value' + msg,
+                    shouldBe: new GlideDuration(parameterSet.expected.start_time_interval_ms),
+                    value: rs.start_time_interval
                 });
             }
-            assertEqual({
-                name: 'duration_increment not nil',
-                shouldBe: false,
-                value: gs.nil(rs.duration_increment)
-            });
-            assertEqual({
-                name: 'duration_increment is valid',
-                shouldBe: true,
-                value: rs.duration_increment.isValid()
-            });
-            assertEqual({
-                name: 'duration_increment value',
-                shouldBe: new GlideDuration(parameterSet.expected.duration_increment_ms),
-                value: rs.duration_increment
-            });
-            assertEqual({
-                name: 'minimum_duration not nil',
-                shouldBe: false,
-                value: gs.nil(rs.minimum_duration)
-            });
-            assertEqual({
-                name: 'minimum_duration is valid',
-                shouldBe: true,
-                value: rs.minimum_duration.isValid()
-            });
-            assertEqual({
-                name: 'minimum_duration value',
-                shouldBe: new GlideDuration(parameterSet.expected.minimum_duration_ms),
-                value: rs.minimum_duration
-            });
-            assertEqual({
-                name: 'maximum_duration not nil',
-                shouldBe: false,
-                value: gs.nil(rs.maximum_duration)
-            });
-            assertEqual({
-                name: 'maximum_duration is valid',
-                shouldBe: true,
-                value: rs.maximum_duration.isValid()
-            });
-            assertEqual({
-                name: 'maximum_duration value',
-                shouldBe: new GlideDuration(parameterSet.expected.maximum_duration_ms),
-                value: rs.maximum_duration
-            });
-            assertEqual({
-                name: 'start_time_interval not nil',
-                shouldBe: false,
-                value: gs.nil(rs.start_time_interval)
-            });
-            assertEqual({
-                name: 'start_time_interval is valid',
-                shouldBe: true,
-                value: rs.start_time_interval.isValid()
-            });
-            assertEqual({
-                name: 'start_time_interval value',
-                shouldBe: new GlideDuration(parameterSet.expected.start_time_interval_ms),
-                value: rs.start_time_interval
-            });
         }
     })(outputs, steps, stepResult, assertEqual);
 }
@@ -347,7 +375,6 @@ namespace normalizationFunctionsTest {
         var group_sys_id: string = atfHelper.getRecordIdFromStep('f70fd5c697051110d87839000153af81');
         if (gs.nil(schedule_sys_id) || gs.nil(group_sys_id))
             return;
-        
         for (var reservationType of <INormalizationFunctionsParameterSet[]>[
             { short_description: 'Start: 1m; Duration: inc=1m, min=15m, max=1h', start_time_interval: new GlideDuration(60000),
                 duration_increment: new GlideDuration(60000), minimum_duration: new GlideDuration(900000), maximum_duration: new GlideDuration(3600000),
@@ -533,7 +560,24 @@ namespace getAvailabilitiesInRangeTest {
     }
 
     (function (outputs: sn_atf.ITestStepOutputs, steps: sn_atf.ITestStepsFunc, stepResult: sn_atf.ITestStepResult, assertEqual: sn_atf.IAssertEqualFunc) {
-        var schedule_sys_id = '' + steps('8b4ed58697051110d87839000153afae').sys_id;
+        var atfHelper: x_g_inte_site_17.AtfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
+        var schedule_sys_id: string | undefined = atfHelper.getRecordIdFromStep('8b4ed58697051110d87839000153afae');
+        var approval_group_sys_id: string | undefined = atfHelper.getRecordIdFromStep('cf4c1e1a97411110d87839000153aff6');
+        var assignment_group_sys_id: string | undefined = atfHelper.getRecordIdFromStep('f70fd5c697051110d87839000153af81');
+        if (gs.nil(schedule_sys_id) || gs.nil(approval_group_sys_id) || gs.nil(assignment_group_sys_id))
+            return;
+        var defaultTimeZone: string | undefined;
+        try { defaultTimeZone = gs.getSession().getTimeZoneName(); }
+        catch (e) {
+            defaultTimeZone = '';
+            atfHelper.setFailed("Unexpected exception while getting time zone", e);
+        }
+        if (gs.nil(defaultTimeZone)) {
+            atfHelper.setFailed("Could not determine default time zone");
+        }
+        var altTimeZone: string = (defaultTimeZone == 'US/Pacific') ? 'US/Eastern' : 'US/Pacific';
+        var gdt = new GlideDateTime();
+        var altTzOffset = new GlideDateTime(new GlideScheduleDateTime(gdt).convertTimeZone(defaultTimeZone, altTimeZone)).getNumericValue() - gdt.getNumericValue();
 
         // Create "zero" date/time to tomorrow at 00:00
         var dhz: GlideDateTime = new GlideDateTime();
