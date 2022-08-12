@@ -31,41 +31,26 @@ namespace constructorTest {
     }
 
     (function(outputs: sn_atf.ITestStepOutputs, steps: sn_atf.ITestStepsFunc, stepResult: sn_atf.ITestStepResult, assertEqual: sn_atf.IAssertEqualFunc) {
-        var schedule_sys_id: string;
-        var approval_group_sys_id: string;
-        var assignment_group_sys_id: string;
-        try {
-            var testResult = steps('8b4ed58697051110d87839000153afae');
-            if (gs.nil(testResult)) throw new Error("Could not find step results with Sys ID '8b4ed58697051110d87839000153afae'");
-            schedule_sys_id = <string>testResult.sys_id;
-            if (gs.nil(schedule_sys_id)) throw new Error("Schedule Sys ID not present in results from step with Sys ID '8b4ed58697051110d87839000153afae'");
-            testResult = steps('cf4c1e1a97411110d87839000153aff6');
-            if (gs.nil(testResult)) throw new Error("Could not find step results with Sys ID 'cf4c1e1a97411110d87839000153aff6'");
-            approval_group_sys_id = <string>testResult.sys_id;
-            if (gs.nil(approval_group_sys_id)) throw new Error("Approval Group Sys ID not present in results from step with Sys ID '8b4ed58697051110d87839000153afae'");
-            testResult = steps('f70fd5c697051110d87839000153af81');
-            if (gs.nil(testResult)) throw new Error("Could not find step results with Sys ID 'f70fd5c697051110d87839000153af81'");
-            assignment_group_sys_id = <string>testResult.sys_id;
-            if (gs.nil(assignment_group_sys_id)) throw new Error("Assignment Group Sys ID not present in results from step with Sys ID '8b4ed58697051110d87839000153afae'");
-        } catch (e) {
-            AtfHelper.setFailed(stepResult, "Unable to get data from previous steps", e);
+        var atfHelper: x_g_inte_site_17.AtfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
+        var schedule_sys_id: string | undefined = atfHelper.getRecordIdFromStep('8b4ed58697051110d87839000153afae');
+        var approval_group_sys_id: string | undefined = atfHelper.getRecordIdFromStep('cf4c1e1a97411110d87839000153aff6');
+        var assignment_group_sys_id: string | undefined = atfHelper.getRecordIdFromStep('f70fd5c697051110d87839000153af81');
+        if (gs.nil(schedule_sys_id) || gs.nil(approval_group_sys_id) || gs.nil(assignment_group_sys_id))
             return;
-        }
-        var defaultTimeZone: string;
+        var defaultTimeZone: string | undefined;
         try { defaultTimeZone = gs.getSession().getTimeZoneName(); }
         catch (e) {
-            AtfHelper.setFailed(stepResult, "Unexpected exception while getting time zone", e);
-            return;
+            defaultTimeZone = '';
+            atfHelper.setFailed("Unexpected exception while getting time zone", e);
         }
         if (gs.nil(defaultTimeZone)) {
-            AtfHelper.setFailed(stepResult, "Could not determine default time zone");
-            return;
+            atfHelper.setFailed("Could not determine default time zone");
         }
         var altTimeZone: string = (defaultTimeZone == 'US/Pacific') ? 'US/Eastern' : 'US/Pacific';
         var gdt = new GlideDateTime();
         var altTzOffset = new GlideDateTime(new GlideScheduleDateTime(gdt).convertTimeZone(defaultTimeZone, altTimeZone)).getNumericValue() - gdt.getNumericValue();
         function getExpectedInactiveTypeErrorMessage(sys_id: string, short_description: string, pv: IReservationTypeInputParameters): string {
-            return "Reservation Type \"" + short_description + "\" (" + sys_id + ") is inactive."
+            return "Reservation Type \"" + short_description + "\" (" + sys_id + ", " + JSON.stringify(pv) + ") is inactive.";
         }
         var parameterSetArray: IReservationTypeParameterSet[] = [
             {
@@ -199,12 +184,11 @@ namespace constructorTest {
                 gr.setValue('start_time_interval', new GlideDuration(parameterSet.parameters.start_time_interval_ms));
                 if (gs.nil(gr.insert())) throw new Error("Failed to create test reservation type \"" + parameterSet.parameters.short_description + "\"");
             } catch (e) {
-                AtfHelper.setFailed(stepResult, "Unable to insert test Reservation Type", e);
-                return;
+                atfHelper.setFailed("Unable to insert test Reservation Type", e);
             }
-            var rs: ReservationScheduler;
-            try { rs = new ReservationScheduler(<reservationTypeGlideRecord>gr); } catch (e) {
-                AtfHelper.setFailed(stepResult, "Unable to create instance of ReservationScheduler", e);
+            var rs: x_g_inte_site_17.ReservationScheduler;
+            try { rs = new x_g_inte_site_17.ReservationScheduler(<x_g_inte_site_17.reservationTypeGlideRecord>gr); } catch (e) {
+                atfHelper.setFailed("Unable to create instance of ReservationScheduler", e);
                 return;
             }
             assertEqual({
@@ -310,7 +294,6 @@ namespace constructorTest {
                 shouldBe: new GlideDuration(parameterSet.expected.start_time_interval_ms),
                 value: rs.start_time_interval
             });
-            rs.assignment_group
         }
     })(outputs, steps, stepResult, assertEqual);
 }
@@ -359,8 +342,11 @@ namespace normalizationFunctionsTest {
     }
 
     (function (outputs: sn_atf.ITestStepOutputs, steps: sn_atf.ITestStepsFunc, stepResult: sn_atf.ITestStepResult, assertEqual: sn_atf.IAssertEqualFunc) {
-        var schedule_sys_id = '' + steps('8b4ed58697051110d87839000153afae').sys_id;
-        var group_sys_id = '' + steps('f70fd5c697051110d87839000153af81').sys_id;
+        var atfHelper: x_g_inte_site_17.AtfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
+        var schedule_sys_id: string = atfHelper.getRecordIdFromStep('8b4ed58697051110d87839000153afae');
+        var group_sys_id: string = atfHelper.getRecordIdFromStep('f70fd5c697051110d87839000153af81');
+        if (gs.nil(schedule_sys_id) || gs.nil(group_sys_id))
+            return;
         
         for (var reservationType of <INormalizationFunctionsParameterSet[]>[
             { short_description: 'Start: 1m; Duration: inc=1m, min=15m, max=1h', start_time_interval: new GlideDuration(60000),
@@ -434,7 +420,7 @@ namespace normalizationFunctionsTest {
                 ]
             }
         ]) {
-            var rs: ReservationScheduler;
+            var rs: x_g_inte_site_17.ReservationScheduler;
             var gr: GlideRecord | undefined;
             try {
                 gr = new GlideRecord('x_g_inte_site_17_reservation_type');
@@ -448,16 +434,15 @@ namespace normalizationFunctionsTest {
                 if (gs.nil(gr.insert()))
                     gr = undefined;
             } catch (e) {
-                AtfHelper.setFailed(stepResult, "Unexpected exception while adding test reservation type \"" + reservationType.short_description + "\"", e);
-                return;
+                atfHelper.setFailed("Unexpected exception while adding test reservation type \"" + reservationType.short_description + "\"", e);
             }
             if (gs.nil(gr)) {
-                AtfHelper.setFailed(stepResult, "Failed to add test reservation type \"" + reservationType.short_description + "\"");
+                atfHelper.setFailed("Failed to add test reservation type \"" + reservationType.short_description + "\"");
                 return;
             }
-            try { rs = new ReservationScheduler(<reservationTypeGlideRecord>gr); }
+            try { rs = new x_g_inte_site_17.ReservationScheduler(<x_g_inte_site_17.reservationTypeGlideRecord>gr); }
             catch (e) {
-                AtfHelper.setFailed(stepResult, "Unexpected exception while initializing ReservationScheduler from type \"" + reservationType.short_description + "\"", e);
+                atfHelper.setFailed("Unexpected exception while initializing ReservationScheduler from type \"" + reservationType.short_description + "\"", e);
                 return;
             }
             var value: number;
@@ -467,8 +452,8 @@ namespace normalizationFunctionsTest {
                 msg = 'normalizeDuration(' + durationParam.input.getNumericValue + ' /* + ' + durationParam.input.getDisplayValue() + '; Reservation Type ' + reservationType.short_description + ' */)';
                 try { value = rs.normalizeDuration(target); }
                 catch (e) {
-                    AtfHelper.setFailed(stepResult, "Unexpected exception while testing ReservationScheduler." + msg, e);
-                    return;
+                    value = NaN;
+                    atfHelper.setFailed("Unexpected exception while testing ReservationScheduler." + msg, e);
                 }
                 assertEqual({
                     name: 'return value of ' + msg,
@@ -487,8 +472,8 @@ namespace normalizationFunctionsTest {
                 msg = 'normalizeStartDate("' + dateParam.input.getDisplayValue() + '" + ' + dateParam.offset + ') /* Reservation Type ' + reservationType.short_description + '*/';
                 try { value = rs.normalizeStartDate(input); }
                 catch (e) {
-                    AtfHelper.setFailed(stepResult, "Unexpected exception while testing ReservationScheduler." + msg, e);
-                    return;
+                    value = NaN;
+                    atfHelper.setFailed("Unexpected exception while testing ReservationScheduler." + msg, e);
                 }
                 assertEqual({
                     name: 'return value of ' + msg,

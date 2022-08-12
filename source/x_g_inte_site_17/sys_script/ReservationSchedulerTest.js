@@ -2,50 +2,28 @@
 var constructorTest;
 (function (constructorTest) {
     (function (outputs, steps, stepResult, assertEqual) {
-        var schedule_sys_id;
-        var approval_group_sys_id;
-        var assignment_group_sys_id;
-        try {
-            var testResult = steps('8b4ed58697051110d87839000153afae');
-            if (gs.nil(testResult))
-                throw new Error("Could not find step results with Sys ID '8b4ed58697051110d87839000153afae'");
-            schedule_sys_id = testResult.sys_id;
-            if (gs.nil(schedule_sys_id))
-                throw new Error("Schedule Sys ID not present in results from step with Sys ID '8b4ed58697051110d87839000153afae'");
-            testResult = steps('cf4c1e1a97411110d87839000153aff6');
-            if (gs.nil(testResult))
-                throw new Error("Could not find step results with Sys ID 'cf4c1e1a97411110d87839000153aff6'");
-            approval_group_sys_id = testResult.sys_id;
-            if (gs.nil(approval_group_sys_id))
-                throw new Error("Approval Group Sys ID not present in results from step with Sys ID '8b4ed58697051110d87839000153afae'");
-            testResult = steps('f70fd5c697051110d87839000153af81');
-            if (gs.nil(testResult))
-                throw new Error("Could not find step results with Sys ID 'f70fd5c697051110d87839000153af81'");
-            assignment_group_sys_id = testResult.sys_id;
-            if (gs.nil(assignment_group_sys_id))
-                throw new Error("Assignment Group Sys ID not present in results from step with Sys ID '8b4ed58697051110d87839000153afae'");
-        }
-        catch (e) {
-            AtfHelper.setFailed(stepResult, "Unable to get data from previous steps", e);
+        var atfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
+        var schedule_sys_id = atfHelper.getRecordIdFromStep('8b4ed58697051110d87839000153afae');
+        var approval_group_sys_id = atfHelper.getRecordIdFromStep('cf4c1e1a97411110d87839000153aff6');
+        var assignment_group_sys_id = atfHelper.getRecordIdFromStep('f70fd5c697051110d87839000153af81');
+        if (gs.nil(schedule_sys_id) || gs.nil(approval_group_sys_id) || gs.nil(assignment_group_sys_id))
             return;
-        }
         var defaultTimeZone;
         try {
             defaultTimeZone = gs.getSession().getTimeZoneName();
         }
         catch (e) {
-            AtfHelper.setFailed(stepResult, "Unexpected exception while getting time zone", e);
-            return;
+            defaultTimeZone = '';
+            atfHelper.setFailed("Unexpected exception while getting time zone", e);
         }
         if (gs.nil(defaultTimeZone)) {
-            AtfHelper.setFailed(stepResult, "Could not determine default time zone");
-            return;
+            atfHelper.setFailed("Could not determine default time zone");
         }
         var altTimeZone = (defaultTimeZone == 'US/Pacific') ? 'US/Eastern' : 'US/Pacific';
         var gdt = new GlideDateTime();
         var altTzOffset = new GlideDateTime(new GlideScheduleDateTime(gdt).convertTimeZone(defaultTimeZone, altTimeZone)).getNumericValue() - gdt.getNumericValue();
         function getExpectedInactiveTypeErrorMessage(sys_id, short_description, pv) {
-            return "Reservation Type \"" + short_description + "\" (" + sys_id + ") is inactive.";
+            return "Reservation Type \"" + short_description + "\" (" + sys_id + ", " + JSON.stringify(pv) + ") is inactive.";
         }
         var parameterSetArray = [
             {
@@ -182,15 +160,14 @@ var constructorTest;
                     throw new Error("Failed to create test reservation type \"" + parameterSet.parameters.short_description + "\"");
             }
             catch (e) {
-                AtfHelper.setFailed(stepResult, "Unable to insert test Reservation Type", e);
-                return;
+                atfHelper.setFailed("Unable to insert test Reservation Type", e);
             }
             var rs;
             try {
-                rs = new ReservationScheduler(gr);
+                rs = new x_g_inte_site_17.ReservationScheduler(gr);
             }
             catch (e) {
-                AtfHelper.setFailed(stepResult, "Unable to create instance of ReservationScheduler", e);
+                atfHelper.setFailed("Unable to create instance of ReservationScheduler", e);
                 return;
             }
             assertEqual({
@@ -296,15 +273,17 @@ var constructorTest;
                 shouldBe: new GlideDuration(parameterSet.expected.start_time_interval_ms),
                 value: rs.start_time_interval
             });
-            rs.assignment_group;
         }
     })(outputs, steps, stepResult, assertEqual);
 })(constructorTest || (constructorTest = {}));
 var normalizationFunctionsTest;
 (function (normalizationFunctionsTest) {
     (function (outputs, steps, stepResult, assertEqual) {
-        var schedule_sys_id = '' + steps('8b4ed58697051110d87839000153afae').sys_id;
-        var group_sys_id = '' + steps('f70fd5c697051110d87839000153af81').sys_id;
+        var atfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
+        var schedule_sys_id = atfHelper.getRecordIdFromStep('8b4ed58697051110d87839000153afae');
+        var group_sys_id = atfHelper.getRecordIdFromStep('f70fd5c697051110d87839000153af81');
+        if (gs.nil(schedule_sys_id) || gs.nil(group_sys_id))
+            return;
         for (var _i = 0, _a = [
             { short_description: 'Start: 1m; Duration: inc=1m, min=15m, max=1h', start_time_interval: new GlideDuration(60000),
                 duration_increment: new GlideDuration(60000), minimum_duration: new GlideDuration(900000), maximum_duration: new GlideDuration(3600000),
@@ -393,18 +372,17 @@ var normalizationFunctionsTest;
                     gr = undefined;
             }
             catch (e) {
-                AtfHelper.setFailed(stepResult, "Unexpected exception while adding test reservation type \"" + reservationType.short_description + "\"", e);
-                return;
+                atfHelper.setFailed("Unexpected exception while adding test reservation type \"" + reservationType.short_description + "\"", e);
             }
             if (gs.nil(gr)) {
-                AtfHelper.setFailed(stepResult, "Failed to add test reservation type \"" + reservationType.short_description + "\"");
+                atfHelper.setFailed("Failed to add test reservation type \"" + reservationType.short_description + "\"");
                 return;
             }
             try {
-                rs = new ReservationScheduler(gr);
+                rs = new x_g_inte_site_17.ReservationScheduler(gr);
             }
             catch (e) {
-                AtfHelper.setFailed(stepResult, "Unexpected exception while initializing ReservationScheduler from type \"" + reservationType.short_description + "\"", e);
+                atfHelper.setFailed("Unexpected exception while initializing ReservationScheduler from type \"" + reservationType.short_description + "\"", e);
                 return;
             }
             var value;
@@ -417,8 +395,8 @@ var normalizationFunctionsTest;
                     value = rs.normalizeDuration(target);
                 }
                 catch (e) {
-                    AtfHelper.setFailed(stepResult, "Unexpected exception while testing ReservationScheduler." + msg, e);
-                    return;
+                    value = NaN;
+                    atfHelper.setFailed("Unexpected exception while testing ReservationScheduler." + msg, e);
                 }
                 assertEqual({
                     name: 'return value of ' + msg,
@@ -441,8 +419,8 @@ var normalizationFunctionsTest;
                     value = rs.normalizeStartDate(input);
                 }
                 catch (e) {
-                    AtfHelper.setFailed(stepResult, "Unexpected exception while testing ReservationScheduler." + msg, e);
-                    return;
+                    value = NaN;
+                    atfHelper.setFailed("Unexpected exception while testing ReservationScheduler." + msg, e);
                 }
                 assertEqual({
                     name: 'return value of ' + msg,
