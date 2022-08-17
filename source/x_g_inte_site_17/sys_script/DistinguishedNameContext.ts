@@ -105,7 +105,7 @@ namespace x_g_inte_site_17 {
                     this._sourceRecord = new GlideRecord('sys_user');
                     this._sourceRecord.addQuery('sys_id', source);
                     this._sourceRecord.query();
-                    if (!gr.next()) {
+                    if (!this._sourceRecord.next()) {
                         this._sourceRecord = new GlideRecord('sys_user_group');
                         this._sourceRecord.addQuery('sys_id', source);
                         this._sourceRecord.query();
@@ -118,7 +118,7 @@ namespace x_g_inte_site_17 {
                     return;
                 }
                 if (source instanceof GlideRecord) {
-                    if ((this._sourceRecord = source).isNewRecord() || !gr.isValidRecord()) throw new Error("Not a valid glide object representing a table row");
+                    if ((this._sourceRecord = source).isNewRecord() || !source.isValidRecord()) throw new Error("Not a valid glide object representing a table row");
                 } else if (source instanceof GlideElement) {
                     this._sourceRecord = (<{ [key: string]: any}>source).getRefRecord();
                     if (gs.nil(this._sourceRecord) || this._sourceRecord.isNewRecord() || !this._sourceRecord.isValidRecord()) throw new Error("Not a valid glide object representing a table row");
