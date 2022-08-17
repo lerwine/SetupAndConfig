@@ -1,6 +1,2 @@
-interface IRecordDefinition {
-    sys_id: string;
-    name: string;
-    description: string;
+declare namespace ensure_default_physical_networks {
 }
-declare var recordDefinitions: IRecordDefinition[];
