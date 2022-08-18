@@ -4,7 +4,7 @@
  * @extends {IExtendedGlideTableProperties}
  */
 declare namespace x_g_inte_site_17 {
-    interface reservationTypeFields extends IExtendedGlideTableProperties {
+    export interface reservationTypeFields extends IExtendedGlideTableProperties {
         /**
          * Short description
          * @type {$$property.Element}
@@ -74,8 +74,8 @@ declare namespace x_g_inte_site_17 {
          */
         inactive: $$property.Boolean;
     }
-    type reservationTypeGlideRecord = GlideRecord & reservationTypeFields;
-    interface ITimeSlot {
+    export type reservationTypeGlideRecord = GlideRecord & reservationTypeFields;
+    export interface ITimeSlot {
         startDateTime: GlideDateTime;
         duration: GlideDuration;
     }
@@ -98,7 +98,7 @@ declare namespace x_g_inte_site_17 {
         new (reservationScheduler: ReservationScheduler, fromDateTime: GlideDateTime, minDuration?: GlideDuration, maxDuration?: GlideDuration): AvailabilitySearcher;
         (reservationScheduler: ReservationScheduler, fromDateTime: GlideDateTime, minDuration?: GlideDuration, maxDuration?: GlideDuration): AvailabilitySearcher;
     }
-    interface IReservationSchedulerBase extends $$snClass.ICustomClassBase<IReservationSchedulerBase, "ReservationScheduler"> {
+    export interface IReservationSchedulerBase extends $$snClass.ICustomClassBase<IReservationSchedulerBase, "ReservationScheduler"> {
         /**
          * Short description
          * @type {string}
@@ -162,14 +162,15 @@ declare namespace x_g_inte_site_17 {
         isAvailable(startDateTime: GlideDateTime, duration: GlideDuration): boolean;
         addAppointment(name: string, startDateTime: GlideDateTime, duration: GlideDuration): cmn_schedule_spanGlideRecord | undefined;
     }
-    interface IReservationSchedulerPrototype extends $$snClass.ICustomClassPrototype3<IReservationSchedulerBase, IReservationSchedulerPrototype, "ReservationScheduler", reservationTypeGlideRecord | string, boolean, string>, IReservationSchedulerBase {
+    export interface IReservationSchedulerPrototype extends $$snClass.ICustomClassPrototype3<IReservationSchedulerBase, IReservationSchedulerPrototype, "ReservationScheduler", reservationTypeGlideRecord | string, boolean, string>, IReservationSchedulerBase {
         _scheduleId: string;
     }
-    type ReservationScheduler = Readonly<IReservationSchedulerBase>;
-    interface ReservationSchedulerConstructor extends $$snClass.CustomClassConstructor3<IReservationSchedulerBase, IReservationSchedulerPrototype, ReservationScheduler, reservationTypeGlideRecord | string, boolean, string> {
+    export type ReservationScheduler = Readonly<IReservationSchedulerBase>;
+    export interface ReservationSchedulerConstructor extends $$snClass.CustomClassConstructor3<IReservationSchedulerBase, IReservationSchedulerPrototype, ReservationScheduler, reservationTypeGlideRecord | string, boolean, string> {
         new (type: reservationTypeGlideRecord | string, allowInactive?: boolean, timeZone?: string): ReservationScheduler;
         (type: reservationTypeGlideRecord | string, allowInactive?: boolean, timeZone?: string): ReservationScheduler;
         AvailabilitySearcher: AvailabilitySearcherConstructor;
     }
-    const ReservationScheduler: ReservationSchedulerConstructor;
+    export const ReservationScheduler: ReservationSchedulerConstructor;
+    export {};
 }

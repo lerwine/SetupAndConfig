@@ -9,11 +9,11 @@ declare namespace x_g_inte_site_17 {
         /**
          * Sets the result message and sets the step result to failed.
          * @param {string} reason - Explains why the test failed.
-         * @param {*} [e] - The error that caused the failure.
+         * @param {*} e - The error that caused the failure.
          * @memberof IAtfHelperBase
          * @throws When the setFailed method is invoked on the associated test result object, an exception will be thrown.
          */
-        setFailed(reason: string, e?: any): void;
+        setFailed(reason: string, e: any): void;
         /**
          * Asserts the record id (Sys ID) from the results of a previous test step.
          * This will invoke the setFailed method if there is no record_id from the referenced test step results, which results in an exception being thrown.
@@ -22,7 +22,7 @@ declare namespace x_g_inte_site_17 {
          * @memberof IAtfHelperBase
          * @throws If the referenced test step results could not be found or it does not define a record_id, then the setFailed method is invoked on the associated test result object, and an exception will be thrown.
          */
-        getRecordIdFromStep(sys_id: string): string | never;
+        getRecordIdFromStep(sys_id: string): string | undefined;
     }
     interface IAtfHelperPrototype extends $$snClass.ICustomClassPrototype2<IAtfHelperBase, IAtfHelperPrototype, "AtfHelper", sn_atf.ITestStepsFunc, sn_atf.ITestStepResult>, IAtfHelperBase {
         _stepResult: sn_atf.ITestStepResult;
@@ -56,11 +56,11 @@ declare namespace x_g_inte_site_17 {
          * Sets the result message and sets the step result to failed.
          * @param {sn_atf.ITestStepResult} stepResult
          * @param {string} reason - Explains why the test failed.
-         * @param {*} [e] - The error that caused the failure.
+         * @param {*} e - The error that caused the failure.
          * @memberof AtfHelperConstructor
          * @throws When the setFailed method is invoked on stepResult, an exception will be thrown.
          */
-        setFailed(stepResult: sn_atf.ITestStepResult, reason: string, e?: any): void;
+        setFailed(stepResult: sn_atf.ITestStepResult, reason: string, e: any): void;
         /**
          * Gets a date/time string that is of a specific time, and is relative to the current date.
          * @param {number} daysFromToday - The relative number of days.

@@ -56,7 +56,7 @@ var x_g_inte_site_17;
         function normalizeGlideDuration(value, interval) {
             var n = interval.getNumericValue();
             if (value.before(interval)) {
-                value.setDisplayValue(interval.getDisplayValue());
+                value.setValue(interval.getDurationValue());
                 return n;
             }
             var mod = value.getNumericValue() % n;
@@ -100,8 +100,9 @@ var x_g_inte_site_17;
                 }
                 else {
                     glideRecord = type;
-                    if (glideRecord.getTableName() != 'x_g_inte_site_17_reservation_type')
-                        throw new Error("Glide record is not from the 'Reservation Types' table.");
+                    var tableName = glideRecord.getTableName();
+                    if (tableName != 'x_g_inte_site_17_reservation_type')
+                        throw new Error("Glide record is not from the 'Reservation Types' table (getTableName()='" + tableName + "')");
                     if (glideRecord.isNewRecord())
                         throw new Error("Reservation Type has not been saved to the database.");
                     if (!glideRecord.isValid())
@@ -116,14 +117,21 @@ var x_g_inte_site_17;
                     this.approval_group = '' + glideRecord.approval_group;
                 this.assignment_group = '' + glideRecord.assignment_group;
                 var duration = new GlideDuration();
-                duration.setValue(glideRecord.getValue('duration_increment'));
+                duration.setValue(glideRecord.duration_increment);
                 this.duration_increment = getNormalizedGlideDuration(duration, oneMinute);
-                duration.setValue(glideRecord.getValue('start_time_interval'));
+                duration.setValue(glideRecord.start_time_interval);
                 this.start_time_interval = getNormalizedGlideDuration(duration, oneMinute);
-                duration.setValue(glideRecord.getValue('minimum_duration'));
+                duration.setValue(glideRecord.minimum_duration);
                 this.minimum_duration = getNormalizedGlideDuration(duration, this.duration_increment);
-                duration.setValue(glideRecord.getValue('maximum_duration'));
-                this.maximum_duration = getNormalizedGlideDuration(duration, this.duration_increment);
+                duration.setValue(glideRecord.maximum_duration);
+                if (duration.before(this.duration_increment))
+                    this.maximum_duration = new GlideDuration(this.duration_increment.getDurationValue());
+                else {
+                    var mod = duration.getNumericValue() % this.duration_increment.getNumericValue();
+                    if (mod > 0)
+                        duration.add(0 - mod);
+                    this.maximum_duration = duration;
+                }
                 this.timeZone = gs.nil(timeZone) ? gs.getSession().getTimeZoneName() : timeZone;
             },
             normalizeDuration: function (value) {
@@ -296,7 +304,10 @@ var x_g_inte_site_17;
                 this._minimumDuration = new GlideDuration(reservationScheduler.minimum_duration);
                 this._maximumDuration = new GlideDuration(reservationScheduler.maximum_duration);
                 normalizeGlideDuration(this._minimumDuration, this._durationIncrement);
-                normalizeGlideDuration(this._maximumDuration, this._durationIncrement);
+                if (this._maximumDuration.before(this._durationIncrement))
+                    this._maximumDuration.setValue(this._durationIncrement.getDurationValue());
+                else if ((mod = this._maximumDuration.getNumericValue() % this._durationIncrement.getNumericValue()) > 0)
+                    this._maximumDuration.add(0 - mod);
                 if (this._minimumDuration.before(this._maximumDuration)) {
                     if (!(gs.nil(minDuration) || minDuration.isValid()))
                         throw new Error("Invalid minimum duration: " + minDuration.getErrorMsg());
