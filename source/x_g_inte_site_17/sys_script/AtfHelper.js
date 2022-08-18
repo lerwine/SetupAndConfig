@@ -4,33 +4,29 @@ var x_g_inte_site_17;
     x_g_inte_site_17.AtfHelper = (function () {
         var atfhelperConstructor = Class.create();
         function setFailed(stepResult, reason, e) {
-            if (gs.nil(e))
-                stepResult.setOutputMessage(reason);
-            else {
-                var m = gs.nil(e.message) ? '' : ((typeof e.message === 'string') ? e.message : '' + e.message).trim();
-                var name = gs.nil(e.name) ? '' : ((typeof e.name === 'string') ? e.name : '' + e.name).trim();
-                var stack = gs.nil(e.stack) ? '' : ((typeof e.stack === 'string') ? e.stack : '' + e.stack).trim();
-                if (m.length > 0) {
-                    if (name.length > 0) {
-                        if (stack.length > 0)
-                            stepResult.setOutputMessage("Unexpected " + name + ": " + reason + "\nMessage: " + m + "\nStack trace:\n" + stack);
-                        else
-                            stepResult.setOutputMessage("Unexpected " + name + ": " + reason + "\nMessage: " + m);
-                    }
-                    else if (stack.length > 0)
-                        stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m + "\nStack trace:\n" + stack);
+            var m = gs.nil(e.message) ? '' : ((typeof e.message === 'string') ? e.message : '' + e.message).trim();
+            var name = gs.nil(e.name) ? '' : ((typeof e.name === 'string') ? e.name : '' + e.name).trim();
+            var stack = gs.nil(e.stack) ? '' : ((typeof e.stack === 'string') ? e.stack : '' + e.stack).trim();
+            if (m.length > 0) {
+                if (name.length > 0) {
+                    if (stack.length > 0)
+                        stepResult.setOutputMessage("Unexpected " + name + ": " + reason + "\nMessage: " + m + "\nStack trace:\n" + stack);
                     else
-                        stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m);
+                        stepResult.setOutputMessage("Unexpected " + name + ": " + reason + "\nMessage: " + m);
                 }
-                else if (name.length > 0)
-                    stepResult.setOutputMessage("Unexpected error: " + ((stack.length > 0) ? reason + "\n" + stack : reason));
                 else if (stack.length > 0)
-                    stepResult.setOutputMessage("Unexpected error: " + reason + "\n" + stack);
-                else if ((m = ('' + e).trim()).length > 0)
-                    stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m);
+                    stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m + "\nStack trace:\n" + stack);
                 else
-                    stepResult.setOutputMessage("Unexpected error: " + reason);
+                    stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m);
             }
+            else if (name.length > 0)
+                stepResult.setOutputMessage("Unexpected error: " + ((stack.length > 0) ? reason + "\n" + stack : reason));
+            else if (stack.length > 0)
+                stepResult.setOutputMessage("Unexpected error: " + reason + "\n" + stack);
+            else if ((m = ('' + e).trim()).length > 0)
+                stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m);
+            else
+                stepResult.setOutputMessage("Unexpected error: " + reason);
             stepResult.setFailed();
         }
         atfhelperConstructor.setFailed = setFailed;
@@ -97,8 +93,8 @@ var x_g_inte_site_17;
                     return;
                 }
                 var result;
-                if (gs.nil(sr)) {
-                    this.setFailed("Could not find result of step with Sys Id '" + sys_id + "'");
+                if (typeof sr === 'undefined' || sr === null) {
+                    this._stepResult.setOutputMessage("Could not find result of step with Sys Id '" + sys_id + "'" + (typeof sr));
                     return;
                 }
                 try {
@@ -108,9 +104,9 @@ var x_g_inte_site_17;
                     this.setFailed("Unexpected exception getting record_id from result of step with Sys Id '" + sys_id + "'", e);
                     return;
                 }
-                if (!gs.nil(result))
-                    return result;
-                this.setFailed("Result of step with Sys Id '" + sys_id + "' does not have a record_id");
+                if (typeof result !== 'undefined' && result !== null)
+                    return '' + result;
+                this._stepResult.setOutputMessage("Result of step with Sys Id '" + sys_id + "' does not have a record_id");
             },
             type: "AtfHelper"
         };

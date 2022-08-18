@@ -9,11 +9,11 @@ namespace x_g_inte_site_17 {
         /**
          * Sets the result message and sets the step result to failed.
          * @param {string} reason - Explains why the test failed.
-         * @param {*} [e] - The error that caused the failure.
+         * @param {*} e - The error that caused the failure.
          * @memberof IAtfHelperBase
          * @throws When the setFailed method is invoked on the associated test result object, an exception will be thrown.
          */
-        setFailed(reason: string, e?: any): void;
+        setFailed(reason: string, e: any): void;
 
         /**
          * Asserts the record id (Sys ID) from the results of a previous test step.
@@ -23,7 +23,7 @@ namespace x_g_inte_site_17 {
          * @memberof IAtfHelperBase
          * @throws If the referenced test step results could not be found or it does not define a record_id, then the setFailed method is invoked on the associated test result object, and an exception will be thrown.
          */
-        getRecordIdFromStep(sys_id: string): string | never;
+        getRecordIdFromStep(sys_id: string): string | undefined;
     }
 
     export interface IAtfHelperPrototype extends $$snClass.ICustomClassPrototype2<IAtfHelperBase, IAtfHelperPrototype, "AtfHelper", sn_atf.ITestStepsFunc, sn_atf.ITestStepResult>, IAtfHelperBase {
@@ -62,11 +62,11 @@ namespace x_g_inte_site_17 {
          * Sets the result message and sets the step result to failed.
          * @param {sn_atf.ITestStepResult} stepResult
          * @param {string} reason - Explains why the test failed.
-         * @param {*} [e] - The error that caused the failure.
+         * @param {*} e - The error that caused the failure.
          * @memberof AtfHelperConstructor
          * @throws When the setFailed method is invoked on stepResult, an exception will be thrown.
          */
-        setFailed(stepResult: sn_atf.ITestStepResult, reason: string, e?: any): void;
+        setFailed(stepResult: sn_atf.ITestStepResult, reason: string, e: any): void;
 
         /**
          * Gets a date/time string that is of a specific time, and is relative to the current date.
@@ -91,33 +91,29 @@ namespace x_g_inte_site_17 {
     export const AtfHelper: AtfHelperConstructor = (function (): AtfHelperConstructor {
         var atfhelperConstructor: AtfHelperConstructor = Class.create();
 
-        function setFailed(stepResult: sn_atf.ITestStepResult, reason: string, e?: any): void {
-            if (gs.nil(e))
-                stepResult.setOutputMessage(reason);
-            else {
-                var m = gs.nil(e.message) ? '' : ((typeof e.message === 'string') ? e.message : '' + e.message).trim();
-                var name = gs.nil(e.name) ? '' : ((typeof e.name === 'string') ? e.name : '' + e.name).trim();
-                var stack = gs.nil(e.stack) ? '' : ((typeof e.stack === 'string') ? e.stack : '' + e.stack).trim();
-                if (m.length > 0) {
-                    if (name.length > 0) {
-                        if (stack.length > 0)
-                            stepResult.setOutputMessage("Unexpected " + name + ": " + reason + "\nMessage: " + m + "\nStack trace:\n" + stack);
-                        else
-                            stepResult.setOutputMessage("Unexpected " + name + ": " + reason + "\nMessage: " + m);
-                    }
-                    else if (stack.length > 0)
-                        stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m + "\nStack trace:\n" + stack);
+        function setFailed(stepResult: sn_atf.ITestStepResult, reason: string, e: any): void {
+            var m = gs.nil(e.message) ? '' : ((typeof e.message === 'string') ? e.message : '' + e.message).trim();
+            var name = gs.nil(e.name) ? '' : ((typeof e.name === 'string') ? e.name : '' + e.name).trim();
+            var stack = gs.nil(e.stack) ? '' : ((typeof e.stack === 'string') ? e.stack : '' + e.stack).trim();
+            if (m.length > 0) {
+                if (name.length > 0) {
+                    if (stack.length > 0)
+                        stepResult.setOutputMessage("Unexpected " + name + ": " + reason + "\nMessage: " + m + "\nStack trace:\n" + stack);
                     else
-                        stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m);
-                } else if (name.length > 0)
-                    stepResult.setOutputMessage("Unexpected error: " + ((stack.length > 0) ? reason + "\n" + stack : reason));
+                        stepResult.setOutputMessage("Unexpected " + name + ": " + reason + "\nMessage: " + m);
+                }
                 else if (stack.length > 0)
-                    stepResult.setOutputMessage("Unexpected error: " + reason + "\n" + stack);
-                else if ((m = ('' + e).trim()).length > 0)
-                    stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m);
+                    stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m + "\nStack trace:\n" + stack);
                 else
-                    stepResult.setOutputMessage("Unexpected error: " + reason);
-            }
+                    stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m);
+            } else if (name.length > 0)
+                stepResult.setOutputMessage("Unexpected error: " + ((stack.length > 0) ? reason + "\n" + stack : reason));
+            else if (stack.length > 0)
+                stepResult.setOutputMessage("Unexpected error: " + reason + "\n" + stack);
+            else if ((m = ('' + e).trim()).length > 0)
+                stepResult.setOutputMessage("Unexpected error: " + reason + "\nMessage: " + m);
+            else
+                stepResult.setOutputMessage("Unexpected error: " + reason);
             stepResult.setFailed();
         }
 
@@ -172,7 +168,7 @@ namespace x_g_inte_site_17 {
                 this._stepResult = stepResult;
             },
 
-            setFailed: function(this: IAtfHelperPrototype, reason: string, e?: any): void {
+            setFailed: function(this: IAtfHelperPrototype, reason: string, e: any): void {
                 setFailed(this._stepResult, reason, e);
             },
 
@@ -183,9 +179,9 @@ namespace x_g_inte_site_17 {
                     this.setFailed("Unexpected exception result of step with Sys Id '" + sys_id + "'", e);
                     return;
                 }
-                var result: string;
-                if (gs.nil(sr)) {
-                    this.setFailed("Could not find result of step with Sys Id '" + sys_id + "'");
+                var result: atf_output_variableFields;
+                if (typeof sr === 'undefined' || sr === null) {
+                    this._stepResult.setOutputMessage("Could not find result of step with Sys Id '" + sys_id + "'" + (typeof sr));
                     return;
                 }
                 try { result = sr.record_id; }
@@ -193,9 +189,9 @@ namespace x_g_inte_site_17 {
                     this.setFailed("Unexpected exception getting record_id from result of step with Sys Id '" + sys_id + "'", e);
                     return
                 }
-                if (!gs.nil(result))
-                    return result;
-                this.setFailed("Result of step with Sys Id '" + sys_id + "' does not have a record_id");
+                if (typeof result !== 'undefined' && result !== null)
+                    return '' + result;
+                this._stepResult.setOutputMessage("Result of step with Sys Id '" + sys_id + "' does not have a record_id");
             },
 
             type: "AtfHelper"
