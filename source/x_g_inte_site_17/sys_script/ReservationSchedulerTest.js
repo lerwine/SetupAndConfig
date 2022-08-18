@@ -407,10 +407,21 @@ var normalizationFunctionsTest;
         var atfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
         var schedule_sys_id = atfHelper.getRecordIdFromStep('8b4ed58697051110d87839000153afae');
         var group_sys_id = atfHelper.getRecordIdFromStep('f70fd5c697051110d87839000153af81');
-        var constructorOutputs = steps('c1cc9ada97411110d87839000153afcd');
-        if (gs.nil(schedule_sys_id) || gs.nil(group_sys_id) || gs.nil(constructorOutputs))
+        if (gs.nil(schedule_sys_id) || gs.nil(group_sys_id))
             return false;
-        var outputItems = JSON.parse(constructorOutputs.types);
+        var constructorOutputs = steps('c1cc9ada97411110d87839000153afcd');
+        if (typeof constructorOutputs === 'undefined' || constructorOutputs === null) {
+            stepResult.setOutputMessage("Could not find result of step with Sys Id 'c1cc9ada97411110d87839000153afcd'");
+            return false;
+        }
+        var outputItems;
+        try {
+            outputItems = JSON.parse(constructorOutputs.types);
+        }
+        catch (e) {
+            atfHelper.setFailed("Unexpected exception while parsing types from result of step with Sys Id 'c1cc9ada97411110d87839000153afcd'", e);
+            return false;
+        }
         var testParameters = {
             // step_sys_id: '6e6da91297191110d87839000153afb5',
             // start_time_interval: gs.getDurationDate('0 0:0:0'),
@@ -516,11 +527,11 @@ var normalizationFunctionsTest;
             // maximum_duration: gs.getDurationDate('0 2:30:1')
             "SInc: 15M; DInc: 30M; Min: 30M; Max: 2H30M; Inactive: true": {
                 durations: [
-                    { test_description: "[0S]=1H30M (+1H30M)", input: new GlideDuration('0 0:0:0'), expected: new GlideDuration('0 1:30:0'), returns: 5400000 },
-                    { test_description: "[1S]=1H30M (+1H29M59)", input: new GlideDuration('0 0:0:1'), expected: new GlideDuration('0 1:30:0'), returns: 5399000 },
-                    { test_description: "[15M]=1H30M (+1H15M)", input: new GlideDuration('0 0:15:0'), expected: new GlideDuration('0 1:30:0'), returns: 4500000 },
-                    { test_description: "[30M]=1H30M (+1H)", input: new GlideDuration('0 0:30:0'), expected: new GlideDuration('0 1:30:0'), returns: 3600000 },
-                    { test_description: "[45M]=1H30M (+45M)", input: new GlideDuration('0 0:45:0'), expected: new GlideDuration('0 1:30:0'), returns: 2700000 },
+                    { test_description: "[0S]=30M (+30M)", input: new GlideDuration('0 0:0:0'), expected: new GlideDuration('0 0:30:0'), returns: 1800000 },
+                    { test_description: "[1S]=30M (+29M59S)", input: new GlideDuration('0 0:0:1'), expected: new GlideDuration('0 0:30:0'), returns: 1799000 },
+                    { test_description: "[15M]=30M (+15M)", input: new GlideDuration('0 0:15:0'), expected: new GlideDuration('0 0:30:0'), returns: 900000 },
+                    { test_description: "[30M]=30M (+1H)", input: new GlideDuration('0 0:30:0'), expected: new GlideDuration('0 0:30:0'), returns: 3600000 },
+                    { test_description: "[45M]=1H (+15M)", input: new GlideDuration('0 0:45:0'), expected: new GlideDuration('0 1:0:0'), returns: 900000 },
                     { test_description: "[1H30M]=1H30M (+0S)", input: new GlideDuration('0 1:30:0'), expected: new GlideDuration('0 1:30:0'), returns: 0 },
                     { test_description: "[1H30M1S]=2H (+29M59S)", input: new GlideDuration('0 1:30:1'), expected: new GlideDuration('0 2:0:0'), returns: 1799000 },
                     { test_description: "[1H59M59S]=2H (+1S)", input: new GlideDuration('0 1:59:59'), expected: new GlideDuration('0 2:0:0'), returns: 1000 },
@@ -551,15 +562,14 @@ var normalizationFunctionsTest;
                 durations: [
                     { test_description: "[0S]=15M (+15M)", input: new GlideDuration('0 0:0:0'), expected: new GlideDuration('0 0:15:0'), returns: 900000 },
                     { test_description: "[1S]=15M (+14M59)", input: new GlideDuration('0 0:0:1'), expected: new GlideDuration('0 0:15:0'), returns: 899000 },
-                    { test_description: "[30M]=30M (+0S)", input: new GlideDuration('0 0:30:0'), expected: new GlideDuration('0 0:30:0'), returns: 0 },
                     { test_description: "[15M]=15M (+0S)", input: new GlideDuration('0 0:15:0'), expected: new GlideDuration('0 0:15:0'), returns: 0 },
                     { test_description: "[7M30S]=15M (+7M30S)", input: new GlideDuration('0 0:7:30'), expected: new GlideDuration('0 0:15:0'), returns: 450000 },
-                    { test_description: "[15M1S]=30M (+14M59S)", input: new GlideDuration('0 0:15:1'), expected: new GlideDuration('0 0:30:0'), returns: 899000 },
+                    { test_description: "[30M]=30M (+0S)", input: new GlideDuration('0 0:30:0'), expected: new GlideDuration('0 0:30:0'), returns: 0 },
                     { test_description: "[29M59S]=30M (+1S)", input: new GlideDuration('0 0:29:59'), expected: new GlideDuration('0 0:30:0'), returns: 1000 },
-                    { test_description: "[43M59S]=45M (+1M1S)", input: new GlideDuration('0 0:43:59'), expected: new GlideDuration('0 0:45:0'), returns: 61000 },
-                    { test_description: "[44M]=45M (+1M)", input: new GlideDuration('0 0:44:0'), expected: new GlideDuration('0 0:45:0'), returns: 60000 },
-                    { test_description: "[44M1S]=45M (+59S)", input: new GlideDuration('0 0:44:1'), expected: new GlideDuration('0 0:45:0'), returns: 59000 },
                     { test_description: "[45M]=45M (+0S)", input: new GlideDuration('0 0:45:0'), expected: new GlideDuration('0 0:45:0'), returns: 0 },
+                    { test_description: "[44M1S]=45M (+59S)", input: new GlideDuration('0 0:44:1'), expected: new GlideDuration('0 0:45:0'), returns: 59000 },
+                    { test_description: "[44M]=45M (+1M)", input: new GlideDuration('0 0:44:0'), expected: new GlideDuration('0 0:45:0'), returns: 60000 },
+                    { test_description: "[43M59S]=45M (+1M1S)", input: new GlideDuration('0 0:43:59'), expected: new GlideDuration('0 0:45:0'), returns: 61000 },
                     { test_description: "[45M1S]=45M (no round up)", input: new GlideDuration('0 0:45:1'), expected: new GlideDuration('0 0:45:0'), returns: 0 },
                     { test_description: "[1H1S]=45M (no round up)", input: new GlideDuration('0 1:0:1'), expected: new GlideDuration('0 0:45:0'), returns: 0 }
                 ],
@@ -594,7 +604,8 @@ var normalizationFunctionsTest;
                     { test_description: "[44M]=45M (+1M)", input: new GlideDuration('0 0:44:0'), expected: new GlideDuration('0 0:45:0'), returns: 60000 },
                     { test_description: "[58M59S]=1H (+1M1S)", input: new GlideDuration('0 0:58:59'), expected: new GlideDuration('0 1:0:0'), returns: 61000 },
                     { test_description: "[59M]=1H (+1M)", input: new GlideDuration('0 0:59:0'), expected: new GlideDuration('0 1:0:0'), returns: 60000 },
-                    { test_description: "[59M1S]=59M (no round up)", input: new GlideDuration('0 0:59:1'), expected: new GlideDuration('0 0:59:0'), returns: 0 }
+                    { test_description: "[1H]=1H (no round up)", input: new GlideDuration('0 1:0:0'), expected: new GlideDuration('0 1:0:0'), returns: 0 },
+                    { test_description: "[1H1S]=1H (no round up)", input: new GlideDuration('0 1:0:1'), expected: new GlideDuration('0 1:0:0'), returns: 0 }
                 ],
                 startDates: [
                     { test_description: "[2022-08-02 00:00:00]=2022-08-02 00:00:00 (+0S)", input: new GlideDateTime('2022-08-02 00:00:00'), expected: new GlideDateTime('2022-08-02 00:00:00'), returns: 0 },
