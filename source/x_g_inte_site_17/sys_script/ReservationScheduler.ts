@@ -327,7 +327,14 @@
                 duration.setValue(glideRecord.minimum_duration);
                 this.minimum_duration = getNormalizedGlideDuration(duration, this.duration_increment);
                 duration.setValue(glideRecord.maximum_duration);
-                this.maximum_duration = getNormalizedGlideDuration(duration, this.duration_increment);
+                if (duration.before(this.duration_increment))
+                    this.maximum_duration = new GlideDuration(this.duration_increment.getDurationValue());
+                else {
+                    var mod = duration.getNumericValue() % this.duration_increment.getNumericValue();
+                    if (mod > 0)
+                        duration.add(0 - mod);
+                    this.maximum_duration = duration;
+                }
                 this.timeZone = gs.nil(timeZone) ? gs.getSession().getTimeZoneName() : timeZone;
             },
 
@@ -473,7 +480,12 @@
                 this._minimumDuration = new GlideDuration(reservationScheduler.minimum_duration);
                 this._maximumDuration = new GlideDuration(reservationScheduler.maximum_duration);
                 normalizeGlideDuration(this._minimumDuration, this._durationIncrement);
-                normalizeGlideDuration(this._maximumDuration, this._durationIncrement);
+                
+                if (this._maximumDuration.before(this._durationIncrement))
+                    this._maximumDuration.setValue(this._durationIncrement.getDurationValue());
+                else if ((mod = this._maximumDuration.getNumericValue() % this._durationIncrement.getNumericValue()) > 0)
+                    this._maximumDuration.add(0 - mod);
+                
                 if (this._minimumDuration.before(this._maximumDuration)) {
                     if (!(gs.nil(minDuration) || minDuration.isValid())) throw new Error("Invalid minimum duration: " + minDuration.getErrorMsg());
                     if (!(gs.nil(maxDuration) || maxDuration.isValid())) throw new Error("Invalid maximum duration: " + maxDuration.getErrorMsg());
