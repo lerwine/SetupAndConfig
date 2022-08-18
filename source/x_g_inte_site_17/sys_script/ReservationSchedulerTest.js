@@ -78,13 +78,13 @@ var constructorTest;
         }
         var parameterSetArray = [
             {
-                test_description: "All values round up",
+                test_description: 'All values round up',
                 step_sys_id: '6e6da91297191110d87839000153afb5',
-                // start_time_interval: gs.getDurationDate('0 0:0:0'),
-                // duration_increment: gs.getDurationDate('0 0:14:1'),
-                // minimum_duration: gs.getDurationDate('0 0:0:1'),
-                // maximum_duration: gs.getDurationDate('0 1:0:54')
-                short_description: 'SInt: 00:01:00; Dur: inc=00:15:00, min=00:15:00, max=01:00:00',
+                // start_time_interval: gs.getDurationDate('0 0:0:0'), // 0S
+                // duration_increment: gs.getDurationDate('0 0:14:1'), // 14M1S
+                // minimum_duration: gs.getDurationDate('0 0:0:1'), // 1S
+                // maximum_duration: gs.getDurationDate('0 1:0:54') // 1H54S
+                short_description: 'SInc: 1M; DInc: 15M; Min: 15M; Max: 1H',
                 start_time_interval: new GlideDuration('0 0:1:0'),
                 duration_increment: new GlideDuration('0 0:15:0'),
                 minimum_duration: new GlideDuration('0 0:15:0'),
@@ -104,13 +104,13 @@ var constructorTest;
                 ]
             },
             {
-                test_description: "Min 1 MS less than 1 Hour",
+                test_description: 'All values round to 1 hour',
                 step_sys_id: '2d00fd9297191110d87839000153af3b',
-                // start_time_interval: gs.getDurationDate('0 0:59:1'),
-                // duration_increment: gs.getDurationDate('0 0:59:59'),
-                // minimum_duration: gs.getDurationDate('0 0:59:0'),
-                // maximum_duration: gs.getDurationDate('0 1:0:0')
-                short_description: 'SInt: 01:00:00; Dur: inc=01:00:00, min=01:00:00, max=01:00:00',
+                // start_time_interval: gs.getDurationDate('0 0:59:1'), // 59M1S
+                // duration_increment: gs.getDurationDate('0 0:59:59'), // 59M59S
+                // minimum_duration: gs.getDurationDate('0 0:59:0'), // 59M
+                // maximum_duration: gs.getDurationDate('0 1:0:0') // 1H
+                short_description: 'SInc: 1H; DInc: 1H; Min: 1H; Max: 1H; Appr: true',
                 start_time_interval: new GlideDuration('0 1:0:0'),
                 duration_increment: new GlideDuration('0 1:0:0'),
                 minimum_duration: new GlideDuration('0 1:0:0'),
@@ -130,13 +130,13 @@ var constructorTest;
                 ]
             },
             {
-                test_description: "Inactive & Max 1 MS beyond 58 minutes",
+                test_description: 'Max 1 second beyond 58 minutes',
                 step_sys_id: '26c03d1297191110d87839000153afad',
-                // start_time_interval: gs.getDurationDate('0 0:30:0'),
-                // duration_increment: gs.getDurationDate('0 0:15:0'),
-                // minimum_duration: gs.getDurationDate('0 0:1:0'),
-                // maximum_duration: gs.getDurationDate('0 0:58:1')
-                short_description: 'SInt: 00:30:00; Dur: inc=00:15:00, min=00:15:00, max=00:45:00',
+                // start_time_interval: gs.getDurationDate('0 0:30:0'), // 30M
+                // duration_increment: gs.getDurationDate('0 0:15:0'), // 15M
+                // minimum_duration: gs.getDurationDate('0 0:1:0'), // 1M
+                // maximum_duration: gs.getDurationDate('0 0:58:1') // 58M1S
+                short_description: 'SInc: 30M; DInc: 15M; Min: 15M; Max: 45M',
                 start_time_interval: new GlideDuration('0 0:30:0'),
                 duration_increment: new GlideDuration('0 0:15:0'),
                 minimum_duration: new GlideDuration('0 0:15:0'),
@@ -156,16 +156,16 @@ var constructorTest;
                 ]
             },
             {
-                test_description: "Min and Max rounds up to nearest 30-minute",
+                test_description: 'Inactive, Min round up, and max round down',
                 step_sys_id: '5071bdd297191110d87839000153afee',
-                // start_time_interval: gs.getDurationDate('0 0:15:0'),
-                // duration_increment: gs.getDurationDate('0 0:30:0'),
-                // minimum_duration: gs.getDurationDate('0 0:15:0'),
-                // maximum_duration: gs.getDurationDate('0 2:30:1')
-                short_description: 'SInt: 00:15:00; Dur: inc=00:30:00, min=00:30:00, max=02:30:00, inactive=true',
+                // start_time_interval: gs.getDurationDate('0 0:15:0'), // 15M
+                // duration_increment: gs.getDurationDate('0 0:30:0'), // 30M
+                // minimum_duration: gs.getDurationDate('0 0:15:0'), // 15M
+                // maximum_duration: gs.getDurationDate('0 2:30:1') // 2H30M1S
+                short_description: 'SInc: 15M; DInc: 30M; Min: 30M; Max: 2H30M; Inactive: true',
                 start_time_interval: new GlideDuration('0 0:15:0'),
                 duration_increment: new GlideDuration('0 0:30:0'),
-                minimum_duration: new GlideDuration('0 1:30:0'),
+                minimum_duration: new GlideDuration('0 0:30:0'),
                 maximum_duration: new GlideDuration('0 2:30:0'),
                 inactive: true,
                 approval_group_empty: true,
@@ -173,8 +173,8 @@ var constructorTest;
                     { expectedTimeZone: defaultTimeZone, getExpectedErrorMessage: getExpectedInactiveTypeErrorMessage },
                     { allowInactive: false, expectedTimeZone: defaultTimeZone, getExpectedErrorMessage: getExpectedInactiveTypeErrorMessage },
                     { allowInactive: true, expectedTimeZone: defaultTimeZone },
-                    { timeZone: altTimeZone, expectedTimeZone: defaultTimeZone, getExpectedErrorMessage: getExpectedInactiveTypeErrorMessage },
-                    { allowInactive: false, timeZone: altTimeZone, expectedTimeZone: defaultTimeZone, getExpectedErrorMessage: getExpectedInactiveTypeErrorMessage },
+                    { timeZone: altTimeZone, expectedTimeZone: altTimeZone, getExpectedErrorMessage: getExpectedInactiveTypeErrorMessage },
+                    { allowInactive: false, timeZone: altTimeZone, expectedTimeZone: altTimeZone, getExpectedErrorMessage: getExpectedInactiveTypeErrorMessage },
                     { allowInactive: true, timeZone: altTimeZone, expectedTimeZone: altTimeZone },
                     { timeZone: defaultTimeZone, expectedTimeZone: defaultTimeZone, getExpectedErrorMessage: getExpectedInactiveTypeErrorMessage },
                     { timeZone: defaultTimeZone, allowInactive: false, expectedTimeZone: defaultTimeZone, getExpectedErrorMessage: getExpectedInactiveTypeErrorMessage },
@@ -182,13 +182,13 @@ var constructorTest;
                 ]
             },
             {
-                test_description: "No values rounded",
+                test_description: 'No values rounded',
                 step_sys_id: 'a122fdd297191110d87839000153af66',
-                // start_time_interval: gs.getDurationDate('0 1:0:0'),
-                // duration_increment: gs.getDurationDate('0 0:1:0'),
-                // minimum_duration: gs.getDurationDate('0 0:1:0'),
-                // maximum_duration: gs.getDurationDate('0 3:12:0')
-                short_description: 'SInt: 01:00:00; Dur: inc=00:01:00, min=00:01:00, max=03:12:00',
+                // start_time_interval: gs.getDurationDate('0 1:0:0'), // 1H
+                // duration_increment: gs.getDurationDate('0 0:1:0'), // 1M
+                // minimum_duration: gs.getDurationDate('0 0:1:0'), // 1M
+                // maximum_duration: gs.getDurationDate('0 3:12:0') // 3H12M
+                short_description: 'SInc: 1H; DInc: 1M; Min: 1M; Max: 3H12M',
                 start_time_interval: new GlideDuration('0 1:0:0'),
                 duration_increment: new GlideDuration('0 0:1:0'),
                 minimum_duration: new GlideDuration('0 0:1:0'),
@@ -208,13 +208,13 @@ var constructorTest;
                 ]
             },
             {
-                test_description: "Round duration increment up",
+                test_description: 'Round duration increment up',
                 step_sys_id: 'b4f80e5e97191110d87839000153af9e',
-                // start_time_interval: gs.getDurationDate('0 1:0:0'),
-                // duration_increment: gs.getDurationDate('0 0:14:1'),
-                // minimum_duration: gs.getDurationDate('0 0:15:0'),
-                // maximum_duration: gs.getDurationDate('0 1:0:0')
-                short_description: 'SInt: 01:00:00; Dur: inc=00:15:00, min=00:15:00, max=01:00:00',
+                // start_time_interval: gs.getDurationDate('0 1:0:0'), // 1H
+                // duration_increment: gs.getDurationDate('0 0:14:1'), // 14M1S
+                // minimum_duration: gs.getDurationDate('0 0:15:0'), // 15M
+                // maximum_duration: gs.getDurationDate('0 1:0:0') // 1H
+                short_description: 'SInc: 1H; DInc: 15M; Min: 15M; Max: 1H',
                 start_time_interval: new GlideDuration('0 1:0:0'),
                 duration_increment: new GlideDuration('0 0:15:0'),
                 minimum_duration: new GlideDuration('0 0:15:0'),
@@ -232,7 +232,7 @@ var constructorTest;
                     { timeZone: defaultTimeZone, allowInactive: false, expectedTimeZone: defaultTimeZone },
                     { timeZone: defaultTimeZone, allowInactive: true, expectedTimeZone: defaultTimeZone }
                 ]
-            }
+            },
         ];
         var outputItems = {};
         for (var _i = 0, parameterSetArray_1 = parameterSetArray; _i < parameterSetArray_1.length; _i++) {
@@ -278,7 +278,7 @@ var constructorTest;
                     }
                     assertEqual({
                         name: 'Error Message from ' + parameterSet.test_description + ' with ' + cDesc,
-                        shouldbe: cps.getExpectedErrorMessage(parameterSet.step_sys_id, parameterSet),
+                        shouldbe: cps.getExpectedErrorMessage(sys_id, parameterSet),
                         value: e.message
                     });
                     continue;
@@ -417,7 +417,7 @@ var normalizationFunctionsTest;
             // duration_increment: gs.getDurationDate('0 0:14:1'),
             // minimum_duration: gs.getDurationDate('0 0:0:1'),
             // maximum_duration: gs.getDurationDate('0 1:0:54')
-            'SInt: 00:01:00; Dur: inc=00:15:00, min=00:15:00, max=01:00:00': {
+            'SInc: 1M; DInc: 15M; Min: 15M; Max: 1H': {
                 durations: [
                     { test_description: "[0S]=15M (+15M)", input: new GlideDuration('0 0:0:0'), expected: new GlideDuration('0 0:15:0'), returns: 900000 },
                     { test_description: "[1S]=15M (+14M59S)", input: new GlideDuration('0 0:0:1'), expected: new GlideDuration('0 0:15:0'), returns: 899000 },
@@ -451,7 +451,7 @@ var normalizationFunctionsTest;
             // duration_increment: gs.getDurationDate('0 0:1:0'),
             // minimum_duration: gs.getDurationDate('0 0:1:0'),
             // maximum_duration: gs.getDurationDate('0 3:12:0')'
-            'SInt: 01:00:00; Dur: inc=00:01:00, min=00:01:00, max=03:12:00': {
+            'SInc: 1H; DInc: 1M; Min: 1M; Max: 3H12M': {
                 durations: [
                     { test_description: "[0S]=1M (+1M)", input: new GlideDuration('0 0:0:0'), expected: new GlideDuration('0 0:1:0'), returns: 60000 },
                     { test_description: "[1S]=1M (+59S)", input: new GlideDuration('0 0:0:1'), expected: new GlideDuration('0 0:1:0'), returns: 59000 },
@@ -485,7 +485,7 @@ var normalizationFunctionsTest;
             // duration_increment: gs.getDurationDate('0 0:59:59'),
             // minimum_duration: gs.getDurationDate('0 0:59:0'),
             // maximum_duration: gs.getDurationDate('0 1:0:0')
-            "SInt: 01:00:00; Dur: inc=01:00:00, min=01:00:00, max=01:00:00": {
+            "SInc: 1H; DInc: 1H; Min: 1H; Max: 1H; Appr: true": {
                 durations: [
                     { test_description: "[0S]=1H (+1H)", input: new GlideDuration('0 0:0:0'), expected: new GlideDuration('0 1:0:0'), returns: 3600000 },
                     { test_description: "[1S]=1H (+59M59S)", input: new GlideDuration('0 0:0:1'), expected: new GlideDuration('0 1:0:0'), returns: 3599000 },
@@ -514,7 +514,7 @@ var normalizationFunctionsTest;
             // duration_increment: gs.getDurationDate('0 0:30:0'),
             // minimum_duration: gs.getDurationDate('0 0:15:0'),
             // maximum_duration: gs.getDurationDate('0 2:30:1')
-            "SInt: 00:15:00; Dur: inc=00:30:00, min=00:30:00, max=02:30:00, inactive=true": {
+            "SInc: 15M; DInc: 30M; Min: 30M; Max: 2H30M; Inactive: true": {
                 durations: [
                     { test_description: "[0S]=1H30M (+1H30M)", input: new GlideDuration('0 0:0:0'), expected: new GlideDuration('0 1:30:0'), returns: 5400000 },
                     { test_description: "[1S]=1H30M (+1H29M59)", input: new GlideDuration('0 0:0:1'), expected: new GlideDuration('0 1:30:0'), returns: 5399000 },
@@ -547,7 +547,7 @@ var normalizationFunctionsTest;
             // duration_increment: gs.getDurationDate('0 0:15:0'),
             // minimum_duration: gs.getDurationDate('0 0:1:0'),
             // maximum_duration: gs.getDurationDate('0 0:58:1')'
-            "SInt: 00:30:00; Dur: inc=00:15:00, min=00:15:00, max=00:45:00": {
+            "SInc: 30M; DInc: 15M; Min: 15M; Max: 45M": {
                 durations: [
                     { test_description: "[0S]=15M (+15M)", input: new GlideDuration('0 0:0:0'), expected: new GlideDuration('0 0:15:0'), returns: 900000 },
                     { test_description: "[1S]=15M (+14M59)", input: new GlideDuration('0 0:0:1'), expected: new GlideDuration('0 0:15:0'), returns: 899000 },
@@ -581,7 +581,7 @@ var normalizationFunctionsTest;
             // duration_increment: gs.getDurationDate('0 0:14:1'),
             // minimum_duration: gs.getDurationDate('0 0:15:0'),
             // maximum_duration: gs.getDurationDate('0 1:0:0')
-            "SInt: 01:00:00; Dur: inc=00:15:00, min=00:15:00, max=01:00:00": {
+            "SInc: 1H; DInc: 15M; Min: 15M; Max: 1H": {
                 durations: [
                     { test_description: "[0S]=15M (+15M)", input: new GlideDuration('0 0:0:0'), expected: new GlideDuration('0 0:15:0'), returns: 900000 },
                     { test_description: "[1S]=15M (+14M59)", input: new GlideDuration('0 0:0:1'), expected: new GlideDuration('0 0:15:0'), returns: 899000 },

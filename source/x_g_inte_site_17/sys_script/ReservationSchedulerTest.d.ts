@@ -1,5 +1,5 @@
 declare namespace constructorTest {
-    type ReservationTypeShortDescription = 'SInt: 00:01:00; Dur: inc=00:15:00, min=00:15:00, max=01:00:00' | 'SInt: 00:30:00; Dur: inc=00:15:00, min=00:15:00, max=00:45:00' | 'SInt: 01:00:00; Dur: inc=01:00:00, min=01:00:00, max=01:00:00' | 'SInt: 00:15:00; Dur: inc=00:30:00, min=00:30:00, max=02:30:00, inactive=true' | 'SInt: 01:00:00; Dur: inc=00:01:00, min=00:01:00, max=03:12:00' | 'SInt: 01:00:00; Dur: inc=00:15:00, min=00:15:00, max=01:00:00';
+    type ReservationTypeShortDescription = 'SInc: 1M; DInc: 15M; Min: 15M; Max: 1H' | 'SInc: 30M; DInc: 15M; Min: 15M; Max: 45M' | 'SInc: 1H; DInc: 1H; Min: 1H; Max: 1H; Appr: true' | 'SInc: 15M; DInc: 30M; Min: 30M; Max: 2H30M; Inactive: true' | 'SInc: 1H; DInc: 1M; Min: 1M; Max: 3H12M' | 'SInc: 1H; DInc: 15M; Min: 15M; Max: 1H';
     interface IReservationTypeDurationParameters {
         minimum_duration: GlideDuration;
         maximum_duration: GlideDuration;
