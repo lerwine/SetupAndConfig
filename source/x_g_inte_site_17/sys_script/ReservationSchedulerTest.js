@@ -56,7 +56,7 @@ var constructorTest;
         var approval_group_sys_id = atfHelper.getRecordIdFromStep('cf4c1e1a97411110d87839000153aff6');
         var assignment_group_sys_id = atfHelper.getRecordIdFromStep('f70fd5c697051110d87839000153af81');
         if (gs.nil(schedule_sys_id) || gs.nil(approval_group_sys_id) || gs.nil(assignment_group_sys_id))
-            return;
+            return false;
         var defaultTimeZone;
         try {
             defaultTimeZone = gs.getSession().getTimeZoneName();
@@ -64,9 +64,11 @@ var constructorTest;
         catch (e) {
             defaultTimeZone = '';
             atfHelper.setFailed("Unexpected exception while getting time zone", e);
+            return false;
         }
         if (gs.nil(defaultTimeZone)) {
-            atfHelper.setFailed("Could not determine default time zone");
+            stepResult.setOutputMessage("Could not determine default time zone");
+            return false;
         }
         outputs.defaultTimeZone = defaultTimeZone;
         var altTimeZone = (defaultTimeZone == 'US/Pacific') ? 'US/Eastern' : 'US/Pacific';
@@ -235,6 +237,9 @@ var constructorTest;
         var outputItems = {};
         for (var _i = 0, parameterSetArray_1 = parameterSetArray; _i < parameterSetArray_1.length; _i++) {
             var parameterSet = parameterSetArray_1[_i];
+            var sys_id = atfHelper.getRecordIdFromStep(parameterSet.step_sys_id);
+            if (typeof sys_id === 'undefined')
+                return false;
             outputItems[parameterSet.short_description] = {
                 minimum_duration: parameterSet.minimum_duration.getDurationValue(),
                 maximum_duration: parameterSet.maximum_duration.getDurationValue(),
@@ -242,7 +247,7 @@ var constructorTest;
                 start_time_interval: parameterSet.start_time_interval.getDurationValue(),
                 approval_group_empty: parameterSet.approval_group_empty,
                 inactive: parameterSet.inactive,
-                sys_id: '' + parameterSet.step_sys_id
+                sys_id: '' + sys_id
             };
             var rs;
             for (var _a = 0, _b = parameterSet.constructorParameterSets; _a < _b.length; _a++) {
@@ -251,141 +256,141 @@ var constructorTest;
                 try {
                     if (gs.nil(cps.timeZone)) {
                         if (gs.nil(cps.allowInactive))
-                            rs = new x_g_inte_site_17.ReservationScheduler(parameterSet.step_sys_id);
+                            rs = new x_g_inte_site_17.ReservationScheduler(sys_id);
                         else
-                            rs = new x_g_inte_site_17.ReservationScheduler(parameterSet.step_sys_id, cps.allowInactive);
+                            rs = new x_g_inte_site_17.ReservationScheduler(sys_id, cps.allowInactive);
                     }
                     else
-                        rs = new x_g_inte_site_17.ReservationScheduler(parameterSet.step_sys_id, cps.allowInactive, cps.timeZone);
+                        rs = new x_g_inte_site_17.ReservationScheduler(sys_id, cps.allowInactive, cps.timeZone);
                 }
                 catch (e) {
                     if (gs.nil(cps.getExpectedErrorMessage)) {
                         atfHelper.setFailed('Unable to create instance of ReservationScheduler for ' + parameterSet.test_description, e) + ' of ' + cDesc;
-                        return;
+                        return false;
                     }
                     assertEqual({
                         name: 'Error Message from ' + parameterSet.test_description + ' of ' + cDesc,
-                        shouldBe: cps.getExpectedErrorMessage(parameterSet.step_sys_id, parameterSet),
+                        shouldbe: cps.getExpectedErrorMessage(parameterSet.step_sys_id, parameterSet),
                         value: e.message
                     });
                     continue;
                 }
                 assertEqual({
                     name: 'timeZone not nil for ' + parameterSet.test_description + ' of ' + cDesc,
-                    shouldBe: false,
+                    shouldbe: false,
                     value: gs.nil(rs.timeZone)
                 });
                 assertEqual({
-                    name: 'short_description value for ' + parameterSet.test_description + ' of ' + cDesc,
-                    shouldBe: parameterSet.short_description,
+                    name: 'timeZone value for ' + parameterSet.test_description + ' of ' + cDesc,
+                    shouldbe: cps.expectedTimeZone,
                     value: rs.timeZone
                 });
                 assertEqual({
                     name: 'short_description not nil for ' + parameterSet.test_description + ' of ' + cDesc,
-                    shouldBe: false,
+                    shouldbe: false,
                     value: gs.nil(rs.short_description)
                 });
                 assertEqual({
                     name: 'short_description value for ' + parameterSet.test_description + ' of ' + cDesc,
-                    shouldBe: parameterSet.short_description,
+                    shouldbe: parameterSet.short_description,
                     value: rs.short_description
                 });
                 assertEqual({
                     name: 'schedule not nil for ' + parameterSet.test_description + ' of ' + cDesc,
-                    shouldBe: false,
+                    shouldbe: false,
                     value: gs.nil(rs.schedule)
                 });
                 assertEqual({
                     name: 'assignment_group not nil for ' + parameterSet.test_description + ' of ' + cDesc,
-                    shouldBe: false,
+                    shouldbe: false,
                     value: gs.nil(rs.assignment_group)
                 });
                 assertEqual({
                     name: 'assignment_group value for ' + parameterSet.test_description + ' of ' + cDesc,
-                    shouldBe: assignment_group_sys_id,
+                    shouldbe: assignment_group_sys_id,
                     value: rs.assignment_group
                 });
                 if (parameterSet.approval_group_empty)
                     assertEqual({
                         name: 'approval_group nil for ' + parameterSet.test_description + ' of ' + cDesc,
-                        shouldBe: true,
+                        shouldbe: true,
                         value: gs.nil(rs.approval_group)
                     });
                 else {
                     assertEqual({
                         name: 'approval_group not nil for ' + parameterSet.test_description + ' of ' + cDesc,
-                        shouldBe: false,
+                        shouldbe: false,
                         value: gs.nil(rs.approval_group)
                     });
                     assertEqual({
                         name: 'approval_group value for ' + parameterSet.test_description + ' of ' + cDesc,
-                        shouldBe: approval_group_sys_id,
+                        shouldbe: approval_group_sys_id,
                         value: rs.approval_group
                     });
                 }
                 assertEqual({
                     name: 'duration_increment not nil for ' + parameterSet.test_description + ' of ' + cDesc,
-                    shouldBe: false,
+                    shouldbe: false,
                     value: gs.nil(rs.duration_increment)
                 });
-                assertEqual({
-                    name: 'duration_increment is valid for ' + parameterSet.test_description + ' of ' + cDesc,
-                    shouldBe: true,
-                    value: rs.duration_increment.isValid()
-                });
+                if (!rs.duration_increment.isValid()) {
+                    stepResult.setOutputMessage("duration_increment is not valid for " + parameterSet.test_description + ' of ' + cDesc +
+                        '; message=' + rs.duration_increment.getErrorMsg() + '; value = ' + rs.duration_increment.getValue());
+                    stepResult.setFailed();
+                    return false;
+                }
                 assertEqual({
                     name: 'duration_increment value for ' + parameterSet.test_description + ' of ' + cDesc,
-                    shouldBe: parameterSet.duration_increment,
+                    shouldbe: parameterSet.duration_increment,
                     value: rs.duration_increment
                 });
                 assertEqual({
                     name: 'minimum_duration not nil for ' + parameterSet.test_description + ' of ' + cDesc,
-                    shouldBe: false,
+                    shouldbe: false,
                     value: gs.nil(rs.minimum_duration)
                 });
-                assertEqual({
-                    name: 'minimum_duration is valid for ' + parameterSet.test_description + ' of ' + cDesc,
-                    shouldBe: true,
-                    value: rs.minimum_duration.isValid()
-                });
-                assertEqual({
-                    name: 'minimum_duration value for ' + parameterSet.test_description + ' of ' + cDesc,
-                    shouldBe: parameterSet.minimum_duration,
-                    value: rs.minimum_duration
-                });
+                if (!rs.minimum_duration.isValid()) {
+                    stepResult.setOutputMessage("minimum_duration is not valid for " + parameterSet.test_description + ' of ' + cDesc +
+                        '; message=' + rs.minimum_duration.getErrorMsg() + '; value = ' + rs.minimum_duration.getValue());
+                    stepResult.setFailed();
+                    return false;
+                }
                 assertEqual({
                     name: 'maximum_duration not nil for ' + parameterSet.test_description + ' of ' + cDesc,
-                    shouldBe: false,
+                    shouldbe: false,
                     value: gs.nil(rs.maximum_duration)
                 });
-                assertEqual({
-                    name: 'maximum_duration is valid for ' + parameterSet.test_description + ' of ' + cDesc,
-                    shouldBe: true,
-                    value: rs.maximum_duration.isValid()
-                });
+                if (!rs.maximum_duration.isValid()) {
+                    stepResult.setOutputMessage("maximum_duration is not valid for " + parameterSet.test_description + ' of ' + cDesc +
+                        '; message=' + rs.maximum_duration.getErrorMsg() + '; value = ' + rs.maximum_duration.getValue());
+                    stepResult.setFailed();
+                    return false;
+                }
                 assertEqual({
                     name: 'maximum_duration value for ' + parameterSet.test_description + ' of ' + cDesc,
-                    shouldBe: parameterSet.maximum_duration,
+                    shouldbe: parameterSet.maximum_duration,
                     value: rs.maximum_duration
                 });
                 assertEqual({
                     name: 'start_time_interval not nil for ' + parameterSet.test_description + ' of ' + cDesc,
-                    shouldBe: false,
+                    shouldbe: false,
                     value: gs.nil(rs.start_time_interval)
                 });
-                assertEqual({
-                    name: 'start_time_interval is valid for ' + parameterSet.test_description + ' of ' + cDesc,
-                    shouldBe: true,
-                    value: rs.start_time_interval.isValid()
-                });
+                if (!rs.start_time_interval.isValid()) {
+                    stepResult.setOutputMessage("start_time_interval is not valid for " + parameterSet.test_description + ' of ' + cDesc +
+                        '; message=' + rs.start_time_interval.getErrorMsg() + '; value = ' + rs.start_time_interval.getValue());
+                    stepResult.setFailed();
+                    return false;
+                }
                 assertEqual({
                     name: 'start_time_interval value for ' + parameterSet.test_description + ' of ' + cDesc,
-                    shouldBe: parameterSet.start_time_interval,
+                    shouldbe: parameterSet.start_time_interval,
                     value: rs.start_time_interval
                 });
             }
         }
         outputs.types = JSON.stringify(outputItems);
+        return true;
     })(outputs, steps, stepResult, assertEqual);
 })(constructorTest || (constructorTest = {}));
 var normalizationFunctionsTest;
@@ -396,7 +401,7 @@ var normalizationFunctionsTest;
         var group_sys_id = atfHelper.getRecordIdFromStep('f70fd5c697051110d87839000153af81');
         var constructorOutputs = steps('c1cc9ada97411110d87839000153afcd');
         if (gs.nil(schedule_sys_id) || gs.nil(group_sys_id) || gs.nil(constructorOutputs))
-            return;
+            return false;
         var outputItems = JSON.parse(constructorOutputs.types);
         var testParameters = {
             // step_sys_id: '6e6da91297191110d87839000153afb5',
@@ -607,7 +612,7 @@ var normalizationFunctionsTest;
             }
             catch (e) {
                 atfHelper.setFailed("Unexpected exception while initializing " + constructorSignature, e);
-                return;
+                return false;
             }
             var value;
             var msg;
@@ -620,15 +625,16 @@ var normalizationFunctionsTest;
                 catch (e) {
                     value = NaN;
                     atfHelper.setFailed("Unexpected exception while testing " + durationParam.test_description, e);
+                    return false;
                 }
                 assertEqual({
                     name: 'return value of ' + durationParam.test_description,
-                    shouldBe: durationParam.returns,
+                    shouldbe: durationParam.returns,
                     value: value
                 });
                 assertEqual({
                     name: 'new duration after ' + durationParam.test_description,
-                    shouldBe: durationParam.expected,
+                    shouldbe: durationParam.expected,
                     value: target
                 });
             }
@@ -641,19 +647,21 @@ var normalizationFunctionsTest;
                 catch (e) {
                     value = NaN;
                     atfHelper.setFailed("Unexpected exception while testing " + dateParam.test_description, e);
+                    return false;
                 }
                 assertEqual({
                     name: 'return value of ' + dateParam.test_description,
-                    shouldBe: dateParam.returns,
+                    shouldbe: dateParam.returns,
                     value: value
                 });
                 assertEqual({
                     name: 'new date/time after ' + dateParam.test_description,
-                    shouldBe: dateParam.expected,
+                    shouldbe: dateParam.expected,
                     value: input
                 });
             }
         }
+        return true;
     })(outputs, steps, stepResult, assertEqual);
 })(normalizationFunctionsTest || (normalizationFunctionsTest = {}));
 var getAvailabilitiesInRangeTest;
@@ -665,23 +673,32 @@ var getAvailabilitiesInRangeTest;
         var assignment_group_sys_id = atfHelper.getRecordIdFromStep('f70fd5c697051110d87839000153af81');
         var off_hours_sys_id = atfHelper.getRecordIdFromStep('e8f6e19897d11110d87839000153afb8');
         var holiday_sys_id = atfHelper.getRecordIdFromStep('5dda655c97d11110d87839000153afea');
-        var appt_sys_id = [
-            atfHelper.getRecordIdFromStep('efde69dc97d11110d87839000153af79'),
-            atfHelper.getRecordIdFromStep('70efe55097151110d87839000153afed'),
-            atfHelper.getRecordIdFromStep('9140795097151110d87839000153af86')
-        ];
-        if (gs.nil(schedule_sys_id) || gs.nil(approval_group_sys_id) || gs.nil(assignment_group_sys_id) || gs.nil(off_hours_sys_id) || gs.nil(holiday_sys_id) || appt_sys_id.filter(function (value) { return typeof value === 'string'; }).length < 3)
-            return;
+        if (gs.nil(schedule_sys_id) || gs.nil(approval_group_sys_id) || gs.nil(assignment_group_sys_id) || gs.nil(off_hours_sys_id) || gs.nil(holiday_sys_id))
+            return false;
+        var appt_sys_id = [];
+        var sys_id = atfHelper.getRecordIdFromStep('efde69dc97d11110d87839000153af79');
+        if (typeof sys_id === 'undefined')
+            return false;
+        appt_sys_id.push(sys_id);
+        sys_id = atfHelper.getRecordIdFromStep('70efe55097151110d87839000153afed');
+        if (typeof sys_id === 'undefined')
+            return false;
+        appt_sys_id.push(sys_id);
+        sys_id = atfHelper.getRecordIdFromStep('9140795097151110d87839000153af86');
+        if (typeof sys_id === 'undefined')
+            return false;
+        appt_sys_id.push(sys_id);
         var defaultTimeZone;
         try {
             defaultTimeZone = gs.getSession().getTimeZoneName();
         }
         catch (e) {
             atfHelper.setFailed("Unexpected exception while getting time zone", e);
-            return;
+            return false;
         }
         if (gs.nil(defaultTimeZone)) {
-            atfHelper.setFailed("Could not determine default time zone");
+            stepResult.setOutputMessage("Could not determine default time zone");
+            return false;
         }
         var altTimeZone = (defaultTimeZone == 'US/Pacific') ? 'US/Eastern' : 'US/Pacific';
         var gdt = new GlideDateTime();
@@ -791,8 +808,9 @@ var getAvailabilitiesInRangeTest;
         }
         catch (e) {
             atfHelper.setFailed("Unexpected exception time range values from database", e);
-            return;
+            return false;
         }
+        return true;
     })(outputs, steps, stepResult, assertEqual);
 })(getAvailabilitiesInRangeTest || (getAvailabilitiesInRangeTest = {}));
 //# sourceMappingURL=ReservationSchedulerTest.js.map
