@@ -86,15 +86,42 @@ namespace x_g_inte_site_17 {
          * @memberof AtfHelperConstructor
          */
         endOfRelativeDay(daysFromToday: number): string;
+        isNil(o: any): o is undefined | null;
+        anyNil(...o: any[]): boolean;
     }
 
     export const AtfHelper: AtfHelperConstructor = (function (): AtfHelperConstructor {
         var atfhelperConstructor: AtfHelperConstructor = Class.create();
 
+        function isNil(o: any): o is undefined | null {
+            switch (typeof o) {
+                case 'undefined':
+                    return true;
+                case 'number':
+                    return isNaN(o) || !isFinite(o);
+                case 'string':
+                    return o.trim().length == 0;
+                case "object":
+                    return o === null || ('' + o).trim().length == 0;
+                default:
+                    return false;
+            }
+        };
+
+        function anyNil(...o: any[]): boolean
+        {
+            for (var a in o) {
+                if (isNil(a)) return true;
+            }
+            return false;
+        }
+
+        atfhelperConstructor.isNil = isNil;
+        
         function setFailed(stepResult: sn_atf.ITestStepResult, reason: string, e: any): void {
-            var m = gs.nil(e.message) ? '' : ((typeof e.message === 'string') ? e.message : '' + e.message).trim();
-            var name = gs.nil(e.name) ? '' : ((typeof e.name === 'string') ? e.name : '' + e.name).trim();
-            var stack = gs.nil(e.stack) ? '' : ((typeof e.stack === 'string') ? e.stack : '' + e.stack).trim();
+            var m = isNil(e.message) ? '' : ((typeof e.message === 'string') ? e.message : '' + e.message).trim();
+            var name = isNil(e.name) ? '' : ((typeof e.name === 'string') ? e.name : '' + e.name).trim();
+            var stack = isNil(e.stack) ? '' : ((typeof e.stack === 'string') ? e.stack : '' + e.stack).trim();
             if (m.length > 0) {
                 if (name.length > 0) {
                     if (stack.length > 0)
@@ -130,7 +157,7 @@ namespace x_g_inte_site_17 {
         atfhelperConstructor.relativeDayAt = function(daysFromToday: number, hours: number, minutes: number, seconds?: number): string {
             var dateTime: GlideDateTime = new GlideDateTime();
             if (daysFromToday != 0) dateTime.addDaysLocalTime(daysFromToday);
-            if (gs.nil(seconds) || seconds < 1) {
+            if (isNil(seconds) || seconds < 1) {
                 if (hours < 10) {
                     if (minutes < 10)
                         return dateTime.getDate().getDisplayValue() + ' 0' + hours + ':0' + minutes + ':00';
@@ -162,8 +189,8 @@ namespace x_g_inte_site_17 {
 
         atfhelperConstructor.prototype = <IAtfHelperPrototype>{
             initialize: function(this: IAtfHelperPrototype, steps: sn_atf.ITestStepsFunc, stepResult: sn_atf.ITestStepResult): void {
-                if (gs.nil(steps)) throw new Error("Steps function not provided");
-                if (gs.nil(stepResult)) throw new Error("Step result not provided");
+                if (isNil(steps)) throw new Error("Steps function not provided");
+                if (isNil(stepResult)) throw new Error("Step result not provided");
                 this._steps = steps;
                 this._stepResult = stepResult;
             },
@@ -179,9 +206,9 @@ namespace x_g_inte_site_17 {
                     this.setFailed("Unexpected exception result of step with Sys Id '" + sys_id + "'", e);
                     return;
                 }
-                var result: atf_output_variableFields;
+                var result: sn_atf.atf_output_variableFields;
                 if (typeof sr === 'undefined' || sr === null) {
-                    this._stepResult.setOutputMessage("Could not find result of step with Sys Id '" + sys_id + "'" + (typeof sr));
+                    this._stepResult.setOutputMessage("Could not find result of step with Sys Id '" + sys_id + "'");
                     return;
                 }
                 try { result = sr.record_id; }

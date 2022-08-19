@@ -94,7 +94,7 @@ var x_g_inte_site_17;
                 }
                 var result;
                 if (typeof sr === 'undefined' || sr === null) {
-                    this._stepResult.setOutputMessage("Could not find result of step with Sys Id '" + sys_id + "'" + (typeof sr));
+                    this._stepResult.setOutputMessage("Could not find result of step with Sys Id '" + sys_id + "'");
                     return;
                 }
                 try {
