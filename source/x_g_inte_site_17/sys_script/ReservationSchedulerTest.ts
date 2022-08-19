@@ -31,7 +31,7 @@ namespace constructorTest {
         inactive: boolean;
     }
 
-    interface IReservationTypeParameterSet extends IReservationTypeDurationParameters{
+    interface IReservationTypeParameterSet extends IReservationTypeDurationParameters {
         test_description: string;
         step_sys_id: string;
         short_description: ReservationTypeShortDescription;
@@ -39,24 +39,6 @@ namespace constructorTest {
         inactive: boolean,
         constructorParameterSets: IConstructorParameterSet[];
     }
-
-    export interface IReservationTypeOutputItem {
-        sys_id: string;
-        minimum_duration: string;
-        maximum_duration: string;
-        duration_increment: string;
-        start_time_interval: string;
-        approval_group_empty: boolean;
-        inactive: boolean;
-    }
-
-    export type IReservationTypeOutput = { [key in ReservationTypeShortDescription]: IReservationTypeOutputItem; };
-
-    export type IConstructorTestOutputs = sn_atf.ITestStepOutputs & {
-        defaultTimeZone: string;
-        altTimeZone: string;
-        types: string;
-    };
 
 // Insert Reservation Schedule
 // {
@@ -112,12 +94,12 @@ namespace constructorTest {
 // }
 
     // sys_id: c1cc9ada97411110d87839000153afcd
-    (function(outputs: IConstructorTestOutputs, steps: sn_atf.ITestStepsFunc, stepResult: sn_atf.ITestStepResult, assertEqual: sn_atf.IAssertEqualFunc): boolean {
+    (function(outputs: sn_atf.ITestStepOutputs, steps: sn_atf.ITestStepsFunc, stepResult: sn_atf.ITestStepResult, assertEqual: sn_atf.IAssertEqualFunc): boolean {
         var atfHelper: x_g_inte_site_17.AtfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
-        var schedule_sys_id: string | undefined = atfHelper.getRecordIdFromStep('8b4ed58697051110d87839000153afae');
-        var approval_group_sys_id: string | undefined = atfHelper.getRecordIdFromStep('cf4c1e1a97411110d87839000153aff6');
-        var assignment_group_sys_id: string | undefined = atfHelper.getRecordIdFromStep('f70fd5c697051110d87839000153af81');
-        if (gs.nil(schedule_sys_id) || gs.nil(approval_group_sys_id) || gs.nil(assignment_group_sys_id))
+        var schedule_sys_id: string= <string>atfHelper.getRecordIdFromStep('8b4ed58697051110d87839000153afae');
+        var approval_group_sys_id: string = <string>atfHelper.getRecordIdFromStep('cf4c1e1a97411110d87839000153aff6');
+        var assignment_group_sys_id: string = <string> atfHelper.getRecordIdFromStep('f70fd5c697051110d87839000153af81');
+        if (x_g_inte_site_17.AtfHelper.anyNil(schedule_sys_id, approval_group_sys_id, assignment_group_sys_id))
             return false;
         var defaultTimeZone: string | undefined;
         try { defaultTimeZone = gs.getSession().getTimeZoneName(); }
@@ -126,7 +108,7 @@ namespace constructorTest {
             atfHelper.setFailed("Unexpected exception while getting time zone", e);
             return false;
         }
-        if (gs.nil(defaultTimeZone)) {
+        if (x_g_inte_site_17.AtfHelper.isNil(defaultTimeZone)) {
             stepResult.setOutputMessage("Could not determine default time zone");
             return false;
         }
@@ -294,40 +276,30 @@ namespace constructorTest {
                 ]
             },
         ];
-        var outputItems: IReservationTypeOutput = <IReservationTypeOutput>{};
         for (var parameterSet of parameterSetArray) {
             var sys_id: string | undefined = atfHelper.getRecordIdFromStep(parameterSet.step_sys_id);
             if (typeof sys_id === 'undefined')
                 return false;
-            outputItems[parameterSet.short_description] = {
-                minimum_duration: parameterSet.minimum_duration.getDurationValue(),
-                maximum_duration: parameterSet.maximum_duration.getDurationValue(),
-                duration_increment: parameterSet.duration_increment.getDurationValue(),
-                start_time_interval: parameterSet.start_time_interval.getDurationValue(),
-                approval_group_empty: parameterSet.approval_group_empty,
-                inactive: parameterSet.inactive,
-                sys_id: '' + sys_id
-            };
             var rs: x_g_inte_site_17.ReservationScheduler;
             for (var cps of parameterSet.constructorParameterSets) {
                 var cDesc: string;
-                if (gs.nil(cps.timeZone)) {
-                    if (gs.nil(cps.allowInactive))
+                if (x_g_inte_site_17.AtfHelper.isNil(cps.timeZone)) {
+                    if (x_g_inte_site_17.AtfHelper.isNil(cps.allowInactive))
                         cDesc = 'new x_g_inte_site_17.ReservationScheduler("' + sys_id + '") // ' + parameterSet.short_description;
                     else
                         cDesc = 'new x_g_inte_site_17.ReservationScheduler("' + sys_id + '", ' + cps.allowInactive + ') // ' + parameterSet.short_description;
                 } else
                     cDesc = 'new x_g_inte_site_17.ReservationScheduler("' + sys_id + '", ' + cps.allowInactive + ', "' + cps.timeZone + '") // ' + parameterSet.short_description;
                 try {
-                    if (gs.nil(cps.timeZone)) {
-                        if (gs.nil(cps.allowInactive))
+                    if (x_g_inte_site_17.AtfHelper.isNil(cps.timeZone)) {
+                        if (x_g_inte_site_17.AtfHelper.isNil(cps.allowInactive))
                             rs = new x_g_inte_site_17.ReservationScheduler(sys_id);
                         else
                             rs = new x_g_inte_site_17.ReservationScheduler(sys_id, cps.allowInactive);
                     } else
                         rs = new x_g_inte_site_17.ReservationScheduler(sys_id, cps.allowInactive, cps.timeZone);
                 } catch (e) {
-                    if (gs.nil(cps.getExpectedErrorMessage)) {
+                    if (x_g_inte_site_17.AtfHelper.isNil(cps.getExpectedErrorMessage)) {
                         atfHelper.setFailed('Unable to create instance of ReservationScheduler for ' + parameterSet.test_description, e) + ' with ' + cDesc;
                         return false;
                     }
@@ -341,7 +313,7 @@ namespace constructorTest {
                 assertEqual({
                     name: 'timeZone not nil for ' + parameterSet.test_description + ' with ' + cDesc,
                     shouldbe: false,
-                    value: gs.nil(rs.timeZone)
+                    value: x_g_inte_site_17.AtfHelper.isNil(rs.timeZone)
                 });
                 assertEqual({
                     name: 'timeZone value for ' + parameterSet.test_description + ' with ' + cDesc,
@@ -351,7 +323,7 @@ namespace constructorTest {
                 assertEqual({
                     name: 'short_description not nil for ' + parameterSet.test_description + ' with ' + cDesc,
                     shouldbe: false,
-                    value: gs.nil(rs.short_description)
+                    value: x_g_inte_site_17.AtfHelper.isNil(rs.short_description)
                 });
                 assertEqual({
                     name: 'short_description value for ' + parameterSet.test_description + ' with ' + cDesc,
@@ -361,12 +333,12 @@ namespace constructorTest {
                 assertEqual({
                     name: 'schedule not nil for ' + parameterSet.test_description + ' with ' + cDesc,
                     shouldbe: false,
-                    value: gs.nil(rs.schedule)
+                    value: x_g_inte_site_17.AtfHelper.isNil(rs.schedule)
                 });
                 assertEqual({
                     name: 'assignment_group not nil for ' + parameterSet.test_description + ' with ' + cDesc,
                     shouldbe: false,
-                    value: gs.nil(rs.assignment_group)
+                    value: x_g_inte_site_17.AtfHelper.isNil(rs.assignment_group)
                 });
                 assertEqual({
                     name: 'assignment_group value for ' + parameterSet.test_description + ' with ' + cDesc,
@@ -377,13 +349,13 @@ namespace constructorTest {
                     assertEqual({
                         name: 'approval_group nil for ' + parameterSet.test_description + ' with ' + cDesc,
                         shouldbe: true,
-                        value: gs.nil(rs.approval_group)
+                        value: x_g_inte_site_17.AtfHelper.isNil(rs.approval_group)
                     });
                 else {
                     assertEqual({
                         name: 'approval_group not nil for ' + parameterSet.test_description + ' with ' + cDesc,
                         shouldbe: false,
-                        value: gs.nil(rs.approval_group)
+                        value: x_g_inte_site_17.AtfHelper.isNil(rs.approval_group)
                     });
                     assertEqual({
                         name: 'approval_group value for ' + parameterSet.test_description + ' with ' + cDesc,
@@ -394,7 +366,7 @@ namespace constructorTest {
                 assertEqual({
                     name: 'duration_increment not nil for ' + parameterSet.test_description + ' with ' + cDesc,
                     shouldbe: false,
-                    value: gs.nil(rs.duration_increment)
+                    value: x_g_inte_site_17.AtfHelper.isNil(rs.duration_increment)
                 });
                 if (!rs.duration_increment.isValid()) {
                     stepResult.setOutputMessage("duration_increment is not valid for " + parameterSet.test_description + ' with ' + cDesc +
@@ -410,7 +382,7 @@ namespace constructorTest {
                 assertEqual({
                     name: 'minimum_duration not nil for ' + parameterSet.test_description + ' with ' + cDesc,
                     shouldbe: false,
-                    value: gs.nil(rs.minimum_duration)
+                    value: x_g_inte_site_17.AtfHelper.isNil(rs.minimum_duration)
                 });
                 if (!rs.minimum_duration.isValid()) {
                     stepResult.setOutputMessage("minimum_duration is not valid for " + parameterSet.test_description + ' with ' + cDesc +
@@ -421,7 +393,7 @@ namespace constructorTest {
                 assertEqual({
                     name: 'maximum_duration not nil for ' + parameterSet.test_description + ' with ' + cDesc,
                     shouldbe: false,
-                    value: gs.nil(rs.maximum_duration)
+                    value: x_g_inte_site_17.AtfHelper.isNil(rs.maximum_duration)
                 });
                 if (!rs.maximum_duration.isValid()) {
                     stepResult.setOutputMessage("maximum_duration is not valid for " + parameterSet.test_description + ' with ' + cDesc +
@@ -437,7 +409,7 @@ namespace constructorTest {
                 assertEqual({
                     name: 'start_time_interval not nil for ' + parameterSet.test_description + ' with ' + cDesc,
                     shouldbe: false,
-                    value: gs.nil(rs.start_time_interval)
+                    value: x_g_inte_site_17.AtfHelper.isNil(rs.start_time_interval)
                 });
                 if (!rs.start_time_interval.isValid()) {
                     stepResult.setOutputMessage("start_time_interval is not valid for " + parameterSet.test_description + ' with ' + cDesc +
@@ -452,9 +424,8 @@ namespace constructorTest {
                 });
             }
         }
-        outputs.types = JSON.stringify(outputItems);
         return true;
-    })(<IConstructorTestOutputs>outputs, steps, stepResult, assertEqual);
+    })(outputs, steps, stepResult, assertEqual);
 }
 
 namespace normalizationFunctionsTest {
@@ -463,74 +434,34 @@ namespace normalizationFunctionsTest {
     declare var stepResult: sn_atf.ITestStepResult;
     declare function assertEqual(assertion: sn_atf.ITestAssertion): void;
     
-    interface IReservationTypeParameterSet {
-        short_description: constructorTest.ReservationTypeShortDescription;
-        minimum_duration: GlideDuration;
-        maximum_duration: GlideDuration;
-        duration_increment: GlideDuration;
-        start_time_interval: GlideDuration;
-    }
-
-    interface ITestAppointmentTime {
-        name: string;
-        start: GlideTime;
-        duration: GlideDuration;
-    }
-    
-    interface ITestScheduleEntry extends ITestAppointmentTime {
-        all_day: boolean;
-        start_offset: GlideDuration;
-        end_offset: GlideDuration;
-        show_as: string;
-    }
-    interface IScheduleDefinitionParameterSet {
-        name: string;
-        time_zone?: string;
-        reservationTypes: IReservationTypeParameterSet[];
-        entries: ITestScheduleEntry[];
-    }
-
     interface IInputAndExpected<T, U> {
         input: T;
         expected: U;
     }
     
-    interface INormalizationFunctionsParameterSet extends IReservationTypeParameterSet {
-        durations: (IInputAndExpected<GlideDuration, GlideDuration> & { returns: number; })[];
-        startDates: (IInputAndExpected<GlideDateTime, GlideDateTime> & { offset: number; returns: number })[];
-    }
-
     interface ITestParameterSet {
+        short_description: constructorTest.ReservationTypeShortDescription;
+        test_description: string;
+        step_sys_id: string;
         durations: (IInputAndExpected<GlideDuration, GlideDuration> & { test_description: string; returns: number })[];
         startDates: (IInputAndExpected<GlideDateTime, GlideDateTime> & { test_description: string; returns: number })[];
     }
-
-    type TestParameters = { [key in constructorTest.ReservationTypeShortDescription]: ITestParameterSet; };
 
     (function (outputs: sn_atf.ITestStepOutputs, steps: sn_atf.ITestStepsFunc, stepResult: sn_atf.ITestStepResult, assertEqual: sn_atf.IAssertEqualFunc): boolean {
         var atfHelper: x_g_inte_site_17.AtfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
         var schedule_sys_id: string | undefined = atfHelper.getRecordIdFromStep('8b4ed58697051110d87839000153afae');
         var group_sys_id: string | undefined = atfHelper.getRecordIdFromStep('f70fd5c697051110d87839000153af81');
-        if (gs.nil(schedule_sys_id) || gs.nil(group_sys_id))
+        if (x_g_inte_site_17.AtfHelper.isNil(schedule_sys_id) || x_g_inte_site_17.AtfHelper.isNil(group_sys_id))
             return false;
-        var constructorOutputs: constructorTest.IConstructorTestOutputs = <constructorTest.IConstructorTestOutputs>steps('c1cc9ada97411110d87839000153afcd');
-        if (typeof constructorOutputs === 'undefined' || constructorOutputs === null) {
-            stepResult.setOutputMessage("Could not find result of step with Sys Id 'c1cc9ada97411110d87839000153afcd'");
-            return false;
-        }
-        var outputItems: constructorTest.IReservationTypeOutput;
-        try { outputItems = JSON.parse(constructorOutputs.types); }
-        catch (e) {
-            atfHelper.setFailed("Unexpected exception while parsing types from result of step with Sys Id 'c1cc9ada97411110d87839000153afcd'", e);
-            return false;
-        }
-        var testParameters: TestParameters = {
-            // step_sys_id: '6e6da91297191110d87839000153afb5',
-            // start_time_interval: gs.getDurationDate('0 0:0:0'),
-            // duration_increment: gs.getDurationDate('0 0:14:1'),
-            // minimum_duration: gs.getDurationDate('0 0:0:1'),
-            // maximum_duration: gs.getDurationDate('0 1:0:54')
-            'SInc: 1M; DInc: 15M; Min: 15M; Max: 1H': {
+        var testParameters: ITestParameterSet[] = [
+            {
+                // start_time_interval: gs.getDurationDate('0 0:0:0'),
+                // duration_increment: gs.getDurationDate('0 0:14:1'),
+                // minimum_duration: gs.getDurationDate('0 0:0:1'),
+                // maximum_duration: gs.getDurationDate('0 1:0:54')
+                test_description: 'TODO: Set Description',
+                short_description: 'SInc: 1M; DInc: 15M; Min: 15M; Max: 1H',
+                step_sys_id: '6e6da91297191110d87839000153afb5',
                 durations: [
                     { test_description: "[0S]=15M (+15M)", input: new GlideDuration('0 0:0:0'), expected: new GlideDuration('0 0:15:0'), returns: 900000 },
                     { test_description: "[1S]=15M (+14M59S)", input: new GlideDuration('0 0:0:1'), expected: new GlideDuration('0 0:15:0'), returns: 899000 },
@@ -559,12 +490,14 @@ namespace normalizationFunctionsTest {
                     { test_description: "[2022-08-02 23:59:59]=2022-08-03 00:00:00 (+1S)", input: new GlideDateTime('2022-08-02 23:59:59'), expected: new GlideDateTime('2022-08-03 00:00:00'), returns: 1000 }
                 ]
             },
-            // step_sys_id: 'a122fdd297191110d87839000153af66',
-            // start_time_interval: gs.getDurationDate('0 1:0:0'),
-            // duration_increment: gs.getDurationDate('0 0:1:0'),
-            // minimum_duration: gs.getDurationDate('0 0:1:0'),
-            // maximum_duration: gs.getDurationDate('0 3:12:0')'
-            'SInc: 1H; DInc: 1M; Min: 1M; Max: 3H12M': {
+            {
+                // start_time_interval: gs.getDurationDate('0 1:0:0'),
+                // duration_increment: gs.getDurationDate('0 0:1:0'),
+                // minimum_duration: gs.getDurationDate('0 0:1:0'),
+                // maximum_duration: gs.getDurationDate('0 3:12:0')'
+                test_description: 'TODO: Set Description',
+                short_description: 'SInc: 1H; DInc: 1M; Min: 1M; Max: 3H12M',
+                step_sys_id: 'a122fdd297191110d87839000153af66',
                 durations: [
                     { test_description: "[0S]=1M (+1M)", input: new GlideDuration('0 0:0:0'), expected: new GlideDuration('0 0:1:0'), returns: 60000 },
                     { test_description: "[1S]=1M (+59S)", input: new GlideDuration('0 0:0:1'), expected: new GlideDuration('0 0:1:0'), returns: 59000 },
@@ -593,12 +526,14 @@ namespace normalizationFunctionsTest {
                     { test_description: "[2022-08-02 23:59:59]=2022-08-03 00:00:00 (+1S)", input: new GlideDateTime('2022-08-02 23:59:59'), expected: new GlideDateTime('2022-08-03 00:00:00'), returns: 1000 }
                 ]
             },
-            // step_sys_id: '2d00fd9297191110d87839000153af3b',
-            // start_time_interval: gs.getDurationDate('0 0:59:1'),
-            // duration_increment: gs.getDurationDate('0 0:59:59'),
-            // minimum_duration: gs.getDurationDate('0 0:59:0'),
-            // maximum_duration: gs.getDurationDate('0 1:0:0')
-            "SInc: 1H; DInc: 1H; Min: 1H; Max: 1H; Appr: true": {
+            {
+                // start_time_interval: gs.getDurationDate('0 0:59:1'),
+                // duration_increment: gs.getDurationDate('0 0:59:59'),
+                // minimum_duration: gs.getDurationDate('0 0:59:0'),
+                // maximum_duration: gs.getDurationDate('0 1:0:0')
+                test_description: 'TODO: Set Description',
+                short_description: 'SInc: 1H; DInc: 1H; Min: 1H; Max: 1H; Appr: true',
+                step_sys_id: '2d00fd9297191110d87839000153af3b',
                 durations: [
                     { test_description: "[0S]=1H (+1H)", input: new GlideDuration('0 0:0:0'), expected: new GlideDuration('0 1:0:0'), returns: 3600000 },
                     { test_description: "[1S]=1H (+59M59S)", input: new GlideDuration('0 0:0:1'), expected: new GlideDuration('0 1:0:0'), returns: 3599000 },
@@ -622,12 +557,14 @@ namespace normalizationFunctionsTest {
                     { test_description: "[2022-08-02 23:59:59]=2022-08-03 00:00:00 (+1S)", input: new GlideDateTime('2022-08-02 23:59:59'), expected: new GlideDateTime('2022-08-03 00:00:00'), returns: 1000 }
                 ]
             },
-            // step_sys_id: '5071bdd297191110d87839000153afee',
-            // start_time_interval: gs.getDurationDate('0 0:15:0'),
-            // duration_increment: gs.getDurationDate('0 0:30:0'),
-            // minimum_duration: gs.getDurationDate('0 0:15:0'),
-            // maximum_duration: gs.getDurationDate('0 2:30:1')
-            "SInc: 15M; DInc: 30M; Min: 30M; Max: 2H30M; Inactive: true": {
+            {
+                // start_time_interval: gs.getDurationDate('0 0:15:0'),
+                // duration_increment: gs.getDurationDate('0 0:30:0'),
+                // minimum_duration: gs.getDurationDate('0 0:15:0'),
+                // maximum_duration: gs.getDurationDate('0 2:30:1')
+                test_description: 'TODO: Set Description',
+                short_description: 'SInc: 15M; DInc: 30M; Min: 30M; Max: 2H30M; Inactive: true',
+                step_sys_id: '5071bdd297191110d87839000153afee',
                 durations: [
                     { test_description: "[0S]=30M (+30M)", input: new GlideDuration('0 0:0:0'), expected: new GlideDuration('0 0:30:0'), returns: 1800000 },
                     { test_description: "[1S]=30M (+29M59S)", input: new GlideDuration('0 0:0:1'), expected: new GlideDuration('0 0:30:0'), returns: 1799000 },
@@ -655,12 +592,14 @@ namespace normalizationFunctionsTest {
                     { test_description: "[2022-08-02 23:59:59]=2022-08-03 00:00:00 (+1S)", input: new GlideDateTime('2022-08-02 23:59:59'), expected: new GlideDateTime('2022-08-03 00:00:00'), returns: 1000 }
                 ]
             },
-            // step_sys_id: '26c03d1297191110d87839000153afad',
-            // start_time_interval: gs.getDurationDate('0 0:30:0'),
-            // duration_increment: gs.getDurationDate('0 0:15:0'),
-            // minimum_duration: gs.getDurationDate('0 0:1:0'),
-            // maximum_duration: gs.getDurationDate('0 0:58:1')'
-            "SInc: 30M; DInc: 15M; Min: 15M; Max: 45M": {
+            {
+                // start_time_interval: gs.getDurationDate('0 0:30:0'),
+                // duration_increment: gs.getDurationDate('0 0:15:0'),
+                // minimum_duration: gs.getDurationDate('0 0:1:0'),
+                // maximum_duration: gs.getDurationDate('0 0:58:1')'
+                test_description: 'TODO: Set Description',
+                short_description: 'SInc: 30M; DInc: 15M; Min: 15M; Max: 45M',
+                step_sys_id: '26c03d1297191110d87839000153afad',
                 durations: [
                     { test_description: "[0S]=15M (+15M)", input: new GlideDuration('0 0:0:0'), expected: new GlideDuration('0 0:15:0'), returns: 900000 },
                     { test_description: "[1S]=15M (+14M59)", input: new GlideDuration('0 0:0:1'), expected: new GlideDuration('0 0:15:0'), returns: 899000 },
@@ -688,12 +627,14 @@ namespace normalizationFunctionsTest {
                     { test_description: "[2022-08-02 23:59:59]=2022-08-03 00:00:00 (+1S)", input: new GlideDateTime('2022-08-02 23:59:59'), expected: new GlideDateTime('2022-08-03 00:00:00'), returns: 1000 }
                 ]
             },
-            // step_sys_id: 'b4f80e5e97191110d87839000153af9e',
-            // start_time_interval: gs.getDurationDate('0 1:0:0'),
-            // duration_increment: gs.getDurationDate('0 0:14:1'),
-            // minimum_duration: gs.getDurationDate('0 0:15:0'),
-            // maximum_duration: gs.getDurationDate('0 1:0:0')
-            "SInc: 1H; DInc: 15M; Min: 15M; Max: 1H": {
+            {
+                // start_time_interval: gs.getDurationDate('0 1:0:0'),
+                // duration_increment: gs.getDurationDate('0 0:14:1'),
+                // minimum_duration: gs.getDurationDate('0 0:15:0'),
+                // maximum_duration: gs.getDurationDate('0 1:0:0')
+                test_description: 'TODO: Set Description',
+                short_description: 'SInc: 1H; DInc: 15M; Min: 15M; Max: 1H',
+                step_sys_id: 'b4f80e5e97191110d87839000153af9e',
                 durations: [
                     { test_description: "[0S]=15M (+15M)", input: new GlideDuration('0 0:0:0'), expected: new GlideDuration('0 0:15:0'), returns: 900000 },
                     { test_description: "[1S]=15M (+14M59)", input: new GlideDuration('0 0:0:1'), expected: new GlideDuration('0 0:15:0'), returns: 899000 },
@@ -722,53 +663,55 @@ namespace normalizationFunctionsTest {
                     { test_description: "[2022-08-02 23:59:59]=2022-08-03 00:00:00 (+1S)", input: new GlideDateTime('2022-08-02 23:59:59'), expected: new GlideDateTime('2022-08-03 00:00:00'), returns: 1000 }
                 ]
             }
-        };
-        for (var short_description in testParameters) {
-            var parameterSet: ITestParameterSet = testParameters[<constructorTest.ReservationTypeShortDescription>short_description];
-            var reservationType: constructorTest.IReservationTypeOutputItem = outputItems[<constructorTest.ReservationTypeShortDescription>short_description];
-            var constructorSignature: string = 'new ReservationScheduler("' + reservationType.sys_id + '" /* ' + short_description + ' */)';
+        ];
+        for (var parameterSet of testParameters) {
+            var sys_id: string | undefined = atfHelper.getRecordIdFromStep(parameterSet.step_sys_id);
+            if (typeof sys_id === 'undefined')
+                return false;
+            var constructorSignature: string = 'new ReservationScheduler("' + sys_id + '" /* ' + parameterSet.short_description + ' */)';
             var rs: x_g_inte_site_17.ReservationScheduler;
-            try { rs = new x_g_inte_site_17.ReservationScheduler(reservationType.sys_id); }
+            try { rs = new x_g_inte_site_17.ReservationScheduler(sys_id, true); }
             catch (e) {
                 atfHelper.setFailed("Unexpected exception while initializing " + constructorSignature, e);
                 return false;
             }
             var value: number;
-            var msg: string;
             for (var durationParam of parameterSet.durations) {
+                var msg: string = durationParam.test_description + ' with ' + constructorSignature;
                 var target = new GlideDuration(durationParam.input);
                 try { value = rs.normalizeDuration(target); }
                 catch (e) {
                     value = NaN;
-                    atfHelper.setFailed("Unexpected exception while testing " + durationParam.test_description, e);
+                    atfHelper.setFailed("Unexpected exception while testing " + msg, e);
                     return false;
                 }
                 assertEqual({
-                    name: 'return value of ' + durationParam.test_description,
+                    name: 'return value of ' + msg,
                     shouldbe: durationParam.returns,
                     value: value
                 });
                 assertEqual({
-                    name: 'new duration after ' + durationParam.test_description,
+                    name: 'new duration after ' + msg,
                     shouldbe: durationParam.expected,
                     value: target
                 });
             }
             for (var dateParam of parameterSet.startDates) {
+                var msg: string = dateParam.test_description + ' with ' + constructorSignature;
                 var input = new GlideDateTime(dateParam.input);
                 try { value = rs.normalizeStartDate(input); }
                 catch (e) {
                     value = NaN;
-                    atfHelper.setFailed("Unexpected exception while testing " + dateParam.test_description, e);
+                    atfHelper.setFailed("Unexpected exception while testing " + msg, e);
                     return false;
                 }
                 assertEqual({
-                    name: 'return value of ' + dateParam.test_description,
+                    name: 'return value of ' + msg,
                     shouldbe: dateParam.returns,
                     value: value
                 });
                 assertEqual({
-                    name: 'new date/time after ' + dateParam.test_description,
+                    name: 'new date/time after ' + msg,
                     shouldbe: dateParam.expected,
                     value: input
                 });
@@ -784,37 +727,19 @@ namespace getAvailabilitiesInRangeTest {
     declare var stepResult: sn_atf.ITestStepResult;
     declare function assertEqual(assertion: sn_atf.ITestAssertion): void;
     
-    interface IReservationTypeParameterSet {
-        short_description: string;
-        minimum_duration: GlideDuration;
-        maximum_duration: GlideDuration;
-        duration_increment: GlideDuration;
-        start_time_interval: GlideDuration;
-    }
-
     interface IDateRange {
         start: GlideDateTime;
         end: GlideDateTime;
     }
 
-    interface IInputAndExpected<T, U> {
-        input: T;
-        expected: U;
-    }
-    
-    interface INormalizationFunctionsParameterSet extends IReservationTypeParameterSet {
-        durations: (IInputAndExpected<GlideDuration, GlideDuration> & { returns: number })[];
-        startDates: (IInputAndExpected<GlideDateTime, GlideDateTime> & { offset: number; returns: number })[];
-    }
-
     (function (outputs: sn_atf.ITestStepOutputs, steps: sn_atf.ITestStepsFunc, stepResult: sn_atf.ITestStepResult, assertEqual: sn_atf.IAssertEqualFunc): boolean {
         var atfHelper: x_g_inte_site_17.AtfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
-        var schedule_sys_id: string | undefined = atfHelper.getRecordIdFromStep('8b4ed58697051110d87839000153afae');
-        var approval_group_sys_id: string | undefined = atfHelper.getRecordIdFromStep('cf4c1e1a97411110d87839000153aff6');
-        var assignment_group_sys_id: string | undefined = atfHelper.getRecordIdFromStep('f70fd5c697051110d87839000153af81');
-        var off_hours_sys_id: string | undefined = atfHelper.getRecordIdFromStep('e8f6e19897d11110d87839000153afb8');
-        var holiday_sys_id: string | undefined = atfHelper.getRecordIdFromStep('5dda655c97d11110d87839000153afea');
-        if (gs.nil(schedule_sys_id) || gs.nil(approval_group_sys_id) || gs.nil(assignment_group_sys_id) || gs.nil(off_hours_sys_id) || gs.nil(holiday_sys_id))
+        var schedule_sys_id: string = <string>atfHelper.getRecordIdFromStep('8b4ed58697051110d87839000153afae');
+        var approval_group_sys_id: string = <string>atfHelper.getRecordIdFromStep('cf4c1e1a97411110d87839000153aff6');
+        var assignment_group_sys_id: string = <string>atfHelper.getRecordIdFromStep('f70fd5c697051110d87839000153af81');
+        var off_hours_sys_id: string = <string>atfHelper.getRecordIdFromStep('e8f6e19897d11110d87839000153afb8');
+        var holiday_sys_id: string = <string>atfHelper.getRecordIdFromStep('5dda655c97d11110d87839000153afea');
+        if (x_g_inte_site_17.AtfHelper.anyNil(schedule_sys_id, approval_group_sys_id, assignment_group_sys_id, off_hours_sys_id, holiday_sys_id))
             return false;
         var appt_sys_id: string[] = [];
         var sys_id: string | undefined = atfHelper.getRecordIdFromStep('efde69dc97d11110d87839000153af79');
@@ -832,7 +757,7 @@ namespace getAvailabilitiesInRangeTest {
             atfHelper.setFailed("Unexpected exception while getting time zone", e);
             return false;
         }
-        if (gs.nil(defaultTimeZone)) {
+        if (x_g_inte_site_17.AtfHelper.isNil(defaultTimeZone)) {
             stepResult.setOutputMessage("Could not determine default time zone");
             return false;
         }

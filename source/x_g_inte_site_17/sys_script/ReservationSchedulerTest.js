@@ -1,6 +1,20 @@
 "use strict";
 var constructorTest;
 (function (constructorTest) {
+    var isNil = function (o) {
+        switch (typeof o) {
+            case 'undefined':
+                return true;
+            case 'number':
+                return isNaN(o) || !isFinite(o);
+            case 'string':
+                return o.trim().length == 0;
+            case "object":
+                return o === null || ('' + o).trim().length == 0;
+            default:
+                return false;
+        }
+    };
     // Insert Reservation Schedule
     // {
     //     sys_id: '8b4ed58697051110d87839000153afae',
@@ -55,7 +69,7 @@ var constructorTest;
         var schedule_sys_id = atfHelper.getRecordIdFromStep('8b4ed58697051110d87839000153afae');
         var approval_group_sys_id = atfHelper.getRecordIdFromStep('cf4c1e1a97411110d87839000153aff6');
         var assignment_group_sys_id = atfHelper.getRecordIdFromStep('f70fd5c697051110d87839000153af81');
-        if (gs.nil(schedule_sys_id) || gs.nil(approval_group_sys_id) || gs.nil(assignment_group_sys_id))
+        if (isNil(schedule_sys_id) || gs.nil(approval_group_sys_id) || gs.nil(assignment_group_sys_id))
             return false;
         var defaultTimeZone;
         try {
