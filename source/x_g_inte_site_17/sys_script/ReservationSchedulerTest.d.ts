@@ -10,23 +10,6 @@ declare namespace constructorTest {
         approval_group_empty: boolean;
         inactive: boolean;
     }
-    interface IReservationTypeOutputItem {
-        sys_id: string;
-        minimum_duration: string;
-        maximum_duration: string;
-        duration_increment: string;
-        start_time_interval: string;
-        approval_group_empty: boolean;
-        inactive: boolean;
-    }
-    type IReservationTypeOutput = {
-        [key in ReservationTypeShortDescription]: IReservationTypeOutputItem;
-    };
-    type IConstructorTestOutputs = sn_atf.ITestStepOutputs & {
-        defaultTimeZone: string;
-        altTimeZone: string;
-        types: string;
-    };
 }
 declare namespace normalizationFunctionsTest {
 }
