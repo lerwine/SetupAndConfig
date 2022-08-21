@@ -52,13 +52,13 @@ var x_g_inte_site_17;
                     return;
                 var fromDateTime = new GlideDateTime(this.getParameter("sys_parm_from"));
                 var toDateTime;
-                var value = this.getParameter("sys_parm_duration");
+                var value = this.getParameter("sys_parm_to");
                 if (!gs.nil(value))
-                    toDateTime = new GlideDateTime(this.getParameter("sys_parm_to"));
+                    toDateTime = new GlideDateTime(value);
                 value = this.getParameter("sys_parm_duration");
                 var duration;
                 if (!gs.nil(value))
-                    duration = new GlideDuration(parseInt('' + value) * 60000);
+                    duration = new GlideDuration(parseInt(value) * 60000);
                 var availability;
                 try {
                     availability = this._scheduler.getNextAvailableTimeSlot(fromDateTime, toDateTime, duration);
@@ -74,7 +74,8 @@ var x_g_inte_site_17;
                 else {
                     availabilitiesElement.setAttribute('success', 'false');
                     availabilitiesElement.setAttribute('startDateTime', availability.startDateTime.getDisplayValue());
-                    availabilitiesElement.setAttribute('durationMinutes', '' + Math.floor(availability.duration.getNumericValue() / 60000));
+                    if (typeof availability.duration !== 'undefined')
+                        availabilitiesElement.setAttribute('durationMinutes', '' + Math.floor(availability.duration.getNumericValue() / 60000));
                 }
             },
             getAvailabilitiesInRange: function () {

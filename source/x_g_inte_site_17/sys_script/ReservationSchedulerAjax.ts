@@ -69,11 +69,11 @@
                     return;
                 var fromDateTime: GlideDateTime = new GlideDateTime(<string>this.getParameter("sys_parm_from"));
                 var toDateTime: GlideDateTime | undefined;
-                var value: $$rhino.String = this.getParameter("sys_parm_duration");
-                if (!gs.nil(value)) toDateTime = new GlideDateTime(<string>this.getParameter("sys_parm_to"));
+                var value: $$rhino.String = this.getParameter("sys_parm_to");
+                if (!gs.nil(value)) toDateTime = new GlideDateTime(<string>value);
                 value = this.getParameter("sys_parm_duration");
                 var duration: GlideDuration | undefined;
-                if (!gs.nil(value)) duration = new GlideDuration(parseInt('' + value) * 60000);
+                if (!gs.nil(value)) duration = new GlideDuration(parseInt(<string>value) * 60000);
                 var availability: ITimeSlot | undefined;
                 try {
                     availability = this._scheduler.getNextAvailableTimeSlot(fromDateTime, toDateTime, duration);
@@ -87,7 +87,8 @@
                 } else {
                     availabilitiesElement.setAttribute('success', 'false');
                     availabilitiesElement.setAttribute('startDateTime', availability.startDateTime.getDisplayValue());
-                    availabilitiesElement.setAttribute('durationMinutes', '' + Math.floor(availability.duration.getNumericValue() / 60000));
+                    if (typeof availability.duration !== 'undefined')
+                        availabilitiesElement.setAttribute('durationMinutes', '' + Math.floor(availability.duration.getNumericValue() / 60000));
                 }
             },
 
@@ -99,7 +100,7 @@
                 var value: $$rhino.String = this.getParameter("sys_parm_duration");
                 var duration: GlideDuration | undefined;
                 if (!gs.nil(value)) duration = new GlideDuration(parseInt('' + value) * 60000);
-                var availabilities: ITimeSlot[]
+                var availabilities: TimeSlot[]
                 try {
                     availabilities = this._scheduler.getAvailabilitiesInRange(fromDateTime, toDateTime, duration);
                 } catch (e) {
