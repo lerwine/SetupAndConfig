@@ -14,7 +14,7 @@
         short_description: $$property.Element;
 
         /**
-         * Schedule for appointments
+         * Schedule for reservations
          * @type {cmn_scheduleProperty}
          * @memberof reservationTypeFields
          * @description Refers to cmn_schedule (Schedule)
@@ -22,7 +22,7 @@
         schedule: cmn_scheduleProperty;
 
         /**
-         * Approval group or nil to automatically approve appointments.
+         * Approval group or nil to automatically approve reservations.
          * @type {$$rhino.Nilable<sys_user_groupProperty>sys_user_groupProperty}
          * @memberof reservationTypeFields
          * @description Refers to sys_user_group (Group)
@@ -49,7 +49,7 @@
          * Maximum Duration
          * @type {$$property.GlideObject}
          * @memberof reservationTypeFields
-         * @description This is the maximum appointment duration. This cannot be less than the Minimum Duration, and values are rounded up to the nearest minute.
+         * @description This is the maximum reservation duration. This cannot be less than the Minimum Duration, and values are rounded up to the nearest minute.
          */
         maximum_duration: $$property.GlideObject;
 
@@ -57,7 +57,7 @@
          * Duration Increment
          * @type {$$property.GlideObject}
          * @memberof reservationTypeFields
-         * @description This is the length by which appointment durations can be incremented. The minimum value is 1 minute, and values are rounded up to the nearest minute.
+         * @description This is the length by which reservation durations can be incremented. The minimum value is 1 minute, and values are rounded up to the nearest minute.
          */
         duration_increment: $$property.GlideObject;
 
@@ -65,7 +65,7 @@
          * Fixed Start Time Interval
          * @type {$$property.GlideObject}
          * @memberof reservationTypeFields
-         * @description This is the interval at which appointments must be scheduled. The minimum value is 1 minute, and values are rounded up to the nearest minute.
+         * @description This is the interval at which reservations must be scheduled. The minimum value is 1 minute, and values are rounded up to the nearest minute.
          */
         start_time_interval: $$property.GlideObject;
 
@@ -89,34 +89,10 @@
 
     export interface ITimeSlot {
         startDateTime: GlideDateTime;
-        duration: GlideDuration;
+        duration?: GlideDuration;
     }
 
-    // #region AvailabilitySearcher
-    interface IAvailabilitySearcherBase extends $$snClass.ICustomClassBase<IAvailabilitySearcherBase, "AvailabilitySearcher"> {
-        getNext(limit?: GlideDateTime): ITimeSlot | undefined;
-        getAvailabilityRanges(toDateTime: GlideDateTime) : ITimeSlot[];
-    }
-
-    interface IAvailabilitySearcherPrototype extends $$snClass.ICustomClassPrototypeN<IAvailabilitySearcherBase, IAvailabilitySearcherPrototype, "AvailabilitySearcher">, IAvailabilitySearcherBase {
-        _schedule: GlideSchedule;
-        _startOfDay: GlideDateTime;
-        _minimumDuration: GlideDuration;
-        _maximumDuration: GlideDuration;
-        _durationIncrement: GlideDuration;
-        _startTimeInterval: GlideDuration;
-        _startDateTime: GlideDateTime;
-        _minEndDateTime: GlideDateTime;
-    }
-
-    declare type AvailabilitySearcher = Readonly<IAvailabilitySearcherBase>;
-
-    interface AvailabilitySearcherConstructor extends $$snClass.CustomClassConstructorN<IAvailabilitySearcherBase, IAvailabilitySearcherPrototype, AvailabilitySearcher> {
-        new(reservationScheduler: ReservationScheduler, fromDateTime: GlideDateTime, minDuration?: GlideDuration, maxDuration?: GlideDuration): AvailabilitySearcher;
-        (reservationScheduler: ReservationScheduler, fromDateTime: GlideDateTime, minDuration?: GlideDuration, maxDuration?: GlideDuration): AvailabilitySearcher;
-    }
-
-    // #endregion
+    export type TimeSlot = Required<ITimeSlot>;
 
     export interface IReservationSchedulerBase extends $$snClass.ICustomClassBase<IReservationSchedulerBase, "ReservationScheduler"> {
         /**
@@ -136,7 +112,7 @@
         timeZone: string;
     
         /**
-         * Sys ID of Approval group or undefined to automatically approve appointments.
+         * Sys ID of Approval group or undefined to automatically approve reservations.
          * @type {(string|undefined)}
          * @memberof IAppointmentUtilBase
          */
@@ -154,7 +130,7 @@
          * Minimum Duration
          * @type {GlideDuration}
          * @memberof IAppointmentUtilBase
-         * @description This is the minimum appointment duration. The minimum value is 1 minute, and values are rounded up to the nearest minute.
+         * @description This is the minimum reservation duration. The minimum value is 1 minute, and values are rounded up to the nearest minute.
          */
         minimum_duration: GlideDuration;
 
@@ -162,7 +138,7 @@
          * Maximum Duration
          * @type {GlideDuration}
          * @memberof IAppointmentUtilBase
-         * @description This is the maximum appointment duration. This cannot be less than the Minimum Duration, and values are rounded up to the nearest minute.
+         * @description This is the maximum reservation duration. This cannot be less than the Minimum Duration, and values are rounded up to the nearest minute.
          */
         maximum_duration: GlideDuration;
 
@@ -170,32 +146,89 @@
          * Duration Increment
          * @type {GlideDuration}
          * @memberof IAppointmentUtilBase
-         * @description This is the length by which appointment durations can be incremented. The minimum value is 1 minute, and values are rounded up to the nearest minute.
+         * @description This is the length by which reservation durations can be incremented. The minimum value is 1 minute, and values are rounded up to the nearest minute.
          */
         duration_increment: GlideDuration;
     
         /**
-         * Fixed Start Time Interval
+         * Fixed time-of-day interval, relative to midnight, for reservation start times.
          * @type {GlideDuration}
          * @memberof IAppointmentUtilBase
-         * @description This is the interval at which appointments must be scheduled. The minimum value is 1 minute, and values are rounded up to the nearest minute.
+         * @description This is the interval at which reservations must be scheduled. The minimum value is 1 minute, and values are rounded up to the nearest minute.
          */
         start_time_interval: GlideDuration;
     
+        /**
+         * Normalizes a duration value according to the {@link #duration_increment}, {@link #minimum_duration} and {@link #maximum_duration} properties.
+         * @param {GlideDuration} value - The duration value to normalize.
+         * @return {number} The number of milliseconds by which the duration value was adjusted.
+         * @memberof IReservationSchedulerBase
+         */
         normalizeDuration(value: GlideDuration): number;
 
+        /**
+         * Creates a new normalized duration value from an existing duration value.
+         * @param {GlideDuration} value - The source duration value.
+         * @return {GlideDuration} A new normalized duration value.
+         * @memberof IReservationSchedulerBase
+         */
         getNormalizedDuration(value: GlideDuration): GlideDuration;
 
+        /**
+         * Rounds a date/time value up to the next increment specified by {@link #start_time_interval} property.
+         * @param {GlideDateTime} value - The date/time value to normalize.
+         * @return {number} The number of milliseconds by which the duration value was adjusted.
+         * @memberof IReservationSchedulerBase
+         */
         normalizeStartDate(value: GlideDateTime): number;
 
+        /**
+         * Creates a new normalizated date/time value from an existing date and time.
+         * @param {GlideDateTime} value - The source date/time value.
+         * @return {GlideDateTime} A new date/time value that is rouned up to the next increment specified by {@link #start_time_interval} property.
+         * @memberof IReservationSchedulerBase
+         */
         getNormalizedStartDate(value: GlideDateTime): GlideDateTime;
 
-        getNextAvailableTimeSlot(fromDateTime: GlideDateTime, toDateTime?: GlideDateTime, minimumDuration?: GlideDuration, maximumDuration?: GlideDuration): ITimeSlot | undefined;
+        /**
+         * 
+         * @param {GlideDateTime} fromDateTime
+         * @param {GlideDateTime} [toDateTime]
+         * @param {GlideDuration} [minimumDuration]
+         * @param {GlideDuration} [maximumDuration]
+         * @return {(ITimeSlot | undefined)}
+         * @memberof IReservationSchedulerBase
+         */
+        getNextAvailableTimeSlot(fromDateTime: GlideDateTime, toDateTime?: GlideDateTime, minimumDuration?: GlideDuration): ITimeSlot | undefined;
 
-        getAvailabilitiesInRange(fromDateTime: GlideDateTime, toDateTime: GlideDateTime, minimumDuration?: GlideDuration, maximumDuration?: GlideDuration): ITimeSlot[];
+        /**
+         * Gets the available time slots within a given range of date/time values.
+         * @param {GlideDateTime} fromDateTime - The starting date/time range.
+         * @param {GlideDateTime} toDateTime - The ending date/time range.
+         * @param {GlideDuration} [minimumDuration] - The optional minimum duration for the returned time slots.
+         * @return {TimeSlot[]} The available time slots within the specified date/time range.
+         * @memberof IReservationSchedulerBase
+         */
+        getAvailabilitiesInRange(fromDateTime: GlideDateTime, toDateTime: GlideDateTime, minimumDuration?: GlideDuration): TimeSlot[];
 
+        /**
+         * Indicates whether the specified start date and duration is available for an reservation.
+         * @param {GlideDateTime} startDateTime - The prospective reservation start date and time.
+         * @param {GlideDuration} duration - The duration of the prospective reservation.
+         * @return {boolean} True if the specified date/time and duration is available for reservation; otherwise, false.
+         * @memberof IReservationSchedulerBase
+         */
         isAvailable(startDateTime: GlideDateTime, duration: GlideDuration): boolean;
 
+        /**
+         * Adds a reservation to the associated schedule.
+         * @param {string} name - The name to assign to the reservation.
+         * @param {GlideDateTime} startDateTime - The start date and time of the reservation.
+         * @param {GlideDuration} duration - The duration of the reservation.
+         * @return {(cmn_schedule_spanGlideRecord | undefined)} The {@link cmn_schedule_spanGlideRecord} representing the reservation
+         * or undefined if the specified date/time and duration was not available.
+         * @memberof IReservationSchedulerBase
+         */
         addAppointment(name: string, startDateTime: GlideDateTime, duration: GlideDuration): cmn_schedule_spanGlideRecord | undefined;
     }
     
@@ -208,31 +241,53 @@
     export interface ReservationSchedulerConstructor extends $$snClass.CustomClassConstructor3<IReservationSchedulerBase, IReservationSchedulerPrototype, ReservationScheduler, reservationTypeGlideRecord | string, boolean, string> {
         new(type: reservationTypeGlideRecord | string, allowInactive?: boolean, timeZone?: string): ReservationScheduler;
         (type: reservationTypeGlideRecord | string, allowInactive?: boolean, timeZone?: string): ReservationScheduler;
-        AvailabilitySearcher: AvailabilitySearcherConstructor;
+        // AvailabilitySearcher: AvailabilitySearcherConstructor;
     }
 
+    interface IScheduleIterationContext {
+        schedule: GlideSchedule;
+        minimum_duration: GlideDuration;
+        maximum_duration: GlideDuration;
+        duration_increment: GlideDuration;
+        start_time_interval: GlideDuration;
+        range_end?: GlideDateTime;
+        current_date_time: GlideDateTime;
+    }
+    
     export const ReservationScheduler: ReservationSchedulerConstructor = (function (): ReservationSchedulerConstructor {
-
         var reservationschedulerConstructor: ReservationSchedulerConstructor = Class.create();
 
-        reservationschedulerConstructor.AvailabilitySearcher = Class.create();
+        // reservationschedulerConstructor.AvailabilitySearcher = Class.create();
 
         var gdz: GlideDuration = new GlideDuration(0);
 
         var oneMinute: GlideDuration = new GlideDuration(60000);
 
-        function getMinuteOfDay(value: GlideTime): number {
-            return (value.getHourOfDayLocalTime() * 60) + value.getMinutesLocalTime();
+        // #region Private functions
+
+        function isNil(obj: any | undefined): obj is undefined | null | "" {
+            switch (typeof obj) {
+                case 'undefined':
+                    return true;
+                case 'number':
+                    return isNaN(obj) || !isFinite(obj);
+                case 'string':
+                    return obj.trim().length == 0;
+                case 'object':
+                    return obj == null || ('' + obj).trim().length == 0;
+                default:
+                    return false;
+            }
         }
 
-        function setToStartOfDay(value: GlideDateTime): void {
-            value.setDisplayValue(value.getDate().getDisplayValue() + " 00:00:00");
+        function areAnyNil(...obj: (any | undefined)[]): boolean {
+            for (var i in obj)
+                if (isNil(obj[i])) return true;
+            return false;
         }
-        
+
         function getStartOfDay(value: GlideDateTime): GlideDateTime {
-            var dateTime = new GlideDateTime(value);
-            setToStartOfDay(dateTime);
-            return dateTime;
+            return new GlideDateTime(gs.dateGenerate(value.getDisplayValue().substring(0, 10), '00:00:00'));
         }
         
         function isNormalizedGlideDateTimee(value: GlideDateTime, interval: GlideDuration): boolean {
@@ -263,7 +318,18 @@
             return !value.after(interval) || (value.getNumericValue() % interval.getNumericValue()) == 0;
         }
 
-        function normalizeGlideDuration(value: GlideDuration, interval: GlideDuration): number {
+        function normalizeGlideDuration(value: GlideDuration, interval: GlideDuration, minDuration?: GlideDuration, maxDuration?: GlideDuration): number {
+            var result: number;
+            if (typeof minDuration !== 'undefined' && value.before(minDuration)) {
+                result = minDuration.getNumericValue() - value.getNumericValue();
+                value.setValue(minDuration.getDurationValue());
+                return result;
+            }
+            if (typeof maxDuration !== 'undefined' && value.after(maxDuration)) {
+                result = maxDuration.getNumericValue() - value.getNumericValue();
+                value.setValue(maxDuration.getDurationValue());
+                return result;
+            }
             var n = interval.getNumericValue();
             if (value.before(interval)) {
                 value.setValue(interval.getDurationValue());
@@ -276,9 +342,9 @@
             return mod;
         }
 
-        function getNormalizedGlideDuration(value: GlideDuration, interval: GlideDuration): GlideDuration {
+        function getNormalizedGlideDuration(value: GlideDuration, interval: GlideDuration, minDuration?: GlideDuration, maxDuration?: GlideDuration): GlideDuration {
             var duration = new GlideDuration(value);
-            normalizeGlideDuration(duration, interval);
+            normalizeGlideDuration(duration, interval, minDuration, maxDuration);
             return duration;
         }
 
@@ -297,9 +363,61 @@
             return ms >= duration.getNumericValue();
         }
 
+        function getNextSlot(this: IScheduleIterationContext): ITimeSlot | undefined {
+            var ms = this.schedule.whenNext(this.current_date_time);
+            var startDateTime: GlideDateTime;
+            while (ms == 0) {
+                startDateTime = new GlideDateTime(this.current_date_time);
+                startDateTime.add(this.duration_increment);
+                var timeUnavailable = this.schedule.duration(this.current_date_time, startDateTime);
+                this.current_date_time.add(timeUnavailable);
+                normalizeGlideDateTime(this.current_date_time, this.start_time_interval);
+                ms = this.schedule.whenNext(this.current_date_time);
+            }
+            if (ms < 0) {
+                startDateTime = new GlideDateTime(this.current_date_time);
+                var remainingDuration: GlideDuration | undefined;
+                if (typeof this.range_end !== 'undefined')
+                    remainingDuration = GlideDateTime.subtract(startDateTime, this.range_end);
+                this.current_date_time.add(this.start_time_interval.after(this.duration_increment) ? this.start_time_interval : this.duration_increment);
+                if (typeof remainingDuration !== 'undefined' && remainingDuration.before(this.minimum_duration)) return;
+                return { startDateTime: startDateTime, duration: remainingDuration };
+            }
+            var nextReservationIn = new GlideDuration(gdz);
+            nextReservationIn.add(ms);
+            while (nextReservationIn.before(this.minimum_duration)) {
+                this.current_date_time.add(nextReservationIn);
+                normalizeGlideDateTime(this.current_date_time, this.start_time_interval);
+                while ((ms = this.schedule.whenNext(this.current_date_time)) == 0) {
+                    startDateTime = new GlideDateTime(this.current_date_time);
+                    startDateTime.add(this.duration_increment);
+                    var timeUnavailable = this.schedule.duration(this.current_date_time, startDateTime);
+                    this.current_date_time.add(timeUnavailable);
+                    normalizeGlideDateTime(this.current_date_time, this.start_time_interval);
+                }
+                if (ms < 0) {
+                    startDateTime = new GlideDateTime(this.current_date_time);
+                    var remainingDuration: GlideDuration | undefined;
+                    if (typeof this.range_end !== 'undefined')
+                        remainingDuration = GlideDateTime.subtract(startDateTime, this.range_end);
+                    this.current_date_time.add(this.start_time_interval.after(this.duration_increment) ? this.start_time_interval : this.duration_increment);
+                    if (typeof remainingDuration !== 'undefined' && remainingDuration.before(this.minimum_duration)) return;
+                    return { startDateTime: startDateTime, duration: remainingDuration };
+                }
+                nextReservationIn = new GlideDuration(gdz);
+                nextReservationIn.add(ms);
+            }
+            startDateTime = new GlideDateTime(this.current_date_time);
+            startDateTime.add(nextReservationIn);
+            normalizeGlideDateTime(this.current_date_time, this.start_time_interval);
+            return { startDateTime: startDateTime, duration: nextReservationIn };
+        }
+
+        // #endregion
+
         reservationschedulerConstructor.prototype = <IReservationSchedulerPrototype>{
             initialize: function(this: IReservationSchedulerPrototype, type: reservationTypeGlideRecord | string, allowInactive?: boolean, timeZone?: string): void {
-                if (gs.nil(type)) throw new Error("Reservation Type was not provided.");
+                if (isNil(type)) throw new Error("Reservation Type was not provided.");
                 var glideRecord: reservationTypeGlideRecord;
                 if (typeof type === 'string') {
                     glideRecord = <reservationTypeGlideRecord>new GlideRecord('x_g_inte_site_17_reservation_type');
@@ -317,7 +435,7 @@
                 this._scheduleId = '' + glideRecord.schedule;
                 this.schedule = new GlideSchedule(this._scheduleId);
                 this.short_description = '' + glideRecord.short_description;
-                if (!gs.nil(glideRecord.approval_group)) this.approval_group = '' + glideRecord.approval_group;
+                if (!isNil(glideRecord.approval_group)) this.approval_group = '' + glideRecord.approval_group;
                 this.assignment_group = '' + glideRecord.assignment_group;
                 var duration: GlideDuration = new GlideDuration();
                 duration.setValue(glideRecord.duration_increment);
@@ -335,56 +453,137 @@
                         duration.add(0 - mod);
                     this.maximum_duration = duration;
                 }
-                this.timeZone = gs.nil(timeZone) ? gs.getSession().getTimeZoneName() : timeZone;
+                this.timeZone = isNil(timeZone) ? gs.getSession().getTimeZoneName() : timeZone;
             },
 
+            /**
+             * Normalizes a duration value according to the {@link #duration_increment}, {@link #minimum_duration} and {@link #maximum_duration} properties.
+             * @param {GlideDuration} value - The duration value to normalize.
+             * @return {number} The number of milliseconds by which the duration value was adjusted.
+             */
             normalizeDuration: function(this: IReservationSchedulerPrototype, value: GlideDuration): number {
-                if (gs.nil(value)) throw new Error("Duration not provided");
+                if (isNil(value)) throw new Error("Duration not provided");
                 if (!value.isValid()) throw new Error("Invalid duration: " + value.getErrorMsg());
-                return normalizeGlideDuration(value, this.start_time_interval);
+                return normalizeGlideDuration(value, this.duration_increment, this.minimum_duration, this.maximum_duration);
             },
 
+            /**
+             * Creates a new normalized duration value from an existing duration value.
+             * @param {GlideDuration} value - The source duration value.
+             * @return {GlideDuration} A new normalized duration value.
+             */
             getNormalizedDuration: function(this: IReservationSchedulerPrototype, value: GlideDuration): GlideDuration {
-                if (gs.nil(value)) throw new Error("Duration not provided");
+                if (isNil(value)) throw new Error("Duration not provided");
                 if (!value.isValid()) throw new Error("Invalid duration: " + value.getErrorMsg());
-                return getNormalizedGlideDuration(value, this.duration_increment);
+                return getNormalizedGlideDuration(value, this.duration_increment, this.minimum_duration, this.maximum_duration);
             },
         
+            /**
+             * Rounds a date/time value up to the next increment specified by {@link #start_time_interval} property.
+             * @param {GlideDateTime} value - The date/time value to normalize.
+             * @return {number} The number of milliseconds by which the duration value was adjusted.
+             */
             normalizeStartDate: function(this: IReservationSchedulerPrototype, value: GlideDateTime): number {
-                if (gs.nil(value)) throw new Error("Date/time not provided");
+                if (isNil(value)) throw new Error("Date/time not provided");
                 if (!value.isValid()) throw new Error("Invalid date/time: " + value.getErrorMsg());
                 return normalizeGlideDateTime(value, this.start_time_interval);
             },
         
+            /**
+             * Creates a new normalizated date/time value from an existing date and time.
+             * @param {GlideDateTime} value - The source date/time value.
+             * @return {GlideDateTime} A new date/time value that is rouned up to the next increment specified by {@link #start_time_interval} property.
+             */
             getNormalizedStartDate: function(this: IReservationSchedulerPrototype, value: GlideDateTime): GlideDateTime {
-                if (gs.nil(value)) throw new Error("Date/time not provided");
+                if (isNil(value)) throw new Error("Date/time not provided");
                 if (!value.isValid()) throw new Error("Invalid date/time: " + value.getErrorMsg());
                 return getNormalizedGlideDateTime(value, this.start_time_interval);
             },
         
-            getNextAvailableTimeSlot: function(this: IReservationSchedulerPrototype, fromDateTime: GlideDateTime, toDateTime?: GlideDateTime, minimumDuration?: GlideDuration, maximumDuration?: GlideDuration): ITimeSlot | undefined {
-                var searcher: AvailabilitySearcher = new ReservationScheduler.AvailabilitySearcher(this, fromDateTime, minimumDuration, maximumDuration);
-                return searcher.getNext(toDateTime);
+            /**
+             * Gets the next reservation availability.
+             * @param {GlideDateTime} fromDateTime
+             * @param {GlideDateTime} [toDateTime]
+             * @param {GlideDuration} [minimumDuration]
+             * @param {GlideDuration} [maximumDuration]
+             * @return {(ITimeSlot | undefined)}
+             */
+            getNextAvailableTimeSlot: function(this: IReservationSchedulerPrototype, fromDateTime: GlideDateTime, toDateTime?: GlideDateTime, minimumDuration?: GlideDuration): ITimeSlot | undefined {
+                var ctx: IScheduleIterationContext = {
+                    schedule: this.schedule,
+                    duration_increment: this.duration_increment,
+                    minimum_duration: this.minimum_duration,
+                    maximum_duration: this.maximum_duration,
+                    range_end: toDateTime,
+                    start_time_interval: this.start_time_interval,
+                    current_date_time: getNormalizedGlideDateTime(fromDateTime, this.start_time_interval)
+                }
+                return getNextSlot.call(ctx);
             },
 
-            getAvailabilitiesInRange: function(this: IReservationSchedulerPrototype, fromDateTime: GlideDateTime, toDateTime: GlideDateTime, minimumDuration?: GlideDuration, maximumDuration?: GlideDuration): ITimeSlot[] {
-                var searcher: AvailabilitySearcher = new ReservationScheduler.AvailabilitySearcher(this, fromDateTime, minimumDuration, maximumDuration);
-                return searcher.getAvailabilityRanges(toDateTime);
+            /**
+             * Gets the available time slots within a given range of date/time values.
+             * @param {GlideDateTime} fromDateTime - The starting date/time range.
+             * @param {GlideDateTime} toDateTime - The ending date/time range.
+             * @param {GlideDuration} [minimumDuration] - The optional minimum duration for the returned time slots.
+             * @return {TimeSlot[]} The available time slots within the specified date/time range.
+             */
+            getAvailabilitiesInRange: function(this: IReservationSchedulerPrototype, fromDateTime: GlideDateTime, toDateTime: GlideDateTime, minimumDuration?: GlideDuration): TimeSlot[] {
+                if (isNil(fromDateTime)) throw new Error("From date/time not provided");
+                if (isNil(toDateTime)) throw new Error("To date/time not provided");
+                if (!fromDateTime.isValid()) throw new Error("Invalid start date/time: " + fromDateTime.getErrorMsg());
+                if (!toDateTime.isValid()) throw new Error("Invalid to date/time: " + toDateTime.getErrorMsg());
+                if (!isNil(minimumDuration) && !minimumDuration.isValid()) throw new Error("Invalid minimum duration: " + minimumDuration.getErrorMsg());
+                var result: TimeSlot[] = [];
+                if (!toDateTime.after(fromDateTime)) return result;
+                var ctx: IScheduleIterationContext = {
+                    schedule: this.schedule,
+                    duration_increment: this.duration_increment,
+                    minimum_duration: this.minimum_duration,
+                    maximum_duration: this.maximum_duration,
+                    range_end: toDateTime,
+                    start_time_interval: this.start_time_interval,
+                    current_date_time: getNormalizedGlideDateTime(fromDateTime, this.start_time_interval)
+                }
+                if (!isNil(minimumDuration) && (minimumDuration = getNormalizedGlideDuration(minimumDuration, this.duration_increment)).after(this.minimum_duration)) {
+                    if (minimumDuration.after(this.maximum_duration)) return result;
+                    ctx.minimum_duration = minimumDuration;
+                }
+                while (ctx.current_date_time.before(toDateTime)) {
+                    var next = getNextSlot.call(ctx);
+                    if (typeof next === 'undefined') break;
+                    result.push(<TimeSlot>next);
+                }
+                return result;
             },
 
+            /**
+             * Indicates whether the specified start date and duration is available for an reservation.
+             * @param {GlideDateTime} startDateTime - The prospective reservation start date and time.
+             * @param {GlideDuration} duration - The duration of the prospective reservation.
+             * @return {boolean} True if the specified date/time and duration is available for reservation; otherwise, false.
+             */
             isAvailable: function(this: IReservationSchedulerPrototype, startDateTime: GlideDateTime, duration: GlideDuration): boolean {
-                if (gs.nil(startDateTime)) throw new Error("Start date/time not provided");
-                if (gs.nil(duration)) throw new Error("Duration not provided");
+                if (isNil(startDateTime)) throw new Error("Start date/time not provided");
+                if (isNil(duration)) throw new Error("Duration not provided");
                 if (!startDateTime.isValid()) throw new Error("Invalid start date/time: " + startDateTime.getErrorMsg());
                 if (!duration.isValid()) throw new Error("Invalid duration: " + duration.getErrorMsg());
                 if (duration.getNumericValue() <= 0) throw new Error("Duration must be greater than zero");
                 return isSlotAvailable.call(this, startDateTime, duration);
             },
 
+            /**
+             * Adds a reservation to the associated schedule.
+             * @param {string} name - The name to assign to the reservation.
+             * @param {GlideDateTime} startDateTime - The start date and time of the reservation.
+             * @param {GlideDuration} duration - The duration of the reservation.
+             * @return {(cmn_schedule_spanGlideRecord | undefined)} The {@link cmn_schedule_spanGlideRecord} representing the reservation
+             * or undefined if the specified date/time and duration was not available.
+             */
             addAppointment: function(this: IReservationSchedulerPrototype, name: string, startDateTime: GlideDateTime, duration: GlideDuration): cmn_schedule_spanGlideRecord {
                 if (typeof name !== 'string' || (name = name.trim()).length == 0) throw new Error("Invalid name");
-                if (gs.nil(startDateTime)) throw new Error("Start date/time not provided");
-                if (gs.nil(duration)) throw new Error("Duration not provided");
+                if (isNil(startDateTime)) throw new Error("Start date/time not provided");
+                if (isNil(duration)) throw new Error("Duration not provided");
                 if (!startDateTime.isValid()) throw new Error("Invalid start date/time: " + startDateTime.getErrorMsg());
                 if (!duration.isValid()) throw new Error("Invalid duration: " + duration.getErrorMsg());
                 if (duration.getNumericValue() <= 0) throw new Error("Duration must be greater than zero");
@@ -404,177 +603,11 @@
                 dateTime.add(duration);
                 gr.setValue('end_date_time', new GlideScheduleDateTime(dateTime).getValue());
                 gr.setValue('type', cmn_schedule_entryEntryType.Appointment);
-                if (!gs.nil(gr.insert())) throw new Error("Failed to add schedule entry");
+                if (!isNil(gr.insert())) throw new Error("Failed to add schedule entry");
                 return <cmn_schedule_spanGlideRecord>gr;
             },
 
             type: "ReservationScheduler"
-        };
-
-        function getNextDuration(this: IAvailabilitySearcherPrototype): GlideDuration {
-            var nextMs: number = this._schedule.whenNext(this._startDateTime);
-            if (nextMs < 0) return new GlideDuration(this._maximumDuration);
-            var duration: GlideDuration = this._schedule.duration(this._startDateTime, this._minEndDateTime);
-            while (duration.after(gdz)) {
-                this._startDateTime.add(duration);
-                this._minEndDateTime.add(duration);
-                if (nextMs > 0) {
-                    this._startDateTime.add(nextMs);
-                    this._minEndDateTime.add(nextMs);
-                }
-                if ((nextMs = this._schedule.whenNext(this._startDateTime)) < 0) return new GlideDuration(this._maximumDuration);
-                duration = this._schedule.duration(this._startDateTime, this._minEndDateTime);
-            }
-            if (nextMs > this._maximumDuration.getNumericValue()) return new GlideDuration(this._maximumDuration);
-            if (nextMs <= this._minimumDuration.getNumericValue()) return new GlideDuration(this._minimumDuration);
-            var resultDur: GlideDuration = new GlideDuration(nextMs);
-            normalizeGlideDuration(resultDur, this._durationIncrement);
-            return resultDur;
-        }
-
-        function getNextDurationLimited(this: IAvailabilitySearcherPrototype, limit: GlideDateTime): GlideDuration | undefined {
-            var nextMs: number = this._schedule.whenNext(this._startDateTime);
-            if (nextMs < 0) return new GlideDuration(this._maximumDuration);
-            var duration: GlideDuration = this._schedule.duration(this._startDateTime, this._minEndDateTime);
-            while (duration.after(gdz)) {
-                this._startDateTime.add(duration);
-                this._minEndDateTime.add(duration);
-                if (nextMs > 0) {
-                    this._startDateTime.add(nextMs);
-                    this._minEndDateTime.add(nextMs);
-                }
-                if (limit.before(this._minEndDateTime)) return;
-                if ((nextMs = this._schedule.whenNext(this._startDateTime)) < 0) return new GlideDuration(this._maximumDuration);
-                duration = this._schedule.duration(this._startDateTime, this._minEndDateTime);
-            }
-            if (nextMs > this._maximumDuration.getNumericValue()) return new GlideDuration(this._maximumDuration);
-            if (nextMs <= this._minimumDuration.getNumericValue()) return new GlideDuration(this._minimumDuration);
-            var resultDur: GlideDuration = new GlideDuration(nextMs);
-            normalizeGlideDuration(resultDur, this._durationIncrement);
-            return resultDur;
-        }
-
-        reservationschedulerConstructor.AvailabilitySearcher.prototype = <IAvailabilitySearcherPrototype>{
-            initialize(this: IAvailabilitySearcherPrototype, reservationScheduler: ReservationScheduler, fromDateTime: GlideDateTime, minDuration?: GlideDuration, maxDuration?: GlideDuration): void {
-                if (gs.nil(reservationScheduler)) throw new Error("ReservationScheduler not provided");
-                if (gs.nil(fromDateTime)) throw new Error("'From' date/time not provided");
-                if (!fromDateTime.isValid()) throw new Error("Invalid 'from' date/time: " + fromDateTime.getErrorMsg());
-
-                this._schedule = reservationScheduler.schedule;
-                this._startOfDay = new GlideDateTime(fromDateTime);
-                this._startOfDay.setDisplayValue(this._startOfDay.getDate().getDisplayValue() + " 00:00:00");
-                this._startDateTime = new GlideDateTime(fromDateTime);
-                if (gs.nil(reservationScheduler.start_time_interval) || gs.nil(reservationScheduler.duration_increment) || gs.nil(reservationScheduler.minimum_duration) || gs.nil(reservationScheduler.maximum_duration) ||
-                        !(reservationScheduler.start_time_interval.isValid() && reservationScheduler.duration_increment.isValid() && reservationScheduler.minimum_duration.isValid() && reservationScheduler.maximum_duration.isValid())) {
-                    if (!(gs.nil(minDuration) || minDuration.isValid())) throw new Error("Invalid minimum duration: " + minDuration.getErrorMsg());
-                    if (!(gs.nil(maxDuration) || maxDuration.isValid())) throw new Error("Invalid maximum duration: " + maxDuration.getErrorMsg());
-                    return;
-                }
-                this._startTimeInterval = new GlideDuration(reservationScheduler.start_time_interval);
-                normalizeGlideDuration(this._startTimeInterval, oneMinute);
-                var ms = this._startTimeInterval.getNumericValue();
-                var mod = (this._startDateTime.getNumericValue() - this._startOfDay.getNumericValue()) % ms;
-                if (mod > 0)  this._startDateTime.add(ms - mod);
-                this._durationIncrement = new GlideDuration(reservationScheduler.duration_increment);
-                normalizeGlideDuration(this._durationIncrement, oneMinute);
-                this._minimumDuration = new GlideDuration(reservationScheduler.minimum_duration);
-                this._maximumDuration = new GlideDuration(reservationScheduler.maximum_duration);
-                normalizeGlideDuration(this._minimumDuration, this._durationIncrement);
-                
-                if (this._maximumDuration.before(this._durationIncrement))
-                    this._maximumDuration.setValue(this._durationIncrement.getDurationValue());
-                else if ((mod = this._maximumDuration.getNumericValue() % this._durationIncrement.getNumericValue()) > 0)
-                    this._maximumDuration.add(0 - mod);
-                
-                if (this._minimumDuration.before(this._maximumDuration)) {
-                    if (!(gs.nil(minDuration) || minDuration.isValid())) throw new Error("Invalid minimum duration: " + minDuration.getErrorMsg());
-                    if (!(gs.nil(maxDuration) || maxDuration.isValid())) throw new Error("Invalid maximum duration: " + maxDuration.getErrorMsg());
-                    return;
-                }
-
-                if (gs.nil(minDuration)) {
-                    if (!gs.nil(maxDuration)) {
-                        if (!maxDuration.isValid()) throw new Error("Invalid maximum duration: " + maxDuration.getErrorMsg());
-                        maxDuration = new GlideDuration(maxDuration);
-                        normalizeGlideDuration(maxDuration, this._durationIncrement);
-                        if (maxDuration.before(this._maximumDuration)) this._maximumDuration = maxDuration;
-                        if (this._minimumDuration.after(this._maximumDuration)) return;
-                    }
-                } else {
-                    if (!minDuration.isValid()) throw new Error("Invalid minimum duration: " + minDuration.getErrorMsg());
-                    minDuration = new GlideDuration(minDuration);
-                    normalizeGlideDuration(minDuration, this._durationIncrement);
-                    if (gs.nil(maxDuration)) {
-                        if (minDuration.after(this._minimumDuration)) {
-                            this._minimumDuration = minDuration;
-                            if (this._minimumDuration.after(this._maximumDuration)) return;
-                        }
-                    } else {
-                        if (!maxDuration.isValid()) throw new Error("Invalid maximum duration: " + maxDuration.getErrorMsg());
-                        if (minDuration.after(this._minimumDuration)) this._minimumDuration = minDuration;
-                        maxDuration = new GlideDuration(maxDuration);
-                        normalizeGlideDuration(maxDuration, this._durationIncrement);
-                        if (this._minimumDuration.after(maxDuration)) return;
-                        if (maxDuration.before(this._maximumDuration))
-                            this._maximumDuration = maxDuration;
-                    }
-                }
-
-                this._minEndDateTime = new GlideDateTime(this._startDateTime);
-                this._minEndDateTime.add(this._minimumDuration);
-            },
-
-            getNext: function(limit?: GlideDateTime): ITimeSlot | undefined {
-                if (gs.nil(this._minEndDateTime)) {
-                    if (!(gs.nil(limit) || limit.isValid())) throw new Error("Invalid limit date/time: " + limit.getErrorMsg());
-                    return;
-                }
-                var resultDur: GlideDuration | undefined;
-                if (gs.nil(limit))
-                    resultDur = getNextDuration.call(this);
-                else {
-                    if (!limit.isValid()) throw new Error("Invalid limit date/time: " + limit.getErrorMsg());
-                    if (limit.before(this._minEndDateTime)) return;
-                    resultDur = getNextDurationLimited.call(this, limit);
-                    if (gs.nil(resultDur)) return;
-                    var dateTime = new GlideDateTime(this._startDateTime);
-                    dateTime.add(resultDur);
-                    if (limit.before(dateTime)) {
-                        resultDur = GlideDateTime.subtract(limit, dateTime);
-                        normalizeGlideDuration(resultDur, this._durationIncrement);
-                    }
-                }
-                var result: ITimeSlot = { startDateTime: new GlideDateTime(this._startDateTime), duration: <GlideDuration>resultDur };
-                this._startDateTime.add(<GlideDuration>resultDur);
-                this._minEndDateTime.add(<GlideDuration>resultDur);
-                return result;
-            },
-
-            getAvailabilityRanges: function(toDateTime: GlideDateTime) : ITimeSlot[] {
-                if (gs.nil(toDateTime)) throw new Error("'To' date/time not provided.");
-                if (!toDateTime.isValid()) throw new Error("Invalid 'to'' date/time: " + toDateTime.getErrorMsg());
-                if (gs.nil(this._minEndDateTime) || toDateTime.before(this._minEndDateTime)) return [];
-                var result: ITimeSlot[] = [];
-                var duration: GlideDuration | undefined = getNextDurationLimited.call(this, toDateTime);
-                while (!gs.nil(duration)) {
-                    var dateTime = new GlideDateTime(this._startDateTime);
-                    dateTime.add(duration);
-                    if (toDateTime.before(dateTime)) {
-                        duration = GlideDateTime.subtract(toDateTime, dateTime);
-                        normalizeGlideDuration(duration, this._durationIncrement);
-                        result.push({ startDateTime: new GlideDateTime(this._startDateTime), duration: duration });
-                        this._startDateTime.add(duration);
-                        this._minEndDateTime.add(duration);
-                        break;
-                    }
-                    result.push({ startDateTime: new GlideDateTime(this._startDateTime), duration: duration });
-                    this._startDateTime.add(duration);
-                    this._minEndDateTime.add(duration);
-                }
-                return result;
-            },
-
-            type: "AvailabilitySearcher"
         };
 
         return reservationschedulerConstructor;
