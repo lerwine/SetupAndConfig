@@ -133,6 +133,7 @@ var x_g_inte_site_17;
                     glideRecord.query();
                     if (!glideRecord.next())
                         throw new Error("Could not find a Reservation Type with Sys ID '" + type + "'.");
+                    this.sys_id = type;
                 }
                 else {
                     glideRecord = type;
@@ -143,6 +144,7 @@ var x_g_inte_site_17;
                         throw new Error("Reservation Type has not been saved to the database.");
                     if (!glideRecord.isValid())
                         throw new Error("Glide Record is not valid.");
+                    this.sys_id = '' + glideRecord.sys_id;
                 }
                 if (glideRecord.inactive + '' == 'true' && allowInactive !== true)
                     throw new Error("Reservation Type \"" + glideRecord.short_description + "\" (" + glideRecord.sys_id + ") is inactive.");

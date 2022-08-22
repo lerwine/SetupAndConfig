@@ -95,6 +95,8 @@
     export type TimeSlot = Required<ITimeSlot>;
 
     export interface IReservationSchedulerBase extends $$snClass.ICustomClassBase<IReservationSchedulerBase, "ReservationScheduler"> {
+        sys_id: string;
+
         /**
          * Short description
          * @type {string}
@@ -373,12 +375,14 @@
                     glideRecord.addQuery('sys_id', type);
                     glideRecord.query();
                     if (!glideRecord.next()) throw new Error("Could not find a Reservation Type with Sys ID '" + type + "'.");
+                    this.sys_id = type;
                 } else {
                     glideRecord = type;
                     var tableName = glideRecord.getTableName();
                     if (tableName != ReservationScheduler.TABLE_NAME) throw new Error("Glide record is not from the 'Reservation Types' table (getTableName()='" + tableName + "')")
                     if (glideRecord.isNewRecord()) throw new Error("Reservation Type has not been saved to the database.");
                     if (!glideRecord.isValid()) throw new Error("Glide Record is not valid.");
+                    this.sys_id = '' + glideRecord.sys_id;
                 }
                 if (glideRecord.inactive + '' == 'true' && allowInactive !== true) throw new Error("Reservation Type \"" + glideRecord.short_description + "\" (" + glideRecord.sys_id + ") is inactive.");
                 this._scheduleId = '' + glideRecord.schedule;

@@ -81,6 +81,7 @@ declare namespace x_g_inte_site_17 {
     }
     type TimeSlot = Required<ITimeSlot>;
     interface IReservationSchedulerBase extends $$snClass.ICustomClassBase<IReservationSchedulerBase, "ReservationScheduler"> {
+        sys_id: string;
         /**
          * Short description
          * @type {string}
