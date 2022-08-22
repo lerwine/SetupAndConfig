@@ -104,7 +104,11 @@ namespace x_g_inte_site_17 {
                 case 'string':
                     return obj.trim().length == 0;
                 case 'object':
-                    return obj == null || ('' + obj).trim().length == 0;
+                    if (obj === null) return true;
+                    if (global.JSUtil.instance_of(obj, 'java.lang.String')) {
+                        return obj.length == 0 || ('' + obj).trim().length == 0;
+                    }
+                    return false;
                 default:
                     return false;
             }
@@ -208,7 +212,7 @@ namespace x_g_inte_site_17 {
                     this.setFailed("Unexpected exception result of step with Sys Id '" + sys_id + "'", e);
                     return;
                 }
-                var result: sn_atf.atf_output_variableFields;
+                var result: atf_output_variableFields;
                 if (typeof sr === 'undefined' || sr === null) {
                     this._stepResult.setOutputMessage("Could not find result of step with Sys Id '" + sys_id + "'");
                     return;

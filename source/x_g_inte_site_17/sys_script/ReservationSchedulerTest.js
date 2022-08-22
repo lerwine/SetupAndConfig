@@ -1,20 +1,6 @@
 "use strict";
 var constructorTest;
 (function (constructorTest) {
-    var isNil = function (o) {
-        switch (typeof o) {
-            case 'undefined':
-                return true;
-            case 'number':
-                return isNaN(o) || !isFinite(o);
-            case 'string':
-                return o.trim().length == 0;
-            case "object":
-                return o === null || ('' + o).trim().length == 0;
-            default:
-                return false;
-        }
-    };
     // Insert Reservation Schedule
     // {
     //     sys_id: '8b4ed58697051110d87839000153afae',
@@ -958,7 +944,6 @@ var normalizationFunctionsTest;
 var getAvailabilitiesInRangeTest;
 (function (getAvailabilitiesInRangeTest) {
     (function (outputs, steps, stepResult, assertEqual) {
-        var _a, _b;
         var atfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
         var schedule_sys_id = atfHelper.getRecordIdFromStep('8b4ed58697051110d87839000153afae');
         if (x_g_inte_site_17.AtfHelper.isNil(schedule_sys_id))
@@ -1421,14 +1406,14 @@ var getAvailabilitiesInRangeTest;
                 atfHelper.setFailed("Unexpected exception while initializing " + constructorSignature, e);
                 return false;
             }
-            for (var _c = 0, _d = schedulerParameters.parameterSets; _c < _d.length; _c++) {
-                var parameterSet = _d[_c];
+            for (var _a = 0, _b = schedulerParameters.parameterSets; _a < _b.length; _a++) {
+                var parameterSet = _b[_a];
                 var desc = parameterSet.test_description + ' with ' + constructorSignature;
                 var actualArray;
                 stepResult.setOutputMessage(JSON.stringify({
                     fromDateTime: parameterSet.fromDateTime.getValue() + ' (' + parameterSet.fromDateTime.getDisplayValue() + ')',
                     toDateTime: parameterSet.toDateTime.getValue() + ' (' + parameterSet.toDateTime.getDisplayValue() + ')',
-                    minimumDuration: (typeof parameterSet.minimumDuration === undefined) ? undefined : (_a = parameterSet.minimumDuration) === null || _a === void 0 ? void 0 : _a.getDurationValue()
+                    minimumDuration: (typeof parameterSet.minimumDuration === undefined) ? undefined : parameterSet.minimumDuration.getDurationValue()
                 }));
                 try {
                     if (typeof parameterSet.minimumDuration === 'undefined')
@@ -1443,7 +1428,7 @@ var getAvailabilitiesInRangeTest;
                 stepResult.setOutputMessage(JSON.stringify({
                     fromDateTime: parameterSet.fromDateTime.getValue() + ' (' + parameterSet.fromDateTime.getDisplayValue() + ')',
                     toDateTime: parameterSet.toDateTime.getValue() + ' (' + parameterSet.toDateTime.getDisplayValue() + ')',
-                    minimumDuration: (typeof parameterSet.minimumDuration === undefined) ? undefined : (_b = parameterSet.minimumDuration) === null || _b === void 0 ? void 0 : _b.getDurationValue(),
+                    minimumDuration: (typeof parameterSet.minimumDuration === undefined) ? undefined : parameterSet.minimumDuration.getDurationValue(),
                     expected: parameterSet.expected.map(function (item) {
                         return {
                             startDateTime: item.startDateTime.getValue() + ' (' + item.startDateTime.getDisplayValue() + ')',

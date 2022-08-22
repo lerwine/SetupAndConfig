@@ -1,8 +1,6 @@
 /// <reference path="../../types/server/sn_typings_server_scoped/index.d.ts" />
 /// <reference path="../../x_g_inte_site_17/sys_script/ReservationScheduler.d.ts" />
 /// <reference path="../../x_g_inte_site_17/sys_script/ReservationSchedulerAjax.d.ts" />
-/// <reference types="sn_typings_server_scoped" />
-/// <reference types="sn_typings_server_scoped" />
 declare namespace x_44813_mmservices {
     interface IAvailabilityRange {
         start: GlideTime;

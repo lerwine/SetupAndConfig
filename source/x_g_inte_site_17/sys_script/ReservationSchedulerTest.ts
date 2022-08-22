@@ -1479,7 +1479,7 @@ namespace getAvailabilitiesInRangeTest {
                 stepResult.setOutputMessage(JSON.stringify({
                     fromDateTime: parameterSet.fromDateTime.getValue() + ' (' + parameterSet.fromDateTime.getDisplayValue() + ')',
                     toDateTime: parameterSet.toDateTime.getValue() + ' (' + parameterSet.toDateTime.getDisplayValue() + ')',
-                    minimumDuration: (typeof parameterSet.minimumDuration === undefined) ? undefined : parameterSet.minimumDuration?.getDurationValue(),
+                    minimumDuration: (typeof parameterSet.minimumDuration === undefined) ? undefined : (<GlideDuration>parameterSet.minimumDuration).getDurationValue(),
                 }));
                 try {
                     if (typeof parameterSet.minimumDuration === 'undefined')
@@ -1493,7 +1493,7 @@ namespace getAvailabilitiesInRangeTest {
                 stepResult.setOutputMessage(JSON.stringify({
                     fromDateTime: parameterSet.fromDateTime.getValue() + ' (' + parameterSet.fromDateTime.getDisplayValue() + ')',
                     toDateTime: parameterSet.toDateTime.getValue() + ' (' + parameterSet.toDateTime.getDisplayValue() + ')',
-                    minimumDuration: (typeof parameterSet.minimumDuration === undefined) ? undefined : parameterSet.minimumDuration?.getDurationValue(),
+                    minimumDuration: (typeof parameterSet.minimumDuration === undefined) ? undefined : (<GlideDuration>parameterSet.minimumDuration).getDurationValue(),
                     expected: parameterSet.expected.map(function(item: x_g_inte_site_17.TimeSlot): {
                         startDateTime: string;
                         duration: string | undefined;

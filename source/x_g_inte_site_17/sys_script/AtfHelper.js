@@ -12,7 +12,12 @@ var x_g_inte_site_17;
                 case 'string':
                     return obj.trim().length == 0;
                 case 'object':
-                    return obj == null || ('' + obj).trim().length == 0;
+                    if (obj === null)
+                        return true;
+                    if (global.JSUtil.instance_of(obj, 'java.lang.String')) {
+                        return obj.length == 0 || ('' + obj).trim().length == 0;
+                    }
+                    return false;
                 default:
                     return false;
             }
