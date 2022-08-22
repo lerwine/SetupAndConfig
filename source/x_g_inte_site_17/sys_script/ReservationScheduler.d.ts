@@ -208,6 +208,7 @@ declare namespace x_g_inte_site_17 {
     interface ReservationSchedulerConstructor extends $$snClass.CustomClassConstructor3<IReservationSchedulerBase, IReservationSchedulerPrototype, ReservationScheduler, reservationTypeGlideRecord | string, boolean, string> {
         new (type: reservationTypeGlideRecord | string, allowInactive?: boolean, timeZone?: string): ReservationScheduler;
         (type: reservationTypeGlideRecord | string, allowInactive?: boolean, timeZone?: string): ReservationScheduler;
+        TABLE_NAME: 'x_g_inte_site_17_reservation_type';
     }
     const ReservationScheduler: ReservationSchedulerConstructor;
 }

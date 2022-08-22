@@ -7,7 +7,7 @@
 var x_g_inte_site_17;
 (function (x_g_inte_site_17) {
     x_g_inte_site_17.ReservationScheduler = (function () {
-        var reservationschedulerConstructor = Class.create();
+        var reservationSchedulerConstructor = Class.create();
         var gdz = new GlideDuration(0);
         var oneMinute = new GlideDuration(60000);
         // #region Private functions
@@ -121,7 +121,8 @@ var x_g_inte_site_17;
             return true;
         }
         // #endregion
-        reservationschedulerConstructor.prototype = {
+        reservationSchedulerConstructor.TABLE_NAME = 'x_g_inte_site_17_reservation_type';
+        reservationSchedulerConstructor.prototype = {
             initialize: function (type, allowInactive, timeZone) {
                 if (isNil(type))
                     throw new Error("Reservation Type was not provided.");
@@ -136,7 +137,7 @@ var x_g_inte_site_17;
                 else {
                     glideRecord = type;
                     var tableName = glideRecord.getTableName();
-                    if (tableName != 'x_g_inte_site_17_reservation_type')
+                    if (tableName != x_g_inte_site_17.ReservationScheduler.TABLE_NAME)
                         throw new Error("Glide record is not from the 'Reservation Types' table (getTableName()='" + tableName + "')");
                     if (glideRecord.isNewRecord())
                         throw new Error("Reservation Type has not been saved to the database.");
@@ -407,7 +408,7 @@ var x_g_inte_site_17;
             },
             type: "ReservationScheduler"
         };
-        return reservationschedulerConstructor;
+        return reservationSchedulerConstructor;
     })();
 })(x_g_inte_site_17 || (x_g_inte_site_17 = {}));
 //# sourceMappingURL=ReservationScheduler.js.map

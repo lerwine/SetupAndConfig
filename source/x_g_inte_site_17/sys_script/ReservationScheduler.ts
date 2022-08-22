@@ -241,11 +241,11 @@
     export interface ReservationSchedulerConstructor extends $$snClass.CustomClassConstructor3<IReservationSchedulerBase, IReservationSchedulerPrototype, ReservationScheduler, reservationTypeGlideRecord | string, boolean, string> {
         new(type: reservationTypeGlideRecord | string, allowInactive?: boolean, timeZone?: string): ReservationScheduler;
         (type: reservationTypeGlideRecord | string, allowInactive?: boolean, timeZone?: string): ReservationScheduler;
-        // AvailabilitySearcher: AvailabilitySearcherConstructor;
+        TABLE_NAME: 'x_g_inte_site_17_reservation_type';
     }
 
     export const ReservationScheduler: ReservationSchedulerConstructor = (function (): ReservationSchedulerConstructor {
-        var reservationschedulerConstructor: ReservationSchedulerConstructor = Class.create();
+        var reservationSchedulerConstructor: ReservationSchedulerConstructor = Class.create();
 
         var gdz: GlideDuration = new GlideDuration(0);
 
@@ -363,7 +363,8 @@
 
         // #endregion
 
-        reservationschedulerConstructor.prototype = <IReservationSchedulerPrototype>{
+        reservationSchedulerConstructor.TABLE_NAME = 'x_g_inte_site_17_reservation_type';
+        reservationSchedulerConstructor.prototype = <IReservationSchedulerPrototype>{
             initialize: function(this: IReservationSchedulerPrototype, type: reservationTypeGlideRecord | string, allowInactive?: boolean, timeZone?: string): void {
                 if (isNil(type)) throw new Error("Reservation Type was not provided.");
                 var glideRecord: reservationTypeGlideRecord;
@@ -375,7 +376,7 @@
                 } else {
                     glideRecord = type;
                     var tableName = glideRecord.getTableName();
-                    if (tableName != 'x_g_inte_site_17_reservation_type') throw new Error("Glide record is not from the 'Reservation Types' table (getTableName()='" + tableName + "')")
+                    if (tableName != ReservationScheduler.TABLE_NAME) throw new Error("Glide record is not from the 'Reservation Types' table (getTableName()='" + tableName + "')")
                     if (glideRecord.isNewRecord()) throw new Error("Reservation Type has not been saved to the database.");
                     if (!glideRecord.isValid()) throw new Error("Glide Record is not valid.");
                 }
@@ -610,6 +611,6 @@
             type: "ReservationScheduler"
         };
 
-        return reservationschedulerConstructor;
+        return reservationSchedulerConstructor;
     })();
 }
