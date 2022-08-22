@@ -923,19 +923,18 @@ var normalizationFunctionsTest;
                     value = rs.normalizeStartDate(input);
                 }
                 catch (e) {
-                    value = NaN;
                     atfHelper.setFailed("Unexpected exception while testing " + desc, e);
                     return false;
                 }
                 assertEqual({
-                    name: 'new date/time after ' + desc,
-                    shouldbe: dateParam.expected,
-                    value: input
-                });
-                assertEqual({
                     name: 'return value of ' + desc,
                     shouldbe: dateParam.returns,
                     value: value
+                });
+                assertEqual({
+                    name: 'new date/time after ' + desc,
+                    shouldbe: dateParam.expected,
+                    value: input
                 });
             }
         }
@@ -945,22 +944,11 @@ var normalizationFunctionsTest;
 var getAvailabilitiesInRangeTest;
 (function (getAvailabilitiesInRangeTest) {
     (function (outputs, steps, stepResult, assertEqual) {
+        var _a, _b;
         var atfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
         var schedule_sys_id = atfHelper.getRecordIdFromStep('8b4ed58697051110d87839000153afae');
-        // var off_hours_sys_id: string = <string>atfHelper.getRecordIdFromStep('e8f6e19897d11110d87839000153afb8');
-        // var holiday_sys_id: string = <string>atfHelper.getRecordIdFromStep('5dda655c97d11110d87839000153afea');
         if (x_g_inte_site_17.AtfHelper.isNil(schedule_sys_id))
             return false;
-        // var appt_sys_id: string[] = [];
-        // var sys_id: string | undefined = atfHelper.getRecordIdFromStep('efde69dc97d11110d87839000153af79');
-        // if (typeof sys_id === 'undefined') return false;
-        // appt_sys_id.push(sys_id);
-        // sys_id = atfHelper.getRecordIdFromStep('70efe55097151110d87839000153afed');
-        // if (typeof sys_id === 'undefined') return false;
-        // appt_sys_id.push(sys_id);
-        // sys_id = atfHelper.getRecordIdFromStep('9140795097151110d87839000153af86');
-        // if (typeof sys_id === 'undefined') return false;
-        // appt_sys_id.push(sys_id);
         var defaultTimeZone;
         try {
             defaultTimeZone = gs.getSession().getTimeZoneName();
@@ -979,12 +967,27 @@ var getAvailabilitiesInRangeTest;
         var day1 = gs.daysAgoStart(-1).substring(0, 10);
         var day2 = gs.daysAgoStart(-2).substring(0, 10);
         var day3 = gs.daysAgoStart(-3).substring(0, 10);
+        var entry_sys_id = atfHelper.getRecordIdFromStep('e8f6e19897d11110d87839000153afb8');
+        var gr = new GlideRecord('cmn_schedule_span');
+        gr.addQuery('sys_id', entry_sys_id);
+        gr.query();
+        assertEqual({
+            name: 'Schedule entry e8f6e19897d11110d87839000153afb8 exists',
+            shouldbe: true,
+            value: gr.next()
+        });
+        assertEqual({
+            name: 'Start date for schedule entry e8f6e19897d11110d87839000153afb8',
+            shouldbe: new GlideDateTime(gs.dateGenerate(gs.daysAgoStart(0).substring(0, 10), "16:00:00")).getDisplayValue(),
+            value: gr.start_date_time.getDisplayValue()
+        });
         var testParameters = [
             {
                 short_description: 'SInc: 1M; DInc: 15M; Min: 15M; Max: 1H',
                 step_sys_id: '6e6da91297191110d87839000153afb5',
                 parameterSets: [
                     {
+                        test_description: 'day1@start to day3@end; minDur: undefined',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day1, "start")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day3, "end")),
                         expected: [
@@ -1007,6 +1010,7 @@ var getAvailabilitiesInRangeTest;
                         ]
                     },
                     {
+                        test_description: 'day1@start to day3@end; minDur: 0S',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day1, "start")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day3, "end")),
                         minimumDuration: new GlideDuration('0 0:0:0'),
@@ -1030,6 +1034,7 @@ var getAvailabilitiesInRangeTest;
                         ]
                     },
                     {
+                        test_description: 'day1@start to day3@end; minDur: 45M',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day1, "start")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day3, "end")),
                         minimumDuration: new GlideDuration('0 0:45:0'),
@@ -1049,6 +1054,7 @@ var getAvailabilitiesInRangeTest;
                         ]
                     },
                     {
+                        test_description: 'day1@start to day1@end; minDur: undefined',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day1, "start")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day1, "end")),
                         expected: [
@@ -1067,6 +1073,7 @@ var getAvailabilitiesInRangeTest;
                         ]
                     },
                     {
+                        test_description: 'day1@start to day1@end; minDur: 0S',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day1, "start")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day1, "end")),
                         minimumDuration: new GlideDuration('0 0:0:0'),
@@ -1086,29 +1093,33 @@ var getAvailabilitiesInRangeTest;
                         ]
                     },
                     {
+                        test_description: 'day1@start to day1@09:14:59; minDur: 0S',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day1, "start")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day1, "09:14:59")),
                         minimumDuration: new GlideDuration('0 0:0:0'),
                         expected: []
                     },
                     {
+                        test_description: 'day1@start to day1@09:15:59; minDur: 0S',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day1, "start")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day1, "09:15:59")),
                         minimumDuration: new GlideDuration('0 0:0:0'),
                         expected: [
                             {
                                 startDateTime: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")),
-                                duration: new GlideDuration('0 0:15:0')
+                                duration: new GlideDuration('0 0:15:59')
                             }
                         ]
                     },
                     {
+                        test_description: 'day1@start to day1@09:15:59; minDur: 30M',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day1, "start")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day1, "09:15:59")),
                         minimumDuration: new GlideDuration('0 0:30:0'),
                         expected: []
                     },
                     {
+                        test_description: 'day1@12:00:00 to day1@13:45:59; minDur: 30M',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day1, "12:00:00")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day1, "13:45:59")),
                         minimumDuration: new GlideDuration('0 0:30:0'),
@@ -1120,6 +1131,7 @@ var getAvailabilitiesInRangeTest;
                         ]
                     },
                     {
+                        test_description: 'day1@12:15:00 to day1@13:45:59; minDur: 30M',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day1, "12:15:00")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day1, "13:45:59")),
                         minimumDuration: new GlideDuration('0 0:30:0'),
@@ -1131,18 +1143,21 @@ var getAvailabilitiesInRangeTest;
                         ]
                     },
                     {
+                        test_description: 'day1@12:15:01 to day1@13:45:59; minDur: 30M',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day1, "12:15:01")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day1, "13:45:59")),
                         minimumDuration: new GlideDuration('0 0:30:0'),
                         expected: []
                     },
                     {
+                        test_description: 'day1@12:30:00 to day1@13:45:59; minDur: 30M',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day1, "12:30:00")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day1, "13:45:59")),
                         minimumDuration: new GlideDuration('0 0:30:0'),
                         expected: []
                     },
                     {
+                        test_description: 'day1@12:30:00 to day1@14:00:00; minDur: 30M',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day1, "12:30:00")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day1, "14:00:00")),
                         minimumDuration: new GlideDuration('0 0:30:0'),
@@ -1154,6 +1169,7 @@ var getAvailabilitiesInRangeTest;
                         ]
                     },
                     {
+                        test_description: 'day1@12:30:00 to day1@end; minDur: 30M',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day1, "12:30:00")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day1, "end")),
                         minimumDuration: new GlideDuration('0 0:30:0'),
@@ -1165,12 +1181,14 @@ var getAvailabilitiesInRangeTest;
                         ]
                     },
                     {
+                        test_description: 'day2@start to day2@end; minDur: 0S',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day2, "start")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day2, "end")),
                         minimumDuration: new GlideDuration('0 0:0:0'),
                         expected: []
                     },
                     {
+                        test_description: 'day3@start to day3@end; minDur: undefined',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day3, "start")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day3, "end")),
                         expected: [
@@ -1181,6 +1199,7 @@ var getAvailabilitiesInRangeTest;
                         ]
                     },
                     {
+                        test_description: 'day3@start to day3@end; minDur: 0S',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day3, "start")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day3, "end")),
                         minimumDuration: new GlideDuration('0 0:0:0'),
@@ -1198,6 +1217,7 @@ var getAvailabilitiesInRangeTest;
                 step_sys_id: 'a122fdd297191110d87839000153af66',
                 parameterSets: [
                     {
+                        test_description: 'day1@start to day3@end; minDur: undefined',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day1, "start")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day3, "end")),
                         expected: [
@@ -1216,6 +1236,7 @@ var getAvailabilitiesInRangeTest;
                         ]
                     },
                     {
+                        test_description: 'day1@start to day3@end; minDur: 0S',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day1, "start")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day3, "end")),
                         minimumDuration: new GlideDuration('0 0:0:0'),
@@ -1235,6 +1256,7 @@ var getAvailabilitiesInRangeTest;
                         ]
                     },
                     {
+                        test_description: 'day1@start to day3@end; minDur: 30M',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day1, "start")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day3, "end")),
                         minimumDuration: new GlideDuration('0 0:30:0'),
@@ -1254,6 +1276,7 @@ var getAvailabilitiesInRangeTest;
                         ]
                     },
                     {
+                        test_description: 'day1@start to day3@end; minDur: 45M',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day1, "start")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day3, "end")),
                         minimumDuration: new GlideDuration('0 0:45:0'),
@@ -1273,6 +1296,7 @@ var getAvailabilitiesInRangeTest;
                         ]
                     },
                     {
+                        test_description: 'day1@09:30:00 to day3@end; minDur: 45M',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day1, "09:30:00")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day3, "end")),
                         minimumDuration: new GlideDuration('0 0:45:0'),
@@ -1292,10 +1316,15 @@ var getAvailabilitiesInRangeTest;
                         ]
                     },
                     {
+                        test_description: 'day1@11:00:00 to day3@end; minDur: 45M',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day1, "11:00:00")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day3, "end")),
                         minimumDuration: new GlideDuration('0 0:45:0'),
                         expected: [
+                            {
+                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "11:00:00")),
+                                duration: new GlideDuration('0 0:45:0')
+                            },
                             {
                                 startDateTime: new GlideDateTime(gs.dateGenerate(day1, "14:00:00")),
                                 duration: new GlideDuration('0 2:00:0')
@@ -1307,6 +1336,7 @@ var getAvailabilitiesInRangeTest;
                         ]
                     },
                     {
+                        test_description: 'day2@start to day2@end; minDur: 45M',
                         fromDateTime: new GlideDateTime(gs.dateGenerate(day2, "start")),
                         toDateTime: new GlideDateTime(gs.dateGenerate(day2, "end")),
                         minimumDuration: new GlideDuration('0 0:45:0'),
@@ -1363,6 +1393,87 @@ var getAvailabilitiesInRangeTest;
                 ]
             }
         ];
+        for (var _i = 0, testParameters_2 = testParameters; _i < testParameters_2.length; _i++) {
+            var schedulerParameters = testParameters_2[_i];
+            var sys_id = atfHelper.getRecordIdFromStep(schedulerParameters.step_sys_id);
+            if (x_g_inte_site_17.AtfHelper.isNil(sys_id))
+                return false;
+            var constructorSignature = 'new ReservationScheduler("' + sys_id + '" /* ' + schedulerParameters.short_description + ' */, true)';
+            var rs;
+            try {
+                rs = new x_g_inte_site_17.ReservationScheduler(sys_id, true);
+            }
+            catch (e) {
+                atfHelper.setFailed("Unexpected exception while initializing " + constructorSignature, e);
+                return false;
+            }
+            for (var _c = 0, _d = schedulerParameters.parameterSets; _c < _d.length; _c++) {
+                var parameterSet = _d[_c];
+                var desc = parameterSet.test_description + ' with ' + constructorSignature;
+                var actualArray;
+                stepResult.setOutputMessage(JSON.stringify({
+                    fromDateTime: parameterSet.fromDateTime.getValue() + ' (' + parameterSet.fromDateTime.getDisplayValue() + ')',
+                    toDateTime: parameterSet.toDateTime.getValue() + ' (' + parameterSet.toDateTime.getDisplayValue() + ')',
+                    minimumDuration: (typeof parameterSet.minimumDuration === undefined) ? undefined : (_a = parameterSet.minimumDuration) === null || _a === void 0 ? void 0 : _a.getDurationValue()
+                }));
+                try {
+                    if (typeof parameterSet.minimumDuration === 'undefined')
+                        actualArray = rs.getAvailabilitiesInRange(parameterSet.fromDateTime, parameterSet.toDateTime);
+                    else
+                        actualArray = rs.getAvailabilitiesInRange(parameterSet.fromDateTime, parameterSet.toDateTime, parameterSet.minimumDuration);
+                }
+                catch (e) {
+                    atfHelper.setFailed("Unexpected exception while testing " + desc, e);
+                    return false;
+                }
+                stepResult.setOutputMessage(JSON.stringify({
+                    fromDateTime: parameterSet.fromDateTime.getValue() + ' (' + parameterSet.fromDateTime.getDisplayValue() + ')',
+                    toDateTime: parameterSet.toDateTime.getValue() + ' (' + parameterSet.toDateTime.getDisplayValue() + ')',
+                    minimumDuration: (typeof parameterSet.minimumDuration === undefined) ? undefined : (_b = parameterSet.minimumDuration) === null || _b === void 0 ? void 0 : _b.getDurationValue(),
+                    expected: parameterSet.expected.map(function (item) {
+                        return {
+                            startDateTime: item.startDateTime.getValue() + ' (' + item.startDateTime.getDisplayValue() + ')',
+                            duration: (typeof item.duration === 'undefined') ? undefined : item.duration.getDurationValue()
+                        };
+                    }),
+                    actual: actualArray.map(function (item) {
+                        return {
+                            startDateTime: item.startDateTime.getValue() + ' (' + item.startDateTime.getDisplayValue() + ')',
+                            duration: (typeof item.duration === 'undefined') ? undefined : item.duration.getDurationValue()
+                        };
+                    })
+                }));
+                assertEqual({
+                    name: 'return value defined for ' + desc,
+                    shouldbe: true,
+                    value: typeof actualArray !== 'undefined'
+                });
+                assertEqual({
+                    name: 'length of return value for ' + desc,
+                    shouldbe: parameterSet.expected.length,
+                    value: actualArray.length
+                });
+                for (var i = 0; i < actualArray.length; i++) {
+                    var expectedItem = parameterSet.expected[i];
+                    var actualItem = actualArray[i];
+                    assertEqual({
+                        name: 'element ' + i + ' defined for ' + desc,
+                        shouldbe: true,
+                        value: typeof actualItem === 'object' && actualItem !== null
+                    });
+                    assertEqual({
+                        name: 'startDateTime of element ' + i + ' for ' + desc,
+                        shouldbe: expectedItem.startDateTime,
+                        value: actualItem.startDateTime
+                    });
+                    assertEqual({
+                        name: 'duration of element ' + i + ' for ' + desc,
+                        shouldbe: expectedItem.duration,
+                        value: actualItem.duration
+                    });
+                }
+            }
+        }
         return true;
     })(outputs, steps, stepResult, assertEqual);
 })(getAvailabilitiesInRangeTest || (getAvailabilitiesInRangeTest = {}));
