@@ -3,10 +3,34 @@ var x_g_inte_site_17;
 (function (x_g_inte_site_17) {
     x_g_inte_site_17.AtfHelper = (function () {
         var atfhelperConstructor = Class.create();
+        function isNil(obj) {
+            switch (typeof obj) {
+                case 'undefined':
+                    return true;
+                case 'number':
+                    return isNaN(obj) || !isFinite(obj);
+                case 'string':
+                    return obj.trim().length == 0;
+                case 'object':
+                    return obj == null || ('' + obj).trim().length == 0;
+                default:
+                    return false;
+            }
+        }
+        function areAnyNil() {
+            var obj = [];
+            for (var _i = 0; _i < arguments.length; _i++) {
+                obj[_i] = arguments[_i];
+            }
+            for (var i in obj)
+                if (isNil(obj[i]))
+                    return true;
+            return false;
+        }
         function setFailed(stepResult, reason, e) {
-            var m = gs.nil(e.message) ? '' : ((typeof e.message === 'string') ? e.message : '' + e.message).trim();
-            var name = gs.nil(e.name) ? '' : ((typeof e.name === 'string') ? e.name : '' + e.name).trim();
-            var stack = gs.nil(e.stack) ? '' : ((typeof e.stack === 'string') ? e.stack : '' + e.stack).trim();
+            var m = isNil(e.message) ? '' : ((typeof e.message === 'string') ? e.message : '' + e.message).trim();
+            var name = isNil(e.name) ? '' : ((typeof e.name === 'string') ? e.name : '' + e.name).trim();
+            var stack = isNil(e.stack) ? '' : ((typeof e.stack === 'string') ? e.stack : '' + e.stack).trim();
             if (m.length > 0) {
                 if (name.length > 0) {
                     if (stack.length > 0)
@@ -29,6 +53,8 @@ var x_g_inte_site_17;
                 stepResult.setOutputMessage("Unexpected error: " + reason);
             stepResult.setFailed();
         }
+        atfhelperConstructor.isNil = isNil;
+        atfhelperConstructor.areAnyNil = areAnyNil;
         atfhelperConstructor.setFailed = setFailed;
         atfhelperConstructor.endOfRelativeDay = function (daysFromToday) {
             var dateTime = new GlideDateTime();
@@ -42,7 +68,7 @@ var x_g_inte_site_17;
             var dateTime = new GlideDateTime();
             if (daysFromToday != 0)
                 dateTime.addDaysLocalTime(daysFromToday);
-            if (gs.nil(seconds) || seconds < 1) {
+            if (isNil(seconds) || seconds < 1) {
                 if (hours < 10) {
                     if (minutes < 10)
                         return dateTime.getDate().getDisplayValue() + ' 0' + hours + ':0' + minutes + ':00';
@@ -73,9 +99,9 @@ var x_g_inte_site_17;
         };
         atfhelperConstructor.prototype = {
             initialize: function (steps, stepResult) {
-                if (gs.nil(steps))
+                if (isNil(steps))
                     throw new Error("Steps function not provided");
-                if (gs.nil(stepResult))
+                if (isNil(stepResult))
                     throw new Error("Step result not provided");
                 this._steps = steps;
                 this._stepResult = stepResult;

@@ -78,6 +78,8 @@ declare namespace x_g_inte_site_17 {
          * @memberof AtfHelperConstructor
          */
         endOfRelativeDay(daysFromToday: number): string;
+        isNil(obj: any | undefined): obj is undefined | null | "";
+        areAnyNil(...obj: (any | undefined)[]): boolean;
     }
     const AtfHelper: AtfHelperConstructor;
 }

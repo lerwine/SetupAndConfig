@@ -86,38 +86,36 @@ namespace x_g_inte_site_17 {
          * @memberof AtfHelperConstructor
          */
         endOfRelativeDay(daysFromToday: number): string;
-        isNil(o: any): o is undefined | null;
-        anyNil(...o: any[]): boolean;
+
+        isNil(obj: any | undefined): obj is undefined | null | "";
+
+        areAnyNil(...obj: (any | undefined)[]): boolean;
     }
 
     export const AtfHelper: AtfHelperConstructor = (function (): AtfHelperConstructor {
         var atfhelperConstructor: AtfHelperConstructor = Class.create();
 
-        function isNil(o: any): o is undefined | null {
-            switch (typeof o) {
+        function isNil(obj: any | undefined): obj is undefined | null | "" {
+            switch (typeof obj) {
                 case 'undefined':
                     return true;
                 case 'number':
-                    return isNaN(o) || !isFinite(o);
+                    return isNaN(obj) || !isFinite(obj);
                 case 'string':
-                    return o.trim().length == 0;
-                case "object":
-                    return o === null || ('' + o).trim().length == 0;
+                    return obj.trim().length == 0;
+                case 'object':
+                    return obj == null || ('' + obj).trim().length == 0;
                 default:
                     return false;
             }
-        };
+        }
 
-        function anyNil(...o: any[]): boolean
-        {
-            for (var a in o) {
-                if (isNil(a)) return true;
-            }
+        function areAnyNil(...obj: (any | undefined)[]): boolean {
+            for (var i in obj)
+                if (isNil(obj[i])) return true;
             return false;
         }
 
-        atfhelperConstructor.isNil = isNil;
-        
         function setFailed(stepResult: sn_atf.ITestStepResult, reason: string, e: any): void {
             var m = isNil(e.message) ? '' : ((typeof e.message === 'string') ? e.message : '' + e.message).trim();
             var name = isNil(e.name) ? '' : ((typeof e.name === 'string') ? e.name : '' + e.name).trim();
@@ -143,6 +141,10 @@ namespace x_g_inte_site_17 {
                 stepResult.setOutputMessage("Unexpected error: " + reason);
             stepResult.setFailed();
         }
+
+        atfhelperConstructor.isNil = isNil;
+
+        atfhelperConstructor.areAnyNil = areAnyNil;
 
         atfhelperConstructor.setFailed = setFailed;
 
