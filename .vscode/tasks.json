@@ -8,10 +8,7 @@
 			"options": {
 				"cwd": "${workspaceFolder}/source/x_g_inte_site_17"
 			},
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
+			"group": "build",
 			"problemMatcher": [
 				"$tsc"
 			],
@@ -24,7 +21,10 @@
 			"options": {
 				"cwd": "${workspaceFolder}/source/x_44813_mmservices/server"
 			},
-			"group": "build",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
 			"problemMatcher": [
 				"$tsc"
 			],

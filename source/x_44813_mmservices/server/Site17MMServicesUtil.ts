@@ -20,6 +20,9 @@ interface ISite17MMServicesUtilPrototype extends $$snClass.ICustomAjaxClassProto
 
 declare type Site17MMServicesUtil = Readonly<ISite17MMServicesUtilBase>;
 
+interface IPrivateConstructorData {
+    _scheduler?: x_g_inte_site_17.ReservationScheduler;
+}
 interface Site17MMServicesUtilConstructor extends $$snClass.CustomAjaxClassConstructor<ISite17MMServicesUtilBase, ISite17MMServicesUtilPrototype, Site17MMServicesUtil> {
     DATE_PATTERN: RegExp;
     TIME_PATTERN: RegExp;
@@ -34,6 +37,8 @@ interface Site17MMServicesUtilConstructor extends $$snClass.CustomAjaxClassConst
 // /show_schedule_page.do?sysparm_page_sys_id=gantt_chart&sysparm_timeline_task_id=d530bf907f0000015ce594fd929cf6a4
 const Site17MMServicesUtil: Site17MMServicesUtilConstructor = (function (): Site17MMServicesUtilConstructor {
     var site17MMServicesUtilConstructor: Site17MMServicesUtilConstructor = Class.create();
+
+    var privateConstructorData: IPrivateConstructorData = { };
 
     function isNil(obj: any | undefined): obj is undefined | null | "" {
         switch (typeof obj) {
@@ -67,15 +72,21 @@ const Site17MMServicesUtil: Site17MMServicesUtilConstructor = (function (): Site
 
     site17MMServicesUtilConstructor.getReservationTypeSysId = function(): string | undefined {
 		var sysId: string = gs.getProperty(Site17MMServicesUtil.RESERVATION_TYPE_PROPERTY_NAME);
+        if (isNil(sysId)) return;
 		return isNil(sysId) ? undefined : sysId;
 	};
 
-    
     site17MMServicesUtilConstructor.getReservationScheduler = function(): x_g_inte_site_17.ReservationScheduler | undefined {
         var sys_id = Site17MMServicesUtil.getReservationTypeSysId();
         if (isNil(sys_id)) {
+            privateConstructorData._scheduler = undefined;
             gs.error('Failure invoking x_44813_mmservices.getReservationScheduler: Property "' + Site17MMServicesUtil.RESERVATION_TYPE_PROPERTY_NAME + '" is empty.');
             return;
+        }
+        if (typeof privateConstructorData._scheduler !== 'undefined') {
+            if (privateConstructorData._scheduler.sys_id == sys_id)
+                return privateConstructorData._scheduler;
+            privateConstructorData._scheduler = undefined;
         }
         var gr = <x_g_inte_site_17.reservationTypeGlideRecord>new GlideRecord(x_g_inte_site_17.ReservationScheduler.TABLE_NAME);
         gr.addQuery('sys_id', sys_id);
@@ -85,7 +96,8 @@ const Site17MMServicesUtil: Site17MMServicesUtilConstructor = (function (): Site
                 ') with sys_id "' + sys_id + '" (specified in setting ' + Site17MMServicesUtil.RESERVATION_TYPE_PROPERTY_NAME + ') was not found.');
             return;
         }
-        return new x_g_inte_site_17.ReservationScheduler(gr);
+        privateConstructorData._scheduler = new x_g_inte_site_17.ReservationScheduler(gr);
+        return privateConstructorData._scheduler;
     }
 
     site17MMServicesUtilConstructor.prototype = Object.extendsObject<IAbstractAjaxProcessor, ISite17MMServicesUtilPrototype>(global.AbstractAjaxProcessor, {
