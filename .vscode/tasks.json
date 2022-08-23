@@ -3,32 +3,56 @@
 	"tasks": [
 		{
 			"label": "Build Site 17",
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"dependsOn": [
+				"Build Site 17 API",
+				"Build Site 17 Scripts"
+			],
+			"problemMatcher": []
+		},
+		{
+			"label": "Build Site 17 API",
+			"hide": true,
 			"type": "typescript",
-			"tsconfig": "source/x_g_inte_site_17/tsconfig.json",
+			"tsconfig": "source/x_g_inte_site_17/server/api/tsconfig.json",
 			"options": {
-				"cwd": "${workspaceFolder}/source/x_g_inte_site_17"
+				"cwd": "${workspaceFolder}/source/x_g_inte_site_17/server/api"
 			},
 			"group": "build",
 			"problemMatcher": [
 				"$tsc"
 			],
-			"detail": "tsc --build - source/x_g_inte_site_17/tsconfig.json"
+			"detail": "tsc --build - source/x_g_inte_site_17/server/api/tsconfig.json"
+		},
+		{
+			"label": "Build Site 17 Scripts",
+			"hide": true,
+			"type": "typescript",
+			"tsconfig": "source/x_g_inte_site_17/server/scripts/tsconfig.json",
+			"options": {
+				"cwd": "${workspaceFolder}/source/x_g_inte_site_17/server/scripts"
+			},
+			"group": "build",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"detail": "tsc --build - source/x_g_inte_site_17/server/scripts/tsconfig.json"
 		},
 		{
 			"label": "Build Multimedia Services Server",
 			"type": "typescript",
-			"tsconfig": "source/x_44813_mmservices/server/tsconfig.json",
+			"tsconfig": "source/x_44813_mmservices/server/api/tsconfig.json",
 			"options": {
-				"cwd": "${workspaceFolder}/source/x_44813_mmservices/server"
+				"cwd": "${workspaceFolder}/source/x_44813_mmservices/server/api"
 			},
-			"group": {
-				"kind": "build",
-				"isDefault": true
-			},
+			"group": "build",
 			"problemMatcher": [
 				"$tsc"
 			],
-			"detail": "tsc --build - source/x_44813_mmservices/server/tsconfig.json"
+			"detail": "tsc --build - source/x_44813_mmservices/server/api/tsconfig.json"
 		},
 		{
 			"type": "typescript",

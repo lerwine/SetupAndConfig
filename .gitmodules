@@ -1,6 +1,6 @@
-[submodule "source/types/server/sn_typings_server_scoped"]
-	path = source/types/server/sn_typings_server_scoped
+[submodule "types/server/sn_typings_server_scoped"]
+	path = types/server/sn_typings_server_scoped
 	url = https://github.com/erwinel/sn_typings_server_scoped.git
-[submodule "source/types/client/sn_typings_client_scoped"]
-	path = source/types/client/sn_typings_client_scoped
+[submodule "types/client/sn_typings_client_scoped"]
+	path = types/client/sn_typings_client_scoped
 	url = https://github.com/erwinel/sn_typings_client_scoped.git
