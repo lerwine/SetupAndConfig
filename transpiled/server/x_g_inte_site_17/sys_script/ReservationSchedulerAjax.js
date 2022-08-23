@@ -210,4 +210,3 @@ var x_g_inte_site_17;
         return reservationschedulerajaxConstructor;
     })();
 })(x_g_inte_site_17 || (x_g_inte_site_17 = {}));
-//# sourceMappingURL=ReservationSchedulerAjax.js.map

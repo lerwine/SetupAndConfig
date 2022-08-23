@@ -1476,4 +1476,3 @@ var getAvailabilitiesInRangeTest;
         return true;
     })(outputs, steps, stepResult, assertEqual);
 })(getAvailabilitiesInRangeTest || (getAvailabilitiesInRangeTest = {}));
-//# sourceMappingURL=ReservationSchedulerTest.js.map

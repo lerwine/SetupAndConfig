@@ -62,4 +62,3 @@ var x_g_inte_site_17;
         return locationApprovalConstructor;
     })();
 })(x_g_inte_site_17 || (x_g_inte_site_17 = {}));
-//# sourceMappingURL=LocationApproval.js.map

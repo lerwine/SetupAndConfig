@@ -3,14 +3,17 @@
     "module": "none",
     "target": "es3",
     "lib": [ "es2015" ],
-    "sourceMap": true,
+    "sourceMap": false,
     "strict": true,
     "forceConsistentCasingInFileNames": true,
     "declaration": true,
     "removeComments": false,
     "typeRoots": [
-      "../../types/server"
-    ]
+      "../types/server"
+    ],
+    "declarationDir": "../../types/server/x_g_inte_site_17",
+    "outDir": "../../transpiled/server/x_g_inte_site_17",
+    "declarationMap": false
   },
   "exclude": [
     "node_modules"

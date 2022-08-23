@@ -1,4 +1,4 @@
-/// <reference path="../../types/server/sn_typings_server_scoped/index.d.ts" />
+/// <reference path="../../../../source/types/server/sn_typings_server_scoped/index.d.ts" />
 declare namespace x_g_inte_site_17 {
     interface IDistinguishedNameContextBase extends $$snClass.ICustomClassBase<IDistinguishedNameContextBase, "DistinguishedNameContext"> {
         /**

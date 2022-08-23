@@ -144,4 +144,3 @@ var x_g_inte_site_17;
         return atfhelperConstructor;
     })();
 })(x_g_inte_site_17 || (x_g_inte_site_17 = {}));
-//# sourceMappingURL=AtfHelper.js.map
