@@ -113,17 +113,12 @@ namespace x_44813_mmservices {
     export const Site17MMServicesUtil: Site17MMServicesUtilConstructor = (function (): Site17MMServicesUtilConstructor {
         const schedule_sys_id = '4882479b2f50511035be56e62799b64c';
     
-        enum PROPERTY_NAME {
-            default_min_leadTime_days = "x_44813_mmservices.default_min_leadTime_days",
-            reservation_type = 'x_44813_mmservices.reservation_type'
-        }
-    
+        const PROPERTY_NAME_default_min_leadTime_days = 'x_44813_mmservices.default_min_leadTime_days';
+        const PROPERTY_NAME_reservation_type = 'x_44813_mmservices.reservation_type';
+        const PROPERTY_NAME_ = 'x_44813_mmservices.';
         const XML_NAME_default_min_lead_time = "default_min_lead_time";
-        
         const DATE_PATTERN = /^\d{4}-(0[1-9]|1[0-2])-[0-2]\d|3[01]$/;
-        
         const TIME_PATTERN = /^([01]\d|2[0-3]):[0-5]\d$/;
-        
         const TIME_RANGE_PATTERN = /^((?:[01]\d|2[0-3]):[0-5]\d)-((?:[01]\d|2[0-3]):[0-5]\d)$/;
         
         var site17MMServicesUtilConstructor: Site17MMServicesUtilConstructor = Class.create();
@@ -140,9 +135,10 @@ namespace x_44813_mmservices {
                     return obj.trim().length == 0;
                 case 'object':
                     if (obj === null) return true;
-                    if (global.JSUtil.instance_of(obj, 'java.lang.String')) {
+                    if (global.JSUtil.instance_of(obj, 'java.lang.String'))
                         return obj.length == 0 || ('' + obj).trim().length == 0;
-                    }
+                    if (obj instanceof GlideElement)
+                        return obj.nil();
                     return false;
                 default:
                     return false;
@@ -150,12 +146,12 @@ namespace x_44813_mmservices {
         }
     
         function getDefaultMinLeadTimeDays(): number {
-            var defaultMinLeadTime: number = parseInt('' + gs.getProperty(PROPERTY_NAME.default_min_leadTime_days, ''));
+            var defaultMinLeadTime: number = parseInt('' + gs.getProperty(PROPERTY_NAME_default_min_leadTime_days, ''));
             return isNaN(defaultMinLeadTime) ? 3 : defaultMinLeadTime;
         }
 
         function getReservationTypeSysId(): string | undefined {
-            var sysId: string = gs.getProperty(PROPERTY_NAME.reservation_type);
+            var sysId: string = gs.getProperty(PROPERTY_NAME_reservation_type);
             if (isNil(sysId)) return;
             return isNil(sysId) ? undefined : sysId;
         }
@@ -164,19 +160,19 @@ namespace x_44813_mmservices {
             var sys_id = getReservationTypeSysId();
             if (isNil(sys_id)) {
                 privateConstructorData._scheduler = undefined;
-                throw new Error('Failure invoking x_44813_mmservices.getReservationScheduler: Property "' + PROPERTY_NAME.reservation_type + '" is empty.');
+                throw new Error('Failure invoking x_44813_mmservices.getReservationScheduler: Property "' + PROPERTY_NAME_reservation_type + '" is empty.');
             }
             if (typeof privateConstructorData._scheduler !== 'undefined') {
                 if (privateConstructorData._scheduler.sys_id == sys_id)
                     return privateConstructorData._scheduler;
                 privateConstructorData._scheduler = undefined;
             }
-            var gr = <reservation_typeGlideRecord>new GlideRecord(x_g_inte_site_17.ReservationScheduler.TABLE_NAME);
+            var gr = <reservation_typeGlideRecord>new GlideRecord(x_g_inte_site_17.ReservationScheduler.getTableName());
             gr.addQuery('sys_id', sys_id);
             gr.query();
             if (!gr.next())
-                throw new Error('Failure invoking x_44813_mmservices.getReservationScheduler: Reservation Type (' + x_g_inte_site_17.ReservationScheduler.TABLE_NAME +
-                    ') with sys_id "' + sys_id + '" (specified in setting ' + PROPERTY_NAME.reservation_type + ') was not found.');
+                throw new Error('Failure invoking x_44813_mmservices.getReservationScheduler: Reservation Type (' + x_g_inte_site_17.ReservationScheduler.getTableName() +
+                    ') with sys_id "' + sys_id + '" (specified in setting ' + PROPERTY_NAME_reservation_type + ') was not found.');
             privateConstructorData._scheduler = new x_g_inte_site_17.ReservationScheduler(gr);
             return privateConstructorData._scheduler;
         }

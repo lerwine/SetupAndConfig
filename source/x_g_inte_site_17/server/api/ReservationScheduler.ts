@@ -158,11 +158,13 @@
     export interface ReservationSchedulerConstructor extends $$snClass.CustomClassConstructor3<IReservationSchedulerBase, IReservationSchedulerPrototype, ReservationScheduler, reservation_typeGlideRecord | string, boolean, string> {
         new(type: reservation_typeGlideRecord | string, allowInactive?: boolean, timeZone?: string): ReservationScheduler;
         (type: reservation_typeGlideRecord | string, allowInactive?: boolean, timeZone?: string): ReservationScheduler;
-        TABLE_NAME: 'x_g_inte_site_17_reservation_type';
+        getTableName(): string;
     }
 
     export const ReservationScheduler: ReservationSchedulerConstructor = (function (): ReservationSchedulerConstructor {
         var reservationSchedulerConstructor: ReservationSchedulerConstructor = Class.create();
+
+        const TABLE_NAME = 'x_g_inte_site_17_reservation_type';
 
         var gdz: GlideDuration = new GlideDuration(0);
 
@@ -180,9 +182,10 @@
                     return obj.trim().length == 0;
                 case 'object':
                     if (obj === null) return true;
-                    if (global.JSUtil.instance_of(obj, 'java.lang.String')) {
+                    if (global.JSUtil.instance_of(obj, 'java.lang.String'))
                         return obj.length == 0 || ('' + obj).trim().length == 0;
-                    }
+                    if (obj instanceof GlideElement)
+                        return obj.nil();
                     return false;
                 default:
                     return false;
@@ -284,13 +287,14 @@
 
         // #endregion
 
-        reservationSchedulerConstructor.TABLE_NAME = 'x_g_inte_site_17_reservation_type';
+        reservationSchedulerConstructor.getTableName = function() { return TABLE_NAME; }
+        
         reservationSchedulerConstructor.prototype = <IReservationSchedulerPrototype>{
             initialize: function(this: IReservationSchedulerPrototype, type: reservation_typeGlideRecord | string, allowInactive?: boolean, timeZone?: string): void {
                 if (isNil(type)) throw new Error("Reservation Type was not provided.");
                 var glideRecord: reservation_typeGlideRecord;
                 if (typeof type === 'string') {
-                    glideRecord = <reservation_typeGlideRecord>new GlideRecord('x_g_inte_site_17_reservation_type');
+                    glideRecord = <reservation_typeGlideRecord>new GlideRecord(TABLE_NAME);
                     glideRecord.addQuery('sys_id', type);
                     glideRecord.query();
                     if (!glideRecord.next()) throw new Error("Could not find a Reservation Type with Sys ID '" + type + "'.");
@@ -298,7 +302,7 @@
                 } else {
                     glideRecord = type;
                     var tableName = glideRecord.getTableName();
-                    if (tableName != ReservationScheduler.TABLE_NAME) throw new Error("Glide record is not from the 'Reservation Types' table (getTableName()='" + tableName + "')")
+                    if (tableName != TABLE_NAME) throw new Error("Glide record is not from the 'Reservation Types' table (getTableName()='" + tableName + "')")
                     if (glideRecord.isNewRecord()) throw new Error("Reservation Type has not been saved to the database.");
                     if (!glideRecord.isValid()) throw new Error("Glide Record is not valid.");
                     this.sys_id = '' + glideRecord.sys_id;
