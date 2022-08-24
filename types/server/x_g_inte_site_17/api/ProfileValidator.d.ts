@@ -214,6 +214,7 @@ declare namespace x_g_inte_site_17 {
          * @memberof IProfileValidatorPrototype
          */
         getUserNotifications(): string | undefined;
+        getCurrentUserPhoneAndOrg(): void;
     }
     interface IProfileValidatorPrototype extends $$snClass.ICustomAjaxClassPrototype<IProfileValidatorBase, IProfileValidatorPrototype, "ProfileValidator">, IProfileValidatorBase {
     }

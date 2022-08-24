@@ -216,6 +216,32 @@ var x_g_inte_site_17;
                 else
                     return JSON.stringify(response);
             },
+            getCurrentUserPhoneAndOrg: function () {
+                var gr = new GlideRecord('sys_user');
+                gr.addQuery('sys_id', gs.getUserID());
+                gr.query();
+                gr.next();
+                var phoneFields = getProfilePhoneFields();
+                var result = this.newItem('result');
+                if (gs.nil(gr.department)) {
+                    if (gs.nil(gr.company))
+                        result.setAttribute('org', '');
+                    else
+                        result.setAttribute('org', gr.company.getDisplayValue());
+                }
+                else
+                    result.setAttribute('org', gr.department.getDisplayValue());
+                if (phoneFields.length > 0 && (phoneFields = new global.ArrayUtil().intersect(new global.GlideRecordUtil().getFields(gr), phoneFields)).length > 0) {
+                    for (var i = 0; i < phoneFields.length; i++) {
+                        var e = gr[phoneFields[i]];
+                        if (!isNil(e)) {
+                            result.setAttribute('phone', e.getDisplayValue());
+                            return;
+                        }
+                    }
+                }
+                result.setAttribute('phone', '');
+            },
             type: "ProfileValidator"
         });
         profileValidatorConstructor.getProfileComplianceCheckFields = getProfileComplianceCheckFields;
