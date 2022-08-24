@@ -71,13 +71,15 @@ namespace x_g_inte_site_17 {
     export const LocationApproval: LocationApprovalConstructor = (function (): LocationApprovalConstructor {
         var locationApprovalConstructor: LocationApprovalConstructor = Class.create();
 
+        const TABLE_NAME = 'x_g_inte_site_17_location_approvers';
+
         function getDefaultApprovalGroup(source: GlideRecord | GlideElementReference): GlideElementReference | undefined {
             var company: GlideRecord | GlideElementReference | undefined = Site17Util.getCompany(source);
             var building: GlideElementReference | undefined = (<{ [key: string]: any}>source).building;
             var business_unit: GlideRecord | GlideElementReference | undefined = Site17Util.getBusinessUnit(source);
             var department: GlideElementReference | undefined = (<{ [key: string]: any}>source).department;
             var location: GlideRecord | GlideElementReference | undefined = Site17Util.getLocation(source);
-            var gr: GlideRecord = new GlideRecord('x_g_inte_site_17_location_approvers');
+            var gr: GlideRecord = new GlideRecord(TABLE_NAME);
             gr.orderBy('order');
             gr.query();
             while (gr.next()) {

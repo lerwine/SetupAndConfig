@@ -4,13 +4,14 @@ var x_g_inte_site_17;
 (function (x_g_inte_site_17) {
     x_g_inte_site_17.LocationApproval = (function () {
         var locationApprovalConstructor = Class.create();
+        var TABLE_NAME = 'x_g_inte_site_17_location_approvers';
         function getDefaultApprovalGroup(source) {
             var company = x_g_inte_site_17.Site17Util.getCompany(source);
             var building = source.building;
             var business_unit = x_g_inte_site_17.Site17Util.getBusinessUnit(source);
             var department = source.department;
             var location = x_g_inte_site_17.Site17Util.getLocation(source);
-            var gr = new GlideRecord('x_g_inte_site_17_location_approvers');
+            var gr = new GlideRecord(TABLE_NAME);
             gr.orderBy('order');
             gr.query();
             while (gr.next()) {
