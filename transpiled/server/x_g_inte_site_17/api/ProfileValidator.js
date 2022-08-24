@@ -5,11 +5,40 @@ var x_g_inte_site_17;
     x_g_inte_site_17.ProfileValidator = (function () {
         var profileValidatorConstructor = Class.create();
         var SYSID_RE = /^[\da-f]{32}$/i;
-        var PROFILE_FIELDS = [
-            { name: 'building', label: 'Building', failAdj: "selected" },
-            { name: 'department', label: 'Department', failAdj: "selected" },
-            { name: 'u_red_phone', label: 'Red Phone', failAdj: "empty" }
-        ];
+        var PROPERTY_NAME_profile_phone_fields = 'x_g_inte_site_17.profile_phone_fields';
+        var PROPERTY_NAME_profile_compliance_check_fields = 'x_g_inte_site_17.profile_compliance_check_fields';
+        function isNil(obj) {
+            switch (typeof obj) {
+                case 'undefined':
+                    return true;
+                case 'number':
+                    return isNaN(obj) || !isFinite(obj);
+                case 'string':
+                    return obj.trim().length == 0;
+                case 'object':
+                    if (obj === null)
+                        return true;
+                    if (global.JSUtil.instance_of(obj, 'java.lang.String'))
+                        return obj.length == 0 || ('' + obj).trim().length == 0;
+                    if (obj instanceof GlideElement)
+                        return obj.nil();
+                    return false;
+                default:
+                    return false;
+            }
+        }
+        function getProfileComplianceCheckFields() {
+            var value = gs.getProperty(PROPERTY_NAME_profile_compliance_check_fields, '');
+            if (isNil(value))
+                return [];
+            return value.split(',').map(function (s) { return s.trim(); }).filter(function (s) { return s.length > 0; });
+        }
+        function getProfilePhoneFields() {
+            var value = gs.getProperty(PROPERTY_NAME_profile_phone_fields, '');
+            if (isNil(value))
+                return [];
+            return value.split(',').map(function (s) { return s.trim(); }).filter(function (s) { return s.length > 0; });
+        }
         profileValidatorConstructor.isUserLookupFault = function (result) {
             return typeof result === 'object' && null != result && result.code !== 0;
         };
@@ -63,22 +92,36 @@ var x_g_inte_site_17;
             return { code: 1, user_id: user_id, message: 'User with user_name "' + user_id + '" not found' };
         };
         profileValidatorConstructor.checkUserProfileCompliance = function (sys_user) {
+            var profile_fields = getProfileComplianceCheckFields();
+            if (sys_user instanceof GlideElementReference)
+                sys_user = sys_user.getRefRecord();
+            if (profile_fields.length == 0 || (profile_fields = new global.ArrayUtil().intersect(new global.GlideRecordUtil().getFields(sys_user), profile_fields)).length == 0)
+                return {
+                    failed: 0,
+                    notChecked: 0,
+                    passed: 0,
+                    message: 'No fields to check'
+                };
             var result = {
                 notChecked: 0,
                 results: {}
             };
-            var failed = PROFILE_FIELDS.filter(function (value) {
+            var labelMap = {};
+            var failed = profile_fields.filter(function (fieldName) {
+                var e = sys_user[fieldName];
+                labelMap[fieldName] = e.getLabel();
                 try {
-                    if (gs.nil(sys_user[value.name])) {
-                        result.results[value.name] = { label: value.label, passed: false };
+                    var v = sys_user.getValue(fieldName);
+                    if (isNil(v)) {
+                        result.results[fieldName] = { label: labelMap[fieldName], passed: false };
                         return true;
                     }
-                    result.results[value.name] = { label: value.label, passed: true };
+                    result.results[fieldName] = { label: labelMap[fieldName], passed: true };
                 }
                 catch (e) {
                     result.notChecked++;
-                    result.results[value.name] = {
-                        label: value.label,
+                    result.results[fieldName] = {
+                        label: labelMap[fieldName],
                         message: 'Unexpected exception accessing field',
                         fault: e,
                         passed: false
@@ -86,7 +129,7 @@ var x_g_inte_site_17;
                 }
                 return false;
             });
-            result.passed = PROFILE_FIELDS.length - ((result.failed = failed.length) + result.notChecked);
+            result.passed = profile_fields.length - ((result.failed = failed.length) + result.notChecked);
             if (failed.length == 0) {
                 if (result.notChecked == 0)
                     result.message = "All compliance checks passed";
@@ -100,20 +143,20 @@ var x_g_inte_site_17;
                 var last = failed.pop();
                 if (result.notChecked == 0) {
                     if (failed.length == 0)
-                        result.message = last.label + " is not " + last.failAdj + ".";
+                        result.message = labelMap[last] + " was not provided.";
                     else
-                        result.message = failed.map(function (value) { return value.label; }).join(", ") + " and " + last.label + " are empty.";
+                        result.message = failed.map(function (value) { return labelMap[value]; }).join(", ") + " and " + labelMap[last] + " are empty.";
                 }
                 else if (result.notChecked == 1) {
                     if (failed.length == 0)
-                        result.message = last.label + " is not " + last.failAdj + "; 1 check failed due to unexpected error.";
+                        result.message = labelMap[last] + " was not provided; 1 check failed due to unexpected error.";
                     else
-                        result.message = failed.map(function (value) { return value.label; }).join(", ") + " and " + last.label + " are empty; 1 check failed due to unexpected error.";
+                        result.message = failed.map(function (value) { return labelMap[value]; }).join(", ") + " and " + labelMap[last] + " are empty; 1 check failed due to unexpected error.";
                 }
                 else if (failed.length == 0)
-                    result.message = last.label + " is not " + last.failAdj + "; " + result.notChecked + " checks failed due to unexpected errors.";
+                    result.message = labelMap[last] + " was not provided; " + result.notChecked + " checks failed due to unexpected errors.";
                 else
-                    result.message = failed.map(function (value) { return value.label; }).join(", ") + " and " + last.label + " are empty; " + result.notChecked + " checks failed due to unexpected errors.";
+                    result.message = failed.map(function (value) { return labelMap[value]; }).join(", ") + " and " + labelMap[last] + " are empty; " + result.notChecked + " checks failed due to unexpected errors.";
             }
             return result;
         };
@@ -128,7 +171,7 @@ var x_g_inte_site_17;
                     fault: getUserResponse.fault,
                     passed: 0,
                     failed: 0,
-                    notChecked: PROFILE_FIELDS.length
+                    notChecked: getProfileComplianceCheckFields().length
                 };
             var result = profileValidatorConstructor.checkUserProfileCompliance(getUserResponse.user);
             result.code = 0;
@@ -147,7 +190,7 @@ var x_g_inte_site_17;
                         message: getUserResponse.message,
                         passed: 0,
                         failed: 0,
-                        notChecked: PROFILE_FIELDS.length,
+                        notChecked: getProfileComplianceCheckFields().length,
                         fault: getUserResponse.fault
                     }
                 };
@@ -175,6 +218,8 @@ var x_g_inte_site_17;
             },
             type: "ProfileValidator"
         });
+        profileValidatorConstructor.getProfileComplianceCheckFields = getProfileComplianceCheckFields;
+        profileValidatorConstructor.getProfilePhoneFields = getProfilePhoneFields;
         return profileValidatorConstructor;
     })();
 })(x_g_inte_site_17 || (x_g_inte_site_17 = {}));

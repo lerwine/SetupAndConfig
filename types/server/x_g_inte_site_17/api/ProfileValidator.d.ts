@@ -261,6 +261,8 @@ declare namespace x_g_inte_site_17 {
          * @memberof ProfileValidatorConstructor
          */
         getUserNotifications(user: GlideRecord | GlideElementReference | string): IUserNotificationsResult;
+        getProfilePhoneFields(): string[];
+        getProfileComplianceCheckFields(): string[];
     }
     const ProfileValidator: ProfileValidatorConstructor;
 }

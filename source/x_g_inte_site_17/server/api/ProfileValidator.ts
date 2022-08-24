@@ -296,17 +296,50 @@ namespace x_g_inte_site_17 {
          * @memberof ProfileValidatorConstructor
          */
         getUserNotifications(user: GlideRecord | GlideElementReference | string): IUserNotificationsResult;
+
+        getProfilePhoneFields(): string[];
+
+        getProfileComplianceCheckFields(): string[];
     }
 
     export const ProfileValidator: ProfileValidatorConstructor = (function (): ProfileValidatorConstructor {
         var profileValidatorConstructor: ProfileValidatorConstructor = Class.create();
 
-        var SYSID_RE: RegExp = /^[\da-f]{32}$/i;
-        var PROFILE_FIELDS: IProfileFieldDefinition[] = [
-            { name: 'building', label: 'Building', failAdj: "selected" },
-            { name: 'department', label: 'Department', failAdj: "selected" },
-            { name: 'u_red_phone', label: 'Red Phone', failAdj: "empty" }
-        ];
+        const SYSID_RE = /^[\da-f]{32}$/i;
+        const PROPERTY_NAME_profile_phone_fields = 'x_g_inte_site_17.profile_phone_fields';
+        const PROPERTY_NAME_profile_compliance_check_fields = 'x_g_inte_site_17.profile_compliance_check_fields';
+
+        function isNil(obj: any | undefined): obj is undefined | null | "" {
+            switch (typeof obj) {
+                case 'undefined':
+                    return true;
+                case 'number':
+                    return isNaN(obj) || !isFinite(obj);
+                case 'string':
+                    return obj.trim().length == 0;
+                case 'object':
+                    if (obj === null) return true;
+                    if (global.JSUtil.instance_of(obj, 'java.lang.String'))
+                        return obj.length == 0 || ('' + obj).trim().length == 0;
+                    if (obj instanceof GlideElement)
+                        return obj.nil();
+                    return false;
+                default:
+                    return false;
+            }
+        }
+
+        function getProfileComplianceCheckFields(): string[] {
+            var value = gs.getProperty(PROPERTY_NAME_profile_compliance_check_fields, '');
+            if (isNil(value)) return [];
+            return value.split(',').map(function(s: string) { return s.trim() }).filter(function(s: string) { return s.length > 0; });
+        }
+
+        function getProfilePhoneFields(): string[] {
+            var value = gs.getProperty(PROPERTY_NAME_profile_phone_fields, '');
+            if (isNil(value)) return [];
+            return value.split(',').map(function(s: string) { return s.trim() }).filter(function(s: string) { return s.length > 0; });
+        }
 
         profileValidatorConstructor.isUserLookupFault = function(result: IUserLookupResult): boolean {
             return typeof result === 'object' && null != result && result.code !== 0;
@@ -359,21 +392,35 @@ namespace x_g_inte_site_17 {
         };
 
         profileValidatorConstructor.checkUserProfileCompliance = function(sys_user: GlideRecord | GlideElementReference): IUserProfileComplianceInfo {
+            var profile_fields = getProfileComplianceCheckFields();
+            if (sys_user instanceof GlideElementReference)
+                sys_user = <GlideRecord>sys_user.getRefRecord();
+            if (profile_fields.length == 0 || (profile_fields = new global.ArrayUtil().intersect(new global.GlideRecordUtil().getFields(sys_user), profile_fields)).length == 0)
+                return {
+                    failed: 0,
+                    notChecked: 0,
+                    passed: 0,
+                    message: 'No fields to check'
+                };
             var result: IUserProfileComplianceInfo = <IUserProfileComplianceInfo>{
                 notChecked: 0,
                 results: {}
             };
-            var failed: IProfileFieldDefinition[] = PROFILE_FIELDS.filter(function(value) {
+            var labelMap: { [key: string]: string } = {};
+            var failed = profile_fields.filter(function(fieldName: string): boolean {
+                var e = (<{[key: string]: any}>sys_user)[fieldName];
+                labelMap[fieldName] = e.getLabel();
                 try {
-                    if (gs.nil((<{[key: string]: any}>sys_user)[value.name])) {
-                        (<{[key: string]: any}>result.results)[value.name] = { label: value.label, passed: false };
+                    var v = (<GlideRecord>sys_user).getValue(fieldName);
+                    if (isNil(v)) {
+                        (<{[key: string]: any}>result.results)[fieldName] = { label: labelMap[fieldName], passed: false };
                         return true;
                     }
-                    (<{[key: string]: any}>result.results)[value.name] = { label: value.label, passed: true };
+                    (<{[key: string]: any}>result.results)[fieldName] = { label: labelMap[fieldName], passed: true };
                 } catch (e) {
                     result.notChecked++;
-                    (<{[key: string]: any}>result.results)[value.name] = {
-                        label: value.label,
+                    (<{[key: string]: any}>result.results)[fieldName] = {
+                        label: labelMap[fieldName],
                         message: 'Unexpected exception accessing field',
                         fault: e,
                         passed: false
@@ -381,7 +428,7 @@ namespace x_g_inte_site_17 {
                 }
                 return false;
             });
-            result.passed = PROFILE_FIELDS.length - ((result.failed = failed.length) + result.notChecked);
+            result.passed = profile_fields.length - ((result.failed = failed.length) + result.notChecked);
             if (failed.length == 0) {
                 if (result.notChecked == 0)
                     result.message = "All compliance checks passed";
@@ -391,21 +438,21 @@ namespace x_g_inte_site_17 {
                 else
                     result.message = "All compliance checks were inconclusive due to unexpected errors.";
             } else {
-                var last: IProfileFieldDefinition = <IProfileFieldDefinition>failed.pop();
+                var last = <string>failed.pop();
                 if (result.notChecked == 0) {
                     if (failed.length == 0)
-                        result.message = last.label + " is not " + last.failAdj + ".";
+                        result.message = labelMap[last] + " was not provided.";
                     else
-                        result.message = failed.map(function(value) { return value.label; }).join(", ") + " and " + last.label + " are empty.";
+                        result.message = failed.map(function(value) { return labelMap[value]; }).join(", ") + " and " + labelMap[last] + " are empty.";
                 } else if (result.notChecked == 1) {
                     if (failed.length == 0)
-                        result.message = last.label + " is not " + last.failAdj + "; 1 check failed due to unexpected error.";
+                        result.message = labelMap[last] + " was not provided; 1 check failed due to unexpected error.";
                     else
-                        result.message = failed.map(function(value) { return value.label; }).join(", ") + " and " + last.label + " are empty; 1 check failed due to unexpected error.";
+                        result.message = failed.map(function(value) { return labelMap[value]; }).join(", ") + " and " + labelMap[last] + " are empty; 1 check failed due to unexpected error.";
                 } else if (failed.length == 0)
-                    result.message = last.label + " is not " + last.failAdj + "; " + result.notChecked + " checks failed due to unexpected errors.";
+                    result.message = labelMap[last] + " was not provided; " + result.notChecked + " checks failed due to unexpected errors.";
                 else
-                    result.message = failed.map(function(value) { return value.label; }).join(", ") + " and " + last.label + " are empty; " + result.notChecked + " checks failed due to unexpected errors.";
+                    result.message = failed.map(function(value) { return labelMap[value]; }).join(", ") + " and " + labelMap[last] + " are empty; " + result.notChecked + " checks failed due to unexpected errors.";
             }
             return result;
         };
@@ -421,7 +468,7 @@ namespace x_g_inte_site_17 {
                     fault: getUserResponse.fault,
                     passed: 0,
                     failed: 0,
-                    notChecked: PROFILE_FIELDS.length
+                    notChecked: getProfileComplianceCheckFields().length
                 };
             var result = <IUserProfileComplianceResult>profileValidatorConstructor.checkUserProfileCompliance(<GlideRecord>getUserResponse.user);
             result.code = 0;
@@ -441,7 +488,7 @@ namespace x_g_inte_site_17 {
                         message: <string>getUserResponse.message,
                         passed: 0,
                         failed: 0,
-                        notChecked: PROFILE_FIELDS.length,
+                        notChecked: getProfileComplianceCheckFields().length,
                         fault: getUserResponse.fault
                     }
                 };
@@ -472,6 +519,10 @@ namespace x_g_inte_site_17 {
 
             type: "ProfileValidator"
         });
+
+        profileValidatorConstructor.getProfileComplianceCheckFields = getProfileComplianceCheckFields;
+
+        profileValidatorConstructor.getProfilePhoneFields = getProfilePhoneFields;
 
         return profileValidatorConstructor;
     })();
