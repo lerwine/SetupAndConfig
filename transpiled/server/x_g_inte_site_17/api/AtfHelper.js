@@ -14,9 +14,10 @@ var x_g_inte_site_17;
                 case 'object':
                     if (obj === null)
                         return true;
-                    if (global.JSUtil.instance_of(obj, 'java.lang.String')) {
+                    if (global.JSUtil.instance_of(obj, 'java.lang.String'))
                         return obj.length == 0 || ('' + obj).trim().length == 0;
-                    }
+                    if (obj instanceof GlideElement)
+                        return obj.nil();
                     return false;
                 default:
                     return false;

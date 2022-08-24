@@ -4,6 +4,11 @@ var x_g_inte_site_17;
 (function (x_g_inte_site_17) {
     var f;
     x_g_inte_site_17.Site17Util = (function () {
+        var PROPERTY_NAME_source_dn_users = 'x_g_inte_site_17.source_dn_users';
+        var PROPERTY_NAME_source_dn_groups = 'x_g_inte_site_17.source_dn_groups';
+        var PROPERTY_NAME_source_user_include_empty = 'x_g_inte_site_17.source_user_include_empty';
+        var PROPERTY_NAME_source_group_include_empty = 'x_g_inte_site_17.source_group_include_empty';
+        var dnRegex = /^([^=,]+|\\.)+=([^,]+|\\.)*(,([^=,]+|\\.)+=([^,]+|\\.)*)*$/;
         var site17UtilConstructor = Class.create();
         site17UtilConstructor.isUser = function (target) {
             return !gs.nil(target) && typeof target === 'object' && target.getTableName && target.getTableName() == 'sys_user';
@@ -142,20 +147,19 @@ var x_g_inte_site_17;
             var dn = '' + value;
             if (dn.trim().length == 0)
                 return false;
-            var re = /^([^=,]+|\\.)+=([^,]+|\\.)*(,([^=,]+|\\.)+=([^,]+|\\.)*)*$/;
-            return re.test(dn);
+            return dnRegex.test(dn);
         };
         site17UtilConstructor.getUsersContainerDN = function () {
-            return '' + gs.getProperty('x_g_inte_site_17.source_dn_users', '');
+            return '' + gs.getProperty(PROPERTY_NAME_source_dn_users, '');
         };
         site17UtilConstructor.getGroupsContainerDN = function () {
-            return '' + gs.getProperty('x_g_inte_site_17.source_dn_groups', '');
+            return '' + gs.getProperty(PROPERTY_NAME_source_dn_groups, '');
         };
         site17UtilConstructor.includeEmptyUserSource = function () {
-            return gs.getProperty('x_g_inte_site_17.source_user_include_empty') == 'true';
+            return gs.getProperty(PROPERTY_NAME_source_user_include_empty) == 'true';
         };
         site17UtilConstructor.includeEmptyGroupSource = function () {
-            return gs.getProperty('x_g_inte_site_17.source_group_include_empty') == 'true';
+            return gs.getProperty(PROPERTY_NAME_source_group_include_empty) == 'true';
         };
         function isUserDN(sourceDN) {
             var containerDN = site17UtilConstructor.getUsersContainerDN();
