@@ -242,6 +242,8 @@ namespace x_g_inte_site_17 {
          * @memberof IProfileValidatorPrototype
          */
         getUserNotifications(): string | undefined;
+
+        getCurrentUserPhoneAndOrg(): void;
     }
 
     export interface IProfileValidatorPrototype extends $$snClass.ICustomAjaxClassPrototype<IProfileValidatorBase, IProfileValidatorPrototype, "ProfileValidator">, IProfileValidatorBase {
@@ -515,6 +517,32 @@ namespace x_g_inte_site_17 {
                     this.setError(response);
                 else
                     return JSON.stringify(response);
+            },
+
+            getCurrentUserPhoneAndOrg: function(this: IProfileValidatorPrototype & IAbstractAjaxProcessor): void {
+                var gr: sys_userGlideRecord = <sys_userGlideRecord>new GlideRecord('sys_user');
+                gr.addQuery('sys_id', gs.getUserID());
+                gr.query();
+                gr.next();
+                var phoneFields = getProfilePhoneFields();
+                var result = this.newItem('result')
+                if (gs.nil(gr.department)) {
+                    if (gs.nil(gr.company))
+                        result.setAttribute('org', '');
+                    else
+                        result.setAttribute('org', (<GlideElement>gr.company).getDisplayValue());
+                } else
+                    result.setAttribute('org', (<GlideElement>gr.department).getDisplayValue());
+                if (phoneFields.length > 0 && (phoneFields = new global.ArrayUtil().intersect(new global.GlideRecordUtil().getFields(gr), phoneFields)).length > 0) {
+                    for (var i = 0; i < phoneFields.length; i++) {
+                        var e = <GlideElement>(<{[key: string]: any}><GlideRecord>gr)[phoneFields[i]];
+                        if (!isNil(e)) {
+                            result.setAttribute('phone', e.getDisplayValue());
+                            return;
+                        }
+                    }
+                }
+                result.setAttribute('phone', '');
             },
 
             type: "ProfileValidator"
