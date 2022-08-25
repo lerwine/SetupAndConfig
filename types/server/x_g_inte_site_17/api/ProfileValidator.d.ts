@@ -199,6 +199,10 @@ declare namespace x_g_inte_site_17 {
          */
         profileCompliance: IUserProfileComplianceInfo;
     }
+    interface IPhoneAndOrg {
+        org: string;
+        phone: string;
+    }
     interface IProfileValidatorBase extends $$snClass.ICustomClassBase<IProfileValidatorBase, "ProfileValidator"> {
         /**
          * Gets compliance check information for the user indicated by the 'sysparm_user_id' parameter.
@@ -214,7 +218,9 @@ declare namespace x_g_inte_site_17 {
          * @memberof IProfileValidatorPrototype
          */
         getUserNotifications(): string | undefined;
-        getCurrentUserPhoneAndOrg(): void;
+        getUserPhoneAndOrg(): void;
+        getUserPhone(): string;
+        getUserOrg(): string;
     }
     interface IProfileValidatorPrototype extends $$snClass.ICustomAjaxClassPrototype<IProfileValidatorBase, IProfileValidatorPrototype, "ProfileValidator">, IProfileValidatorBase {
     }
@@ -264,6 +270,9 @@ declare namespace x_g_inte_site_17 {
         getUserNotifications(user: GlideRecord | GlideElementReference | string): IUserNotificationsResult;
         getProfilePhoneFields(): string[];
         getProfileComplianceCheckFields(): string[];
+        getUserPhoneAndOrg(user?: string | sys_userGlideRecord | sys_userElement): IPhoneAndOrg | undefined;
+        getUserPhone(user?: string | sys_userGlideRecord | sys_userElement): string | undefined;
+        getUserOrg(user?: string | sys_userGlideRecord | sys_userElement): string | undefined;
     }
     const ProfileValidator: ProfileValidatorConstructor;
 }
