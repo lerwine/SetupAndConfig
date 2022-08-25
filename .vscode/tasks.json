@@ -9,7 +9,8 @@
 			},
 			"dependsOn": [
 				"Build Site 17 API",
-				"Build Site 17 Scripts"
+				"Build Site 17 Server Scripts",
+				"Build Site 17 Client Scripts"
 			],
 			"problemMatcher": []
 		},
@@ -28,7 +29,7 @@
 			"detail": "tsc --build - source/x_g_inte_site_17/server/api/tsconfig.json"
 		},
 		{
-			"label": "Build Site 17 Scripts",
+			"label": "Build Site 17 Server Scripts",
 			"hide": true,
 			"type": "typescript",
 			"tsconfig": "source/x_g_inte_site_17/server/scripts/tsconfig.json",
@@ -40,6 +41,20 @@
 				"$tsc"
 			],
 			"detail": "tsc --build - source/x_g_inte_site_17/server/scripts/tsconfig.json"
+		},
+		{
+			"label": "Build Site 17 Client Scripts",
+			"hide": true,
+			"type": "typescript",
+			"tsconfig": "source/x_g_inte_site_17/client/tsconfig.json",
+			"options": {
+				"cwd": "${workspaceFolder}/source/x_g_inte_site_17/client"
+			},
+			"group": "build",
+			"problemMatcher": [
+				"$tsc"
+			],
+			"detail": "tsc --build - source/x_g_inte_site_17/client/tsconfig.json"
 		},
 		{
 			"label": "Build Multimedia Services Server",
