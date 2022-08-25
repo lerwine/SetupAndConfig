@@ -226,6 +226,11 @@ namespace x_g_inte_site_17 {
         profileCompliance: IUserProfileComplianceInfo;
     }
 
+    export interface IPhoneAndOrg {
+        org: string;
+        phone: string;
+    }
+
     export interface IProfileValidatorBase extends $$snClass.ICustomClassBase<IProfileValidatorBase, "ProfileValidator"> {
         /**
          * Gets compliance check information for the user indicated by the 'sysparm_user_id' parameter.
@@ -243,7 +248,11 @@ namespace x_g_inte_site_17 {
          */
         getUserNotifications(): string | undefined;
 
-        getCurrentUserPhoneAndOrg(): void;
+        getUserPhoneAndOrg(): void;
+
+        getUserPhone(): string;
+
+        getUserOrg(): string;
     }
 
     export interface IProfileValidatorPrototype extends $$snClass.ICustomAjaxClassPrototype<IProfileValidatorBase, IProfileValidatorPrototype, "ProfileValidator">, IProfileValidatorBase {
@@ -302,6 +311,12 @@ namespace x_g_inte_site_17 {
         getProfilePhoneFields(): string[];
 
         getProfileComplianceCheckFields(): string[];
+
+        getUserPhoneAndOrg(user?: string | sys_userGlideRecord | sys_userElement): IPhoneAndOrg | undefined;
+
+        getUserPhone(user?: string | sys_userGlideRecord | sys_userElement): string | undefined;
+
+        getUserOrg(user?: string | sys_userGlideRecord | sys_userElement): string | undefined;
     }
 
     export const ProfileValidator: ProfileValidatorConstructor = (function (): ProfileValidatorConstructor {
@@ -341,6 +356,66 @@ namespace x_g_inte_site_17 {
             var value = gs.getProperty(PROPERTY_NAME_profile_phone_fields, '');
             if (isNil(value)) return [];
             return value.split(',').map(function(s: string) { return s.trim() }).filter(function(s: string) { return s.length > 0; });
+        }
+
+        function getUserPhone(gr: sys_userGlideRecord): string {
+            var phoneFields = getProfilePhoneFields();
+            if (phoneFields.length > 0) {
+                for (var i = 0; i < phoneFields.length; i++) {
+                    var e = <GlideElement | undefined | null>(<{[key: string]: any}><GlideRecord>gr)[phoneFields[i]];
+                    if (!isNil(e))
+                        return e.getDisplayValue();
+                }
+            }
+            return '';
+        }
+
+        function getUserOrg(gr: sys_userGlideRecord): string {
+            var org: string = (<GlideElement>gr.department).getDisplayValue();
+            if (gs.nil(org)) {
+                org = (<GlideElement>gr.company).getDisplayValue();
+                if (gs.nil(org)) return '';
+            }
+            return org;
+        }
+
+        function asValidUserGlideRecord(user?: $$rhino.String | sys_userGlideRecord | sys_userElement): sys_userGlideRecord | undefined {
+            var sys_id: string;
+            if (typeof user === 'undefined')
+                sys_id = gs.getUserID();
+            else if (typeof user === 'object') {
+                if (user === null)
+                    sys_id = gs.getUserID();
+                else if (global.JSUtil.instance_of(user, 'java.lang.String')) {
+                    if ((sys_id = ('' + user).trim()).length == 0)
+                        sys_id = gs.getUserID();
+                } else {
+                    if (user instanceof GlideRecord) {
+                        if (user.isValid() && user.getTableName() == 'sys_user') return user;
+                    } else if (user instanceof GlideElementReference && !user.nil() && user.getTableName() == 'sys_user')
+                        return <sys_userGlideRecord>(<GlideElementReference>user).getRefRecord();
+                    return;
+                }
+            }
+            else if (typeof user === 'string') {
+                if ((sys_id = user.trim()).length == 0)
+                    sys_id = gs.getUserID();
+            } else
+                return;
+            var gr: sys_userGlideRecord = <sys_userGlideRecord>new GlideRecord('sys_user');
+            gr.addQuery('sys_id', sys_id);
+            gr.query();
+            if (gr.next()) return gr;
+        }
+
+        function getUserPhoneAndOrg(user?: string | sys_userGlideRecord | sys_userElement): IPhoneAndOrg | undefined {
+            var gr: sys_userGlideRecord | undefined = asValidUserGlideRecord(user);
+            if (typeof gr !== 'undefined') return { org: getUserOrg(gr), phone: getUserPhone(gr) };
+        }
+
+        function getUserIdFromParameter(this: IAbstractAjaxProcessor): string | undefined {
+            var userId = this.getParameter('sysparm_user_id');
+            return isNil(userId) ? gs.getUserID() : (typeof userId === 'string') ? userId : '' + userId;
         }
 
         profileValidatorConstructor.isUserLookupFault = function(result: IUserLookupResult): boolean {
@@ -397,7 +472,7 @@ namespace x_g_inte_site_17 {
             var profile_fields = getProfileComplianceCheckFields();
             if (sys_user instanceof GlideElementReference)
                 sys_user = <GlideRecord>sys_user.getRefRecord();
-            if (profile_fields.length == 0 || (profile_fields = new global.ArrayUtil().intersect(new global.GlideRecordUtil().getFields(sys_user), profile_fields)).length == 0)
+            if (profile_fields.length == 0)
                 return {
                     failed: 0,
                     notChecked: 0,
@@ -411,22 +486,33 @@ namespace x_g_inte_site_17 {
             var labelMap: { [key: string]: string } = {};
             var failed = profile_fields.filter(function(fieldName: string): boolean {
                 var e = (<{[key: string]: any}>sys_user)[fieldName];
-                labelMap[fieldName] = e.getLabel();
-                try {
-                    var v = (<GlideRecord>sys_user).getValue(fieldName);
-                    if (isNil(v)) {
-                        (<{[key: string]: any}>result.results)[fieldName] = { label: labelMap[fieldName], passed: false };
-                        return true;
-                    }
-                    (<{[key: string]: any}>result.results)[fieldName] = { label: labelMap[fieldName], passed: true };
-                } catch (e) {
+                if (typeof e === 'undefined' || e === null) {
                     result.notChecked++;
+                    labelMap[fieldName] = fieldName;
                     (<{[key: string]: any}>result.results)[fieldName] = {
-                        label: labelMap[fieldName],
-                        message: 'Unexpected exception accessing field',
+                        label: fieldName,
+                        message: 'Field does not exist',
                         fault: e,
                         passed: false
                     };
+                } else {
+                    labelMap[fieldName] = e.getLabel();
+                    try {
+                        var v = (<GlideRecord>sys_user).getValue(fieldName);
+                        if (isNil(v)) {
+                            (<{[key: string]: any}>result.results)[fieldName] = { label: labelMap[fieldName], passed: false };
+                            return true;
+                        }
+                        (<{[key: string]: any}>result.results)[fieldName] = { label: labelMap[fieldName], passed: true };
+                    } catch (e) {
+                        result.notChecked++;
+                        (<{[key: string]: any}>result.results)[fieldName] = {
+                            label: labelMap[fieldName],
+                            message: 'Unexpected exception accessing field',
+                            fault: e,
+                            passed: false
+                        };
+                    }
                 }
                 return false;
             });
@@ -502,6 +588,18 @@ namespace x_g_inte_site_17 {
             };
         };
 
+        profileValidatorConstructor.getUserPhoneAndOrg = getUserPhoneAndOrg;
+
+        profileValidatorConstructor.getUserPhone = function(user?: string | sys_userGlideRecord | sys_userElement): string | undefined {
+            var gr: sys_userGlideRecord | undefined = asValidUserGlideRecord(user);
+            if (typeof gr !== 'undefined') return getUserPhone(gr);
+        };
+
+        profileValidatorConstructor.getUserOrg = function(user?: string | sys_userGlideRecord | sys_userElement): string | undefined {
+            var gr: sys_userGlideRecord | undefined = asValidUserGlideRecord(user);
+            if (typeof gr !== 'undefined') return getUserOrg(gr);
+        };
+
         profileValidatorConstructor.prototype = Object.extendsObject<IAbstractAjaxProcessor, IProfileValidatorPrototype>(global.AbstractAjaxProcessor, {
             getUserProfileCompliance: function(this: IProfileValidatorPrototype & IAbstractAjaxProcessor): string | undefined {
                 var response = profileValidatorConstructor.getUserProfileCompliance('' + this.getParameter('sysparm_user_id'));
@@ -519,35 +617,32 @@ namespace x_g_inte_site_17 {
                     return JSON.stringify(response);
             },
 
-            getCurrentUserPhoneAndOrg: function(this: IProfileValidatorPrototype & IAbstractAjaxProcessor): void {
-                var gr: sys_userGlideRecord = <sys_userGlideRecord>new GlideRecord('sys_user');
-                gr.addQuery('sys_id', gs.getUserID());
-                gr.query();
-                gr.next();
-                var phoneFields = getProfilePhoneFields();
+            getUserPhoneAndOrg: function(this: IProfileValidatorPrototype & IAbstractAjaxProcessor): void {
                 var result = this.newItem('result')
-                if (gs.nil(gr.department)) {
-                    if (gs.nil(gr.company))
-                        result.setAttribute('org', '');
-                    else
-                        result.setAttribute('org', (<GlideElement>gr.company).getDisplayValue());
-                } else
-                    result.setAttribute('org', (<GlideElement>gr.department).getDisplayValue());
-                if (phoneFields.length > 0 && (phoneFields = new global.ArrayUtil().intersect(new global.GlideRecordUtil().getFields(gr), phoneFields)).length > 0) {
-                    for (var i = 0; i < phoneFields.length; i++) {
-                        var e = <GlideElement>(<{[key: string]: any}><GlideRecord>gr)[phoneFields[i]];
-                        if (!isNil(e)) {
-                            result.setAttribute('phone', e.getDisplayValue());
-                            return;
-                        }
-                    }
+                var phoneAndOrg = getUserPhoneAndOrg(getUserIdFromParameter.call(this));
+                if (typeof phoneAndOrg === 'undefined') {
+                    result.setAttribute('org', '');
+                    result.setAttribute('phone', '');
+                } else {
+                    result.setAttribute('org', phoneAndOrg.org);
+                    result.setAttribute('phone', phoneAndOrg.phone);
                 }
-                result.setAttribute('phone', '');
+            },
+
+            getUserPhone: function(this: IProfileValidatorPrototype & IAbstractAjaxProcessor): string {
+                var gr: sys_userGlideRecord | undefined = asValidUserGlideRecord(getUserIdFromParameter.call(this));
+                return (typeof gr !== 'undefined') ? getUserPhone(gr) : '';
+            },
+
+            getUserOrg: function(this: IProfileValidatorPrototype & IAbstractAjaxProcessor): string {
+                var gr: sys_userGlideRecord | undefined = asValidUserGlideRecord(getUserIdFromParameter.call(this));
+                return (typeof gr !== 'undefined') ? getUserOrg(gr) : '';
             },
 
             type: "ProfileValidator"
         });
 
+        
         profileValidatorConstructor.getProfileComplianceCheckFields = getProfileComplianceCheckFields;
 
         profileValidatorConstructor.getProfilePhoneFields = getProfilePhoneFields;
