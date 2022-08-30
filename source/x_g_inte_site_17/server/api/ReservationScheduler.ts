@@ -9,13 +9,13 @@
 
     export type TimeSlot = Required<ITimeSlot>;
 
-    export interface IReservationSchedulerBase extends $$snClass.ICustomClassBase<IReservationSchedulerBase, "ReservationScheduler"> {
+    export interface IReservationScheduler extends $$snClass.ICustomClassBase<IReservationScheduler, "ReservationScheduler"> {
         sys_id: string;
 
         /**
          * Short description
          * @type {string}
-         * @memberof IAppointmentUtilBase
+         * @memberof IReservationScheduler
          */
         short_description: string;
 
@@ -24,21 +24,21 @@
         /**
          * The current user's time zone
          * @type {string}
-         * @memberof IAppointmentUtilBase
+         * @memberof IReservationScheduler
          */
         timeZone: string;
     
         /**
          * Sys ID of Approval group or undefined to automatically approve reservations.
          * @type {(string|undefined)}
-         * @memberof IAppointmentUtilBase
+         * @memberof IReservationScheduler
          */
         approval_group?: string;
     
         /**
          * Sys ID of Default Assignment group
          * @type {string}
-         * @memberof IAppointmentUtilBase
+         * @memberof IReservationScheduler
          * @description Refers to sys_user_group (Group)
          */
         assignment_group: string;
@@ -46,7 +46,7 @@
         /**
          * Minimum Duration
          * @type {GlideDuration}
-         * @memberof IAppointmentUtilBase
+         * @memberof IReservationScheduler
          * @description This is the minimum reservation duration. The minimum value is 1 minute, and values are rounded up to the nearest minute.
          */
         minimum_duration: GlideDuration;
@@ -54,7 +54,7 @@
         /**
          * Maximum Duration
          * @type {GlideDuration}
-         * @memberof IAppointmentUtilBase
+         * @memberof IReservationScheduler
          * @description This is the maximum reservation duration. This cannot be less than the Minimum Duration, and values are rounded up to the nearest minute.
          */
         maximum_duration: GlideDuration;
@@ -62,7 +62,7 @@
         /**
          * Duration Increment
          * @type {GlideDuration}
-         * @memberof IAppointmentUtilBase
+         * @memberof IReservationScheduler
          * @description This is the length by which reservation durations can be incremented. The minimum value is 1 minute, and values are rounded up to the nearest minute.
          */
         duration_increment: GlideDuration;
@@ -70,7 +70,7 @@
         /**
          * Fixed time-of-day interval, relative to midnight, for reservation start times.
          * @type {GlideDuration}
-         * @memberof IAppointmentUtilBase
+         * @memberof IReservationScheduler
          * @description This is the interval at which reservations must be scheduled. The minimum value is 1 minute, and values are rounded up to the nearest minute.
          */
         start_time_interval: GlideDuration;
@@ -79,7 +79,7 @@
          * Normalizes a duration value according to the {@link #duration_increment}, {@link #minimum_duration} and {@link #maximum_duration} properties.
          * @param {GlideDuration} value - The duration value to normalize.
          * @return {number} The number of milliseconds by which the duration value was adjusted.
-         * @memberof IReservationSchedulerBase
+         * @memberof IReservationScheduler
          */
         normalizeDuration(value: GlideDuration): number;
 
@@ -87,7 +87,7 @@
          * Creates a new normalized duration value from an existing duration value.
          * @param {GlideDuration} value - The source duration value.
          * @return {GlideDuration} A new normalized duration value.
-         * @memberof IReservationSchedulerBase
+         * @memberof IReservationScheduler
          */
         getNormalizedDuration(value: GlideDuration): GlideDuration;
 
@@ -95,7 +95,7 @@
          * Rounds a date/time value up to the next increment specified by {@link #start_time_interval} property.
          * @param {GlideDateTime} value - The date/time value to normalize.
          * @return {number} The number of milliseconds by which the duration value was adjusted.
-         * @memberof IReservationSchedulerBase
+         * @memberof IReservationScheduler
          */
         normalizeStartDate(value: GlideDateTime): number;
 
@@ -103,7 +103,7 @@
          * Creates a new normalizated date/time value from an existing date and time.
          * @param {GlideDateTime} value - The source date/time value.
          * @return {GlideDateTime} A new date/time value that is rouned up to the next increment specified by {@link #start_time_interval} property.
-         * @memberof IReservationSchedulerBase
+         * @memberof IReservationScheduler
          */
         getNormalizedStartDate(value: GlideDateTime): GlideDateTime;
 
@@ -114,7 +114,7 @@
          * @param {GlideDuration} [minimumDuration]
          * @param {GlideDuration} [maximumDuration]
          * @return {(ITimeSlot | undefined)}
-         * @memberof IReservationSchedulerBase
+         * @memberof IReservationScheduler
          */
         getNextAvailableTimeSlot(fromDateTime: GlideDateTime, toDateTime?: GlideDateTime, minimumDuration?: GlideDuration): ITimeSlot | undefined;
 
@@ -124,7 +124,7 @@
          * @param {GlideDateTime} toDateTime - The ending date/time range.
          * @param {GlideDuration} [minimumDuration] - The optional minimum duration for the returned time slots.
          * @return {TimeSlot[]} The available time slots within the specified date/time range.
-         * @memberof IReservationSchedulerBase
+         * @memberof IReservationScheduler
          */
         getAvailabilitiesInRange(fromDateTime: GlideDateTime, toDateTime: GlideDateTime, minimumDuration?: GlideDuration): TimeSlot[];
 
@@ -133,7 +133,7 @@
          * @param {GlideDateTime} startDateTime - The prospective reservation start date and time.
          * @param {GlideDuration} duration - The duration of the prospective reservation.
          * @return {boolean} True if the specified date/time and duration is available for reservation; otherwise, false.
-         * @memberof IReservationSchedulerBase
+         * @memberof IReservationScheduler
          */
         isAvailable(startDateTime: GlideDateTime, duration: GlideDuration): boolean;
 
@@ -141,30 +141,37 @@
          * Adds a reservation to the associated schedule.
          * @param {string} name - The name to assign to the reservation.
          * @param {GlideDateTime} startDateTime - The start date and time of the reservation.
-         * @param {GlideDuration} duration - The duration of the reservation.
+         * @param {string} duration - The duration of the reservation.
+         * @param {GlideDuration} [group_id] - The optional sys_id of the associated sys_user_group.
+         * @param {GlideDuration} [user_id] - The optional sys_id of the associated user.
          * @return {(cmn_schedule_spanGlideRecord | undefined)} The {@link cmn_schedule_spanGlideRecord} representing the reservation
          * or undefined if the specified date/time and duration was not available.
-         * @memberof IReservationSchedulerBase
+         * @memberof IReservationScheduler
          */
-        addAppointment(name: string, startDateTime: GlideDateTime, duration: GlideDuration): cmn_schedule_spanGlideRecord | undefined;
+        addReservation(name: string, startDateTime: GlideDateTime, duration: GlideDuration, group_id?: string, user_id?: string): cmn_schedule_spanGlideRecord | undefined;
+
+        removeReservation(reservation: string | cmn_schedule_spanElement | cmn_schedule_spanGlideRecord): boolean;
     }
     
-    export interface IReservationSchedulerPrototype extends $$snClass.ICustomClassPrototype3<IReservationSchedulerBase, IReservationSchedulerPrototype, "ReservationScheduler", reservation_typeGlideRecord | string, boolean, string>, IReservationSchedulerBase {
+    export interface IReservationSchedulerPrototype extends $$snClass.ICustomClassPrototype3<IReservationScheduler, IReservationSchedulerPrototype, "ReservationScheduler", reservation_typeGlideRecord | string, boolean, string>, IReservationScheduler {
         _scheduleId: string;
     }
 
-    export declare type ReservationScheduler = Readonly<IReservationSchedulerBase>;
+    export declare type ReservationScheduler = Readonly<IReservationScheduler>;
 
-    export interface ReservationSchedulerConstructor extends $$snClass.CustomClassConstructor3<IReservationSchedulerBase, IReservationSchedulerPrototype, ReservationScheduler, reservation_typeGlideRecord | string, boolean, string> {
+    export interface ReservationSchedulerConstructor extends $$snClass.CustomClassConstructor3<IReservationScheduler, IReservationSchedulerPrototype, ReservationScheduler, reservation_typeGlideRecord | string, boolean, string> {
         new(type: reservation_typeGlideRecord | string, allowInactive?: boolean, timeZone?: string): ReservationScheduler;
         (type: reservation_typeGlideRecord | string, allowInactive?: boolean, timeZone?: string): ReservationScheduler;
         getTableName(): string;
     }
 
     export const ReservationScheduler: ReservationSchedulerConstructor = (function (): ReservationSchedulerConstructor {
-        var reservationSchedulerConstructor: ReservationSchedulerConstructor = Class.create();
+        var constructor: ReservationSchedulerConstructor = Class.create();
+
+        var a: ReservationSchedulerAjax = new ReservationSchedulerAjax();
 
         const TABLE_NAME = 'x_g_inte_site_17_reservation_type';
+        const ENTRY_TABLE_NAME = 'cmn_schedule_span';
 
         var gdz: GlideDuration = new GlideDuration(0);
 
@@ -287,9 +294,9 @@
 
         // #endregion
 
-        reservationSchedulerConstructor.getTableName = function() { return TABLE_NAME; }
+        constructor.getTableName = function() { return TABLE_NAME; }
         
-        reservationSchedulerConstructor.prototype = <IReservationSchedulerPrototype>{
+        constructor.prototype = <IReservationSchedulerPrototype>{
             initialize: function(this: IReservationSchedulerPrototype, type: reservation_typeGlideRecord | string, allowInactive?: boolean, timeZone?: string): void {
                 if (isNil(type)) throw new Error("Reservation Type was not provided.");
                 var glideRecord: reservation_typeGlideRecord;
@@ -505,10 +512,12 @@
              * @param {string} name - The name to assign to the reservation.
              * @param {GlideDateTime} startDateTime - The start date and time of the reservation.
              * @param {GlideDuration} duration - The duration of the reservation.
+             * @param {GlideDuration} [group_id] - The optional sys_id of the associated sys_user_group.
+             * @param {GlideDuration} [user_id] - The optional sys_id of the associated sys_user.
              * @return {(cmn_schedule_spanGlideRecord | undefined)} The {@link cmn_schedule_spanGlideRecord} representing the reservation
              * or undefined if the specified date/time and duration was not available.
              */
-            addAppointment: function(this: IReservationSchedulerPrototype, name: string, startDateTime: GlideDateTime, duration: GlideDuration): cmn_schedule_spanGlideRecord {
+            addReservation: function(this: IReservationSchedulerPrototype, name: string, startDateTime: GlideDateTime, duration: GlideDuration, group_id?: string, user_id?: string): cmn_schedule_spanGlideRecord | undefined {
                 if (typeof name !== 'string' || (name = name.trim()).length == 0) throw new Error("Invalid name");
                 if (isNil(startDateTime)) throw new Error("Start date/time not provided");
                 if (isNil(duration)) throw new Error("Duration not provided");
@@ -519,25 +528,49 @@
                 if (!isNormalizedGlideDuration(duration, this.duration_increment)) throw new Error("Invalid duration");
                 if (duration.before(this.minimum_duration)) throw new Error("Appointment duration is shorter than the minimum allowed duration");
                 if (duration.after(this.maximum_duration)) throw new Error("Appointment duration is longer than the maximum allowed duration");
-                if (!isSlotAvailable.call(this, startDateTime, duration)) throw new Error("That appoinment slot is not available");
-                var gr: GlideRecord = new GlideRecord('cmn_schedule_span');
+                if (!isSlotAvailable.call(this, startDateTime, duration)) return;
+                var gr: GlideRecord = new GlideRecord(ENTRY_TABLE_NAME);
                 gr.newRecord();
                 gr.setValue('schedule', this._scheduleId);
                 gr.setValue('all_day', false);
                 gr.setValue('name', name);
-                gr.setValue('show_as', cmn_schedule_entryShowAs.Busy);
+                gr.setValue('show_as', 'busy');
                 gr.setValue('start_date_time', new GlideScheduleDateTime(startDateTime).getValue());
                 var dateTime = new GlideDateTime(startDateTime);
                 dateTime.add(duration);
                 gr.setValue('end_date_time', new GlideScheduleDateTime(dateTime).getValue());
-                gr.setValue('type', cmn_schedule_entryEntryType.Appointment);
+                gr.setValue('type', 'exclude');
+                if (!isNil(group_id)) gr.setValue('group', group_id);
+                if (!isNil(user_id)) gr.setValue('user', user_id);
                 if (!isNil(gr.insert())) throw new Error("Failed to add schedule entry");
                 return <cmn_schedule_spanGlideRecord>gr;
+            },
+
+            removeReservation: function(this: IReservationSchedulerPrototype, reservation: string | cmn_schedule_spanElement | cmn_schedule_spanGlideRecord): boolean {
+                if (isNil(reservation)) return false;
+                var gr: cmn_schedule_spanGlideRecord;
+                if (typeof reservation === 'string') {
+                    gr = <cmn_schedule_spanGlideRecord>new GlideRecord(ENTRY_TABLE_NAME);
+                    gr.addQuery('sys_id', reservation);
+                    gr.query();
+                    if (!gr.next()) return false;
+                } else {
+                    if (reservation instanceof GlideElement) {
+                        if (reservation.nil() || !(<GlideElementReference>reservation).getRefRecord) return false;
+                        gr = <cmn_schedule_spanGlideRecord>(<GlideElementReference>reservation).getRefRecord();
+                        if (gs.nil(gr)) return false;
+                    } else {
+                        if (!reservation.getTableName) return false;
+                        gr = <cmn_schedule_spanGlideRecord>reservation;
+                    }
+                    if (gr.getTableName() != ENTRY_TABLE_NAME) return false;
+                }
+                return gr.getValue('schedule') == this._scheduleId && gr.deleteRecord();
             },
 
             type: "ReservationScheduler"
         };
 
-        return reservationSchedulerConstructor;
+        return constructor;
     })();
 }
