@@ -203,7 +203,7 @@ declare namespace x_g_inte_site_17 {
         org: string;
         phone: string;
     }
-    interface IProfileValidatorBase extends $$snClass.ICustomClassBase<IProfileValidatorBase, "ProfileValidator"> {
+    interface IProfileValidator extends $$snClass.ICustomClassBase<IProfileValidator, "ProfileValidator"> {
         /**
          * Gets compliance check information for the user indicated by the 'sysparm_user_id' parameter.
          *
@@ -222,10 +222,10 @@ declare namespace x_g_inte_site_17 {
         getUserPhone(): string;
         getUserOrg(): string;
     }
-    interface IProfileValidatorPrototype extends $$snClass.ICustomAjaxClassPrototype<IProfileValidatorBase, IProfileValidatorPrototype, "ProfileValidator">, IProfileValidatorBase {
+    interface IProfileValidatorPrototype extends $$snClass.ICustomAjaxClassPrototype<IProfileValidator, IProfileValidatorPrototype, "ProfileValidator">, IProfileValidator {
     }
-    type ProfileValidator = Readonly<IProfileValidatorBase>;
-    interface ProfileValidatorConstructor extends $$snClass.CustomAjaxClassConstructor<IProfileValidatorBase, IProfileValidatorPrototype, ProfileValidator> {
+    type ProfileValidator = Readonly<IProfileValidator>;
+    interface ProfileValidatorConstructor extends $$snClass.CustomAjaxClassConstructor<IProfileValidator, IProfileValidatorPrototype, ProfileValidator> {
         new (request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController): ProfileValidator;
         (request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController): ProfileValidator;
         /**

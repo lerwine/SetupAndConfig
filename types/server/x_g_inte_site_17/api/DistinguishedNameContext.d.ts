@@ -1,8 +1,8 @@
 /// <reference path="../../sn_typings_server_scoped/dist/index.d.ts" />
 declare namespace x_g_inte_site_17 {
-    interface IDistinguishedNameContextBase extends $$snClass.ICustomClassBase<IDistinguishedNameContextBase, "DistinguishedNameContext"> {
+    interface IDistinguishedNameContext extends $$snClass.ICustomClassBase<IDistinguishedNameContext, "DistinguishedNameContext"> {
         /**
-         * Has a true value if {@link IDistinguishedNameContextBase#_targetObject} is a sys_user_group; otherwise, false
+         * Has a true value if {@link IDistinguishedNameContext#_targetObject} is a sys_user_group; otherwise, false
          *
          * @type {boolean}
          * @memberof IDistinguishedNameContextBase
@@ -40,46 +40,46 @@ declare namespace x_g_inte_site_17 {
         /**
          * Indicates whether the target object is a sys_user_group or sys_user.
          *
-         * @returns {boolean} true if {@link IDistinguishedNameContextBase#getTargetObject} returns a sys_user_group {@link GlideRecord} or {@link GlideElementReference}; otherwise, false.
+         * @returns {boolean} true if {@link IDistinguishedNameContext#getTargetObject} returns a sys_user_group {@link GlideRecord} or {@link GlideElementReference}; otherwise, false.
          */
         isGroup(): boolean;
         /**
          * Indicates whether the target object is a sys_user and it is considered a Site 17 user.
          *
-         * @returns {boolean} true if {@link IDistinguishedNameContextBase#getTargetObject} returns a sys_user {@link GlideRecord} or {@link GlideElementReference} and {@link Site17Util#isUserDN} returns true for the source property of the target object; otherwise, false.
+         * @returns {boolean} true if {@link IDistinguishedNameContext#getTargetObject} returns a sys_user {@link GlideRecord} or {@link GlideElementReference} and {@link Site17Util#isUserDN} returns true for the source property of the target object; otherwise, false.
          */
         isSite17User(): boolean;
         /**
          * Indicates whether the target object is a sys_user_group and it is considered a Site 17 group.
          *
-         * @returns {boolean} true if {@link IDistinguishedNameContextBase#getTargetObject} returns a sys_user_group {@link GlideRecord} or {@link GlideElementReference} and {@link Site17Util#isGroupDN} returns true for the source property of the target object; otherwise, false.
+         * @returns {boolean} true if {@link IDistinguishedNameContext#getTargetObject} returns a sys_user_group {@link GlideRecord} or {@link GlideElementReference} and {@link Site17Util#isGroupDN} returns true for the source property of the target object; otherwise, false.
          */
         isSite17Group(): boolean;
     }
-    interface IDistinguishedNameContextPrototype extends $$snClass.ICustomClassPrototype1<IDistinguishedNameContextBase, IDistinguishedNameContextPrototype, "DistinguishedNameContext", string | GlideRecord | GlideElementReference>, IDistinguishedNameContextBase {
+    interface IDistinguishedNameContextPrototype extends $$snClass.ICustomClassPrototype1<IDistinguishedNameContext, IDistinguishedNameContextPrototype, "DistinguishedNameContext", string | GlideRecord | GlideElementReference>, IDistinguishedNameContext {
     }
-    interface IDistinguishedNameContext extends Readonly<IDistinguishedNameContextBase> {
+    interface IDistinguishedNameContextInfo extends Readonly<IDistinguishedNameContext> {
     }
     type DistinguishedNameContext = Readonly<IDistinguishedNameContextPrototype>;
-    interface DistinguishedNameContextConstructor extends $$snClass.CustomClassConstructor1<IDistinguishedNameContextBase, IDistinguishedNameContextPrototype, IDistinguishedNameContext, string | GlideRecord | GlideElementReference> {
+    interface DistinguishedNameContextConstructor extends $$snClass.CustomClassConstructor1<IDistinguishedNameContext, IDistinguishedNameContextPrototype, IDistinguishedNameContextInfo, string | GlideRecord | GlideElementReference> {
         /**
          * Creates a new {@link DistinguishedNameContext} instance.
          *
          * @constructor
          * @param {(string | GlideRecord | GlideElementReference)} source - The source of the Distinguished Name context
          * @memberof DistinguishedNameContextConstructor
-         * @returns {IDistinguishedNameContext} A new {@link DistinguishedNameContext} instance.
+         * @returns {IDistinguishedNameContextInfo} A new {@link DistinguishedNameContext} instance.
          */
-        new (source: string | GlideRecord | GlideElementReference): IDistinguishedNameContext;
+        new (source: string | GlideRecord | GlideElementReference): IDistinguishedNameContextInfo;
         /**
          * Creates a new {@link DistinguishedNameContext} instance.
          *
          * @constructor
          * @param {(string | GlideRecord | GlideElementReference)} source - The source of the Distinguished Name context
          * @memberof DistinguishedNameContextConstructor
-         * @returns {IDistinguishedNameContext} A new {@link DistinguishedNameContext} instance.
+         * @returns {IDistinguishedNameContextInfo} A new {@link DistinguishedNameContext} instance.
          */
-        (source: string | GlideRecord | GlideElementReference): IDistinguishedNameContext;
+        (source: string | GlideRecord | GlideElementReference): IDistinguishedNameContextInfo;
     }
     const DistinguishedNameContext: DistinguishedNameContextConstructor;
 }

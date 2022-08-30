@@ -1,6 +1,6 @@
 /// <reference path="../../sn_typings_server_scoped/dist/index.d.ts" />
 declare namespace x_g_inte_site_17 {
-    interface ILocationApprovalBase extends $$snClass.ICustomClassBase<ILocationApprovalBase, "LocationApproval"> {
+    interface ILocationApproval extends $$snClass.ICustomClassBase<ILocationApproval, "LocationApproval"> {
         /**
          * Gets the target user of the target record (ie. caller, requested_for).
          *
@@ -10,7 +10,7 @@ declare namespace x_g_inte_site_17 {
         /**
          * Indicates whether the target user is a VIP user.
          *
-         * @returns {boolean} true if {@link ILocationApprovalBase#getCaller} returns user designated as VIP; otherwise, false.
+         * @returns {boolean} true if {@link ILocationApproval#getCaller} returns user designated as VIP; otherwise, false.
          */
         isVip(): boolean;
         /**
@@ -20,7 +20,7 @@ declare namespace x_g_inte_site_17 {
          */
         getDefaultApprovalGroup(): GlideElementReference | undefined;
     }
-    interface ILocationApprovalPrototype extends $$snClass.ICustomClassPrototype1<ILocationApprovalBase, ILocationApprovalPrototype, "LocationApproval", GlideRecord | GlideElementReference>, ILocationApprovalBase {
+    interface ILocationApprovalPrototype extends $$snClass.ICustomClassPrototype1<ILocationApproval, ILocationApprovalPrototype, "LocationApproval", GlideRecord | GlideElementReference>, ILocationApproval {
         /**
          * The target {@link GlideRecord}.
          *
@@ -31,7 +31,7 @@ declare namespace x_g_inte_site_17 {
         _glideRecord?: GlideRecord;
     }
     type LocationApproval = Readonly<ILocationApprovalPrototype>;
-    interface LocationApprovalConstructor extends $$snClass.CustomClassConstructor1<ILocationApprovalBase, ILocationApprovalPrototype, LocationApproval, GlideRecord | GlideElementReference> {
+    interface LocationApprovalConstructor extends $$snClass.CustomClassConstructor1<ILocationApproval, ILocationApprovalPrototype, LocationApproval, GlideRecord | GlideElementReference> {
         /**
          * Creates a new {@link LocationApproval} instance.
          *
