@@ -15,8 +15,8 @@ var x_44813_mmservices;
         var DATE_PATTERN = /^\d{4}-(0[1-9]|1[0-2])-[0-2]\d|3[01]$/;
         var TIME_PATTERN = /^([01]\d|2[0-3]):[0-5]\d$/;
         var TIME_RANGE_PATTERN = /^((?:[01]\d|2[0-3]):[0-5]\d)-((?:[01]\d|2[0-3]):[0-5]\d)$/;
-        var site17MMServicesUtilConstructor = Class.create();
-        var privateConstructorData = {};
+        var constructor = Class.create();
+        var privateData = {};
         function isNil(obj) {
             switch (typeof obj) {
                 case 'undefined':
@@ -50,13 +50,13 @@ var x_44813_mmservices;
         function getReservationScheduler() {
             var sys_id = getReservationTypeSysId();
             if (isNil(sys_id)) {
-                privateConstructorData._scheduler = undefined;
+                privateData._scheduler = undefined;
                 throw new Error('Failure invoking x_44813_mmservices.getReservationScheduler: Property "' + PROPERTY_NAME_reservation_type + '" is empty.');
             }
-            if (typeof privateConstructorData._scheduler !== 'undefined') {
-                if (privateConstructorData._scheduler.sys_id == sys_id)
-                    return privateConstructorData._scheduler;
-                privateConstructorData._scheduler = undefined;
+            if (typeof privateData._scheduler !== 'undefined') {
+                if (privateData._scheduler.sys_id == sys_id)
+                    return privateData._scheduler;
+                privateData._scheduler = undefined;
             }
             var gr = new GlideRecord(x_g_inte_site_17.ReservationScheduler.getTableName());
             gr.addQuery('sys_id', sys_id);
@@ -64,13 +64,13 @@ var x_44813_mmservices;
             if (!gr.next())
                 throw new Error('Failure invoking x_44813_mmservices.getReservationScheduler: Reservation Type (' + x_g_inte_site_17.ReservationScheduler.getTableName() +
                     ') with sys_id "' + sys_id + '" (specified in setting ' + PROPERTY_NAME_reservation_type + ') was not found.');
-            privateConstructorData._scheduler = new x_g_inte_site_17.ReservationScheduler(gr);
-            return privateConstructorData._scheduler;
+            privateData._scheduler = new x_g_inte_site_17.ReservationScheduler(gr);
+            return privateData._scheduler;
         }
-        site17MMServicesUtilConstructor.getDefaultMinLeadTimeDays = getDefaultMinLeadTimeDays;
-        site17MMServicesUtilConstructor.getReservationTypeSysId = getReservationTypeSysId;
-        site17MMServicesUtilConstructor.getReservationScheduler = getReservationScheduler;
-        site17MMServicesUtilConstructor.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+        constructor.getDefaultMinLeadTimeDays = getDefaultMinLeadTimeDays;
+        constructor.getReservationTypeSysId = getReservationTypeSysId;
+        constructor.getReservationScheduler = getReservationScheduler;
+        constructor.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
             getDefaultMinLeadTimeDays: function () {
                 this.setAnswer(getDefaultMinLeadTimeDays());
             },
@@ -106,6 +106,6 @@ var x_44813_mmservices;
             },
             type: "Site17MMServicesUtil"
         });
-        return site17MMServicesUtilConstructor;
+        return constructor;
     })();
 })(x_44813_mmservices || (x_44813_mmservices = {}));

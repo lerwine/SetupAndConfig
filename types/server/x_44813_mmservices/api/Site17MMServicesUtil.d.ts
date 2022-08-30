@@ -11,7 +11,7 @@ declare namespace x_44813_mmservices {
         start: string;
         end: string;
     }
-    interface ISite17MMServicesUtilBase extends $$snClass.ICustomClassBase<ISite17MMServicesUtilBase, "Site17MMServicesUtil"> {
+    interface ISite17MMServicesUtil extends $$snClass.ICustomClassBase<ISite17MMServicesUtil, "Site17MMServicesUtil"> {
         /**
          * Gets the number of days the default minimum lead time for appointments.
          * @memberof ISite17MMServicesUtilBase
@@ -69,13 +69,13 @@ declare namespace x_44813_mmservices {
          */
         getAvailabilitiesInRange(): void;
     }
-    interface ISite17MMServicesUtilPrototype extends $$snClass.ICustomAjaxClassPrototype<ISite17MMServicesUtilBase, ISite17MMServicesUtilPrototype, "Site17MMServicesUtil">, ISite17MMServicesUtilBase {
+    interface ISite17MMServicesUtilPrototype extends $$snClass.ICustomAjaxClassPrototype<ISite17MMServicesUtil, ISite17MMServicesUtilPrototype, "Site17MMServicesUtil">, ISite17MMServicesUtil {
     }
-    type Site17MMServicesUtil = Readonly<ISite17MMServicesUtilBase>;
-    interface IPrivateConstructorData {
+    type Site17MMServicesUtil = Readonly<ISite17MMServicesUtil>;
+    interface ISite17MMServicesUtilConstructorPrivate {
         _scheduler?: x_g_inte_site_17.ReservationScheduler;
     }
-    interface Site17MMServicesUtilConstructor extends $$snClass.CustomAjaxClassConstructor<ISite17MMServicesUtilBase, ISite17MMServicesUtilPrototype, Site17MMServicesUtil> {
+    interface Site17MMServicesUtilConstructor extends $$snClass.CustomAjaxClassConstructor<ISite17MMServicesUtil, ISite17MMServicesUtilPrototype, Site17MMServicesUtil> {
         /**
          * Gets the number of days the default minimum lead time for appointments.
          * @return {number} The number of days the default minimum lead time for appointments.
