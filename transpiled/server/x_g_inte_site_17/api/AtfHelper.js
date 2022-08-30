@@ -2,7 +2,7 @@
 var x_g_inte_site_17;
 (function (x_g_inte_site_17) {
     x_g_inte_site_17.AtfHelper = (function () {
-        var atfhelperConstructor = Class.create();
+        var constructor = Class.create();
         function isNil(obj) {
             switch (typeof obj) {
                 case 'undefined':
@@ -59,10 +59,10 @@ var x_g_inte_site_17;
                 stepResult.setOutputMessage("Unexpected error: " + reason);
             stepResult.setFailed();
         }
-        atfhelperConstructor.isNil = isNil;
-        atfhelperConstructor.areAnyNil = areAnyNil;
-        atfhelperConstructor.setFailed = setFailed;
-        atfhelperConstructor.endOfRelativeDay = function (daysFromToday) {
+        constructor.isNil = isNil;
+        constructor.areAnyNil = areAnyNil;
+        constructor.setFailed = setFailed;
+        constructor.endOfRelativeDay = function (daysFromToday) {
             var dateTime = new GlideDateTime();
             if (daysFromToday != -1)
                 dateTime.addDaysLocalTime(daysFromToday + 1);
@@ -70,7 +70,7 @@ var x_g_inte_site_17;
             dateTime.subtract(1);
             return dateTime.getDisplayValue();
         };
-        atfhelperConstructor.relativeDayAt = function (daysFromToday, hours, minutes, seconds) {
+        constructor.relativeDayAt = function (daysFromToday, hours, minutes, seconds) {
             var dateTime = new GlideDateTime();
             if (daysFromToday != 0)
                 dateTime.addDaysLocalTime(daysFromToday);
@@ -103,7 +103,7 @@ var x_g_inte_site_17;
                 return dateTime.getDate().getDisplayValue() + ' ' + hours + ':0' + minutes + ':' + seconds;
             return dateTime.getDate().getDisplayValue() + ' ' + hours + ':' + minutes + ':' + seconds;
         };
-        atfhelperConstructor.prototype = {
+        constructor.prototype = {
             initialize: function (steps, stepResult) {
                 if (isNil(steps))
                     throw new Error("Steps function not provided");
@@ -142,6 +142,6 @@ var x_g_inte_site_17;
             },
             type: "AtfHelper"
         };
-        return atfhelperConstructor;
+        return constructor;
     })();
 })(x_g_inte_site_17 || (x_g_inte_site_17 = {}));

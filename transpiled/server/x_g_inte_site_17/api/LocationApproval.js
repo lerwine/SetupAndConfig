@@ -3,7 +3,7 @@
 var x_g_inte_site_17;
 (function (x_g_inte_site_17) {
     x_g_inte_site_17.LocationApproval = (function () {
-        var locationApprovalConstructor = Class.create();
+        var constructor = Class.create();
         var TABLE_NAME = 'x_g_inte_site_17_location_approvers';
         function getDefaultApprovalGroup(source) {
             var company = x_g_inte_site_17.Site17Util.getCompany(source);
@@ -33,8 +33,8 @@ var x_g_inte_site_17;
                 }
             }
         }
-        locationApprovalConstructor.getDefaultApprovalGroup = getDefaultApprovalGroup;
-        locationApprovalConstructor.prototype = {
+        constructor.getDefaultApprovalGroup = getDefaultApprovalGroup;
+        constructor.prototype = {
             initialize: function (source) {
                 if (gs.nil(source))
                     throw new Error("No glide object provided");
@@ -60,6 +60,6 @@ var x_g_inte_site_17;
             },
             type: "LocationApproval"
         };
-        return locationApprovalConstructor;
+        return constructor;
     })();
 })(x_g_inte_site_17 || (x_g_inte_site_17 = {}));

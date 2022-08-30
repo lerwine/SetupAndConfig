@@ -1,7 +1,7 @@
 /// <reference path="../../../../types/server/sn_typings_server_scoped/dist/index.d.ts" />
 
 namespace x_g_inte_site_17 {
-    export interface ISite17UtilBase extends $$snClass.ICustomClassBase<ISite17UtilBase, "Site17Util"> {
+    export interface ISite17Util extends $$snClass.ICustomClassBase<ISite17Util, "Site17Util"> {
         isDnContainedBy(sourceDN: string, containerDN: string): "true" | "false";
         getUsersContainerDN(): string;
         getGroupsContainerDN(): string;
@@ -15,12 +15,12 @@ namespace x_g_inte_site_17 {
 
     var f: reservation_typeFields;
     
-    export interface ISite17UtilPrototype extends $$snClass.ICustomAjaxClassPrototype<ISite17UtilBase, ISite17UtilPrototype, "Site17Util">, ISite17UtilBase {
+    export interface ISite17UtilPrototype extends $$snClass.ICustomAjaxClassPrototype<ISite17Util, ISite17UtilPrototype, "Site17Util">, ISite17Util {
     }
 
-    export declare type Site17Util = Readonly<ISite17UtilBase>;
+    export declare type Site17Util = Readonly<ISite17Util>;
 
-    export interface Site17UtilConstructor extends $$snClass.CustomAjaxClassConstructor<ISite17UtilBase, ISite17UtilPrototype, Site17Util> {
+    export interface Site17UtilConstructor extends $$snClass.CustomAjaxClassConstructor<ISite17Util, ISite17UtilPrototype, Site17Util> {
         new(request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController): Site17Util;
         (request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController): Site17Util;
         isUser(target: GlideRecord | GlideElementReference): boolean;
@@ -55,17 +55,17 @@ namespace x_g_inte_site_17 {
         const PROPERTY_NAME_source_group_include_empty = 'x_g_inte_site_17.source_group_include_empty';
         const dnRegex = /^([^=,]+|\\.)+=([^,]+|\\.)*(,([^=,]+|\\.)+=([^,]+|\\.)*)*$/;
 
-        var site17UtilConstructor: Site17UtilConstructor = Class.create();
+        var constructor: Site17UtilConstructor = Class.create();
 
-        site17UtilConstructor.isUser = function(target: GlideRecord | GlideElementReference): boolean {
+        constructor.isUser = function(target: GlideRecord | GlideElementReference): boolean {
             return !gs.nil(target) && typeof target === 'object' && target.getTableName && target.getTableName() == 'sys_user';
         };
 
-        site17UtilConstructor.isGroup = function(target: GlideRecord | GlideElementReference): boolean {
+        constructor.isGroup = function(target: GlideRecord | GlideElementReference): boolean {
             return !gs.nil(target) && typeof target === 'object' && target.getTableName && target.getTableName() == 'sys_user_group';
         };
 
-        site17UtilConstructor.isVip = function(target: GlideRecord | GlideElementReference): boolean {
+        constructor.isVip = function(target: GlideRecord | GlideElementReference): boolean {
             return !gs.nil(target) && typeof target === 'object' && target.getTableName && target.getTableName() == 'sys_user' && (<{ [key: string]: any}>target).vip;
         };
 
@@ -105,7 +105,7 @@ namespace x_g_inte_site_17 {
                 return caller;
         }
 
-        site17UtilConstructor.getCaller = function(target: GlideRecord | GlideElementReference): GlideElementReference | undefined {
+        constructor.getCaller = function(target: GlideRecord | GlideElementReference): GlideElementReference | undefined {
             if (!gs.nil(target))
                 return getCaller(target);
         };
@@ -114,31 +114,31 @@ namespace x_g_inte_site_17 {
             return !gs.nil(target) && typeof target === 'object' && target.getTableName && target.getTableName() == 'business_unit';
         }
 
-        site17UtilConstructor.isBusinessUnit = isBusinessUnit;
+        constructor.isBusinessUnit = isBusinessUnit;
 
         function isDepartment(target: GlideRecord | GlideElementReference): boolean {
             return !gs.nil(target) && typeof target === 'object' && target.getTableName && target.getTableName() == 'cmn_department';
         }
 
-        site17UtilConstructor.isDepartment = isDepartment;
+        constructor.isDepartment = isDepartment;
 
         function isCompany(target: GlideRecord | GlideElementReference): boolean {
             return !gs.nil(target) && typeof target === 'object' && target.getTableName && target.getTableName() == 'core_company';
         }
 
-        site17UtilConstructor.isCompany = isCompany;
+        constructor.isCompany = isCompany;
 
         function isLocation(target: GlideRecord | GlideElementReference): boolean {
             return !gs.nil(target) && typeof target === 'object' && target.getTableName && target.getTableName() == 'cmn_location';
         }
 
-        site17UtilConstructor.isLocation = isLocation;
+        constructor.isLocation = isLocation;
 
         function isBuilding(target: GlideRecord | GlideElementReference): boolean {
             return !gs.nil(target) && typeof target === 'object' && target.getTableName && target.getTableName() == 'cmn_building';
         }
 
-        site17UtilConstructor.isBuilding = isBuilding;
+        constructor.isBuilding = isBuilding;
 
         function getBusinessUnit(target: GlideRecord | GlideElementReference): GlideRecord | GlideElementReference | undefined {
             if (Site17Util.isUser(target))
@@ -150,7 +150,7 @@ namespace x_g_inte_site_17 {
             }
         }
 
-        site17UtilConstructor.getBusinessUnit = function(target: GlideRecord | GlideElementReference): GlideRecord | GlideElementReference | undefined {
+        constructor.getBusinessUnit = function(target: GlideRecord | GlideElementReference): GlideRecord | GlideElementReference | undefined {
             if (!gs.nil(target))
                 return getBusinessUnit(target);
         };
@@ -169,7 +169,7 @@ namespace x_g_inte_site_17 {
             }
         }
 
-        site17UtilConstructor.getCompany = function(target: GlideRecord | GlideElementReference): GlideRecord | GlideElementReference | undefined {
+        constructor.getCompany = function(target: GlideRecord | GlideElementReference): GlideRecord | GlideElementReference | undefined {
             if (!gs.nil(target)) return getCompany(target);
         };
 
@@ -183,7 +183,7 @@ namespace x_g_inte_site_17 {
             }
         }
 
-        site17UtilConstructor.getLocation = function(target: GlideRecord | GlideElementReference): GlideRecord | GlideElementReference | undefined {
+        constructor.getLocation = function(target: GlideRecord | GlideElementReference): GlideRecord | GlideElementReference | undefined {
             if (!gs.nil(target))
                 return getLocation(target);
         };
@@ -195,57 +195,57 @@ namespace x_g_inte_site_17 {
             return sourceDN.toLowerCase().endsWith(',' + containerDN.toLowerCase());
         }
 
-        site17UtilConstructor.isDnContainedBy = function(sourceDN: string, containerDN: string): boolean {
+        constructor.isDnContainedBy = function(sourceDN: string, containerDN: string): boolean {
             var s = '' + sourceDN;
             if (s.trim().length == 0) return false;
             var c = '' + containerDN;
             return c.trim().length > 0 && isDnContainedBy(s, c);
         };
 
-        site17UtilConstructor.testDistinguishedName = function(value: string): boolean {
+        constructor.testDistinguishedName = function(value: string): boolean {
             if (gs.nil(value)) return false;
             var dn = '' + value;
             if (dn.trim().length == 0) return false;
             return dnRegex.test(dn);
         };
 
-        site17UtilConstructor.getUsersContainerDN = function() {
+        constructor.getUsersContainerDN = function() {
             return '' + gs.getProperty(PROPERTY_NAME_source_dn_users, '');
         };
 
-        site17UtilConstructor.getGroupsContainerDN = function() {
+        constructor.getGroupsContainerDN = function() {
             return '' + gs.getProperty(PROPERTY_NAME_source_dn_groups, '');
         };
 
-        site17UtilConstructor.includeEmptyUserSource = function() {
+        constructor.includeEmptyUserSource = function() {
             return gs.getProperty(PROPERTY_NAME_source_user_include_empty) == 'true';
         };
 
-        site17UtilConstructor.includeEmptyGroupSource = function() {
+        constructor.includeEmptyGroupSource = function() {
             return gs.getProperty(PROPERTY_NAME_source_group_include_empty) == 'true';
         };
 
         function isUserDN(sourceDN: string): boolean {
-            var containerDN = site17UtilConstructor.getUsersContainerDN();
+            var containerDN = constructor.getUsersContainerDN();
             if (sourceDN.startsWith('ldap:')) sourceDN = sourceDN.substring(5);
             if (containerDN.trim().length == 0) return sourceDN.trim().length == 0;
-            if (sourceDN.trim().length == 0) return site17UtilConstructor.includeEmptyUserSource();
+            if (sourceDN.trim().length == 0) return constructor.includeEmptyUserSource();
             return isDnContainedBy(sourceDN, containerDN);
         }
 
-        site17UtilConstructor.isUserDN = function(sourceDN: string): boolean { return isUserDN('' + sourceDN); };
+        constructor.isUserDN = function(sourceDN: string): boolean { return isUserDN('' + sourceDN); };
 
         function isGroupDN(sourceDN: string): boolean {
-            var containerDN = site17UtilConstructor.getGroupsContainerDN();
+            var containerDN = constructor.getGroupsContainerDN();
             if (sourceDN.startsWith('ldap:')) sourceDN = sourceDN.substring(5);
             if (containerDN.trim().length == 0) return sourceDN.trim().length == 0;
-            if (sourceDN.trim().length == 0) return site17UtilConstructor.includeEmptyGroupSource();
+            if (sourceDN.trim().length == 0) return constructor.includeEmptyGroupSource();
             return isDnContainedBy(sourceDN, containerDN);
         }
 
-        site17UtilConstructor.isGroupDN = function(sourceDN: string): boolean { return isGroupDN('' + sourceDN); };
+        constructor.isGroupDN = function(sourceDN: string): boolean { return isGroupDN('' + sourceDN); };
 
-        site17UtilConstructor.isSite17User = function(source: GlideRecord | GlideElementReference | string): boolean {
+        constructor.isSite17User = function(source: GlideRecord | GlideElementReference | string): boolean {
             if (gs.nil(source)) return false;
             var gr: GlideRecord | GlideElementReference | undefined;
             if (source instanceof GlideRecord || source instanceof GlideElement) {
@@ -261,7 +261,7 @@ namespace x_g_inte_site_17 {
             return isUserDN('' +  (<{ [key: string]: any}>gr).source);
         };
 
-        site17UtilConstructor.isSite17Group = function(sys_user_group: GlideRecord | GlideElementReference | string): boolean {
+        constructor.isSite17Group = function(sys_user_group: GlideRecord | GlideElementReference | string): boolean {
             if (gs.nil(sys_user_group)) return false;
             if (sys_user_group instanceof GlideRecord || sys_user_group instanceof GlideElement) {
                 if (('' + sys_user_group.getTableName()) != 'sys_user_group') return false;
@@ -273,16 +273,16 @@ namespace x_g_inte_site_17 {
             return gr.next() && isGroupDN('' + (<{ [key: string]: any}>gr).source);
         };
 
-        site17UtilConstructor.prototype = Object.extendsObject<IAbstractAjaxProcessor, ISite17UtilPrototype>(global.AbstractAjaxProcessor, {
-            isDnContainedBy: function(sourceDN: string, containerDN: string): "true"|"false" { return <"true"|"false">JSON.stringify(site17UtilConstructor.isDnContainedBy(sourceDN, containerDN)); },
+        constructor.prototype = Object.extendsObject<IAbstractAjaxProcessor, ISite17UtilPrototype>(global.AbstractAjaxProcessor, {
+            isDnContainedBy: function(sourceDN: string, containerDN: string): "true"|"false" { return <"true"|"false">JSON.stringify(constructor.isDnContainedBy(sourceDN, containerDN)); },
             
-            getUsersContainerDN: function() { return JSON.stringify(site17UtilConstructor.getUsersContainerDN()); },
+            getUsersContainerDN: function() { return JSON.stringify(constructor.getUsersContainerDN()); },
             
-            getGroupsContainerDN: function() { return JSON.stringify(site17UtilConstructor.getGroupsContainerDN()); },
+            getGroupsContainerDN: function() { return JSON.stringify(constructor.getGroupsContainerDN()); },
             
-            includeEmptyUserSource: function(): "true"|"false" { return <"true"|"false">JSON.stringify(site17UtilConstructor.includeEmptyUserSource()); },
+            includeEmptyUserSource: function(): "true"|"false" { return <"true"|"false">JSON.stringify(constructor.includeEmptyUserSource()); },
             
-            includeEmptyGroupSource: function(): "true"|"false" { return <"true"|"false">JSON.stringify(site17UtilConstructor.includeEmptyGroupSource()); },
+            includeEmptyGroupSource: function(): "true"|"false" { return <"true"|"false">JSON.stringify(constructor.includeEmptyGroupSource()); },
             
             isUserDN: function(sourceDN): "true"|"false" { return <"true"|"false">JSON.stringify(isUserDN('' + sourceDN)); },
             
@@ -305,6 +305,6 @@ namespace x_g_inte_site_17 {
             type: "Site17Util"
         });
 
-        return site17UtilConstructor;
+        return constructor;
     })();
 }

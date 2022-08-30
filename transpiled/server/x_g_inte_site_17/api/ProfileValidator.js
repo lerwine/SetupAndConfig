@@ -3,7 +3,7 @@
 var x_g_inte_site_17;
 (function (x_g_inte_site_17) {
     x_g_inte_site_17.ProfileValidator = (function () {
-        var profileValidatorConstructor = Class.create();
+        var constructor = Class.create();
         var SYSID_RE = /^[\da-f]{32}$/i;
         var PROPERTY_NAME_profile_phone_fields = 'x_g_inte_site_17.profile_phone_fields';
         var PROPERTY_NAME_profile_compliance_check_fields = 'x_g_inte_site_17.profile_compliance_check_fields';
@@ -101,10 +101,10 @@ var x_g_inte_site_17;
             var userId = this.getParameter('sysparm_user_id');
             return isNil(userId) ? gs.getUserID() : (typeof userId === 'string') ? userId : '' + userId;
         }
-        profileValidatorConstructor.isUserLookupFault = function (result) {
+        constructor.isUserLookupFault = function (result) {
             return typeof result === 'object' && null != result && result.code !== 0;
         };
-        profileValidatorConstructor.getUserLookupResult = function (user) {
+        constructor.getUserLookupResult = function (user) {
             var user_id, sys_id;
             if (typeof user === 'object') {
                 if (user != null) {
@@ -153,7 +153,7 @@ var x_g_inte_site_17;
                 return { code: 1, user_id: user_id, sys_id: user_id.toLowerCase(), message: 'User with sys_id or user_name "' + user_id + '" not found' };
             return { code: 1, user_id: user_id, message: 'User with user_name "' + user_id + '" not found' };
         };
-        profileValidatorConstructor.checkUserProfileCompliance = function (sys_user) {
+        constructor.checkUserProfileCompliance = function (sys_user) {
             var profile_fields = getProfileComplianceCheckFields();
             if (sys_user instanceof GlideElementReference)
                 sys_user = sys_user.getRefRecord();
@@ -234,9 +234,9 @@ var x_g_inte_site_17;
             }
             return result;
         };
-        profileValidatorConstructor.getUserProfileCompliance = function (user) {
-            var getUserResponse = profileValidatorConstructor.getUserLookupResult(user);
-            if (profileValidatorConstructor.isUserLookupFault(getUserResponse))
+        constructor.getUserProfileCompliance = function (user) {
+            var getUserResponse = constructor.getUserLookupResult(user);
+            if (constructor.isUserLookupFault(getUserResponse))
                 return {
                     code: getUserResponse.code,
                     user_id: getUserResponse.user_id,
@@ -247,15 +247,15 @@ var x_g_inte_site_17;
                     failed: 0,
                     notChecked: getProfileComplianceCheckFields().length
                 };
-            var result = profileValidatorConstructor.checkUserProfileCompliance(getUserResponse.user);
+            var result = constructor.checkUserProfileCompliance(getUserResponse.user);
             result.code = 0;
             result.user_id = getUserResponse.user_id;
             result.sys_id = getUserResponse.sys_id;
             return result;
         };
-        profileValidatorConstructor.getUserNotifications = function (user) {
-            var getUserResponse = profileValidatorConstructor.getUserLookupResult(user);
-            if (profileValidatorConstructor.isUserLookupFault(getUserResponse))
+        constructor.getUserNotifications = function (user) {
+            var getUserResponse = constructor.getUserLookupResult(user);
+            if (constructor.isUserLookupFault(getUserResponse))
                 return {
                     code: getUserResponse.code,
                     user_id: getUserResponse.user_id,
@@ -272,31 +272,31 @@ var x_g_inte_site_17;
                 code: 0,
                 user_id: getUserResponse.user_id,
                 sys_id: getUserResponse.sys_id,
-                profileCompliance: profileValidatorConstructor.checkUserProfileCompliance(getUserResponse.user)
+                profileCompliance: constructor.checkUserProfileCompliance(getUserResponse.user)
             };
         };
-        profileValidatorConstructor.getUserPhoneAndOrg = getUserPhoneAndOrg;
-        profileValidatorConstructor.getUserPhone = function (user) {
+        constructor.getUserPhoneAndOrg = getUserPhoneAndOrg;
+        constructor.getUserPhone = function (user) {
             var gr = asValidUserGlideRecord(user);
             if (typeof gr !== 'undefined')
                 return getUserPhone(gr);
         };
-        profileValidatorConstructor.getUserOrg = function (user) {
+        constructor.getUserOrg = function (user) {
             var gr = asValidUserGlideRecord(user);
             if (typeof gr !== 'undefined')
                 return getUserOrg(gr);
         };
-        profileValidatorConstructor.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+        constructor.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
             getUserProfileCompliance: function () {
-                var response = profileValidatorConstructor.getUserProfileCompliance('' + this.getParameter('sysparm_user_id'));
-                if (profileValidatorConstructor.isUserLookupFault(response))
+                var response = constructor.getUserProfileCompliance('' + this.getParameter('sysparm_user_id'));
+                if (constructor.isUserLookupFault(response))
                     this.setError(response);
                 else
                     return JSON.stringify(response);
             },
             getUserNotifications: function () {
-                var response = profileValidatorConstructor.getUserNotifications('' + this.getParameter('sysparm_user_id'));
-                if (profileValidatorConstructor.isUserLookupFault(response))
+                var response = constructor.getUserNotifications('' + this.getParameter('sysparm_user_id'));
+                if (constructor.isUserLookupFault(response))
                     this.setError(response);
                 else
                     return JSON.stringify(response);
@@ -323,8 +323,8 @@ var x_g_inte_site_17;
             },
             type: "ProfileValidator"
         });
-        profileValidatorConstructor.getProfileComplianceCheckFields = getProfileComplianceCheckFields;
-        profileValidatorConstructor.getProfilePhoneFields = getProfilePhoneFields;
-        return profileValidatorConstructor;
+        constructor.getProfileComplianceCheckFields = getProfileComplianceCheckFields;
+        constructor.getProfilePhoneFields = getProfilePhoneFields;
+        return constructor;
     })();
 })(x_g_inte_site_17 || (x_g_inte_site_17 = {}));

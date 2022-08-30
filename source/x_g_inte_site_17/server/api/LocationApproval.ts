@@ -1,7 +1,7 @@
 /// <reference path="../../../../types/server/sn_typings_server_scoped/dist/index.d.ts" />
 
 namespace x_g_inte_site_17 {
-    export interface ILocationApprovalBase extends $$snClass.ICustomClassBase<ILocationApprovalBase, "LocationApproval"> {
+    export interface ILocationApproval extends $$snClass.ICustomClassBase<ILocationApproval, "LocationApproval"> {
     
         /**
          * Gets the target user of the target record (ie. caller, requested_for).
@@ -13,7 +13,7 @@ namespace x_g_inte_site_17 {
         /**
          * Indicates whether the target user is a VIP user.
          *
-         * @returns {boolean} true if {@link ILocationApprovalBase#getCaller} returns user designated as VIP; otherwise, false.
+         * @returns {boolean} true if {@link ILocationApproval#getCaller} returns user designated as VIP; otherwise, false.
          */
         isVip(): boolean;
         
@@ -25,7 +25,7 @@ namespace x_g_inte_site_17 {
         getDefaultApprovalGroup(): GlideElementReference | undefined;
     }
 
-    export interface ILocationApprovalPrototype extends $$snClass.ICustomClassPrototype1<ILocationApprovalBase, ILocationApprovalPrototype, "LocationApproval", GlideRecord | GlideElementReference>, ILocationApprovalBase {
+    export interface ILocationApprovalPrototype extends $$snClass.ICustomClassPrototype1<ILocationApproval, ILocationApprovalPrototype, "LocationApproval", GlideRecord | GlideElementReference>, ILocationApproval {
         /**
          * The target {@link GlideRecord}.
          *
@@ -38,7 +38,7 @@ namespace x_g_inte_site_17 {
 
         export declare type LocationApproval = Readonly<ILocationApprovalPrototype>;
 
-    export interface LocationApprovalConstructor extends $$snClass.CustomClassConstructor1<ILocationApprovalBase, ILocationApprovalPrototype, LocationApproval, GlideRecord | GlideElementReference> {
+    export interface LocationApprovalConstructor extends $$snClass.CustomClassConstructor1<ILocationApproval, ILocationApprovalPrototype, LocationApproval, GlideRecord | GlideElementReference> {
         /**
          * Creates a new {@link LocationApproval} instance.
          * 
@@ -69,7 +69,7 @@ namespace x_g_inte_site_17 {
     }
 
     export const LocationApproval: LocationApprovalConstructor = (function (): LocationApprovalConstructor {
-        var locationApprovalConstructor: LocationApprovalConstructor = Class.create();
+        var constructor: LocationApprovalConstructor = Class.create();
 
         const TABLE_NAME = 'x_g_inte_site_17_location_approvers';
 
@@ -101,9 +101,9 @@ namespace x_g_inte_site_17 {
             }
         }
 
-        locationApprovalConstructor.getDefaultApprovalGroup = getDefaultApprovalGroup;
+        constructor.getDefaultApprovalGroup = getDefaultApprovalGroup;
 
-        locationApprovalConstructor.prototype = {
+        constructor.prototype = {
             initialize(source: GlideRecord | GlideElementReference): void {
                 if (gs.nil(source)) throw new Error("No glide object provided");
                 if (source instanceof GlideRecord) {
@@ -131,6 +131,6 @@ namespace x_g_inte_site_17 {
             type: "LocationApproval"
         };
 
-        return locationApprovalConstructor;
+        return constructor;
     })();
 }
