@@ -5,6 +5,10 @@ declare namespace x_g_inte_site_17 {
         startDateTime: GlideDateTime;
         duration?: GlideDuration;
     }
+    interface IAvailabilityRange {
+        startDateTime: GlideDateTime;
+        duration: GlideDuration;
+    }
     type TimeSlot = Required<ITimeSlot>;
     interface IReservationScheduler extends $$snClass.ICustomClassBase<IReservationScheduler, "ReservationScheduler"> {
         sys_id: string;
@@ -96,19 +100,19 @@ declare namespace x_g_inte_site_17 {
          * @param {GlideDateTime} [toDateTime]
          * @param {GlideDuration} [minimumDuration]
          * @param {GlideDuration} [maximumDuration]
-         * @return {(ITimeSlot | undefined)}
+         * @return {global.Optional<IAvailabilityRange>}
          * @memberof IReservationScheduler
          */
-        getNextAvailableTimeSlot(fromDateTime: GlideDateTime, toDateTime?: GlideDateTime, minimumDuration?: GlideDuration): ITimeSlot | undefined;
+        getNextAvailableTimeSlot(fromDateTime: GlideDateTime, toDateTime?: GlideDateTime, minimumDuration?: GlideDuration): global.Optional<IAvailabilityRange>;
         /**
          * Gets the available time slots within a given range of date/time values.
          * @param {GlideDateTime} fromDateTime - The starting date/time range.
          * @param {GlideDateTime} toDateTime - The ending date/time range.
          * @param {GlideDuration} [minimumDuration] - The optional minimum duration for the returned time slots.
-         * @return {TimeSlot[]} The available time slots within the specified date/time range.
+         * @return {global.Stream<IAvailabilityRange>} The available time slots within the specified date/time range.
          * @memberof IReservationScheduler
          */
-        getAvailabilitiesInRange(fromDateTime: GlideDateTime, toDateTime: GlideDateTime, minimumDuration?: GlideDuration): TimeSlot[];
+        getAvailabilitiesInRange(fromDateTime: GlideDateTime, toDateTime: GlideDateTime, minimumDuration?: GlideDuration): global.Stream<IAvailabilityRange>;
         /**
          * Indicates whether the specified start date and duration is available for an reservation.
          * @param {GlideDateTime} startDateTime - The prospective reservation start date and time.
