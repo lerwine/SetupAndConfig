@@ -231,7 +231,7 @@ namespace x_g_inte_site_17 {
         phone: string;
     }
 
-    export interface IProfileValidatorBase extends $$snClass.ICustomClassBase<IProfileValidatorBase, "ProfileValidator"> {
+    export interface IProfileValidator extends $$snClass.ICustomClassBase<IProfileValidator, "ProfileValidator"> {
         /**
          * Gets compliance check information for the user indicated by the 'sysparm_user_id' parameter.
          *
@@ -255,12 +255,12 @@ namespace x_g_inte_site_17 {
         getUserOrg(): string;
     }
 
-    export interface IProfileValidatorPrototype extends $$snClass.ICustomAjaxClassPrototype<IProfileValidatorBase, IProfileValidatorPrototype, "ProfileValidator">, IProfileValidatorBase {
+    export interface IProfileValidatorPrototype extends $$snClass.ICustomAjaxClassPrototype<IProfileValidator, IProfileValidatorPrototype, "ProfileValidator">, IProfileValidator {
     }
 
-    export declare type ProfileValidator = Readonly<IProfileValidatorBase>;
+    export declare type ProfileValidator = Readonly<IProfileValidator>;
 
-    export interface ProfileValidatorConstructor extends $$snClass.CustomAjaxClassConstructor<IProfileValidatorBase, IProfileValidatorPrototype, ProfileValidator> {
+    export interface ProfileValidatorConstructor extends $$snClass.CustomAjaxClassConstructor<IProfileValidator, IProfileValidatorPrototype, ProfileValidator> {
         new(request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController): ProfileValidator;
         (request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController): ProfileValidator;
         /**
@@ -320,7 +320,7 @@ namespace x_g_inte_site_17 {
     }
 
     export const ProfileValidator: ProfileValidatorConstructor = (function (): ProfileValidatorConstructor {
-        var profileValidatorConstructor: ProfileValidatorConstructor = Class.create();
+        var constructor: ProfileValidatorConstructor = Class.create();
 
         const SYSID_RE = /^[\da-f]{32}$/i;
         const PROPERTY_NAME_profile_phone_fields = 'x_g_inte_site_17.profile_phone_fields';
@@ -418,11 +418,11 @@ namespace x_g_inte_site_17 {
             return isNil(userId) ? gs.getUserID() : (typeof userId === 'string') ? userId : '' + userId;
         }
 
-        profileValidatorConstructor.isUserLookupFault = function(result: IUserLookupResult): boolean {
+        constructor.isUserLookupFault = function(result: IUserLookupResult): boolean {
             return typeof result === 'object' && null != result && result.code !== 0;
         };
 
-        profileValidatorConstructor.getUserLookupResult = function(user: GlideRecord | GlideElementReference | string): IUserLookupResult {
+        constructor.getUserLookupResult = function(user: GlideRecord | GlideElementReference | string): IUserLookupResult {
             var user_id, sys_id;
             if (typeof user === 'object') {
                 if (user != null) {
@@ -468,7 +468,7 @@ namespace x_g_inte_site_17 {
             return { code: 1, user_id: user_id, message: 'User with user_name "' + user_id + '" not found' };
         };
 
-        profileValidatorConstructor.checkUserProfileCompliance = function(sys_user: GlideRecord | GlideElementReference): IUserProfileComplianceInfo {
+        constructor.checkUserProfileCompliance = function(sys_user: GlideRecord | GlideElementReference): IUserProfileComplianceInfo {
             var profile_fields = getProfileComplianceCheckFields();
             if (sys_user instanceof GlideElementReference)
                 sys_user = <GlideRecord>sys_user.getRefRecord();
@@ -545,9 +545,9 @@ namespace x_g_inte_site_17 {
             return result;
         };
 
-        profileValidatorConstructor.getUserProfileCompliance = function(user: GlideRecord | GlideElementReference | string): IUserProfileComplianceResult {
-            var getUserResponse: IUserLookupResult = profileValidatorConstructor.getUserLookupResult(user);
-            if (profileValidatorConstructor.isUserLookupFault(getUserResponse))
+        constructor.getUserProfileCompliance = function(user: GlideRecord | GlideElementReference | string): IUserProfileComplianceResult {
+            var getUserResponse: IUserLookupResult = constructor.getUserLookupResult(user);
+            if (constructor.isUserLookupFault(getUserResponse))
                 return {
                     code: getUserResponse.code,
                     user_id: getUserResponse.user_id,
@@ -558,16 +558,16 @@ namespace x_g_inte_site_17 {
                     failed: 0,
                     notChecked: getProfileComplianceCheckFields().length
                 };
-            var result = <IUserProfileComplianceResult>profileValidatorConstructor.checkUserProfileCompliance(<GlideRecord>getUserResponse.user);
+            var result = <IUserProfileComplianceResult>constructor.checkUserProfileCompliance(<GlideRecord>getUserResponse.user);
             result.code = 0;
             result.user_id = getUserResponse.user_id;
             result.sys_id = getUserResponse.sys_id;
             return result;
         };
 
-        profileValidatorConstructor.getUserNotifications = function(user: GlideRecord | GlideElementReference | string): IUserNotificationsResult {
-            var getUserResponse: IUserLookupResult = profileValidatorConstructor.getUserLookupResult(user);
-            if (profileValidatorConstructor.isUserLookupFault(getUserResponse))
+        constructor.getUserNotifications = function(user: GlideRecord | GlideElementReference | string): IUserNotificationsResult {
+            var getUserResponse: IUserLookupResult = constructor.getUserLookupResult(user);
+            if (constructor.isUserLookupFault(getUserResponse))
                 return {
                     code: getUserResponse.code,
                     user_id: getUserResponse.user_id,
@@ -584,34 +584,34 @@ namespace x_g_inte_site_17 {
                 code: 0,
                 user_id: getUserResponse.user_id,
                 sys_id: getUserResponse.sys_id,
-                profileCompliance: profileValidatorConstructor.checkUserProfileCompliance(<GlideRecord>getUserResponse.user)
+                profileCompliance: constructor.checkUserProfileCompliance(<GlideRecord>getUserResponse.user)
             };
         };
 
-        profileValidatorConstructor.getUserPhoneAndOrg = getUserPhoneAndOrg;
+        constructor.getUserPhoneAndOrg = getUserPhoneAndOrg;
 
-        profileValidatorConstructor.getUserPhone = function(user?: string | sys_userGlideRecord | sys_userElement): string | undefined {
+        constructor.getUserPhone = function(user?: string | sys_userGlideRecord | sys_userElement): string | undefined {
             var gr: sys_userGlideRecord | undefined = asValidUserGlideRecord(user);
             if (typeof gr !== 'undefined') return getUserPhone(gr);
         };
 
-        profileValidatorConstructor.getUserOrg = function(user?: string | sys_userGlideRecord | sys_userElement): string | undefined {
+        constructor.getUserOrg = function(user?: string | sys_userGlideRecord | sys_userElement): string | undefined {
             var gr: sys_userGlideRecord | undefined = asValidUserGlideRecord(user);
             if (typeof gr !== 'undefined') return getUserOrg(gr);
         };
 
-        profileValidatorConstructor.prototype = Object.extendsObject<IAbstractAjaxProcessor, IProfileValidatorPrototype>(global.AbstractAjaxProcessor, {
+        constructor.prototype = Object.extendsObject<IAbstractAjaxProcessor, IProfileValidatorPrototype>(global.AbstractAjaxProcessor, {
             getUserProfileCompliance: function(this: IProfileValidatorPrototype & IAbstractAjaxProcessor): string | undefined {
-                var response = profileValidatorConstructor.getUserProfileCompliance('' + this.getParameter('sysparm_user_id'));
-                if (profileValidatorConstructor.isUserLookupFault(response))
+                var response = constructor.getUserProfileCompliance('' + this.getParameter('sysparm_user_id'));
+                if (constructor.isUserLookupFault(response))
                     this.setError(response);
                 else
                     return JSON.stringify(response);
             },
             
             getUserNotifications: function(this: IProfileValidatorPrototype & IAbstractAjaxProcessor): string | undefined {
-                var response = profileValidatorConstructor.getUserNotifications('' + this.getParameter('sysparm_user_id'));
-                if (profileValidatorConstructor.isUserLookupFault(response))
+                var response = constructor.getUserNotifications('' + this.getParameter('sysparm_user_id'));
+                if (constructor.isUserLookupFault(response))
                     this.setError(response);
                 else
                     return JSON.stringify(response);
@@ -643,10 +643,10 @@ namespace x_g_inte_site_17 {
         });
 
         
-        profileValidatorConstructor.getProfileComplianceCheckFields = getProfileComplianceCheckFields;
+        constructor.getProfileComplianceCheckFields = getProfileComplianceCheckFields;
 
-        profileValidatorConstructor.getProfilePhoneFields = getProfilePhoneFields;
+        constructor.getProfilePhoneFields = getProfilePhoneFields;
 
-        return profileValidatorConstructor;
+        return constructor;
     })();
 }

@@ -4,8 +4,10 @@
 var x_g_inte_site_17;
 (function (x_g_inte_site_17) {
     x_g_inte_site_17.ReservationScheduler = (function () {
-        var reservationSchedulerConstructor = Class.create();
+        var constructor = Class.create();
+        var a = new x_g_inte_site_17.ReservationSchedulerAjax();
         var TABLE_NAME = 'x_g_inte_site_17_reservation_type';
+        var ENTRY_TABLE_NAME = 'cmn_schedule_span';
         var gdz = new GlideDuration(0);
         var oneMinute = new GlideDuration(60000);
         // #region Private functions
@@ -125,8 +127,8 @@ var x_g_inte_site_17;
             return true;
         }
         // #endregion
-        reservationSchedulerConstructor.getTableName = function () { return TABLE_NAME; };
-        reservationSchedulerConstructor.prototype = {
+        constructor.getTableName = function () { return TABLE_NAME; };
+        constructor.prototype = {
             initialize: function (type, allowInactive, timeZone) {
                 if (isNil(type))
                     throw new Error("Reservation Type was not provided.");
@@ -371,10 +373,12 @@ var x_g_inte_site_17;
              * @param {string} name - The name to assign to the reservation.
              * @param {GlideDateTime} startDateTime - The start date and time of the reservation.
              * @param {GlideDuration} duration - The duration of the reservation.
+             * @param {GlideDuration} [group_id] - The optional sys_id of the associated sys_user_group.
+             * @param {GlideDuration} [user_id] - The optional sys_id of the associated sys_user.
              * @return {(cmn_schedule_spanGlideRecord | undefined)} The {@link cmn_schedule_spanGlideRecord} representing the reservation
              * or undefined if the specified date/time and duration was not available.
              */
-            addAppointment: function (name, startDateTime, duration) {
+            addReservation: function (name, startDateTime, duration, group_id, user_id) {
                 if (typeof name !== 'string' || (name = name.trim()).length == 0)
                     throw new Error("Invalid name");
                 if (isNil(startDateTime))
@@ -396,24 +400,57 @@ var x_g_inte_site_17;
                 if (duration.after(this.maximum_duration))
                     throw new Error("Appointment duration is longer than the maximum allowed duration");
                 if (!isSlotAvailable.call(this, startDateTime, duration))
-                    throw new Error("That appoinment slot is not available");
-                var gr = new GlideRecord('cmn_schedule_span');
+                    return;
+                var gr = new GlideRecord(ENTRY_TABLE_NAME);
                 gr.newRecord();
                 gr.setValue('schedule', this._scheduleId);
                 gr.setValue('all_day', false);
                 gr.setValue('name', name);
-                gr.setValue('show_as', cmn_schedule_entryShowAs.Busy);
+                gr.setValue('show_as', 'busy');
                 gr.setValue('start_date_time', new GlideScheduleDateTime(startDateTime).getValue());
                 var dateTime = new GlideDateTime(startDateTime);
                 dateTime.add(duration);
                 gr.setValue('end_date_time', new GlideScheduleDateTime(dateTime).getValue());
-                gr.setValue('type', cmn_schedule_entryEntryType.Appointment);
+                gr.setValue('type', 'exclude');
+                if (!isNil(group_id))
+                    gr.setValue('group', group_id);
+                if (!isNil(user_id))
+                    gr.setValue('user', user_id);
                 if (!isNil(gr.insert()))
                     throw new Error("Failed to add schedule entry");
                 return gr;
             },
+            removeReservation: function (reservation) {
+                if (isNil(reservation))
+                    return false;
+                var gr;
+                if (typeof reservation === 'string') {
+                    gr = new GlideRecord(ENTRY_TABLE_NAME);
+                    gr.addQuery('sys_id', reservation);
+                    gr.query();
+                    if (!gr.next())
+                        return false;
+                }
+                else {
+                    if (reservation instanceof GlideElement) {
+                        if (reservation.nil() || !reservation.getRefRecord)
+                            return false;
+                        gr = reservation.getRefRecord();
+                        if (gs.nil(gr))
+                            return false;
+                    }
+                    else {
+                        if (!reservation.getTableName)
+                            return false;
+                        gr = reservation;
+                    }
+                    if (gr.getTableName() != ENTRY_TABLE_NAME)
+                        return false;
+                }
+                return gr.getValue('schedule') == this._scheduleId && gr.deleteRecord();
+            },
             type: "ReservationScheduler"
         };
-        return reservationSchedulerConstructor;
+        return constructor;
     })();
 })(x_g_inte_site_17 || (x_g_inte_site_17 = {}));

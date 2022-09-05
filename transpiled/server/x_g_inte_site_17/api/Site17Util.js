@@ -9,14 +9,14 @@ var x_g_inte_site_17;
         var PROPERTY_NAME_source_user_include_empty = 'x_g_inte_site_17.source_user_include_empty';
         var PROPERTY_NAME_source_group_include_empty = 'x_g_inte_site_17.source_group_include_empty';
         var dnRegex = /^([^=,]+|\\.)+=([^,]+|\\.)*(,([^=,]+|\\.)+=([^,]+|\\.)*)*$/;
-        var site17UtilConstructor = Class.create();
-        site17UtilConstructor.isUser = function (target) {
+        var constructor = Class.create();
+        constructor.isUser = function (target) {
             return !gs.nil(target) && typeof target === 'object' && target.getTableName && target.getTableName() == 'sys_user';
         };
-        site17UtilConstructor.isGroup = function (target) {
+        constructor.isGroup = function (target) {
             return !gs.nil(target) && typeof target === 'object' && target.getTableName && target.getTableName() == 'sys_user_group';
         };
-        site17UtilConstructor.isVip = function (target) {
+        constructor.isVip = function (target) {
             return !gs.nil(target) && typeof target === 'object' && target.getTableName && target.getTableName() == 'sys_user' && target.vip;
         };
         function getCaller(target) {
@@ -52,30 +52,30 @@ var x_g_inte_site_17;
             if (!gs.nil(caller))
                 return caller;
         }
-        site17UtilConstructor.getCaller = function (target) {
+        constructor.getCaller = function (target) {
             if (!gs.nil(target))
                 return getCaller(target);
         };
         function isBusinessUnit(target) {
             return !gs.nil(target) && typeof target === 'object' && target.getTableName && target.getTableName() == 'business_unit';
         }
-        site17UtilConstructor.isBusinessUnit = isBusinessUnit;
+        constructor.isBusinessUnit = isBusinessUnit;
         function isDepartment(target) {
             return !gs.nil(target) && typeof target === 'object' && target.getTableName && target.getTableName() == 'cmn_department';
         }
-        site17UtilConstructor.isDepartment = isDepartment;
+        constructor.isDepartment = isDepartment;
         function isCompany(target) {
             return !gs.nil(target) && typeof target === 'object' && target.getTableName && target.getTableName() == 'core_company';
         }
-        site17UtilConstructor.isCompany = isCompany;
+        constructor.isCompany = isCompany;
         function isLocation(target) {
             return !gs.nil(target) && typeof target === 'object' && target.getTableName && target.getTableName() == 'cmn_location';
         }
-        site17UtilConstructor.isLocation = isLocation;
+        constructor.isLocation = isLocation;
         function isBuilding(target) {
             return !gs.nil(target) && typeof target === 'object' && target.getTableName && target.getTableName() == 'cmn_building';
         }
-        site17UtilConstructor.isBuilding = isBuilding;
+        constructor.isBuilding = isBuilding;
         function getBusinessUnit(target) {
             if (x_g_inte_site_17.Site17Util.isUser(target))
                 return getBusinessUnit(target.department);
@@ -85,7 +85,7 @@ var x_g_inte_site_17;
                 return target.business_unit;
             }
         }
-        site17UtilConstructor.getBusinessUnit = function (target) {
+        constructor.getBusinessUnit = function (target) {
             if (!gs.nil(target))
                 return getBusinessUnit(target);
         };
@@ -106,7 +106,7 @@ var x_g_inte_site_17;
                 return result;
             }
         }
-        site17UtilConstructor.getCompany = function (target) {
+        constructor.getCompany = function (target) {
             if (!gs.nil(target))
                 return getCompany(target);
         };
@@ -123,7 +123,7 @@ var x_g_inte_site_17;
                     return target.location;
             }
         }
-        site17UtilConstructor.getLocation = function (target) {
+        constructor.getLocation = function (target) {
             if (!gs.nil(target))
                 return getLocation(target);
         };
@@ -134,14 +134,14 @@ var x_g_inte_site_17;
                 return false;
             return sourceDN.toLowerCase().endsWith(',' + containerDN.toLowerCase());
         }
-        site17UtilConstructor.isDnContainedBy = function (sourceDN, containerDN) {
+        constructor.isDnContainedBy = function (sourceDN, containerDN) {
             var s = '' + sourceDN;
             if (s.trim().length == 0)
                 return false;
             var c = '' + containerDN;
             return c.trim().length > 0 && isDnContainedBy(s, c);
         };
-        site17UtilConstructor.testDistinguishedName = function (value) {
+        constructor.testDistinguishedName = function (value) {
             if (gs.nil(value))
                 return false;
             var dn = '' + value;
@@ -149,41 +149,41 @@ var x_g_inte_site_17;
                 return false;
             return dnRegex.test(dn);
         };
-        site17UtilConstructor.getUsersContainerDN = function () {
+        constructor.getUsersContainerDN = function () {
             return '' + gs.getProperty(PROPERTY_NAME_source_dn_users, '');
         };
-        site17UtilConstructor.getGroupsContainerDN = function () {
+        constructor.getGroupsContainerDN = function () {
             return '' + gs.getProperty(PROPERTY_NAME_source_dn_groups, '');
         };
-        site17UtilConstructor.includeEmptyUserSource = function () {
+        constructor.includeEmptyUserSource = function () {
             return gs.getProperty(PROPERTY_NAME_source_user_include_empty) == 'true';
         };
-        site17UtilConstructor.includeEmptyGroupSource = function () {
+        constructor.includeEmptyGroupSource = function () {
             return gs.getProperty(PROPERTY_NAME_source_group_include_empty) == 'true';
         };
         function isUserDN(sourceDN) {
-            var containerDN = site17UtilConstructor.getUsersContainerDN();
+            var containerDN = constructor.getUsersContainerDN();
             if (sourceDN.startsWith('ldap:'))
                 sourceDN = sourceDN.substring(5);
             if (containerDN.trim().length == 0)
                 return sourceDN.trim().length == 0;
             if (sourceDN.trim().length == 0)
-                return site17UtilConstructor.includeEmptyUserSource();
+                return constructor.includeEmptyUserSource();
             return isDnContainedBy(sourceDN, containerDN);
         }
-        site17UtilConstructor.isUserDN = function (sourceDN) { return isUserDN('' + sourceDN); };
+        constructor.isUserDN = function (sourceDN) { return isUserDN('' + sourceDN); };
         function isGroupDN(sourceDN) {
-            var containerDN = site17UtilConstructor.getGroupsContainerDN();
+            var containerDN = constructor.getGroupsContainerDN();
             if (sourceDN.startsWith('ldap:'))
                 sourceDN = sourceDN.substring(5);
             if (containerDN.trim().length == 0)
                 return sourceDN.trim().length == 0;
             if (sourceDN.trim().length == 0)
-                return site17UtilConstructor.includeEmptyGroupSource();
+                return constructor.includeEmptyGroupSource();
             return isDnContainedBy(sourceDN, containerDN);
         }
-        site17UtilConstructor.isGroupDN = function (sourceDN) { return isGroupDN('' + sourceDN); };
-        site17UtilConstructor.isSite17User = function (source) {
+        constructor.isGroupDN = function (sourceDN) { return isGroupDN('' + sourceDN); };
+        constructor.isSite17User = function (source) {
             if (gs.nil(source))
                 return false;
             var gr;
@@ -203,7 +203,7 @@ var x_g_inte_site_17;
             }
             return isUserDN('' + gr.source);
         };
-        site17UtilConstructor.isSite17Group = function (sys_user_group) {
+        constructor.isSite17Group = function (sys_user_group) {
             if (gs.nil(sys_user_group))
                 return false;
             if (sys_user_group instanceof GlideRecord || sys_user_group instanceof GlideElement) {
@@ -216,12 +216,12 @@ var x_g_inte_site_17;
             gr.query();
             return gr.next() && isGroupDN('' + gr.source);
         };
-        site17UtilConstructor.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
-            isDnContainedBy: function (sourceDN, containerDN) { return JSON.stringify(site17UtilConstructor.isDnContainedBy(sourceDN, containerDN)); },
-            getUsersContainerDN: function () { return JSON.stringify(site17UtilConstructor.getUsersContainerDN()); },
-            getGroupsContainerDN: function () { return JSON.stringify(site17UtilConstructor.getGroupsContainerDN()); },
-            includeEmptyUserSource: function () { return JSON.stringify(site17UtilConstructor.includeEmptyUserSource()); },
-            includeEmptyGroupSource: function () { return JSON.stringify(site17UtilConstructor.includeEmptyGroupSource()); },
+        constructor.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
+            isDnContainedBy: function (sourceDN, containerDN) { return JSON.stringify(constructor.isDnContainedBy(sourceDN, containerDN)); },
+            getUsersContainerDN: function () { return JSON.stringify(constructor.getUsersContainerDN()); },
+            getGroupsContainerDN: function () { return JSON.stringify(constructor.getGroupsContainerDN()); },
+            includeEmptyUserSource: function () { return JSON.stringify(constructor.includeEmptyUserSource()); },
+            includeEmptyGroupSource: function () { return JSON.stringify(constructor.includeEmptyGroupSource()); },
             isUserDN: function (sourceDN) { return JSON.stringify(isUserDN('' + sourceDN)); },
             isGroupDN: function (sourceDN) { return JSON.stringify(isGroupDN('' + sourceDN)); },
             isSite17User: function (sys_id) {
@@ -238,6 +238,6 @@ var x_g_inte_site_17;
             },
             type: "Site17Util"
         });
-        return site17UtilConstructor;
+        return constructor;
     })();
 })(x_g_inte_site_17 || (x_g_inte_site_17 = {}));

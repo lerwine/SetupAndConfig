@@ -14,7 +14,7 @@ namespace x_44813_mmservices {
         end: string;
     }
     
-    export interface ISite17MMServicesUtilBase extends $$snClass.ICustomClassBase<ISite17MMServicesUtilBase, "Site17MMServicesUtil"> {
+    export interface ISite17MMServicesUtil extends $$snClass.ICustomClassBase<ISite17MMServicesUtil, "Site17MMServicesUtil"> {
         /**
          * Gets the number of days the default minimum lead time for appointments.
          * @memberof ISite17MMServicesUtilBase
@@ -75,16 +75,16 @@ namespace x_44813_mmservices {
         getAvailabilitiesInRange(): void;
     }
     
-    export interface ISite17MMServicesUtilPrototype extends $$snClass.ICustomAjaxClassPrototype<ISite17MMServicesUtilBase, ISite17MMServicesUtilPrototype, "Site17MMServicesUtil">, ISite17MMServicesUtilBase {
+    export interface ISite17MMServicesUtilPrototype extends $$snClass.ICustomAjaxClassPrototype<ISite17MMServicesUtil, ISite17MMServicesUtilPrototype, "Site17MMServicesUtil">, ISite17MMServicesUtil {
     }
     
-    export type Site17MMServicesUtil = Readonly<ISite17MMServicesUtilBase>;
+    export type Site17MMServicesUtil = Readonly<ISite17MMServicesUtil>;
     
-    export interface IPrivateConstructorData {
+    export interface ISite17MMServicesUtilConstructorPrivate {
         _scheduler?: x_g_inte_site_17.ReservationScheduler;
     }
 
-    export interface Site17MMServicesUtilConstructor extends $$snClass.CustomAjaxClassConstructor<ISite17MMServicesUtilBase, ISite17MMServicesUtilPrototype, Site17MMServicesUtil> {
+    export interface Site17MMServicesUtilConstructor extends $$snClass.CustomAjaxClassConstructor<ISite17MMServicesUtil, ISite17MMServicesUtilPrototype, Site17MMServicesUtil> {
         /**
          * Gets the number of days the default minimum lead time for appointments.
          * @return {number} The number of days the default minimum lead time for appointments.
@@ -121,9 +121,9 @@ namespace x_44813_mmservices {
         const TIME_PATTERN = /^([01]\d|2[0-3]):[0-5]\d$/;
         const TIME_RANGE_PATTERN = /^((?:[01]\d|2[0-3]):[0-5]\d)-((?:[01]\d|2[0-3]):[0-5]\d)$/;
         
-        var site17MMServicesUtilConstructor: Site17MMServicesUtilConstructor = Class.create();
+        var constructor: Site17MMServicesUtilConstructor = Class.create();
     
-        var privateConstructorData: IPrivateConstructorData = { };
+        var privateData: ISite17MMServicesUtilConstructorPrivate = { };
     
         function isNil(obj: any | undefined): obj is undefined | null | "" {
             switch (typeof obj) {
@@ -159,13 +159,13 @@ namespace x_44813_mmservices {
         function getReservationScheduler(): x_g_inte_site_17.ReservationScheduler {
             var sys_id = getReservationTypeSysId();
             if (isNil(sys_id)) {
-                privateConstructorData._scheduler = undefined;
+                privateData._scheduler = undefined;
                 throw new Error('Failure invoking x_44813_mmservices.getReservationScheduler: Property "' + PROPERTY_NAME_reservation_type + '" is empty.');
             }
-            if (typeof privateConstructorData._scheduler !== 'undefined') {
-                if (privateConstructorData._scheduler.sys_id == sys_id)
-                    return privateConstructorData._scheduler;
-                privateConstructorData._scheduler = undefined;
+            if (typeof privateData._scheduler !== 'undefined') {
+                if (privateData._scheduler.sys_id == sys_id)
+                    return privateData._scheduler;
+                privateData._scheduler = undefined;
             }
             var gr = <reservation_typeGlideRecord>new GlideRecord(x_g_inte_site_17.ReservationScheduler.getTableName());
             gr.addQuery('sys_id', sys_id);
@@ -173,17 +173,17 @@ namespace x_44813_mmservices {
             if (!gr.next())
                 throw new Error('Failure invoking x_44813_mmservices.getReservationScheduler: Reservation Type (' + x_g_inte_site_17.ReservationScheduler.getTableName() +
                     ') with sys_id "' + sys_id + '" (specified in setting ' + PROPERTY_NAME_reservation_type + ') was not found.');
-            privateConstructorData._scheduler = new x_g_inte_site_17.ReservationScheduler(gr);
-            return privateConstructorData._scheduler;
+            privateData._scheduler = new x_g_inte_site_17.ReservationScheduler(gr);
+            return privateData._scheduler;
         }
 
-        site17MMServicesUtilConstructor.getDefaultMinLeadTimeDays = getDefaultMinLeadTimeDays;
+        constructor.getDefaultMinLeadTimeDays = getDefaultMinLeadTimeDays;
     
-        site17MMServicesUtilConstructor.getReservationTypeSysId = getReservationTypeSysId;
+        constructor.getReservationTypeSysId = getReservationTypeSysId;
     
-        site17MMServicesUtilConstructor.getReservationScheduler = getReservationScheduler;
+        constructor.getReservationScheduler = getReservationScheduler;
     
-        site17MMServicesUtilConstructor.prototype = Object.extendsObject<IAbstractAjaxProcessor, ISite17MMServicesUtilPrototype>(global.AbstractAjaxProcessor, {
+        constructor.prototype = Object.extendsObject<IAbstractAjaxProcessor, ISite17MMServicesUtilPrototype>(global.AbstractAjaxProcessor, {
             getDefaultMinLeadTimeDays: function(this: IAbstractAjaxProcessor & ISite17MMServicesUtilPrototype): void {
                 this.setAnswer(getDefaultMinLeadTimeDays())
             },
@@ -221,6 +221,6 @@ namespace x_44813_mmservices {
             type: "Site17MMServicesUtil"
         });
     
-        return site17MMServicesUtilConstructor;
+        return constructor;
     })();
 }

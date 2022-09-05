@@ -3,8 +3,8 @@
 var x_g_inte_site_17;
 (function (x_g_inte_site_17) {
     x_g_inte_site_17.DistinguishedNameContext = (function () {
-        var distinguishedNameContextConstructor = Class.create();
-        distinguishedNameContextConstructor.prototype = {
+        var constructor = Class.create();
+        constructor.prototype = {
             _isGroup: false,
             initialize: function (source) {
                 if (gs.nil(source))
@@ -62,6 +62,6 @@ var x_g_inte_site_17;
             },
             type: "DistinguishedNameContext"
         };
-        return distinguishedNameContextConstructor;
+        return constructor;
     })();
 })(x_g_inte_site_17 || (x_g_inte_site_17 = {}));

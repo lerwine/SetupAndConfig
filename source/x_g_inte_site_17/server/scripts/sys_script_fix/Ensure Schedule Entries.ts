@@ -5,6 +5,7 @@ namespace ensure_schedule_entries {
     type FloatDayType = "1" | "2" | "3" | "4" | "5" | "6" | "7";
     type FloatWeekType = "1" | "2" | "3" | "4" | "last";
     type MonthType = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "11" | "12";
+    type ShowAsType = "busy" | "free" | "tentative" | "on_call";
     interface IChildScheduleDefinition {
         sys_id: string;
         type: ScheduleType;
@@ -16,6 +17,7 @@ namespace ensure_schedule_entries {
         all_day: boolean;
         repeat_type: RepeatType;
         type?: ScheduleType;
+        show_as: ShowAsType;
         yearly_type?: YearlyType;
         float_day?: FloatDayType;
         float_week?: FloatWeekType;
@@ -37,7 +39,8 @@ namespace ensure_schedule_entries {
             start_date_time: "20180222T060000",
             end_date_time: "20180222T180000",
             all_day: false,
-            repeat_type: "weekdays"
+            repeat_type: "weekdays",
+            show_as: "busy"
         }],
         child_schedules: [{ /* Site 17 Facility Holidays */ sys_id: 'c7475f021ba7c9101497a820f54bcb04', type: 'include' }]
     }, {
@@ -48,7 +51,8 @@ namespace ensure_schedule_entries {
             start_date_time: "20220214T090000",
             end_date_time: "20220214T140000",
             all_day: false,
-            repeat_type: "weekdays"
+            repeat_type: "weekdays",
+            show_as: "busy"
         }],
         child_schedules: [{ /* Site 17 Facility Holidays */ sys_id: 'c7475f021ba7c9101497a820f54bcb04', type: 'include' }]
     }, {
@@ -61,7 +65,8 @@ namespace ensure_schedule_entries {
             all_day: true,
             repeat_type: "yearly",
             yearly_type: "doy",
-            type: "exclude"
+            type: "exclude",
+            show_as: "free"
         }, {
             name: "Martin Luther King, Jr. Day",
             start_date_time: "20120116T000000",
@@ -72,7 +77,8 @@ namespace ensure_schedule_entries {
             float_day: "2",
             float_week: "3",
             month: "1",
-            type: "exclude"
+            type: "exclude",
+            show_as: "free"
         }, {
             name: "Memorial Day",
             start_date_time: "20120528T000000",
@@ -83,7 +89,8 @@ namespace ensure_schedule_entries {
             float_day: "2",
             float_week: "last",
             month: "5",
-            type: "exclude"
+            type: "exclude",
+            show_as: "free"
         }, {
             name: "Juneteenth",
             start_date_time: "20220619T000000",
@@ -91,7 +98,8 @@ namespace ensure_schedule_entries {
             all_day: true,
             repeat_type: "yearly",
             yearly_type: "doy",
-            type: "exclude"
+            type: "exclude",
+            show_as: "free"
         }, {
             name: "Independence Day",
             start_date_time: "20120704T000000",
@@ -99,7 +107,8 @@ namespace ensure_schedule_entries {
             all_day: true,
             repeat_type: "yearly",
             yearly_type: "doy",
-            type: "exclude"
+            type: "exclude",
+            show_as: "free"
         }, {
             name: "Labor Day",
             start_date_time: "20120901T000000",
@@ -110,7 +119,8 @@ namespace ensure_schedule_entries {
             float_day: "2",
             float_week: "1",
             month: "9",
-            type: "exclude"
+            type: "exclude",
+            show_as: "free"
         }, {
             name: "Veterans Day",
             start_date_time: "20121111T000000",
@@ -118,7 +128,8 @@ namespace ensure_schedule_entries {
             all_day: true,
             repeat_type: "yearly",
             yearly_type: "doy",
-            type: "exclude"
+            type: "exclude",
+            show_as: "free"
         }, {
             name: "Thanksgiving Day",
             start_date_time: "20121122T000000",
@@ -129,7 +140,8 @@ namespace ensure_schedule_entries {
             float_day: "5",
             float_week: "4",
             month: "11",
-            type: "exclude"
+            type: "exclude",
+            show_as: "free"
         }, {
             name: "Black Friday",
             start_date_time: "20221125T000000",
@@ -140,7 +152,8 @@ namespace ensure_schedule_entries {
             float_day: "6",
             float_week: "4",
             month: "11",
-            type: "exclude"
+            type: "exclude",
+            show_as: "free"
         }, {
             name: "Christmas Day",
             start_date_time: "20121225T000000",
@@ -148,7 +161,8 @@ namespace ensure_schedule_entries {
             all_day: true,
             repeat_type: "yearly",
             yearly_type: "doy",
-            type: "exclude"
+            type: "exclude",
+            show_as: "free"
         }, {
             name: "New Year's Eve",
             start_date_time: "20121231T000000",
@@ -156,7 +170,8 @@ namespace ensure_schedule_entries {
             all_day: true,
             repeat_type: "yearly",
             yearly_type: "doy",
-            type: "exclude"
+            type: "exclude",
+            show_as: "free"
         }],
         child_schedules: []
     }, {
@@ -168,14 +183,16 @@ namespace ensure_schedule_entries {
             end_date_time: "20080709T120000",
             all_day: false,
             repeat_type: "weekdays",
-            notes: 'Represents before-lunch hours. Actual hours may vary for each person.'
+            notes: 'Represents before-lunch hours. Actual hours may vary for each person.',
+            show_as: "busy"
         }, {
             name: "1300-1700 Weekdays",
             start_date_time: "20220214T130000",
             end_date_time: "20220214T170000",
             all_day: false,
             repeat_type: "weekdays",
-            notes: 'Represents after-lunch hours. Actual hours may vary for each person.'
+            notes: 'Represents after-lunch hours. Actual hours may vary for each person.',
+            show_as: "busy"
         }],
         child_schedules: [{ /* Site 17 Facility Holidays */ sys_id: 'c7475f021ba7c9101497a820f54bcb04', type: 'include' }]
     }, {
@@ -186,9 +203,13 @@ namespace ensure_schedule_entries {
             start_date_time: "20220214T060000",
             end_date_time: "20220214T180000",
             all_day: false,
-            repeat_type: "weekdays"
+            repeat_type: "weekdays",
+            show_as: "busy"
         }],
-        child_schedules: [{ /* Site 17 UM/CIV Holidays */ sys_id: '46981f421ba7c9101497a820f54bcbff', type: 'include' }]
+        child_schedules: [
+            { /* Site 17 Facility Holidays */ sys_id: 'c7475f021ba7c9101497a820f54bcb04', type: 'include' },
+            { /* Site 17 UM/CIV Holidays */ sys_id: '46981f421ba7c9101497a820f54bcbff', type: 'include' }
+        ]
     }, {
         sys_id: "79a01f0a1b67c9101497a820f54bcbc9", // Site 17 UM/CIV Core Hours (0900-1400 weekdays)
         is_holiday: false,
@@ -197,9 +218,13 @@ namespace ensure_schedule_entries {
             start_date_time: "20220214T090000",
             end_date_time: "20220214T140000",
             all_day: false,
-            repeat_type: "weekdays"
+            repeat_type: "weekdays",
+            show_as: "busy"
         }],
-        child_schedules: [{ /* Site 17 UM/CIV Holidays */ sys_id: '46981f421ba7c9101497a820f54bcbff', type: 'include' }]
+        child_schedules: [
+            { /* Site 17 Facility Holidays */ sys_id: 'c7475f021ba7c9101497a820f54bcb04', type: 'include' },
+            { /* Site 17 UM/CIV Holidays */ sys_id: '46981f421ba7c9101497a820f54bcbff', type: 'include' }
+        ]
     }, {
         sys_id: "46981f421ba7c9101497a820f54bcbff", // Site 17 UM/CIV Holidays
         is_holiday: true,
@@ -213,7 +238,8 @@ namespace ensure_schedule_entries {
             float_day: "2",
             float_week: "3",
             month: "2",
-            type: "exclude"
+            type: "exclude",
+            show_as: "free"
         }, {
             name: "Columbus Day",
             start_date_time: "20121009T000000",
@@ -224,7 +250,8 @@ namespace ensure_schedule_entries {
             float_day: "2",
             float_week: "2",
             month: "10",
-            type: "exclude"
+            type: "exclude",
+            show_as: "free"
         }, {
             name: "Christmas Eve",
             start_date_time: "20121224T000000",
@@ -232,7 +259,8 @@ namespace ensure_schedule_entries {
             all_day: true,
             repeat_type: "yearly",
             yearly_type: "doy",
-            type: "exclude"
+            type: "exclude",
+            show_as: "free"
         }],
         child_schedules: [{ /* Site 17 Facility Holidays */ sys_id: 'c7475f021ba7c9101497a820f54bcb04', type: 'include' }]
     }, {
@@ -244,16 +272,21 @@ namespace ensure_schedule_entries {
             end_date_time: "20220214T090000",
             all_day: false,
             repeat_type: "weekdays",
-            notes: 'Represents before-lunch hours. Actual hours may vary for each person.'
+            notes: 'Represents before-lunch hours. Actual hours may vary for each person.',
+            show_as: "busy"
         }, {
             name: "1300-1700 Weekdays",
             start_date_time: "20220214T130000",
             end_date_time: "20220214T170000",
             all_day: false,
             repeat_type: "weekdays",
-            notes: 'Represents after-lunch hours. Actual hours may vary for each person.'
+            notes: 'Represents after-lunch hours. Actual hours may vary for each person.',
+            show_as: "busy"
         }],
-        child_schedules: [{ /* Site 17 UM/CIV Holidays */ sys_id: '46981f421ba7c9101497a820f54bcbff', type: 'include' }]
+        child_schedules: [
+            { /* Site 17 Facility Holidays */ sys_id: 'c7475f021ba7c9101497a820f54bcb04', type: 'include' },
+            { /* Site 17 UM/CIV Holidays */ sys_id: '46981f421ba7c9101497a820f54bcbff', type: 'include' }
+        ]
     }];
     for (var s = 0; s < schedules.length; s++) {
         // Make sure the schedule exists
@@ -284,6 +317,7 @@ namespace ensure_schedule_entries {
                 gr.setValue('all_day', entry.all_day);
                 if (!gs.nil(entry.type)) gr.setValue('type', entry.type);
                 gr.setValue('repeat_type', entry.repeat_type);
+                cmn_schedule_entryShowAs
                 if (!gs.nil(entry.yearly_type)) gr.setValue('yearly_type', entry.yearly_type);
                 if (!gs.nil(entry.float_day)) gr.setValue('float_day', entry.float_day);
                 if (!gs.nil(entry.float_week)) gr.setValue('float_week', entry.float_week);
@@ -313,6 +347,7 @@ namespace ensure_schedule_entries {
                 gr.setValue('end_date_time', entry.end_date_time);
                 gr.setValue('all_day', entry.all_day);
                 if (!gs.nil(entry.type)) gr.setValue('type', entry.type);
+                gr.setValue('show_as', entry.show_as);
                 gr.setValue('repeat_type', entry.repeat_type);
                 if (!gs.nil(entry.yearly_type)) gr.setValue('yearly_type', entry.yearly_type);
                 if (!gs.nil(entry.float_day)) gr.setValue('float_day', entry.float_day);

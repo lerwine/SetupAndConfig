@@ -3,9 +3,9 @@ declare namespace x_g_inte_site_17 {
      * Base interface for the AtfHelper API
      * @export
      * @interface IAtfHelperBase
-     * @extends {$$snClass.ICustomClassBase<IAtfHelperBase, "AtfHelper">}
+     * @extends {$$snClass.ICustomClassBase<IAtfHelper, "AtfHelper">}
      */
-    interface IAtfHelperBase extends $$snClass.ICustomClassBase<IAtfHelperBase, "AtfHelper"> {
+    interface IAtfHelper extends $$snClass.ICustomClassBase<IAtfHelper, "AtfHelper"> {
         /**
          * Sets the result message and sets the step result to failed.
          * @param {string} reason - Explains why the test failed.
@@ -24,18 +24,18 @@ declare namespace x_g_inte_site_17 {
          */
         getRecordIdFromStep(sys_id: string): string | undefined;
     }
-    interface IAtfHelperPrototype extends $$snClass.ICustomClassPrototype2<IAtfHelperBase, IAtfHelperPrototype, "AtfHelper", sn_atf.ITestStepsFunc, sn_atf.ITestStepResult>, IAtfHelperBase {
+    interface IAtfHelperPrototype extends $$snClass.ICustomClassPrototype2<IAtfHelper, IAtfHelperPrototype, "AtfHelper", sn_atf.ITestStepsFunc, sn_atf.ITestStepResult>, IAtfHelper {
         _stepResult: sn_atf.ITestStepResult;
         _steps: sn_atf.ITestStepsFunc;
     }
-    type AtfHelper = Readonly<IAtfHelperBase>;
+    type AtfHelper = Readonly<IAtfHelper>;
     /**
      * Constructor for the AtfHelper API
      * @export
      * @interface AtfHelperConstructor
-     * @extends {$$snClass.CustomClassConstructor2<IAtfHelperBase, IAtfHelperPrototype, AtfHelper, sn_atf.ITestStepsFunc, sn_atf.ITestStepResult>}
+     * @extends {$$snClass.CustomClassConstructor2<IAtfHelper, IAtfHelperPrototype, AtfHelper, sn_atf.ITestStepsFunc, sn_atf.ITestStepResult>}
      */
-    interface AtfHelperConstructor extends $$snClass.CustomClassConstructor2<IAtfHelperBase, IAtfHelperPrototype, AtfHelper, sn_atf.ITestStepsFunc, sn_atf.ITestStepResult> {
+    interface AtfHelperConstructor extends $$snClass.CustomClassConstructor2<IAtfHelper, IAtfHelperPrototype, AtfHelper, sn_atf.ITestStepsFunc, sn_atf.ITestStepResult> {
         /**
          * Initializes a new AtfHelper object.
          * @param {sn_atf.ITestStepsFunc} steps - The function that is used to retrieve results of preceding test steps.

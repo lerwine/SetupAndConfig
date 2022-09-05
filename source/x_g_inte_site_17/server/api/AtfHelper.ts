@@ -3,9 +3,9 @@ namespace x_g_inte_site_17 {
      * Base interface for the AtfHelper API
      * @export
      * @interface IAtfHelperBase
-     * @extends {$$snClass.ICustomClassBase<IAtfHelperBase, "AtfHelper">}
+     * @extends {$$snClass.ICustomClassBase<IAtfHelper, "AtfHelper">}
      */
-    export interface IAtfHelperBase extends $$snClass.ICustomClassBase<IAtfHelperBase, "AtfHelper"> {
+    export interface IAtfHelper extends $$snClass.ICustomClassBase<IAtfHelper, "AtfHelper"> {
         /**
          * Sets the result message and sets the step result to failed.
          * @param {string} reason - Explains why the test failed.
@@ -26,20 +26,20 @@ namespace x_g_inte_site_17 {
         getRecordIdFromStep(sys_id: string): string | undefined;
     }
 
-    export interface IAtfHelperPrototype extends $$snClass.ICustomClassPrototype2<IAtfHelperBase, IAtfHelperPrototype, "AtfHelper", sn_atf.ITestStepsFunc, sn_atf.ITestStepResult>, IAtfHelperBase {
+    export interface IAtfHelperPrototype extends $$snClass.ICustomClassPrototype2<IAtfHelper, IAtfHelperPrototype, "AtfHelper", sn_atf.ITestStepsFunc, sn_atf.ITestStepResult>, IAtfHelper {
         _stepResult: sn_atf.ITestStepResult;
         _steps: sn_atf.ITestStepsFunc;
     }
 
-    export declare type AtfHelper = Readonly<IAtfHelperBase>;
+    export declare type AtfHelper = Readonly<IAtfHelper>;
 
     /**
      * Constructor for the AtfHelper API
      * @export
      * @interface AtfHelperConstructor
-     * @extends {$$snClass.CustomClassConstructor2<IAtfHelperBase, IAtfHelperPrototype, AtfHelper, sn_atf.ITestStepsFunc, sn_atf.ITestStepResult>}
+     * @extends {$$snClass.CustomClassConstructor2<IAtfHelper, IAtfHelperPrototype, AtfHelper, sn_atf.ITestStepsFunc, sn_atf.ITestStepResult>}
      */
-    export interface AtfHelperConstructor extends $$snClass.CustomClassConstructor2<IAtfHelperBase, IAtfHelperPrototype, AtfHelper, sn_atf.ITestStepsFunc, sn_atf.ITestStepResult> {
+    export interface AtfHelperConstructor extends $$snClass.CustomClassConstructor2<IAtfHelper, IAtfHelperPrototype, AtfHelper, sn_atf.ITestStepsFunc, sn_atf.ITestStepResult> {
         /**
          * Initializes a new AtfHelper object.
          * @param {sn_atf.ITestStepsFunc} steps - The function that is used to retrieve results of preceding test steps.
@@ -93,7 +93,7 @@ namespace x_g_inte_site_17 {
     }
 
     export const AtfHelper: AtfHelperConstructor = (function (): AtfHelperConstructor {
-        var atfhelperConstructor: AtfHelperConstructor = Class.create();
+        var constructor: AtfHelperConstructor = Class.create();
 
         function isNil(obj: any | undefined): obj is undefined | null | "" {
             switch (typeof obj) {
@@ -147,13 +147,13 @@ namespace x_g_inte_site_17 {
             stepResult.setFailed();
         }
 
-        atfhelperConstructor.isNil = isNil;
+        constructor.isNil = isNil;
 
-        atfhelperConstructor.areAnyNil = areAnyNil;
+        constructor.areAnyNil = areAnyNil;
 
-        atfhelperConstructor.setFailed = setFailed;
+        constructor.setFailed = setFailed;
 
-        atfhelperConstructor.endOfRelativeDay = function(daysFromToday: number): string {
+        constructor.endOfRelativeDay = function(daysFromToday: number): string {
             var dateTime: GlideDateTime = new GlideDateTime();
             if (daysFromToday != -1) dateTime.addDaysLocalTime(daysFromToday + 1);
             dateTime.setDisplayValue(dateTime.getDate().getDisplayValue() + " 00:00:00");
@@ -161,7 +161,7 @@ namespace x_g_inte_site_17 {
             return dateTime.getDisplayValue();
         }
 
-        atfhelperConstructor.relativeDayAt = function(daysFromToday: number, hours: number, minutes: number, seconds?: number): string {
+        constructor.relativeDayAt = function(daysFromToday: number, hours: number, minutes: number, seconds?: number): string {
             var dateTime: GlideDateTime = new GlideDateTime();
             if (daysFromToday != 0) dateTime.addDaysLocalTime(daysFromToday);
             if (isNil(seconds) || seconds < 1) {
@@ -194,7 +194,7 @@ namespace x_g_inte_site_17 {
             return dateTime.getDate().getDisplayValue() + ' ' + hours + ':' + minutes + ':' + seconds;
         }
 
-        atfhelperConstructor.prototype = <IAtfHelperPrototype>{
+        constructor.prototype = <IAtfHelperPrototype>{
             initialize: function(this: IAtfHelperPrototype, steps: sn_atf.ITestStepsFunc, stepResult: sn_atf.ITestStepResult): void {
                 if (isNil(steps)) throw new Error("Steps function not provided");
                 if (isNil(stepResult)) throw new Error("Step result not provided");
@@ -231,6 +231,6 @@ namespace x_g_inte_site_17 {
             type: "AtfHelper"
         };
 
-        return atfhelperConstructor;
+        return constructor;
     })();
 }
