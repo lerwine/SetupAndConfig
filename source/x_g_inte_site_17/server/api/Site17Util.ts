@@ -222,20 +222,20 @@ namespace x_g_inte_site_17 {
         
         /**
          * Checks whether a string contains a valid LDAP Distinguished Name.
-         * @param {string} value - The target string value.
+         * @param {($$rhino.String | null)} [value] - The target string value.
          * @return {boolean} True if the given string represents a valid LDAP distinguished name; otherwise, false.
          * @memberof Site17UtilConstructor
          */
-        testDistinguishedName(value: string): boolean;
+        testDistinguishedName(value?: $$rhino.String | null): boolean;
 
         /**
          * Determines whether a specified DistinguishedName is contained within another.
-         * @param {string} sourceDN - The DistinguishedName to check.
-         * @param {string} containerDN - The parent DistinguishedName.
+         * @param {($$rhino.String | null)} [sourceDN] - The DistinguishedName to check.
+         * @param {($$rhino.String | null)} [containerDN] - The parent DistinguishedName.
          * @return {boolean} true if the source DN is contained within the container DN; otherwise, false.
          * @memberof Site17UtilConstructor
          */
-        isDnContainedBy(sourceDN: string, containerDN: string): boolean;
+        isDnContainedBy(sourceDN?: $$rhino.String | null, containerDN?: $$rhino.String | null): boolean;
 
         /**
          * Gets the LDAP Distinguished Name of the container for all Site 17 users.
@@ -267,35 +267,35 @@ namespace x_g_inte_site_17 {
 
         /**
          * Tests whether a given LDAP Distinguished Name is to be considered that of a Site 17 user.
-         * @param {string} sourceDN - The LDAP Distinguished Name.
+         * @param {($$rhino.String | null)} [sourceDN] - The LDAP Distinguished Name.
          * @return {boolean} True if the given DN is for a Site 17 user; otherwise, false.
          * @memberof Site17UtilConstructor
          */
-        isUserDN(sourceDN: string): boolean;
+        isUserDN(sourceDN: $$rhino.String): boolean;
         
         /**
          * Tests whether a given LDAP Distinguished Name is to be considered that of a Site 17 group.
-         * @param {string} sourceDN - The LDAP Distinguished Name.
+         * @param {($$rhino.String | null)} [sourceDN] - The LDAP Distinguished Name.
          * @return {boolean} True if the given DN is for a Site 17 group; otherwise, false.
          * @memberof Site17UtilConstructor
          */
-        isGroupDN(sourceDN: string): boolean;
+        isGroupDN(sourceDN?: $$rhino.String): boolean;
 
         /**
          * Tests whether the given glide record or element is to be considered a Site 17 user.
-         * @param {(GlideRecord | GlideElementReference | string)} source - The glide record or reference element.
+         * @param {(GlideRecord | GlideElementReference | $$rhino.String | null)} [source] - The glide record or reference element.
          * @return {boolean} True if the given glide record element is for a Site 17 user; otherwise, false.
          * @memberof Site17UtilConstructor
          */
-        isSite17User(source: GlideRecord | GlideElementReference | string): source is sys_userElement | sys_userGlideRecord;
+        isSite17User(source?: GlideRecord | GlideElementReference | $$rhino.String | null): source is sys_userElement | sys_userGlideRecord;
         
         /**
          * Tests whether the given glide record or element is to be considered a Site 17 group.
-         * @param {(GlideRecord | GlideElementReference | string)} source - The glide record or reference element.
+         * @param {(GlideRecord | GlideElementReference | $$rhino.String | null)} [source] - The glide record or reference element.
          * @return {boolean} True if the given glide record element is for a Site 17 group; otherwise, false.
          * @memberof Site17UtilConstructor
          */
-        isSite17Group(source: GlideRecord | GlideElementReference | string): source is sys_user_groupElement | sys_user_groupGlideRecord;
+        isSite17Group(source?: GlideRecord | GlideElementReference | $$rhino.String | null): source is sys_user_groupElement | sys_user_groupGlideRecord;
 
         /**
          * Creates a new iterator which is a filtered result set of a given iterator.
@@ -397,6 +397,35 @@ namespace x_g_inte_site_17 {
          * @memberof Site17UtilConstructor
          */
         iteratorToArray<TYield>(source: Iterator<TYield>, limit?: number): TYield[];
+
+        /**
+         * Creates an interator from an array.
+         * @template T - The element type.
+         * @template TReturn - The optional return value type.
+         * @param {T[]} arr - The source array.
+         * @param {boolean} [supportsReturn] - If true, the iterator will implement the "return" method.
+         * @param {TReturn} [finalReturnValue] - The value to return with the iteration result when all items have been iterated.
+         * @param {{ (e?: any): IteratorResult<T, TReturn> }} [onThrow] - If defined, the iterator will implement the "throw" method, using this method to get the result value.
+         * @return {Iterator<T, TReturn>} - The iterator created from the array.
+         * @memberof Site17UtilConstructor
+         */
+        iteratorFromArray<T, TReturn = any>(arr: T[], supportsReturn?: boolean, finalReturnValue?: TReturn, onThrow?: { (e?: any): IteratorResult<T, TReturn> }): Iterator<T, TReturn>;
+
+        /**
+         * Creates an interator from an array that accepts an argument for the "next" method.
+         * @template T - The element type.
+         * @template TReturn - The optional return value type.
+         * @template TNext - The argument type for the "next" method.
+         * @param {T[]} arr - The source array.
+         * @param {{ (value: T, next?: TNext): IteratorYieldResult<T>; }} onNext - Gets return value for the "next" method.
+         * @param {boolean} [supportsReturn] - If true, the iterator will implement the "return" method.
+         * @param {TReturn} [finalReturnValue] - The value to return with the iteration result when all items have been iterated.
+         * @param {{ (e?: any): IteratorResult<T, TReturn> }} [onThrow] - If defined, the iterator will implement the "throw" method, using this method to get the result value.
+         * @return {*}  {Iterator<T, TReturn, TNext>} - The iterator created from the array.
+         * @memberof Site17UtilConstructor
+         */
+        iteratorFromArray2<T, TReturn, TNext>(arr: T[], onNext: { (value: T, next?: TNext): IteratorResult<T>; }, supportsReturn?: boolean, finalReturnValue?: TReturn,
+            onThrow?: { (e?: any): IteratorResult<T, TReturn> }): Iterator<T, TReturn, TNext>;
     }
 
     export const Site17Util: Site17UtilConstructor = (function (): Site17UtilConstructor {
@@ -577,31 +606,39 @@ namespace x_g_inte_site_17 {
 
         /**
          * Determines whether a specified DistinguishedName is contained within another.
-         * @param {string} sourceDN - The DistinguishedName to check.
-         * @param {string} containerDN - The parent DistinguishedName.
+         * @param {($$rhino.String | null)} [sourceDN] - The DistinguishedName to check.
+         * @param {($$rhino.String | null)} [containerDN] - The parent DistinguishedName.
          * @return {boolean} true if the source DN is contained within the container DN; otherwise, false.
          * @static
          * @memberof Site17Util
          */
-        constructor.isDnContainedBy = function(sourceDN: string, containerDN: string): boolean {
+        constructor.isDnContainedBy = function(sourceDN?: $$rhino.String, containerDN?: $$rhino.String): boolean {
+            var c: string;
+            if (typeof sourceDN === 'string') {
+                if (!testDistinguishedName(sourceDN)) return false;
+                if (typeof containerDN === 'string')
+                    return containerDN == sourceDN || (testDistinguishedName(containerDN) && isDnContainedBy(sourceDN, containerDN));
+                return !gs.nil(containerDN) && ((c = '' + containerDN) == sourceDN || (testDistinguishedName(c) && isDnContainedBy(sourceDN, c)));
+            }
+            if (gs.nil(sourceDN)) return false;
             var s = '' + sourceDN;
-            if (s.trim().length == 0) return false;
-            var c = '' + containerDN;
-            return c.trim().length > 0 && isDnContainedBy(s, c);
+            if (!testDistinguishedName(s)) return false;
+            if (typeof containerDN === 'string')
+                return containerDN == s || (testDistinguishedName(containerDN) && isDnContainedBy(s, containerDN));
+            return (c = '' + containerDN) == s || (testDistinguishedName(c) && isDnContainedBy(s, c));
         };
 
         /**
          * Checks whether a string contains a valid LDAP Distinguished Name.
-         * @param {string} value - The target string value.
+         * @param {($$rhino.String | null)} [value] - The target string value.
          * @return {boolean} True if the given string represents a valid LDAP distinguished name; otherwise, false.
          * @static
          * @memberof Site17Util
          */
-        constructor.testDistinguishedName = function(value: string): boolean {
-            if (gs.nil(value)) return false;
-            var dn = '' + value;
-            if (dn.trim().length == 0) return false;
-            return dnRegex.test(dn);
+        constructor.testDistinguishedName = function(value?: $$rhino.String | null): boolean {
+            if (typeof value === 'string')
+                return testDistinguishedName(value);
+            return !gs.nil(value) && testDistinguishedName('' + value);
         };
 
         /**
@@ -646,62 +683,94 @@ namespace x_g_inte_site_17 {
 
         /**
          * Tests whether a given LDAP Distinguished Name is to be considered that of a Site 17 user.
-         * @param {string} sourceDN - The LDAP Distinguished Name.
+         * @param {($$rhino.String | null)} [sourceDN] - The LDAP Distinguished Name.
          * @return {boolean} True if the given DN is for a Site 17 user; otherwise, false.
          * @static
          * @memberof Site17Util
          */
-        constructor.isUserDN = function(sourceDN: string): boolean { return isUserDN('' + sourceDN); };
+        constructor.isUserDN = function(sourceDN?: $$rhino.String | null): boolean {
+            if (typeof sourceDN === 'string')
+                return (sourceDN.length == 0 || testDistinguishedName(sourceDN)) && isUserDN(sourceDN);
+            if (typeof sourceDN === 'undefined' || sourceDN === null) return false;
+            var s = '' + sourceDN;
+            return (s.length == 0 || testDistinguishedName(s)) && isUserDN(s);
+        };
 
         /**
          * Tests whether a given LDAP Distinguished Name is to be considered that of a Site 17 group.
-         * @param {string} sourceDN - The LDAP Distinguished Name.
+         * @param {($$rhino.String | null)} [sourceDN] - The LDAP Distinguished Name.
          * @return {boolean} True if the given DN is for a Site 17 group; otherwise, false.
          * @static
          * @memberof Site17Util
          */
-        constructor.isGroupDN = function(sourceDN: string): boolean { return isGroupDN('' + sourceDN); };
+        constructor.isGroupDN = function(sourceDN?: $$rhino.String | null): boolean {
+            if (typeof sourceDN === 'string')
+                return (sourceDN.length == 0 || testDistinguishedName(sourceDN)) && isGroupDN(sourceDN);
+            if (typeof sourceDN === 'undefined' || sourceDN === null) return false;
+            var s = '' + sourceDN;
+            return (s.length == 0 || testDistinguishedName(s)) && isGroupDN(s);
+        };
 
         /**
          * Tests whether the given glide record or element is to be considered a Site 17 user.
-         * @param {(GlideRecord | GlideElementReference | string)} source - The glide record or reference element.
+         * @param {(GlideRecord | GlideElementReference | $$rhino.String | null)} [source] - The glide record or reference element.
          * @return {boolean} True if the given glide record element is for a Site 17 user; otherwise, false.
          * @static
          * @memberof Site17Util
          */
-        constructor.isSite17User = function(source: GlideRecord | GlideElementReference | string): source is sys_userElement | sys_userGlideRecord {
+        constructor.isSite17User = function(source?: GlideRecord | GlideElementReference | $$rhino.String | null): source is sys_userElement | sys_userGlideRecord {
             if (gs.nil(source)) return false;
             var gr: GlideRecord | GlideElementReference | undefined;
+            var s: string;
             if (source instanceof GlideRecord || source instanceof GlideElement) {
-                if (('' + source.getTableName()) == 'sys_user') return isUserDN('' + (<{ [key: string]: any}>source).source);
+                if (('' + source.getTableName()) == 'sys_user')
+                    return ((s = '' + (<{ [key: string]: any}>source).source).length == 0 || testDistinguishedName(s)) && isUserDN(s);
                 gr = getCaller(<GlideElementReference>source);
                 if (gs.nil(gr)) return false;
             } else {
                 gr = new GlideRecord('sys_user');
-                gr.addQuery('sys_id', '' + source);
+                if (typeof source === 'string') {
+                    if (source.trim().length == 0) return false;
+                    gr.addQuery('sys_id', source);
+                } else {
+                    if ((s = '' + source).trim().length == 0) return false;
+                    gr.addQuery('sys_id', s);
+                }
                 gr.query();
                 if (!gr.next()) return false;
             }
-            return isUserDN('' +  (<{ [key: string]: any}>gr).source);
+            return ((s = (<{ [key: string]: any}>gr).source).length == 0 || testDistinguishedName(s)) && isUserDN(s);
         };
 
         /**
          * Tests whether the given glide record or element is to be considered a Site 17 group.
-         * @param {(GlideRecord | GlideElementReference | string)} source - The glide record or reference element.
+         * @param {(GlideRecord | GlideElementReference | $$rhino.String | null)} [source] - The glide record or reference element.
          * @return {boolean} True if the given glide record element is for a Site 17 group; otherwise, false.
          * @static
          * @memberof Site17Util
          */
-        constructor.isSite17Group = function(source: GlideRecord | GlideElementReference | string): source is sys_user_groupElement | sys_user_groupGlideRecord {
+        constructor.isSite17Group = function(source?: GlideRecord | GlideElementReference | $$rhino.String | null): source is sys_user_groupElement | sys_user_groupGlideRecord {
             if (gs.nil(source)) return false;
+            var gr: GlideRecord | GlideElementReference | undefined;
+            var s: string;
             if (source instanceof GlideRecord || source instanceof GlideElement) {
-                if (('' + source.getTableName()) != 'sys_user_group') return false;
-                return isGroupDN('' + (<{ [key: string]: any}>source).source);
+                if (('' + source.getTableName()) == 'sys_user_group')
+                    return ((s = '' + (<{ [key: string]: any}>source).source).length == 0 || testDistinguishedName(s)) && isGroupDN(s);
+                gr = getCaller(<GlideElementReference>source);
+                if (gs.nil(gr)) return false;
+            } else {
+                gr = new GlideRecord('sys_user_group');
+                if (typeof source === 'string') {
+                    if (source.trim().length == 0) return false;
+                    gr.addQuery('sys_id', source);
+                } else {
+                    if ((s = '' + source).trim().length == 0) return false;
+                    gr.addQuery('sys_id', s);
+                }
+                gr.query();
+                if (!gr.next()) return false;
             }
-            var gr: GlideRecord = new GlideRecord('sys_user_group');
-            gr.addQuery('sys_id', '' + source);
-            gr.query();
-            return gr.next() && isGroupDN('' + (<{ [key: string]: any}>gr).source);
+            return ((s = (<{ [key: string]: any}>gr).source).length == 0 || testDistinguishedName(s)) && isGroupDN(s);
         };
 
         /**
@@ -1201,7 +1270,8 @@ namespace x_g_inte_site_17 {
          * @param {Iterator<TYield>} source - The source iterator.
          * @param {number} [limit] - The optional maximum number of elements (iterations).
          * @return {TYield[]} The yielded values of the iterator.
-         * @memberof Site17UtilConstructor
+         * @static
+         * @memberof Site17Util
          */
         constructor.iteratorToArray = function<TYield>(source: Iterator<TYield>, limit?: number): TYield[] {
             var result = [];
@@ -1219,6 +1289,121 @@ namespace x_g_inte_site_17 {
             return result;
         }
 
+
+        /**
+         * Creates an interator from an array.
+         * @template T - The element type.
+         * @template TReturn - The optional return value type.
+         * @param {T[]} arr - The source array.
+         * @param {boolean} [supportsReturn] - If true, the iterator will implement the "return" method.
+         * @param {TReturn} [finalReturnValue] - The value to return with the iteration result when all items have been iterated.
+         * @param {{ (e?: any): IteratorResult<T, TReturn> }} [onThrow] - If defined, the iterator will implement the "throw" method, using this method to get the result value.
+         * @return {Iterator<T, TReturn>} - The iterator created from the array.
+         * @static
+         * @memberof Site17Util
+         */
+         constructor.iteratorFromArray = function<T, TReturn = any>(arr: T[], supportsReturn?: boolean, finalReturnValue?: TReturn, onThrow?: { (e?: any): IteratorResult<T, TReturn> }): Iterator<T, TReturn> {
+            var context: { index: number; returned?: TReturn } = { index: 0 };
+            var iterator = <Iterator<T, TReturn>> {
+                next: function(): IteratorResult<T, TReturn> {
+                    if (context.index < 0) {
+                        if (typeof context.returned === 'undefined') return <IteratorReturnResult<TReturn>>{ done: true };
+                        return { done: true, value: context.returned };
+                    }
+                    if (context.index < arr.length) {
+                        var result:  IteratorYieldResult<T> = { value: arr[context.index] };
+                        context.index++;
+                        return result;
+                    }
+                    context.index = -1;
+                    if (typeof finalReturnValue === "undefined") return <IteratorReturnResult<TReturn>>{ done: true };
+                    context.returned = finalReturnValue;
+                    return { done: true, value: finalReturnValue };
+                }
+            };
+            if (supportsReturn)
+                iterator.return = function(value?: TReturn): IteratorResult<T, TReturn> {
+                    if (context.index < 0) {
+                        if (typeof value === "undefined") return <IteratorReturnResult<TReturn>>{ done: true };
+                        return { done: true, value: value };
+                    }
+                    context.index = -1;
+                    if (typeof finalReturnValue === "undefined") return <IteratorReturnResult<TReturn>>{ done: true };
+                    context.returned = finalReturnValue;
+                    return { done: true, value: finalReturnValue };
+                }
+            if (typeof onThrow !== 'undefined')
+                iterator.throw = function(e?: any): IteratorResult<T, TReturn> {
+                    var result = onThrow(e);
+                    if (context.index >= 0) {
+                        context.index = -1;
+                        if (result.done) context.returned = result.value;
+                    }
+                    return result;
+                };
+            return iterator;
+         };
+
+        /**
+         * Creates an interator from an array that accepts an argument for the "next" method.
+         * @template T - The element type.
+         * @template TReturn - The optional return value type.
+         * @template TNext - The argument type for the "next" method.
+         * @param {T[]} arr - The source array.
+         * @param {{ (value: T, next?: TNext): IteratorYieldResult<T>; }} onNext - Gets return value for the "next" method.
+         * @param {boolean} [supportsReturn] - If true, the iterator will implement the "return" method.
+         * @param {TReturn} [finalReturnValue] - The value to return with the iteration result when all items have been iterated.
+         * @param {{ (e?: any): IteratorResult<T, TReturn> }} [onThrow] - If defined, the iterator will implement the "throw" method, using this method to get the result value.
+         * @return {{Iterator<T, TReturn, TNext>} - The iterator created from the array.
+         * @static
+         * @memberof Site17Util
+         */
+        constructor.iteratorFromArray2 = function<T, TReturn, TNext>(arr: T[], onNext: { (value: T, next?: TNext): IteratorResult<T>; }, supportsReturn?: boolean, finalReturnValue?: TReturn, onThrow?: { (e?: any): IteratorResult<T, TReturn> }): Iterator<T, TReturn, TNext> {
+            var context: { index: number; returned?: TReturn } = { index: 0 };
+            var iterator = <Iterator<T, TReturn, TNext>> {
+                next: function(next?: TNext): IteratorResult<T, TReturn> {
+                    if (context.index < 0) {
+                        if (typeof context.returned === 'undefined') return <IteratorReturnResult<TReturn>>{ done: true };
+                        return { done: true, value: context.returned };
+                    }
+                    if (context.index < arr.length) {
+                        var result = onNext(arr[context.index], next);
+                        if (result.done) {
+                            context.index = -1;
+                            context.returned = result.value;
+                        } else
+                            context.index++;
+                        return result;
+                    }
+                    context.index = -1;
+                    if (typeof finalReturnValue === "undefined") return <IteratorReturnResult<TReturn>>{ done: true };
+                    context.returned = finalReturnValue;
+                    return { done: true, value: finalReturnValue };
+                }
+            };
+            if (supportsReturn)
+                iterator.return = function(value?: TReturn): IteratorResult<T, TReturn> {
+                    if (context.index < 0) {
+                        if (typeof value === "undefined") return <IteratorReturnResult<TReturn>>{ done: true };
+                        return { done: true, value: value };
+                    }
+                    context.index = -1;
+                    if (typeof finalReturnValue === "undefined") return <IteratorReturnResult<TReturn>>{ done: true };
+                    context.returned = finalReturnValue;
+                    return { done: true, value: finalReturnValue };
+                }
+            if (typeof onThrow !== 'undefined')
+                iterator.throw = function(e?: any): IteratorResult<T, TReturn> {
+                    var result = onThrow(e);
+                    if (context.index >= 0) {
+                        context.index = -1;
+                        if (result.done) context.returned = result.value;
+                    }
+                    return result;
+                };
+            return iterator;
+        };
+
         // #endregion
         
         constructor.prototype = Object.extendsObject<IAbstractAjaxProcessor, ISite17UtilPrototype>(global.AbstractAjaxProcessor, {
@@ -1231,8 +1416,8 @@ namespace x_g_inte_site_17 {
              * "sys_parm_container_dn"=The parent DistinguishedName.
              */
             isDnContainedBy: function(this: ISite17UtilPrototype & IAbstractAjaxProcessor): "true"|"false" {
-                return <"true"|"false">JSON.stringify(constructor.isDnContainedBy('' + this.getParameter(PARAM_NAME.target_dn),
-                    '' + this.getParameter(PARAM_NAME.container_dn)));
+                return <"true"|"false">JSON.stringify(constructor.isDnContainedBy(this.getParameter(PARAM_NAME.target_dn),
+                    this.getParameter(PARAM_NAME.container_dn)));
             },
         
             /**
@@ -1341,7 +1526,7 @@ namespace x_g_inte_site_17 {
         const PROPERTY_NAME_source_dn_groups = 'x_g_inte_site_17.source_dn_groups';
         const PROPERTY_NAME_source_user_include_empty = 'x_g_inte_site_17.source_user_include_empty';
         const PROPERTY_NAME_source_group_include_empty = 'x_g_inte_site_17.source_group_include_empty';
-        const dnRegex = /^([^=,]+|\\.)+=([^,]+|\\.)*(,([^=,]+|\\.)+=([^,]+|\\.)*)*$/;
+        const dnRegex = /^([^=,\\]+|\\.)+=([^,\\]+|\\.)*(,([^=,\\]+|\\.)+=([^,\\]+|\\.)*)*$/;
         const TABLE_NAME_sys_user = 'sys_user';
         const TABLE_NAME_sys_user_group = 'sys_user_group';
         const TABLE_NAME_business_unit = 'business_unit';
@@ -1509,11 +1694,17 @@ namespace x_g_inte_site_17 {
                 return <cmn_locationElement>(<cmn_buildingElement>target).location;
         }
 
+        function testDistinguishedName(value: string): boolean {
+            if (value.trim().length == 0) return false;
+            return dnRegex.test(value);
+        }
+
         function isDnContainedBy(sourceDN: string, containerDN: string): boolean {
+            if (!testDistinguishedName(sourceDN)) return false;
             if (sourceDN.length == containerDN.length)
                 return sourceDN.toLowerCase() == containerDN.toLowerCase();
             if (sourceDN.length >= (containerDN.length + 1)) return false;
-            return sourceDN.toLowerCase().endsWith(',' + containerDN.toLowerCase());
+            return testDistinguishedName(containerDN) && sourceDN.toLowerCase().endsWith(',' + containerDN.toLowerCase());
         }
 
         function isUserDN(sourceDN: string): boolean {
