@@ -1,24 +1,20 @@
 namespace ensure_schedule_entries {
-    type RepeatType = "yearly" | "monthly" | "weekdays" | "daily";
-    type YearlyType = "doy" | "float";
-    type ScheduleType = "include" | "exclude";
     type FloatDayType = "1" | "2" | "3" | "4" | "5" | "6" | "7";
     type FloatWeekType = "1" | "2" | "3" | "4" | "last";
     type MonthType = "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "11" | "12";
-    type ShowAsType = "busy" | "free" | "tentative" | "on_call";
     interface IChildScheduleDefinition {
         sys_id: string;
-        type: ScheduleType;
+        type: cmn_other_scheduleType;
     }
     interface IEntryDefinition {
         name: string;
         start_date_time: string;
         end_date_time: string;
         all_day: boolean;
-        repeat_type: RepeatType;
-        type?: ScheduleType;
-        show_as: ShowAsType;
-        yearly_type?: YearlyType;
+        repeat_type: cmn_schedule_entryRepeatType;
+        type?: cmn_other_scheduleType;
+        show_as: cmn_schedule_entryShowAs;
+        yearly_type?: cmn_schedule_entryYearlyType;
         float_day?: FloatDayType;
         float_week?: FloatWeekType;
         month?: MonthType;
@@ -317,7 +313,7 @@ namespace ensure_schedule_entries {
                 gr.setValue('all_day', entry.all_day);
                 if (!gs.nil(entry.type)) gr.setValue('type', entry.type);
                 gr.setValue('repeat_type', entry.repeat_type);
-                cmn_schedule_entryShowAs
+                gr.setValue('show_as', entry.show_as);
                 if (!gs.nil(entry.yearly_type)) gr.setValue('yearly_type', entry.yearly_type);
                 if (!gs.nil(entry.float_day)) gr.setValue('float_day', entry.float_day);
                 if (!gs.nil(entry.float_week)) gr.setValue('float_week', entry.float_week);

@@ -5,11 +5,55 @@ var x_g_inte_site_17;
 (function (x_g_inte_site_17) {
     x_g_inte_site_17.ReservationScheduler = (function () {
         var constructor = Class.create();
-        var a = new x_g_inte_site_17.ReservationSchedulerAjax();
         var TABLE_NAME = 'x_g_inte_site_17_reservation_type';
         var ENTRY_TABLE_NAME = 'cmn_schedule_span';
         var gdz = new GlideDuration(0);
         var oneMinute = new GlideDuration(60000);
+        var AvailabilityIterator = (function () {
+            var iteratorConstructor = Class.create();
+            iteratorConstructor.prototype = {
+                initialize: function (schedule, start, end) {
+                    this._schedule = schedule;
+                    this._start = new GlideDateTime(start);
+                    this._end = end;
+                },
+                next: function () {
+                    if (!this._start.before(this._end))
+                        return { value: null, done: true };
+                    var duration = GlideDateTime.subtract(this._start, this._end);
+                    var actual = this._schedule.duration(this._start, this._end);
+                    if (!actual.after(gdz)) {
+                        var ms = this._schedule.whenNext(this._start);
+                        if (ms < 0)
+                            return { value: null, done: true };
+                        this._start.add(ms);
+                        while (!(actual = this._schedule.duration(this._start, this._end)).after(gdz)) {
+                            this._start.addSeconds(1);
+                            if ((actual = this._schedule.duration(this._start, this._end)).after(gdz))
+                                break;
+                            if ((ms = this._schedule.whenNext(this._start)) < 0)
+                                return { value: null, done: true };
+                            this._start.add(ms);
+                        }
+                    }
+                    while (actual.before(duration)) {
+                        duration = actual;
+                        var endDateTime = new GlideDateTime(this._start);
+                        endDateTime.add(duration);
+                        actual = this._schedule.duration(this._start, endDateTime);
+                    }
+                    var result = {
+                        start: new GlideDateTime(this._start),
+                        duration: duration
+                    };
+                    this._start.add(duration);
+                    return { value: result };
+                },
+                type: "AvailabilityIterator"
+            };
+            return iteratorConstructor;
+        })();
+        // #endregion
         // #region Private functions
         function isNil(obj) {
             switch (typeof obj) {
@@ -65,7 +109,7 @@ var x_g_inte_site_17;
                 return false;
             return !value.after(interval) || (value.getNumericValue() % interval.getNumericValue()) == 0;
         }
-        function normalizeGlideDuration(value, interval, minDuration, maxDuration) {
+        function normalizeGlideDuration(value, interval, minDuration, maxDuration, round) {
             var result;
             if (typeof minDuration !== 'undefined' && value.before(minDuration)) {
                 result = minDuration.getNumericValue() - value.getNumericValue();
@@ -80,18 +124,22 @@ var x_g_inte_site_17;
             var n = interval.getNumericValue();
             if (value.before(interval)) {
                 value.setValue(interval.getDurationValue());
-                return n;
+                return n - value.getNumericValue();
             }
             var mod = value.getNumericValue() % n;
             if (mod == 0)
                 return 0;
+            if (typeof round !== 'undefined' && (round < 0 || (round == 0 && (n >> 1) > mod))) {
+                value.subtract(new GlideDuration(mod));
+                return 0 - mod;
+            }
             mod = n - mod;
             value.add(mod);
             return mod;
         }
-        function getNormalizedGlideDuration(value, interval, minDuration, maxDuration) {
+        function getNormalizedGlideDuration(value, interval, minDuration, maxDuration, round) {
             var duration = new GlideDuration(value);
-            normalizeGlideDuration(duration, interval, minDuration, maxDuration);
+            normalizeGlideDuration(duration, interval, minDuration, maxDuration, round);
             return duration;
         }
         function getNormalizedGlideDateTime(value, interval) {
@@ -99,16 +147,14 @@ var x_g_inte_site_17;
             normalizeGlideDateTime(dateTime, interval);
             return dateTime;
         }
-        function isSlotAvailable(startDateTime, duration) {
-            var ms = this.schedule.whenNext(startDateTime);
-            if (ms < 0)
-                return true;
-            duration = getNormalizedGlideDuration(duration, this.duration_increment);
-            var diff = getNormalizedGlideDateTime(startDateTime, this.start_time_interval).getNumericValue() - startDateTime.getNumericValue();
-            if (diff > 0)
-                duration.add(diff);
-            return ms >= duration.getNumericValue();
+        function isTimeSpanAvailable(start, duration) {
+            var endDateTime = new GlideDateTime(start);
+            endDateTime.add(duration);
+            return !this.schedule.duration(start, endDateTime).before(duration);
         }
+        /**
+         * @deprecated Use {@link AvailabilityIterator}
+         */
         function moveToNextAvailability(currentDateTime, minimumDuration, rangeEnd) {
             var endDateTime = new GlideDateTime(currentDateTime);
             endDateTime.add(minimumDuration);
@@ -125,6 +171,61 @@ var x_g_inte_site_17;
                 duration = this.schedule.duration(currentDateTime, endDateTime);
             }
             return true;
+        }
+        /**
+         * @deprecated Use {@link AvailabilityIterator}
+         */
+        function getAvailabilities(fromDateTime, minimumDuration, toDateTime) {
+            if (!fromDateTime.before(toDateTime))
+                return global.Stream.fromArray([]);
+            if (typeof minimumDuration === 'undefined' || minimumDuration.before(this.minimum_duration))
+                minimumDuration = this.minimum_duration;
+            else if ((minimumDuration = getNormalizedGlideDuration(minimumDuration, this.duration_increment, this.minimum_duration, this.maximum_duration)).after(this.maximum_duration))
+                return global.Stream.fromArray([]);
+            var context = {
+                schedule: this.schedule,
+                currentStart: fromDateTime,
+                currentEnd: new GlideDateTime(fromDateTime)
+            };
+            return new global.Stream(function () {
+                if (!(context.currentStart = new GlideDateTime(context.currentEnd)).before(toDateTime))
+                    return global.Stream.END;
+                if (context.currentEnd.before(toDateTime))
+                    context.currentEnd = new GlideDateTime(toDateTime);
+                var needed = GlideDateTime.subtract(context.currentStart, context.currentEnd);
+                if (needed.before(minimumDuration)) {
+                    context.currentStart = new GlideDateTime(toDateTime);
+                    return global.Stream.END;
+                }
+                var available = context.schedule.duration(context.currentStart, toDateTime);
+                while (available.before(needed)) {
+                    if (available.before(minimumDuration)) {
+                        context.currentStart = new GlideDateTime(toDateTime);
+                        return global.Stream.END;
+                    }
+                    needed = available;
+                    context.currentEnd = new GlideDateTime(context.currentStart);
+                    context.currentEnd.add(needed);
+                    if ((available = context.schedule.duration(context.currentStart, context.currentEnd)) == gdz) {
+                        context.currentEnd = new GlideDateTime(toDateTime);
+                        var ms = context.schedule.whenNext(context.currentEnd);
+                        if (ms < 0) {
+                            context.currentStart = new GlideDateTime(toDateTime);
+                            return global.Stream.END;
+                        }
+                        context.currentStart.add(new GlideDuration(ms));
+                        if (context.currentStart.after(toDateTime) || (needed = GlideDateTime.subtract(context.currentStart, toDateTime)).before(minimumDuration)) {
+                            context.currentStart = new GlideDateTime(toDateTime);
+                            return global.Stream.END;
+                        }
+                        available = context.schedule.duration(context.currentStart, toDateTime);
+                    }
+                }
+                return {
+                    start: new GlideDateTime(context.currentStart),
+                    duration: needed
+                };
+            });
         }
         // #endregion
         constructor.getTableName = function () { return TABLE_NAME; };
@@ -181,26 +282,32 @@ var x_g_inte_site_17;
             /**
              * Normalizes a duration value according to the {@link #duration_increment}, {@link #minimum_duration} and {@link #maximum_duration} properties.
              * @param {GlideDuration} value - The duration value to normalize.
+             * @param {number} [round] - Rounding type: Greater than zero = round to next higher {@link #duration_increment} (default);
+             * Less than 0 = round to next lower {@link #duration_increment};
+             * 0 = round to nearest {@link #duration_increment}.
              * @return {number} The number of milliseconds by which the duration value was adjusted.
              */
-            normalizeDuration: function (value) {
+            normalizeDuration: function (value, round) {
                 if (isNil(value))
                     throw new Error("Duration not provided");
                 if (!value.isValid())
                     throw new Error("Invalid duration: " + value.getErrorMsg());
-                return normalizeGlideDuration(value, this.duration_increment, this.minimum_duration, this.maximum_duration);
+                return normalizeGlideDuration(value, this.duration_increment, this.minimum_duration, this.maximum_duration, round);
             },
             /**
              * Creates a new normalized duration value from an existing duration value.
              * @param {GlideDuration} value - The source duration value.
+             * @param {number} [round] - Rounding type: Greater than zero = round to next higher {@link #duration_increment} (default);
+             * Less than 0 = round to next lower {@link #duration_increment};
+             * 0 = round to nearest {@link #duration_increment}.
              * @return {GlideDuration} A new normalized duration value.
              */
-            getNormalizedDuration: function (value) {
+            getNormalizedDuration: function (value, round) {
                 if (isNil(value))
                     throw new Error("Duration not provided");
                 if (!value.isValid())
                     throw new Error("Invalid duration: " + value.getErrorMsg());
-                return getNormalizedGlideDuration(value, this.duration_increment, this.minimum_duration, this.maximum_duration);
+                return getNormalizedGlideDuration(value, this.duration_increment, this.minimum_duration, this.maximum_duration, round);
             },
             /**
              * Rounds a date/time value up to the next increment specified by {@link #start_time_interval} property.
@@ -229,62 +336,35 @@ var x_g_inte_site_17;
             /**
              * Gets the next reservation availability.
              * @param {GlideDateTime} fromDateTime
-             * @param {GlideDateTime} [toDateTime]
+             * @param {GlideDateTime} toDateTime
              * @param {GlideDuration} [minimumDuration]
              * @param {GlideDuration} [maximumDuration]
              * @return {(ITimeSlot | undefined)}
              */
-            getNextAvailableTimeSlot: function (fromDateTime, toDateTime, minimumDuration) {
+            getNextAvailableTimeSpan: function (fromDateTime, toDateTime, minimumDuration) {
                 if (isNil(fromDateTime))
                     throw new Error("From date/time not provided");
                 if (!fromDateTime.isValid())
                     throw new Error("Invalid start date/time: " + fromDateTime.getErrorMsg());
-                if (!(isNil(toDateTime) || toDateTime.isValid()))
+                if (!toDateTime.isValid())
                     throw new Error("Invalid to date/time: " + toDateTime.getErrorMsg());
                 if (!(isNil(minimumDuration) || minimumDuration.isValid()))
                     throw new Error("Invalid minimum duration: " + minimumDuration.getErrorMsg());
-                var currentDateTime = getNormalizedGlideDateTime(fromDateTime, this.start_time_interval);
-                if (!(isNil(toDateTime) || toDateTime.after(currentDateTime)))
-                    return;
                 var md;
                 if (typeof minimumDuration === 'undefined' || !minimumDuration.after(this.minimum_duration))
                     md = this.minimum_duration;
                 else
                     md = getNormalizedGlideDuration(minimumDuration, this.duration_increment, this.minimum_duration, this.maximum_duration);
-                if (!moveToNextAvailability.call(this, currentDateTime, md, toDateTime))
-                    return;
-                var duration;
-                var ms = this.schedule.whenNext(currentDateTime);
-                if (ms < 0) {
-                    if (typeof toDateTime === 'undefined')
-                        return { startDateTime: currentDateTime };
-                    duration = GlideDateTime.subtract(currentDateTime, toDateTime);
-                    if (duration.before(md))
-                        return;
-                }
-                else {
-                    if (ms == 0)
-                        throw new Error("Unexpected zero returned by GlideScheduler.whenNext after GlideScheduler.duration returned '0 0:0:0'");
-                    duration = new GlideDuration(gdz);
-                    duration.add(ms);
-                }
-                if (typeof toDateTime !== 'undefined') {
-                    var endDateTime = new GlideDateTime(currentDateTime);
-                    endDateTime.add(duration);
-                    if (endDateTime.after(toDateTime)) {
-                        duration = GlideDateTime.subtract(currentDateTime, endDateTime);
-                        if (duration.before(md))
-                            return;
-                        return {
-                            startDateTime: new GlideDateTime(currentDateTime),
-                            duration: duration
-                        };
+                return x_g_inte_site_17.Site17Util.firstIterated(new AvailabilityIterator(this.schedule, getNormalizedGlideDateTime(fromDateTime, this.start_time_interval), toDateTime), function (ts) {
+                    var ms = normalizeGlideDateTime(ts.start, this.start_time_interval);
+                    if (ms > 0) {
+                        var d = new GlideDuration(ms);
+                        if (d.before(ts.duration))
+                            return false;
+                        ts.duration.subtract(d);
                     }
-                }
-                return {
-                    startDateTime: currentDateTime,
-                    duration: duration
-                };
+                    return !ts.duration.before(md);
+                }, this);
             },
             /**
              * Gets the available time slots within a given range of date/time values.
@@ -304,50 +384,21 @@ var x_g_inte_site_17;
                     throw new Error("Invalid to date/time: " + toDateTime.getErrorMsg());
                 if (!(isNil(minimumDuration) || minimumDuration.isValid()))
                     throw new Error("Invalid minimum duration: " + minimumDuration.getErrorMsg());
-                var result = [];
-                if (!toDateTime.after(fromDateTime))
-                    return result;
-                var currentDateTime = getNormalizedGlideDateTime(fromDateTime, this.start_time_interval);
                 var md;
                 if (typeof minimumDuration === 'undefined' || !minimumDuration.after(this.minimum_duration))
                     md = this.minimum_duration;
                 else
                     md = getNormalizedGlideDuration(minimumDuration, this.duration_increment, this.minimum_duration, this.maximum_duration);
-                while (currentDateTime.before(toDateTime) && moveToNextAvailability.call(this, currentDateTime, md, toDateTime)) {
-                    var duration;
-                    var ms = this.schedule.whenNext(currentDateTime);
-                    if (ms < 0) {
-                        duration = GlideDateTime.subtract(currentDateTime, toDateTime);
-                        if (!duration.before(md))
-                            result.push({
-                                startDateTime: new GlideDateTime(currentDateTime),
-                                duration: duration
-                            });
-                        return result;
+                return x_g_inte_site_17.Site17Util.filterIterator(new AvailabilityIterator(this.schedule, getNormalizedGlideDateTime(fromDateTime, this.start_time_interval), toDateTime), function (ts) {
+                    var ms = normalizeGlideDateTime(ts.start, this.start_time_interval);
+                    if (ms > 0) {
+                        var d = new GlideDuration(ms);
+                        if (d.before(ts.duration))
+                            return false;
+                        ts.duration.subtract(d);
                     }
-                    if (ms == 0)
-                        throw new Error("Unexpected zero returned by GlideScheduler.whenNext after GlideScheduler.duration returned '0 0:0:0'");
-                    duration = new GlideDuration(gdz);
-                    duration.add(ms);
-                    var endDateTime = new GlideDateTime(currentDateTime);
-                    endDateTime.add(duration);
-                    if (endDateTime.after(toDateTime)) {
-                        duration = GlideDateTime.subtract(currentDateTime, toDateTime);
-                        if (!duration.before(md))
-                            result.push({
-                                startDateTime: new GlideDateTime(currentDateTime),
-                                duration: duration
-                            });
-                        break;
-                    }
-                    result.push({
-                        startDateTime: new GlideDateTime(currentDateTime),
-                        duration: duration
-                    });
-                    currentDateTime.add(duration);
-                    normalizeGlideDateTime(currentDateTime, this.start_time_interval);
-                }
-                return result;
+                    return !ts.duration.before(md);
+                }, this);
             },
             /**
              * Indicates whether the specified start date and duration is available for an reservation.
@@ -366,7 +417,7 @@ var x_g_inte_site_17;
                     throw new Error("Invalid duration: " + duration.getErrorMsg());
                 if (duration.getNumericValue() <= 0)
                     throw new Error("Duration must be greater than zero");
-                return isSlotAvailable.call(this, startDateTime, duration);
+                return isTimeSpanAvailable.call(this, getNormalizedGlideDateTime(startDateTime, this.start_time_interval), duration);
             },
             /**
              * Adds a reservation to the associated schedule.
@@ -399,7 +450,7 @@ var x_g_inte_site_17;
                     throw new Error("Appointment duration is shorter than the minimum allowed duration");
                 if (duration.after(this.maximum_duration))
                     throw new Error("Appointment duration is longer than the maximum allowed duration");
-                if (!isSlotAvailable.call(this, startDateTime, duration))
+                if (!isTimeSpanAvailable.call(this, startDateTime, duration))
                     return;
                 var gr = new GlideRecord(ENTRY_TABLE_NAME);
                 gr.newRecord();

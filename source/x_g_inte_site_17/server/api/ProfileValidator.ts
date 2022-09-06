@@ -323,6 +323,12 @@ namespace x_g_inte_site_17 {
         var constructor: ProfileValidatorConstructor = Class.create();
 
         const SYSID_RE = /^[\da-f]{32}$/i;
+        const XMLNAME_result = 'result';
+        const XMLNAME_org = 'org';
+        const XMLNAME_phone = 'phone';
+        const XMLNAME_ = '';
+        const PARAMNAME_user_id = 'sysparm_user_id';
+        const PARAMNAME_ = '';
         const PROPERTY_NAME_profile_phone_fields = 'x_g_inte_site_17.profile_phone_fields';
         const PROPERTY_NAME_profile_compliance_check_fields = 'x_g_inte_site_17.profile_compliance_check_fields';
 
@@ -414,7 +420,7 @@ namespace x_g_inte_site_17 {
         }
 
         function getUserIdFromParameter(this: IAbstractAjaxProcessor): string | undefined {
-            var userId = this.getParameter('sysparm_user_id');
+            var userId = this.getParameter(PARAMNAME_user_id);
             return isNil(userId) ? gs.getUserID() : (typeof userId === 'string') ? userId : '' + userId;
         }
 
@@ -602,7 +608,7 @@ namespace x_g_inte_site_17 {
 
         constructor.prototype = Object.extendsObject<IAbstractAjaxProcessor, IProfileValidatorPrototype>(global.AbstractAjaxProcessor, {
             getUserProfileCompliance: function(this: IProfileValidatorPrototype & IAbstractAjaxProcessor): string | undefined {
-                var response = constructor.getUserProfileCompliance('' + this.getParameter('sysparm_user_id'));
+                var response = constructor.getUserProfileCompliance('' + this.getParameter(PARAMNAME_user_id));
                 if (constructor.isUserLookupFault(response))
                     this.setError(response);
                 else
@@ -610,7 +616,7 @@ namespace x_g_inte_site_17 {
             },
             
             getUserNotifications: function(this: IProfileValidatorPrototype & IAbstractAjaxProcessor): string | undefined {
-                var response = constructor.getUserNotifications('' + this.getParameter('sysparm_user_id'));
+                var response = constructor.getUserNotifications('' + this.getParameter(PARAMNAME_user_id));
                 if (constructor.isUserLookupFault(response))
                     this.setError(response);
                 else
@@ -618,14 +624,14 @@ namespace x_g_inte_site_17 {
             },
 
             getUserPhoneAndOrg: function(this: IProfileValidatorPrototype & IAbstractAjaxProcessor): void {
-                var result = this.newItem('result')
+                var result = this.newItem(XMLNAME_result)
                 var phoneAndOrg = getUserPhoneAndOrg(getUserIdFromParameter.call(this));
                 if (typeof phoneAndOrg === 'undefined') {
-                    result.setAttribute('org', '');
-                    result.setAttribute('phone', '');
+                    result.setAttribute(XMLNAME_org, '');
+                    result.setAttribute(XMLNAME_phone, '');
                 } else {
-                    result.setAttribute('org', phoneAndOrg.org);
-                    result.setAttribute('phone', phoneAndOrg.phone);
+                    result.setAttribute(XMLNAME_org, phoneAndOrg.org);
+                    result.setAttribute(XMLNAME_phone, phoneAndOrg.phone);
                 }
             },
 

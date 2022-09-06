@@ -5,6 +5,12 @@ var x_g_inte_site_17;
     x_g_inte_site_17.ProfileValidator = (function () {
         var constructor = Class.create();
         var SYSID_RE = /^[\da-f]{32}$/i;
+        var XMLNAME_result = 'result';
+        var XMLNAME_org = 'org';
+        var XMLNAME_phone = 'phone';
+        var XMLNAME_ = '';
+        var PARAMNAME_user_id = 'sysparm_user_id';
+        var PARAMNAME_ = '';
         var PROPERTY_NAME_profile_phone_fields = 'x_g_inte_site_17.profile_phone_fields';
         var PROPERTY_NAME_profile_compliance_check_fields = 'x_g_inte_site_17.profile_compliance_check_fields';
         function isNil(obj) {
@@ -98,7 +104,7 @@ var x_g_inte_site_17;
                 return { org: getUserOrg(gr), phone: getUserPhone(gr) };
         }
         function getUserIdFromParameter() {
-            var userId = this.getParameter('sysparm_user_id');
+            var userId = this.getParameter(PARAMNAME_user_id);
             return isNil(userId) ? gs.getUserID() : (typeof userId === 'string') ? userId : '' + userId;
         }
         constructor.isUserLookupFault = function (result) {
@@ -288,29 +294,29 @@ var x_g_inte_site_17;
         };
         constructor.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
             getUserProfileCompliance: function () {
-                var response = constructor.getUserProfileCompliance('' + this.getParameter('sysparm_user_id'));
+                var response = constructor.getUserProfileCompliance('' + this.getParameter(PARAMNAME_user_id));
                 if (constructor.isUserLookupFault(response))
                     this.setError(response);
                 else
                     return JSON.stringify(response);
             },
             getUserNotifications: function () {
-                var response = constructor.getUserNotifications('' + this.getParameter('sysparm_user_id'));
+                var response = constructor.getUserNotifications('' + this.getParameter(PARAMNAME_user_id));
                 if (constructor.isUserLookupFault(response))
                     this.setError(response);
                 else
                     return JSON.stringify(response);
             },
             getUserPhoneAndOrg: function () {
-                var result = this.newItem('result');
+                var result = this.newItem(XMLNAME_result);
                 var phoneAndOrg = getUserPhoneAndOrg(getUserIdFromParameter.call(this));
                 if (typeof phoneAndOrg === 'undefined') {
-                    result.setAttribute('org', '');
-                    result.setAttribute('phone', '');
+                    result.setAttribute(XMLNAME_org, '');
+                    result.setAttribute(XMLNAME_phone, '');
                 }
                 else {
-                    result.setAttribute('org', phoneAndOrg.org);
-                    result.setAttribute('phone', phoneAndOrg.phone);
+                    result.setAttribute(XMLNAME_org, phoneAndOrg.org);
+                    result.setAttribute(XMLNAME_phone, phoneAndOrg.phone);
                 }
             },
             getUserPhone: function () {

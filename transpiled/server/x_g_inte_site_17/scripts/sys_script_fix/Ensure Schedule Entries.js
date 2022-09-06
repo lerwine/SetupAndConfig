@@ -290,7 +290,7 @@ var ensure_schedule_entries;
                 if (!gs.nil(entry.type))
                     gr.setValue('type', entry.type);
                 gr.setValue('repeat_type', entry.repeat_type);
-                cmn_schedule_entryShowAs;
+                gr.setValue('show_as', entry.show_as);
                 if (!gs.nil(entry.yearly_type))
                     gr.setValue('yearly_type', entry.yearly_type);
                 if (!gs.nil(entry.float_day))

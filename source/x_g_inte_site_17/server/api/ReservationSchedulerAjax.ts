@@ -367,10 +367,11 @@
         {
             var fromDateTime: GlideDateTime = new GlideDateTime(<string>this.getParameter(PARAM_NAME.from));
             var toDateTime: GlideDateTime = new GlideDateTime(<string>this.getParameter(PARAM_NAME.to));
-            var value: $$rhino.String = this.getParameter(PARAM_NAME.duration);
+            var value: $$rhino.Nilable<$$rhino.String> = this.getParameter(PARAM_NAME.duration);
             var duration: GlideDuration | undefined;
             if (!gs.nil(value)) duration = new GlideDuration(parseInt('' + value) * 60000);
-            var availabilities: TimeSlot[];
+            
+            var availabilities: Iterator<ITimeSpan>;
             try {
                 availabilities = scheduler.getAvailabilitiesInRange(fromDateTime, toDateTime, duration);
             } catch (e) {
@@ -378,27 +379,28 @@
                 return [];
             }
             var availabilitiesElement: IXMLElement = this.newItem(XMLNAME_availabilities);
-            availabilitiesElement.setAttribute(XMLNAME_length, '' + availabilities.length);
-            for (var a of availabilities) {
+            var count = 0;
+            var yielded = availabilities.next();
+            while (!yielded.done) {
+                count++;
                 var element = (<XMLDocument2>this.getDocument()).createElement(XMLNAME_availability);
                 availabilitiesElement.appendChild(element);
-                element.setAttribute(XMLNAME_startDateTime, a.startDateTime.getDisplayValue());
-                element.setAttribute(XMLNAME_durationMinutes, '' + Math.floor(a.duration.getNumericValue() / 60000));
+                element.setAttribute(XMLNAME_startDateTime, yielded.value.start.getDisplayValue());
+                element.setAttribute(XMLNAME_durationMinutes, '' + Math.floor(yielded.value.duration.getNumericValue() / 60000));
             }
+            availabilitiesElement.setAttribute(XMLNAME_length, '' + count);
             return addIncludeParams.call(this, scheduler);
         }
         
         function getNextAvailableTimeSlot(this: IAbstractAjaxProcessor, scheduler: ReservationScheduler): string[] {
             var fromDateTime: GlideDateTime = new GlideDateTime(<string>this.getParameter(PARAM_NAME.from));
-            var toDateTime: GlideDateTime | undefined;
-            var value: $$rhino.String = this.getParameter(PARAM_NAME.to);
-            if (!gs.nil(value)) toDateTime = new GlideDateTime(<string>value);
-            value = this.getParameter(PARAM_NAME.duration);
+            var toDateTime: GlideDateTime = new GlideDateTime(<string>this.getParameter(PARAM_NAME.to));
+            var value = this.getParameter(PARAM_NAME.duration);
             var duration: GlideDuration | undefined;
             if (!gs.nil(value)) duration = new GlideDuration(parseInt(<string>value) * 60000);
-            var availability: ITimeSlot | undefined;
+            var availability: ITimeSpan | undefined;
             try {
-                availability = scheduler.getNextAvailableTimeSlot(fromDateTime, toDateTime, duration);
+                availability = scheduler.getNextAvailableTimeSpan(fromDateTime, toDateTime, duration);
             } catch (e) {
                 this.setError(e);
                 return [];
@@ -408,7 +410,7 @@
                 availabilitiesElement.setAttribute(XMLNAME_success, 'false');
             } else {
                 availabilitiesElement.setAttribute(XMLNAME_success, 'false');
-                availabilitiesElement.setAttribute(XMLNAME_startDateTime, availability.startDateTime.getDisplayValue());
+                availabilitiesElement.setAttribute(XMLNAME_startDateTime, availability.start.getDisplayValue());
                 if (typeof availability.duration !== 'undefined')
                     availabilitiesElement.setAttribute(XMLNAME_durationMinutes, '' + Math.floor(availability.duration.getNumericValue() / 60000));
             }
@@ -430,8 +432,8 @@
          * Parameters are:
          * sys_parm_reservation_type = The sys_id of the reservation type;
          * sys_parm_allow_inactive = Optional boolean indicating whether to allow inactive reservation types;
-         * sys_parm_from = The date and time to start from;
-         * sys_parm_to = The optional end date and time to search within;
+         * sys_parm_from = The required date and time to start from;
+         * sys_parm_to = The required end date and time to search within;
          * sys_parm_duration = The optional minimum reservation duration in minutes;
          * sys_parm_include = The optional list of comma-separated result inclusions.
          * 
@@ -467,8 +469,8 @@
          * Parameters are:
          * sys_parm_reservation_type =The sys_id of the reservation type;
          * sys_parm_allow_inactive = Optional boolean indicating whether to allow inactive reservation types;
-         * sys_parm_from = The date and time to start from;
-         * sys_parm_to = The end date and time to search within;
+         * sys_parm_from = The required date and time to start from;
+         * sys_parm_to = The required end date and time to search within;
          * sys_parm_duration = The optional minimum reservation duration in minutes;
          * sys_parm_include = The optional list of comma-separated result inclusions.
          * 
@@ -494,7 +496,7 @@
             initialize(this: IAbstractAjaxProcessor & IReservationSchedulerAjaxPrototype, request?: GlideServletRequest, responseXML?: XMLDocument2, gc?: GlideController) {
                 global.AbstractAjaxProcessor.prototype.initialize.call(this, request, responseXML, gc);
                 
-                var value: $$rhino.String = this.getParameter(PARAM_NAME.allow_inactive);
+                var value: $$rhino.Nilable<$$rhino.String> = this.getParameter(PARAM_NAME.allow_inactive);
                 var allowInactive: boolean | undefined;
                 if (!gs.nil(value)) {
                     var s = ('' + value).trim().toLowerCase();

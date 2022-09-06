@@ -1,11 +1,16 @@
 /// <reference path="../../sn_typings_server_scoped/dist/index.d.ts" />
 /// <reference path="../table/index.d.ts" />
 declare namespace x_g_inte_site_17 {
-    interface ITimeSlot {
-        startDateTime: GlideDateTime;
-        duration?: GlideDuration;
+    interface ITimeSpan {
+        start: GlideDateTime;
+        duration: GlideDuration;
     }
-    type TimeSlot = Required<ITimeSlot>;
+    /**
+     * Base interface for the ReservationScheduler API.
+     * @export
+     * @interface IReservationScheduler
+     * @extends {$$snClass.ICustomClassBase<IReservationScheduler, "ReservationScheduler">}
+     */
     interface IReservationScheduler extends $$snClass.ICustomClassBase<IReservationScheduler, "ReservationScheduler"> {
         sys_id: string;
         /**
@@ -14,6 +19,11 @@ declare namespace x_g_inte_site_17 {
          * @memberof IReservationScheduler
          */
         short_description: string;
+        /**
+         * The current GlideSchedule object.
+         * @type {GlideSchedule}
+         * @memberof IReservationScheduler
+         */
         schedule: GlideSchedule;
         /**
          * The current user's time zone
@@ -65,19 +75,25 @@ declare namespace x_g_inte_site_17 {
         /**
          * Normalizes a duration value according to the {@link #duration_increment}, {@link #minimum_duration} and {@link #maximum_duration} properties.
          * @param {GlideDuration} value - The duration value to normalize.
+         * @param {number} [round] - Rounding type: Greater than zero = round to next higher {@link #duration_increment} (default);
+         * Less than 0 = round to next lower {@link #duration_increment};
+         * 0 = round to nearest {@link #duration_increment}.
          * @return {number} The number of milliseconds by which the duration value was adjusted.
          * @memberof IReservationScheduler
          */
-        normalizeDuration(value: GlideDuration): number;
+        normalizeDuration(value: GlideDuration, round?: number): number;
         /**
          * Creates a new normalized duration value from an existing duration value.
          * @param {GlideDuration} value - The source duration value.
+         * @param {number} [round] - Greater than zero = round to next higher {@link #duration_increment} (default);
+         * Less than 0 = round to next lower {@link #duration_increment};
+         * 0 = round to nearest {@link #duration_increment}.
          * @return {GlideDuration} A new normalized duration value.
          * @memberof IReservationScheduler
          */
-        getNormalizedDuration(value: GlideDuration): GlideDuration;
+        getNormalizedDuration(value: GlideDuration, round?: number): GlideDuration;
         /**
-         * Rounds a date/time value up to the next increment specified by {@link #start_time_interval} property.
+         * Rounds a date/time value up to the next increment specified by the {@link #start_time_interval} property.
          * @param {GlideDateTime} value - The date/time value to normalize.
          * @return {number} The number of milliseconds by which the duration value was adjusted.
          * @memberof IReservationScheduler
@@ -86,29 +102,28 @@ declare namespace x_g_inte_site_17 {
         /**
          * Creates a new normalizated date/time value from an existing date and time.
          * @param {GlideDateTime} value - The source date/time value.
-         * @return {GlideDateTime} A new date/time value that is rouned up to the next increment specified by {@link #start_time_interval} property.
+         * @return {GlideDateTime} A new date/time value that is rouned up to the next increment specified by the {@link #start_time_interval} property.
          * @memberof IReservationScheduler
          */
         getNormalizedStartDate(value: GlideDateTime): GlideDateTime;
         /**
-         *
-         * @param {GlideDateTime} fromDateTime
-         * @param {GlideDateTime} [toDateTime]
-         * @param {GlideDuration} [minimumDuration]
-         * @param {GlideDuration} [maximumDuration]
-         * @return {(ITimeSlot | undefined)}
+         * Gets the timespan of the next availability from the current {@link GlideSchedule}.
+         * @param {GlideDateTime} fromDateTime - The starting date/time (inclusive).
+         * @param {GlideDateTime} toDateTime - The ending date/time (exclusive).
+         * @param {GlideDuration} [minimumDuration] - The optional minimum duration.
+         * @return {ITimeSpan | undefined}
          * @memberof IReservationScheduler
          */
-        getNextAvailableTimeSlot(fromDateTime: GlideDateTime, toDateTime?: GlideDateTime, minimumDuration?: GlideDuration): ITimeSlot | undefined;
+        getNextAvailableTimeSpan(fromDateTime: GlideDateTime, toDateTime: GlideDateTime, minimumDuration?: GlideDuration): ITimeSpan | undefined;
         /**
          * Gets the available time slots within a given range of date/time values.
          * @param {GlideDateTime} fromDateTime - The starting date/time range.
          * @param {GlideDateTime} toDateTime - The ending date/time range.
          * @param {GlideDuration} [minimumDuration] - The optional minimum duration for the returned time slots.
-         * @return {TimeSlot[]} The available time slots within the specified date/time range.
+         * @return {global.Stream<ITimeSpan>} The available time slots within the specified date/time range.
          * @memberof IReservationScheduler
          */
-        getAvailabilitiesInRange(fromDateTime: GlideDateTime, toDateTime: GlideDateTime, minimumDuration?: GlideDuration): TimeSlot[];
+        getAvailabilitiesInRange(fromDateTime: GlideDateTime, toDateTime: GlideDateTime, minimumDuration?: GlideDuration): Iterator<ITimeSpan>;
         /**
          * Indicates whether the specified start date and duration is available for an reservation.
          * @param {GlideDateTime} startDateTime - The prospective reservation start date and time.
