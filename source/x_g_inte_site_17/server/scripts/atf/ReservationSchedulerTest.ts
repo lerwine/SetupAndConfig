@@ -1014,6 +1014,59 @@ namespace getAvailabilitiesInRangeTest {
         parameterSets: IAvailabilitiesInRangeParameterSet[];
     }
 
+    /*
+        Add afternoon hours schedule entry recurring daily from today at 09:00 to 12:00:
+            Schedule (schedule)={{step['8b4ed58697051110d87839000153afae'].record_id}}
+            All day (all_day)=false
+            Name (name)=Morning Hours
+            Repeats (repeat_type)=daily
+            Show as (show_as)=free
+            Start date time (start_date_time)=javascript:new GlideDateTime(gs.dateGenerate(gs.daysAgoStart(0).substring(0, 10), "09:00:00")).getDisplayValue()
+            End date time (end_date_time)=javascript:new GlideDateTime(gs.dateGenerate(gs.daysAgoStart(0).substring(0, 10), "12:00:00")).getDisplayValue()
+            Type (type)=
+        Add afternoon hours schedule entry recurring daily from today at 13:00 to 16:00:
+            Schedule (schedule)={{step['8b4ed58697051110d87839000153afae'].record_id}}
+            All day (all_day)=false
+            Name (name)=Afternoon Hours
+            Repeats (repeat_type)=weekdays
+            Show as (show_as)=free
+            Start date time (start_date_time)=javascript:new GlideDateTime(gs.dateGenerate(gs.daysAgoStart(0).substring(0, 10), "16:00:00")).getDisplayValue()
+            End date time (end_date_time)=javascript:new GlideDateTime(gs.dateGenerate(gs.daysAgoStart(0).substring(0, 10), "13:00:00")).getDisplayValue()
+            Type (type)=
+        Add holiday schedule entry for 2 days out
+            schedule={{step['07f5e19897d11110d87839000153af81'].record_id}}
+            all_day=true
+            name=Party Time
+            repeat_type=yearly
+            show_as=busy
+            start_date_time=javascript:new GlideDateTime(gs.dateGenerate(gs.daysAgoStart(-2).substring(0, 10), "start")).getDisplayValue()
+            end_date_time=javascript:new GlideDateTime(gs.dateGenerate(gs.daysAgoStart(-2).substring(0, 10), "end")).getDisplayValue()
+            type=exclude
+        Add First Appointment tomorrow from 11:45 to 12:00
+            name=First Appointment
+            start_date_time=javascript:new GlideDateTime(gs.dateGenerate(gs.daysAgoStart(-1).substring(0, 10), "11:45:00")).getDisplayValue()
+            end_date_time=javascript:new GlideDateTime(gs.dateGenerate(gs.daysAgoStart(-1).substring(0, 10), "12:00:00")).getDisplayValue()
+            all_day=false
+            show_as=busy
+            schedule={{step['8b4ed58697051110d87839000153afae'].record_id}}
+            type=exclude
+        Add second appointment tomorrow from 13:30 to 14:15
+            name=Second Appointment
+            start_date_time=javascript:new GlideDateTime(gs.dateGenerate(gs.daysAgoStart(-1).substring(0, 10), "13:30:00")).getDisplayValue()
+            end_date_time=javascript:new GlideDateTime(gs.dateGenerate(gs.daysAgoStart(-1).substring(0, 10), "14:15:00")).getDisplayValue()
+            all_day=false
+            show_as=busy
+            type=exclude
+            schedule={{step['8b4ed58697051110d87839000153afae'].record_id}}
+        Add Third Appointment tomorrow from 15:00 to 16:00
+            name=Third Appointment
+            start_date_time=javascript:new GlideDateTime(gs.dateGenerate(gs.daysAgoStart(-1).substring(0, 10), "15:00:00")).getDisplayValue()
+            end_date_time=javascript:new GlideDateTime(gs.dateGenerate(gs.daysAgoStart(-1).substring(0, 10), "16:00:00")).getDisplayValue()
+            all_day=false
+            show_as=busy
+            type=exclude
+            schedule={{step['8b4ed58697051110d87839000153afae'].record_id}}
+    */
     (function (outputs: sn_atf.ITestStepOutputs, steps: sn_atf.ITestStepsFunc, stepResult: sn_atf.ITestStepResult, assertEqual: sn_atf.IAssertEqualFunc): boolean {
         var atfHelper: x_g_inte_site_17.AtfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
         var schedule_sys_id: string = <string>atfHelper.getRecordIdFromStep('8b4ed58697051110d87839000153afae');
