@@ -1005,7 +1005,7 @@ namespace getAvailabilitiesInRangeTest {
         fromDateTime: GlideDateTime;
         toDateTime: GlideDateTime;
         minimumDuration?: GlideDuration;
-        expected: x_g_inte_site_17.TimeSlot[];
+        expected: x_g_inte_site_17.ITimeSpan[];
     }
 
     interface ITestParameterSet {
@@ -1063,19 +1063,19 @@ namespace getAvailabilitiesInRangeTest {
                         toDateTime: new GlideDateTime(gs.dateGenerate(day3, "end")),
                         expected: [
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")), // day1, 09:00-11:45
+                                start: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")), // day1, 09:00-11:45
                                 duration: new GlideDuration('0 2:45:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "12:15:00")), // day1, 12:15-12:45
+                                start: new GlideDateTime(gs.dateGenerate(day1, "12:15:00")), // day1, 12:15-12:45
                                 duration: new GlideDuration('0 0:30:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "13:30:00")), // day1, 13:30-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day1, "13:30:00")), // day1, 13:30-16:00
                                 duration: new GlideDuration('0 2:30:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
                                 duration: new GlideDuration('0 7:0:0')
                             }
                         ]
@@ -1087,19 +1087,19 @@ namespace getAvailabilitiesInRangeTest {
                         minimumDuration: new GlideDuration('0 0:0:0'),
                         expected: [
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")), // day1, 09:00-11:45
+                                start: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")), // day1, 09:00-11:45
                                 duration: new GlideDuration('0 2:45:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "12:15:00")), // day1, 12:15-12:45
+                                start: new GlideDateTime(gs.dateGenerate(day1, "12:15:00")), // day1, 12:15-12:45
                                 duration: new GlideDuration('0 0:30:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "13:30:00")), // day1, 13:30-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day1, "13:30:00")), // day1, 13:30-16:00
                                 duration: new GlideDuration('0 2:30:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
                                 duration: new GlideDuration('0 7:0:0')
                             }
                         ]
@@ -1111,15 +1111,15 @@ namespace getAvailabilitiesInRangeTest {
                         minimumDuration: new GlideDuration('0 0:45:0'),
                         expected: [
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")), // day1, 09:00-11:45
+                                start: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")), // day1, 09:00-11:45
                                 duration: new GlideDuration('0 2:45:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "13:30:00")), // day1, 13:30-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day1, "13:30:00")), // day1, 13:30-16:00
                                 duration: new GlideDuration('0 2:30:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
                                 duration: new GlideDuration('0 7:0:0')
                             }
                         ]
@@ -1130,15 +1130,15 @@ namespace getAvailabilitiesInRangeTest {
                         toDateTime: new GlideDateTime(gs.dateGenerate(day1, "end")),
                         expected: [
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")), // day1, 09:00-11:45
+                                start: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")), // day1, 09:00-11:45
                                 duration: new GlideDuration('0 2:45:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "12:15:00")), // day1, 12:15-12:45
+                                start: new GlideDateTime(gs.dateGenerate(day1, "12:15:00")), // day1, 12:15-12:45
                                 duration: new GlideDuration('0 0:30:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "13:30:00")), // day1, 13:30-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day1, "13:30:00")), // day1, 13:30-16:00
                                 duration: new GlideDuration('0 2:30:0')
                             }
                         ]
@@ -1150,15 +1150,15 @@ namespace getAvailabilitiesInRangeTest {
                         minimumDuration: new GlideDuration('0 0:0:0'),
                         expected: [
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")), // day1, 09:00-11:45
+                                start: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")), // day1, 09:00-11:45
                                 duration: new GlideDuration('0 2:45:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "12:15:00")), // day1, 12:15-12:45
+                                start: new GlideDateTime(gs.dateGenerate(day1, "12:15:00")), // day1, 12:15-12:45
                                 duration: new GlideDuration('0 0:30:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "13:30:00")), // day1, 13:30-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day1, "13:30:00")), // day1, 13:30-16:00
                                 duration: new GlideDuration('0 2:30:0')
                             }
                         ]
@@ -1177,7 +1177,7 @@ namespace getAvailabilitiesInRangeTest {
                         minimumDuration: new GlideDuration('0 0:0:0'),
                         expected: [
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")), // day1, 09:00-11:45
+                                start: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")), // day1, 09:00-11:45
                                 duration: new GlideDuration('0 0:15:59')
                             }
                         ]
@@ -1196,7 +1196,7 @@ namespace getAvailabilitiesInRangeTest {
                         minimumDuration: new GlideDuration('0 0:30:0'),
                         expected: [
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "12:15:00")), // day1, 12:15-12:45
+                                start: new GlideDateTime(gs.dateGenerate(day1, "12:15:00")), // day1, 12:15-12:45
                                 duration: new GlideDuration('0 0:30:0')
                             }
                         ]
@@ -1208,7 +1208,7 @@ namespace getAvailabilitiesInRangeTest {
                         minimumDuration: new GlideDuration('0 0:30:0'),
                         expected: [
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "12:15:00")), // day1, 12:15-12:45
+                                start: new GlideDateTime(gs.dateGenerate(day1, "12:15:00")), // day1, 12:15-12:45
                                 duration: new GlideDuration('0 0:30:0')
                             }
                         ]
@@ -1234,7 +1234,7 @@ namespace getAvailabilitiesInRangeTest {
                         minimumDuration: new GlideDuration('0 0:30:0'),
                         expected: [
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "13:30:00")), // day1, 13:30-14:00
+                                start: new GlideDateTime(gs.dateGenerate(day1, "13:30:00")), // day1, 13:30-14:00
                                 duration: new GlideDuration('0 0:30:0')
                             }
                         ]
@@ -1246,7 +1246,7 @@ namespace getAvailabilitiesInRangeTest {
                         minimumDuration: new GlideDuration('0 0:30:0'),
                         expected: [
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "13:30:00")), // day1, 13:30-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day1, "13:30:00")), // day1, 13:30-16:00
                                 duration: new GlideDuration('0 2:30:0')
                             }
                         ]
@@ -1264,7 +1264,7 @@ namespace getAvailabilitiesInRangeTest {
                         toDateTime: new GlideDateTime(gs.dateGenerate(day3, "end")),
                         expected: [
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
                                 duration: new GlideDuration('0 7:0:0')
                             }
                         ]
@@ -1276,7 +1276,7 @@ namespace getAvailabilitiesInRangeTest {
                         minimumDuration: new GlideDuration('0 0:0:0'),
                         expected: [
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
                                 duration: new GlideDuration('0 7:0:0')
                             }
                         ]
@@ -1293,15 +1293,15 @@ namespace getAvailabilitiesInRangeTest {
                         toDateTime: new GlideDateTime(gs.dateGenerate(day3, "end")),
                         expected: [
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")), // day1, 09:00-11:45
+                                start: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")), // day1, 09:00-11:45
                                 duration: new GlideDuration('0 2:45:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "14:00:00")), // day1, 14:00-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day1, "14:00:00")), // day1, 14:00-16:00
                                 duration: new GlideDuration('0 2:00:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
                                 duration: new GlideDuration('0 7:0:0')
                             }
                         ]
@@ -1313,15 +1313,15 @@ namespace getAvailabilitiesInRangeTest {
                         minimumDuration: new GlideDuration('0 0:0:0'),
                         expected: [
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")), // day1, 09:00-11:45
+                                start: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")), // day1, 09:00-11:45
                                 duration: new GlideDuration('0 2:45:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "14:00:00")), // day1, 14:00-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day1, "14:00:00")), // day1, 14:00-16:00
                                 duration: new GlideDuration('0 2:00:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
                                 duration: new GlideDuration('0 7:0:0')
                             }
                         ]
@@ -1333,15 +1333,15 @@ namespace getAvailabilitiesInRangeTest {
                         minimumDuration: new GlideDuration('0 0:30:0'),
                         expected: [
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")), // day1, 09:00-11:45
+                                start: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")), // day1, 09:00-11:45
                                 duration: new GlideDuration('0 2:45:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "14:00:00")), // day1, 14:00-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day1, "14:00:00")), // day1, 14:00-16:00
                                 duration: new GlideDuration('0 2:00:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
                                 duration: new GlideDuration('0 7:0:0')
                             }
                         ]
@@ -1353,15 +1353,15 @@ namespace getAvailabilitiesInRangeTest {
                         minimumDuration: new GlideDuration('0 0:45:0'),
                         expected: [
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")), // day1, 09:00-11:45
+                                start: new GlideDateTime(gs.dateGenerate(day1, "09:00:00")), // day1, 09:00-11:45
                                 duration: new GlideDuration('0 2:45:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "14:00:00")), // day1, 14:00-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day1, "14:00:00")), // day1, 14:00-16:00
                                 duration: new GlideDuration('0 2:00:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
                                 duration: new GlideDuration('0 7:0:0')
                             }
                         ]
@@ -1373,15 +1373,15 @@ namespace getAvailabilitiesInRangeTest {
                         minimumDuration: new GlideDuration('0 0:45:0'),
                         expected: [
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "10:00:00")), // day1, 10:00-11:45
+                                start: new GlideDateTime(gs.dateGenerate(day1, "10:00:00")), // day1, 10:00-11:45
                                 duration: new GlideDuration('0 1:45:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "14:00:00")), // day1, 14:00-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day1, "14:00:00")), // day1, 14:00-16:00
                                 duration: new GlideDuration('0 2:00:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
                                 duration: new GlideDuration('0 7:0:0')
                             }
                         ]
@@ -1393,15 +1393,15 @@ namespace getAvailabilitiesInRangeTest {
                         minimumDuration: new GlideDuration('0 0:45:0'),
                         expected: [
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "11:00:00")), // day1, 11:00-11:45
+                                start: new GlideDateTime(gs.dateGenerate(day1, "11:00:00")), // day1, 11:00-11:45
                                 duration: new GlideDuration('0 0:45:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day1, "14:00:00")), // day1, 14:00-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day1, "14:00:00")), // day1, 14:00-16:00
                                 duration: new GlideDuration('0 2:00:0')
                             },
                             {
-                                startDateTime: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
+                                start: new GlideDateTime(gs.dateGenerate(day3, "09:00:00")), // day3, 09:00-16:00
                                 duration: new GlideDuration('0 7:0:0')
                             }
                         ]
@@ -1477,7 +1477,7 @@ namespace getAvailabilitiesInRangeTest {
             }
             for (var parameterSet of schedulerParameters.parameterSets) {
                 var desc = parameterSet.test_description + ' with ' + constructorSignature;
-                var actualArray: x_g_inte_site_17.TimeSlot[];
+                var actualArray: x_g_inte_site_17.ITimeSpan[];
                 stepResult.setOutputMessage(JSON.stringify({
                     fromDateTime: parameterSet.fromDateTime.getValue() + ' (' + parameterSet.fromDateTime.getDisplayValue() + ')',
                     toDateTime: parameterSet.toDateTime.getValue() + ' (' + parameterSet.toDateTime.getDisplayValue() + ')',
@@ -1485,9 +1485,9 @@ namespace getAvailabilitiesInRangeTest {
                 }));
                 try {
                     if (typeof parameterSet.minimumDuration === 'undefined')
-                        actualArray = rs.getAvailabilitiesInRange(parameterSet.fromDateTime, parameterSet.toDateTime);
+                        actualArray = x_g_inte_site_17.Site17Util.iteratorToArray<x_g_inte_site_17.ITimeSpan>(rs.getAvailabilitiesInRange(parameterSet.fromDateTime, parameterSet.toDateTime));
                     else
-                        actualArray = rs.getAvailabilitiesInRange(parameterSet.fromDateTime, parameterSet.toDateTime, parameterSet.minimumDuration);
+                        actualArray = x_g_inte_site_17.Site17Util.iteratorToArray<x_g_inte_site_17.ITimeSpan>(rs.getAvailabilitiesInRange(parameterSet.fromDateTime, parameterSet.toDateTime, parameterSet.minimumDuration));
                 } catch (e) {
                     atfHelper.setFailed("Unexpected exception while testing " + desc, e);
                     return false;
@@ -1496,21 +1496,21 @@ namespace getAvailabilitiesInRangeTest {
                     fromDateTime: parameterSet.fromDateTime.getValue() + ' (' + parameterSet.fromDateTime.getDisplayValue() + ')',
                     toDateTime: parameterSet.toDateTime.getValue() + ' (' + parameterSet.toDateTime.getDisplayValue() + ')',
                     minimumDuration: (typeof parameterSet.minimumDuration === undefined) ? undefined : (<GlideDuration>parameterSet.minimumDuration).getDurationValue(),
-                    expected: parameterSet.expected.map(function(item: x_g_inte_site_17.TimeSlot): {
-                        startDateTime: string;
+                    expected: parameterSet.expected.map(function(item: x_g_inte_site_17.ITimeSpan): {
+                        start: string;
                         duration: string | undefined;
                     } {
                         return {
-                            startDateTime: item.startDateTime.getValue() + ' (' + item.startDateTime.getDisplayValue() + ')',
+                            start: item.start.getValue() + ' (' + item.start.getDisplayValue() + ')',
                             duration: (typeof item.duration === 'undefined') ? undefined : item.duration.getDurationValue()
                         };
                     }),
-                    actual: actualArray.map(function(item: x_g_inte_site_17.TimeSlot): {
-                        startDateTime: string;
+                    actual: actualArray.map(function(item: x_g_inte_site_17.ITimeSpan): {
+                        start: string;
                         duration: string | undefined;
                     } {
                         return {
-                            startDateTime: item.startDateTime.getValue() + ' (' + item.startDateTime.getDisplayValue() + ')',
+                            start: item.start.getValue() + ' (' + item.start.getDisplayValue() + ')',
                             duration: (typeof item.duration === 'undefined') ? undefined : item.duration.getDurationValue()
                         };
                     })
@@ -1535,8 +1535,8 @@ namespace getAvailabilitiesInRangeTest {
                     });
                     assertEqual({
                         name: 'startDateTime of element ' + i  + ' for ' + desc,
-                        shouldbe: expectedItem.startDateTime,
-                        value: actualItem.startDateTime
+                        shouldbe: expectedItem.start,
+                        value: actualItem.start
                     });
                     assertEqual({
                         name: 'duration of element ' + i  + ' for ' + desc,

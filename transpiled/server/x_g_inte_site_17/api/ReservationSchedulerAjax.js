@@ -227,29 +227,28 @@ var x_g_inte_site_17;
                 return [];
             }
             var availabilitiesElement = this.newItem(XMLNAME_availabilities);
-            availabilitiesElement.setAttribute(XMLNAME_length, '' + availabilities.length);
-            for (var _i = 0, availabilities_1 = availabilities; _i < availabilities_1.length; _i++) {
-                var a = availabilities_1[_i];
+            var count = 0;
+            var yielded = availabilities.next();
+            while (!yielded.done) {
+                count++;
                 var element = this.getDocument().createElement(XMLNAME_availability);
                 availabilitiesElement.appendChild(element);
-                element.setAttribute(XMLNAME_startDateTime, a.startDateTime.getDisplayValue());
-                element.setAttribute(XMLNAME_durationMinutes, '' + Math.floor(a.duration.getNumericValue() / 60000));
+                element.setAttribute(XMLNAME_startDateTime, yielded.value.start.getDisplayValue());
+                element.setAttribute(XMLNAME_durationMinutes, '' + Math.floor(yielded.value.duration.getNumericValue() / 60000));
             }
+            availabilitiesElement.setAttribute(XMLNAME_length, '' + count);
             return addIncludeParams.call(this, scheduler);
         }
         function getNextAvailableTimeSlot(scheduler) {
             var fromDateTime = new GlideDateTime(this.getParameter(PARAM_NAME.from));
-            var toDateTime;
-            var value = this.getParameter(PARAM_NAME.to);
-            if (!gs.nil(value))
-                toDateTime = new GlideDateTime(value);
-            value = this.getParameter(PARAM_NAME.duration);
+            var toDateTime = new GlideDateTime(this.getParameter(PARAM_NAME.to));
+            var value = this.getParameter(PARAM_NAME.duration);
             var duration;
             if (!gs.nil(value))
                 duration = new GlideDuration(parseInt(value) * 60000);
             var availability;
             try {
-                availability = scheduler.getNextAvailableTimeSlot(fromDateTime, toDateTime, duration);
+                availability = scheduler.getNextAvailableTimeSpan(fromDateTime, toDateTime, duration);
             }
             catch (e) {
                 this.setError(e);
@@ -261,7 +260,7 @@ var x_g_inte_site_17;
             }
             else {
                 availabilitiesElement.setAttribute(XMLNAME_success, 'false');
-                availabilitiesElement.setAttribute(XMLNAME_startDateTime, availability.startDateTime.getDisplayValue());
+                availabilitiesElement.setAttribute(XMLNAME_startDateTime, availability.start.getDisplayValue());
                 if (typeof availability.duration !== 'undefined')
                     availabilitiesElement.setAttribute(XMLNAME_durationMinutes, '' + Math.floor(availability.duration.getNumericValue() / 60000));
             }
@@ -282,8 +281,8 @@ var x_g_inte_site_17;
          * Parameters are:
          * sys_parm_reservation_type = The sys_id of the reservation type;
          * sys_parm_allow_inactive = Optional boolean indicating whether to allow inactive reservation types;
-         * sys_parm_from = The date and time to start from;
-         * sys_parm_to = The optional end date and time to search within;
+         * sys_parm_from = The required date and time to start from;
+         * sys_parm_to = The required end date and time to search within;
          * sys_parm_duration = The optional minimum reservation duration in minutes;
          * sys_parm_include = The optional list of comma-separated result inclusions.
          *
@@ -319,8 +318,8 @@ var x_g_inte_site_17;
          * Parameters are:
          * sys_parm_reservation_type =The sys_id of the reservation type;
          * sys_parm_allow_inactive = Optional boolean indicating whether to allow inactive reservation types;
-         * sys_parm_from = The date and time to start from;
-         * sys_parm_to = The end date and time to search within;
+         * sys_parm_from = The required date and time to start from;
+         * sys_parm_to = The required end date and time to search within;
          * sys_parm_duration = The optional minimum reservation duration in minutes;
          * sys_parm_include = The optional list of comma-separated result inclusions.
          *
