@@ -19,20 +19,20 @@ var x_g_inte_site_17;
                 },
                 next: function () {
                     if (!this._start.before(this._end))
-                        return { value: null, done: true };
+                        return { done: true };
                     var duration = GlideDateTime.subtract(this._start, this._end);
                     var actual = this._schedule.duration(this._start, this._end);
                     if (!actual.after(gdz)) {
                         var ms = this._schedule.whenNext(this._start);
                         if (ms < 0)
-                            return { value: null, done: true };
+                            return { done: true };
                         this._start.add(ms);
                         while (!(actual = this._schedule.duration(this._start, this._end)).after(gdz)) {
                             this._start.addSeconds(1);
                             if ((actual = this._schedule.duration(this._start, this._end)).after(gdz))
                                 break;
                             if ((ms = this._schedule.whenNext(this._start)) < 0)
-                                return { value: null, done: true };
+                                return { done: true };
                             this._start.add(ms);
                         }
                     }

@@ -216,17 +216,17 @@
                 },
                 
                 next: function(): IteratorResult<ITimeSpan> {
-                    if (!this._start.before(this._end)) return { value: null, done: true };
+                    if (!this._start.before(this._end)) return <IteratorResult<ITimeSpan>>{ done: true };
                     var duration = GlideDateTime.subtract(this._start, this._end);
                     var actual = this._schedule.duration(this._start, this._end);
                     if (!actual.after(gdz)) {
                         var ms = this._schedule.whenNext(this._start);
-                        if(ms < 0) return { value: null, done: true };
+                        if(ms < 0) return <IteratorResult<ITimeSpan>>{ done: true };
                         this._start.add(ms);
                         while (!(actual = this._schedule.duration(this._start, this._end)).after(gdz)) {
                             this._start.addSeconds(1);
                             if ((actual = this._schedule.duration(this._start, this._end)).after(gdz)) break;
-                            if((ms = this._schedule.whenNext(this._start)) < 0) return { value: null, done: true };
+                            if((ms = this._schedule.whenNext(this._start)) < 0) return <IteratorResult<ITimeSpan>>{ done: true };
                             this._start.add(ms);
                         }
                     }
@@ -241,7 +241,7 @@
                         duration: duration
                     };
                     this._start.add(duration);
-                    return { value: result };
+                    return <IteratorResult<ITimeSpan>>{ value: result };
                 },
 
                 type: "AvailabilityIterator"
