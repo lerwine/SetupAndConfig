@@ -283,13 +283,13 @@ declare namespace x_g_inte_site_17 {
          * @template TReturn - The optional final value type for the iterator.
          * @template TNext - The optional parameter type for obtaining a yielded result.
          * @param {Iterator<TYield, TReturn, TNext>} source - The source iterator.
-         * @param {{ (value: TYield): void; }} callbackFn - The function that is applied to each value before it is yielded in the result iterator.
+         * @param {{ (value: TYield, ...args: [] | [TNext]): void; }} callbackFn - The function that is applied to each value before it is yielded in the result iterator.
          * @param {*} [thisArg] - An optional object to which the this keyword can refer in the callback function.
          * @return {Iterator<TYield, TReturn, TNext>} A wrapper for the original iterator.
          * @memberof Site17UtilConstructor
          */
         reiterate<TYield, TReturn = any, TNext = undefined>(source: Iterator<TYield, TReturn, TNext>, callbackFn: {
-            (value: TYield): void;
+            (value: TYield, ...args: [] | [TNext]): void;
         }, thisArg?: any): Iterator<TYield, TReturn, TNext>;
         /**
          * Maps the yielded results of an iterator to another value or type.
@@ -298,13 +298,13 @@ declare namespace x_g_inte_site_17 {
          * @template TReturn - The optional final value type for the iterator.
          * @template TNext - The optional parameter type for obtaining a yielded result.
          * @param {Iterator<TInput, TReturn, TNext>} source - The source iterator.
-         * @param {{ (value: TInput): TYield; }} mapper - A function that converts each value from the source iterator as it is yielded.
+         * @param {{ (value: TInput, ...args: [] | [TNext]): TYield; }} mapper - A function that converts each value from the source iterator as it is yielded.
          * @param {*} [thisArg] - An optional object to which the this keyword can refer in the mapper function.
          * @return {Iterator<TYield, TReturn, TNext>} The iterator with mapped values.
          * @memberof Site17UtilConstructor
          */
         mapIterator<TInput, TYield, TReturn = any, TNext = undefined>(source: Iterator<TInput, TReturn, TNext>, mapper: {
-            (value: TInput): TYield;
+            (value: TInput, ...args: [] | [TNext]): TYield;
         }, thisArg?: any): Iterator<TYield, TReturn, TNext>;
         /**
          * Creates an aggregated value from all yielded values of an iterator.
@@ -399,20 +399,6 @@ declare namespace x_g_inte_site_17 {
         }, supportsReturn?: boolean, finalReturnValue?: TReturn, onThrow?: {
             (e?: any): IteratorResult<T, TReturn>;
         }): Iterator<T, TReturn, TNext>;
-        filter<T>(source: T[], predicate: {
-            (value: T): boolean;
-        }, thisArg?: any): T[];
-        notNil<T>(source: (T | null | undefined)[]): T[];
-        map<T, R>(source: T[], mapper: {
-            (value: T): R;
-        }, thisArg?: any): R[];
-        any<T>(source: T[], predicate: {
-            (value: T): boolean;
-        }, thisArg?: any): boolean;
-        all<T>(source: T[], predicate: {
-            (value: T): boolean;
-        }, thisArg?: any): boolean;
-        cloneArray<T>(source: T[]): T[];
     }
     const Site17Util: Site17UtilConstructor;
 }

@@ -480,7 +480,7 @@ var x_g_inte_site_17;
          * @template TReturn - The optional final value type for the iterator.
          * @template TNext - The optional parameter type for obtaining a yielded result.
          * @param {Iterator<TYield, TReturn, TNext>} source - The source iterator.
-         * @param {{ (value: TYield): void; }} callbackFn - The function that is applied to each value before it is yielded in the result iterator.
+         * @param {{ (value: TYield, ...args: [] | [TNext]): void; }} callbackFn - The function that is applied to each value before it is yielded in the result iterator.
          * @param {*} [thisArg] - An optional object to which the this keyword can refer in the callback function.
          * @return {Iterator<TYield, TReturn, TNext>} A wrapper for the original iterator.
          * @static
@@ -489,6 +489,7 @@ var x_g_inte_site_17;
         constructor.reiterate = function (source, callbackFn, thisArg) {
             var context = {};
             var iterator;
+            var arrayUtil = new global.ArrayUtil();
             if (typeof thisArg === 'undefined') {
                 iterator = {
                     next: function () {
@@ -503,7 +504,10 @@ var x_g_inte_site_17;
                             context["return"] = result;
                             return result;
                         }
-                        callbackFn(result.value);
+                        if (typeof args !== undefined && args.length > 0)
+                            callbackFn.apply(undefined, arrayUtil.concat([result.value], args));
+                        else
+                            callbackFn(result.value);
                         return result;
                     }
                 };
@@ -554,7 +558,10 @@ var x_g_inte_site_17;
                             context["return"] = result;
                             return result;
                         }
-                        callbackFn.call(thisArg, result.value);
+                        if (typeof args !== undefined && args.length > 0)
+                            callbackFn.apply(thisArg, arrayUtil.concat([result.value], args));
+                        else
+                            callbackFn.call(thisArg, result.value);
                         return result;
                     }
                 };
@@ -600,7 +607,7 @@ var x_g_inte_site_17;
          * @template TReturn - The optional final value type for the iterator.
          * @template TNext - The optional parameter type for obtaining a yielded result.
          * @param {Iterator<TInput, TReturn, TNext>} source - The source iterator.
-         * @param {{ (value: TInput): TYield; }} mapper - A function that converts each value from the source iterator as it is yielded.
+         * @param {{ (value: TInput, ...args: [] | [TNext]): TYield; }} mapper - A function that converts each value from the source iterator as it is yielded.
          * @param {*} [thisArg] - An optional object to which the this keyword can refer in the mapper function.
          * @return {Iterator<TYield, TReturn, TNext>} The iterator with mapped values.
          * @static
@@ -609,6 +616,7 @@ var x_g_inte_site_17;
         constructor.mapIterator = function (source, mapper, thisArg) {
             var context = {};
             var iterator;
+            var arrayUtil = new global.ArrayUtil();
             if (typeof thisArg === 'undefined') {
                 iterator = {
                     next: function () {
@@ -623,6 +631,8 @@ var x_g_inte_site_17;
                             context["return"] = result;
                             return result;
                         }
+                        if (typeof args !== undefined && args.length > 0)
+                            return { value: mapper.apply(undefined, arrayUtil.concat([result.value], args)) };
                         return { value: mapper(result.value) };
                     }
                 };
@@ -673,6 +683,8 @@ var x_g_inte_site_17;
                             context["return"] = result;
                             return result;
                         }
+                        if (typeof args !== undefined && args.length > 0)
+                            return { value: mapper.apply(thisArg, arrayUtil.concat([result.value], args)) };
                         return { value: mapper.call(thisArg, result.value) };
                     }
                 };
@@ -1011,98 +1023,6 @@ var x_g_inte_site_17;
                     return result;
                 };
             return iterator;
-        };
-        constructor.filter = function (source, predicate, thisArg) {
-            if (typeof thisArg !== 'undefined')
-                if (constructor.any(source, function (value) { return !predicate.call(thisArg, value); })) {
-                    var arr = [];
-                    for (var _i = 0, source_1 = source; _i < source_1.length; _i++) {
-                        var item = source_1[_i];
-                        if (predicate.call(thisArg, item))
-                            arr.push(item);
-                    }
-                    return arr;
-                }
-                else if (constructor.any(source, function (value) { return !predicate(value); })) {
-                    var arr = [];
-                    for (var _a = 0, source_2 = source; _a < source_2.length; _a++) {
-                        var item = source_2[_a];
-                        if (predicate(item))
-                            arr.push(item);
-                    }
-                    return arr;
-                }
-            return source;
-        };
-        constructor.notNil = function (source) {
-            if (constructor.any(source, function (value) { return typeof value === 'undefined' || value === null; })) {
-                var arr = [];
-                for (var _i = 0, source_3 = source; _i < source_3.length; _i++) {
-                    var item = source_3[_i];
-                    if (typeof item !== 'undefined' && item !== null)
-                        arr.push(item);
-                }
-                return arr;
-            }
-            return source;
-        };
-        constructor.map = function (source, mapper, thisArg) {
-            var arr = [];
-            if (typeof thisArg === 'undefined')
-                for (var _i = 0, source_4 = source; _i < source_4.length; _i++) {
-                    var item = source_4[_i];
-                    arr.push(mapper(item));
-                }
-            else
-                for (var _a = 0, source_5 = source; _a < source_5.length; _a++) {
-                    var item = source_5[_a];
-                    arr.push(mapper.call(this, item));
-                }
-            return arr;
-        };
-        constructor.any = function (source, predicate, thisArg) {
-            if (typeof thisArg !== 'undefined') {
-                for (var _i = 0, source_6 = source; _i < source_6.length; _i++) {
-                    var item = source_6[_i];
-                    if (predicate.call(thisArg, item))
-                        return true;
-                }
-            }
-            else {
-                for (var _a = 0, source_7 = source; _a < source_7.length; _a++) {
-                    var item = source_7[_a];
-                    if (predicate(item))
-                        return true;
-                }
-            }
-            return false;
-        };
-        constructor.all = function (source, predicate, thisArg) {
-            if (source.length == 0)
-                return false;
-            if (typeof thisArg !== 'undefined') {
-                for (var _i = 0, source_8 = source; _i < source_8.length; _i++) {
-                    var item = source_8[_i];
-                    if (!predicate.call(thisArg, item))
-                        return false;
-                }
-            }
-            else {
-                for (var _a = 0, source_9 = source; _a < source_9.length; _a++) {
-                    var item = source_9[_a];
-                    if (!predicate(item))
-                        return false;
-                }
-            }
-            return true;
-        };
-        constructor.cloneArray = function (source) {
-            var arr = [];
-            for (var _i = 0, source_10 = source; _i < source_10.length; _i++) {
-                var item = source_10[_i];
-                arr.push(item);
-            }
-            return arr;
         };
         // #endregion
         constructor.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {

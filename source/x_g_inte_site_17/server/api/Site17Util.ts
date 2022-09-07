@@ -317,12 +317,12 @@ namespace x_g_inte_site_17 {
          * @template TReturn - The optional final value type for the iterator.
          * @template TNext - The optional parameter type for obtaining a yielded result.
          * @param {Iterator<TYield, TReturn, TNext>} source - The source iterator.
-         * @param {{ (value: TYield): void; }} callbackFn - The function that is applied to each value before it is yielded in the result iterator.
+         * @param {{ (value: TYield, ...args: [] | [TNext]): void; }} callbackFn - The function that is applied to each value before it is yielded in the result iterator.
          * @param {*} [thisArg] - An optional object to which the this keyword can refer in the callback function.
          * @return {Iterator<TYield, TReturn, TNext>} A wrapper for the original iterator.
          * @memberof Site17UtilConstructor
          */
-        reiterate<TYield, TReturn = any, TNext = undefined>(source: Iterator<TYield, TReturn, TNext>, callbackFn: { (value: TYield): void; },
+        reiterate<TYield, TReturn = any, TNext = undefined>(source: Iterator<TYield, TReturn, TNext>, callbackFn: { (value: TYield, ...args: [] | [TNext]): void; },
             thisArg?: any): Iterator<TYield, TReturn, TNext>;
         
         /**
@@ -332,12 +332,12 @@ namespace x_g_inte_site_17 {
          * @template TReturn - The optional final value type for the iterator.
          * @template TNext - The optional parameter type for obtaining a yielded result.
          * @param {Iterator<TInput, TReturn, TNext>} source - The source iterator.
-         * @param {{ (value: TInput): TYield; }} mapper - A function that converts each value from the source iterator as it is yielded.
+         * @param {{ (value: TInput, ...args: [] | [TNext]): TYield; }} mapper - A function that converts each value from the source iterator as it is yielded.
          * @param {*} [thisArg] - An optional object to which the this keyword can refer in the mapper function.
          * @return {Iterator<TYield, TReturn, TNext>} The iterator with mapped values.
          * @memberof Site17UtilConstructor
          */
-        mapIterator<TInput, TYield, TReturn = any, TNext = undefined>(source: Iterator<TInput, TReturn, TNext>, mapper: { (value: TInput): TYield; },
+        mapIterator<TInput, TYield, TReturn = any, TNext = undefined>(source: Iterator<TInput, TReturn, TNext>, mapper: { (value: TInput, ...args: [] | [TNext]): TYield; },
             thisArg?: any): Iterator<TYield, TReturn, TNext>;
         
         /**
@@ -426,18 +426,6 @@ namespace x_g_inte_site_17 {
          */
         iteratorFromArray2<T, TReturn, TNext>(arr: T[], onNext: { (value: T, next?: TNext): IteratorResult<T>; }, supportsReturn?: boolean, finalReturnValue?: TReturn,
             onThrow?: { (e?: any): IteratorResult<T, TReturn> }): Iterator<T, TReturn, TNext>;
-        
-        filter<T>(source: T[], predicate: { (value: T): boolean; }, thisArg?: any): T[];
-    
-        notNil<T>(source: (T | null | undefined)[]): T[];
-    
-        map<T, R>(source: T[], mapper: { (value: T): R; }, thisArg?: any): R[];
-    
-        any<T>(source: T[], predicate: { (value: T): boolean; }, thisArg?: any): boolean;
-    
-        all<T>(source: T[], predicate: { (value: T): boolean; }, thisArg?: any): boolean;
-    
-        cloneArray<T>(source: T[]): T[];
     }
 
     export const Site17Util: Site17UtilConstructor = (function (): Site17UtilConstructor {
@@ -915,16 +903,17 @@ namespace x_g_inte_site_17 {
          * @template TReturn - The optional final value type for the iterator.
          * @template TNext - The optional parameter type for obtaining a yielded result.
          * @param {Iterator<TYield, TReturn, TNext>} source - The source iterator.
-         * @param {{ (value: TYield): void; }} callbackFn - The function that is applied to each value before it is yielded in the result iterator.
+         * @param {{ (value: TYield, ...args: [] | [TNext]): void; }} callbackFn - The function that is applied to each value before it is yielded in the result iterator.
          * @param {*} [thisArg] - An optional object to which the this keyword can refer in the callback function.
          * @return {Iterator<TYield, TReturn, TNext>} A wrapper for the original iterator.
          * @static
          * @memberof Site17Util
          */
-        constructor.reiterate = function<TYield, TReturn = any, TNext = undefined>(source: Iterator<TYield, TReturn, TNext>, callbackFn: { (value: TYield): void; },
+        constructor.reiterate = function<TYield, TReturn = any, TNext = undefined>(source: Iterator<TYield, TReturn, TNext>, callbackFn: { (value: TYield, ...args: [] | [TNext]): void; },
                 thisArg?: any): Iterator<TYield, TReturn, TNext> {
             var context: { return?: IteratorReturnResult<TReturn>; } = { };
             var iterator: Iterator<TYield, TReturn, TNext>;
+            var arrayUtil = new global.ArrayUtil();
             if (typeof thisArg === 'undefined') {
                 iterator = {
                     next: function(...args: [] | [TNext]): IteratorResult<TYield, TReturn> {
@@ -934,7 +923,10 @@ namespace x_g_inte_site_17 {
                             context.return = result;
                             return result;
                         }
-                        callbackFn((<IteratorYieldResult<TYield>>result).value);
+                        if (typeof args !== undefined && args.length > 0)
+                            callbackFn.apply(undefined, <[TYield] | [TYield, TNext]>arrayUtil.concat(<any[]>[(<IteratorYieldResult<TYield>>result).value], args));
+                        else
+                            callbackFn((<IteratorYieldResult<TYield>>result).value);
                         return result;
                     }
                 };
@@ -979,7 +971,10 @@ namespace x_g_inte_site_17 {
                             context.return = result;
                             return result;
                         }
-                        callbackFn.call(thisArg, (<IteratorYieldResult<TYield>>result).value);
+                        if (typeof args !== undefined && args.length > 0)
+                            callbackFn.apply(thisArg, <[TYield] | [TYield, TNext]>arrayUtil.concat(<any[]>[(<IteratorYieldResult<TYield>>result).value], args));
+                        else
+                            callbackFn.call(thisArg, (<IteratorYieldResult<TYield>>result).value);
                         return result;
                     }
                 };
@@ -1026,16 +1021,17 @@ namespace x_g_inte_site_17 {
          * @template TReturn - The optional final value type for the iterator.
          * @template TNext - The optional parameter type for obtaining a yielded result.
          * @param {Iterator<TInput, TReturn, TNext>} source - The source iterator.
-         * @param {{ (value: TInput): TYield; }} mapper - A function that converts each value from the source iterator as it is yielded.
+         * @param {{ (value: TInput, ...args: [] | [TNext]): TYield; }} mapper - A function that converts each value from the source iterator as it is yielded.
          * @param {*} [thisArg] - An optional object to which the this keyword can refer in the mapper function.
          * @return {Iterator<TYield, TReturn, TNext>} The iterator with mapped values.
          * @static
          * @memberof Site17Util
          */
-        constructor.mapIterator = function<TInput, TYield, TReturn = any, TNext = undefined>(source: Iterator<TInput, TReturn, TNext>, mapper: { (value: TInput): TYield; },
+        constructor.mapIterator = function<TInput, TYield, TReturn = any, TNext = undefined>(source: Iterator<TInput, TReturn, TNext>, mapper: { (value: TInput, ...args: [] | [TNext]): TYield; },
                 thisArg?: any): Iterator<TYield, TReturn, TNext> {
             var context: { return?: IteratorReturnResult<TReturn>; } = { };
             var iterator: Iterator<TYield, TReturn, TNext>;
+            var arrayUtil = new global.ArrayUtil();
             if (typeof thisArg === 'undefined') {
                 iterator = {
                     next: function(...args: [] | [TNext]): IteratorResult<TYield, TReturn> {
@@ -1045,6 +1041,8 @@ namespace x_g_inte_site_17 {
                             context.return = result;
                             return result;
                         }
+                        if (typeof args !== undefined && args.length > 0)
+                            return { value: mapper.apply(undefined, <[TInput] | [TInput, TNext]>arrayUtil.concat(<any[]>[result.value], args)) };
                         return { value: mapper(result.value) };
                     }
                 };
@@ -1089,7 +1087,9 @@ namespace x_g_inte_site_17 {
                             context.return = result;
                             return result;
                         }
-                        return { value: mapper.call(thisArg, result.value) };
+                        if (typeof args !== undefined && args.length > 0)
+                            return { value: mapper.apply(thisArg, <[TInput] | [TInput, TNext]>arrayUtil.concat(<any[]>[result.value], args)) };
+                        return { value: mapper.call(thisArg, result.value) }
                     }
                 };
                 if (typeof source.return !== 'undefined')
@@ -1223,8 +1223,7 @@ namespace x_g_inte_site_17 {
          * @static
          * @memberof Site17Util
          */
-        constructor.limitIterator = function<TYield, TReturn = any, TNext = undefined>(source: Iterator<TYield, TReturn, TNext>,
-                count: number): Iterator<TYield, TReturn, TNext> {
+        constructor.limitIterator = function<TYield, TReturn = any, TNext = undefined>(source: Iterator<TYield, TReturn, TNext>, count: number): Iterator<TYield, TReturn, TNext> {
             if (isNaN(count)) count = 0;
             var context: { iterations: number; return?: IteratorReturnResult<TReturn>; } = { iterations: 0 };
             var iterator = <Iterator<TYield, TReturn, TNext>>{
@@ -1412,76 +1411,6 @@ namespace x_g_inte_site_17 {
                 };
             return iterator;
         };
-
-        constructor.filter = function<T>(source: T[], predicate: { (value: T): boolean; }, thisArg?: any): T[] {
-            if (typeof thisArg !== 'undefined')
-                if (constructor.any(source, function(value: T) { return !predicate.call(thisArg, value); })) {
-                    var arr: T[] = [];
-                    for (var item of source) {
-                        if (predicate.call(thisArg, item)) arr.push(item);
-                    }
-                    return arr;
-                }
-            else
-                if (constructor.any(source, function(value: T) { return !predicate(value); })) {
-                    var arr: T[] = [];
-                    for (var item of source) {
-                        if (predicate(item)) arr.push(item);
-                    }
-                    return arr;
-                }
-            return source;
-        };
-    
-        constructor.notNil = function<T>(source: (T | null | undefined)[]): T[] {
-            if (constructor.any(source, function(value?: T | null) { return typeof value === 'undefined' || value === null; })) {
-                var arr: T[] = [];
-                for (var item of source) {
-                    if (typeof item !== 'undefined' && item !== null) arr.push(item);
-                }
-                return arr;
-            }
-            return <T[]>source;
-        }
-
-        constructor.map = function<T, R>(source: T[], mapper: { (value: T): R; }, thisArg?: any): R[] {
-            var arr: R[] = [];
-            if (typeof thisArg === 'undefined')
-                for (var item of source) arr.push(mapper(item));
-            else
-                for (var item of source) arr.push(mapper.call(this, item));
-            return arr;
-        };
-    
-        constructor.any = function<T>(source: T[], predicate: { (value: T): boolean; }, thisArg?: any): boolean {
-            if (typeof thisArg !== 'undefined') {
-                for (var item of source)
-                    if (predicate.call(thisArg, item)) return true;
-            } else {
-                for (var item of source)
-                    if (predicate(item)) return true;
-            }
-            return false;
-        };
-    
-        constructor.all = function<T>(source: T[], predicate: { (value: T): boolean; }, thisArg?: any): boolean {
-            if (source.length == 0) return false;
-            if (typeof thisArg !== 'undefined') {
-                for (var item of source)
-                    if (!predicate.call(thisArg, item)) return false;
-            } else {
-                for (var item of source)
-                    if (!predicate(item)) return false;
-            }
-            return true;
-        };
-    
-        constructor.cloneArray = function<T>(source: T[]): T[] {
-            var arr: T[] = [];
-            for (var item of source)
-                arr.push(item);
-            return arr;
-        }
 
         // #endregion
         

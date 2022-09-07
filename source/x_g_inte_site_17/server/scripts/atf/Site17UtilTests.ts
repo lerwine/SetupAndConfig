@@ -85,449 +85,144 @@ namespace site17Util_DistinguishedNameTest {
     })(outputs, steps, stepResult, assertEqual);
 }
 
-namespace site17Util_ArrayMethodsTest {
-    declare var outputs: sn_atf.ITestStepOutputs;
-    declare function steps(sys_id: string): sn_atf.ITestStepOutputs;
-    declare var stepResult: sn_atf.ITestStepResult;
-    declare function assertEqual(assertion: sn_atf.ITestAssertion): void;
-
-    (function(outputs: sn_atf.ITestStepOutputs, steps: sn_atf.ITestStepsFunc, stepResult: sn_atf.ITestStepResult, assertEqual: sn_atf.IAssertEqualFunc): boolean {
-        var atfHelper: x_g_inte_site_17.AtfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
-        
-        var sourceStringArr = ["One", "", "Three"];
-        var actualStringArr: string[];
-        var thisObj = { count: 0 };
-        var sourceNumberArr = [1, 2, 3, 5, 7, 11, 13];
-        var numberStringArr = ["1", "2", "3", "5", "7", "11", "13"];
-        var actualNumberArr: number[];
-        var obj: any;
-
-        // #region filter<string>(source: string[], predicate: { (value: string): boolean; }): string[]
-
-        try {
-            actualStringArr = x_g_inte_site_17.Site17Util.filter<string>(x_g_inte_site_17.Site17Util.cloneArray(sourceStringArr),
-                function(value: string): boolean { return value.length > 0; });
-        } catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling filter(' + JSON.stringify(sourceStringArr) + ')', e);
-            return false;
-        }
-        assertEqual({
-            name: 'Type of result from filter(' + JSON.stringify(sourceStringArr) + ')',
-            shouldbe: false,
-            value: typeof actualStringArr === 'undefined' || actualStringArr === null
-        });
-        assertEqual({
-            name: 'Values of result from filter(' + JSON.stringify(sourceStringArr) + ')',
-            shouldbe: JSON.stringify(["One", "Three"]),
-            value: JSON.stringify(actualStringArr)
-        });
-
-        // #endregion
-
-        // #region filter<number>(source: number[], predicate: { (value: number): boolean; }, thisArg: { count: number }): number[]
-
-        try {
-            actualStringArr = x_g_inte_site_17.Site17Util.filter<string>(x_g_inte_site_17.Site17Util.cloneArray(sourceStringArr),
-                function(this: { count: number }, value: string): boolean {
-                    this.count++;
-                    return value.length > 0;
-                }, thisObj);
-        } catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling filter(' + JSON.stringify(sourceStringArr) + ', thisArg: { count: number })', e);
-            return false;
-        }
-        assertEqual({
-            name: 'Type of result from filter(' + JSON.stringify(sourceStringArr) + ', thisArg: { count: number })',
-            shouldbe: false,
-            value: typeof actualStringArr === 'undefined' || actualStringArr === null
-        });
-        assertEqual({
-            name: 'Values of result from filter(' + JSON.stringify(sourceStringArr) + ', thisArg: { count: number })',
-            shouldbe: JSON.stringify(["One", "Three"]),
-            value: JSON.stringify(actualStringArr)
-        });
-        assertEqual({
-            name: 'This invocation count on filter(' + JSON.stringify(sourceStringArr) + ', thisArg: { count: number })',
-            shouldbe: sourceStringArr.length,
-            value: thisObj.count
-        });
-
-        // #endregion
-
-        // #region notNil<string>(source: string[]): string[]
-
-        try { actualStringArr = x_g_inte_site_17.Site17Util.notNil<string>(["One", "", null, undefined, "Three"]); }
-        catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling notNil(["One", "", null, undefined, "Three"])', e);
-            return false;
-        }
-        assertEqual({
-            name: 'Type of result from notNil(["One", "", null, undefined, "Three"])',
-            shouldbe: false,
-            value: typeof actualStringArr === 'undefined' || actualStringArr === null
-        });
-        assertEqual({
-            name: 'Values of result from notNil(["One", "", null, undefined, "Three"])',
-            shouldbe: JSON.stringify(sourceStringArr),
-            value: JSON.stringify(actualStringArr)
-        });
-
-        // #endregion
-
-        // #region map<number, string>(source: number[], mapper: { (value: number): string; }): string[]
-
-        try {
-            actualStringArr = x_g_inte_site_17.Site17Util.map<number, string>(x_g_inte_site_17.Site17Util.cloneArray(sourceNumberArr),
-                function(value: number): string { return value.toString(); });
-        } catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling map(' + JSON.stringify(sourceNumberArr) + ')', e);
-            return false;
-        }
-        assertEqual({
-            name: 'Type of result from map(' + JSON.stringify(sourceNumberArr) + ')',
-            shouldbe: false,
-            value: typeof actualStringArr === 'undefined' || actualStringArr === null
-        });
-        assertEqual({
-            name: 'Values of result from map(' + JSON.stringify(sourceNumberArr) + ')',
-            shouldbe: JSON.stringify(numberStringArr),
-            value: JSON.stringify(actualStringArr)
-        });
-
-        // #endregion
-
-        // #region map<number, string>(source: number[], mapper: { (value: number): string; }, thisArg: { count: number }): string[]
-
-        thisObj.count = 0;
-
-        try {
-            actualStringArr = x_g_inte_site_17.Site17Util.map<number, string>(x_g_inte_site_17.Site17Util.cloneArray(sourceNumberArr),
-                function(this: { count: number }, value: number): string {
-                    this.count++;
-                    return value.toString();
-                }, thisObj);
-        } catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling map(' + JSON.stringify(sourceNumberArr) + ', thisArg: { count: number })', e);
-            return false;
-        }
-        assertEqual({
-            name: 'Type of result from map(' + JSON.stringify(sourceNumberArr) + ', thisArg: { count: number })',
-            shouldbe: false,
-            value: typeof actualStringArr === 'undefined' || actualStringArr === null
-        });
-        assertEqual({
-            name: 'Values of result from map(' + JSON.stringify(sourceNumberArr) + ', thisArg: { count: number })',
-            shouldbe: JSON.stringify(numberStringArr),
-            value: JSON.stringify(actualStringArr)
-        });
-        assertEqual({
-            name: 'This invocation count on map(' + JSON.stringify(sourceNumberArr) + ', thisArg: { count: number })',
-            shouldbe: sourceStringArr.length,
-            value: thisObj.count
-        });
-        
-        // #endregion
-
-        // #region any<string>(source: string[], predicate: { (value: string): boolean; }): boolean
-
-        try {
-            obj = x_g_inte_site_17.Site17Util.any<string>([], function(value: string): boolean { return true; });
-        } catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling any([])', e);
-            return false;
-        }
-        assertEqual({
-            name: 'Value of result from any([])',
-            shouldbe: false,
-            value: obj
-        });
-        
-        try {
-            obj = x_g_inte_site_17.Site17Util.any<string>(x_g_inte_site_17.Site17Util.cloneArray(sourceStringArr),
-                function(value: string): boolean { return value.length > 0; });
-        } catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling any(' + JSON.stringify(sourceNumberArr) + ')', e);
-            return false;
-        }
-        assertEqual({
-            name: 'Value of result from any(' + JSON.stringify(sourceNumberArr) + ')',
-            shouldbe: true,
-            value: obj
-        });
-        
-        try {
-            obj = x_g_inte_site_17.Site17Util.any<string>(x_g_inte_site_17.Site17Util.cloneArray(sourceStringArr),
-                function(value: string): boolean { return value.length > 1024; });
-        } catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling any(' + JSON.stringify(sourceNumberArr) + ')', e);
-            return false;
-        }
-        assertEqual({
-            name: 'Value of result from any(' + JSON.stringify(sourceNumberArr) + ')',
-            shouldbe: false,
-            value: obj
-        });
-        
-        // #endregion
-
-        // #region any<number>(source: number[], predicate: { (value: number): boolean; }, thisArg: { count: number }): boolean
-
-        thisObj.count = 0;
-
-        try {
-            obj = x_g_inte_site_17.Site17Util.any<number>([], function(this: { count: number }, value: number): boolean {
-                this.count++;
-                return true;
-            }, thisObj);
-        } catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling any([], thisArg: { count: number })', e);
-            return false;
-        }
-        assertEqual({
-            name: 'Value of result from any([], thisArg: { count: number })',
-            shouldbe: false,
-            value: obj
-        });
-        assertEqual({
-            name: 'This invocation count on any([], thisArg: { count: number })',
-            shouldbe: 0,
-            value: thisObj.count
-        });
-        
-        try {
-            obj = x_g_inte_site_17.Site17Util.any<number>(x_g_inte_site_17.Site17Util.cloneArray(sourceNumberArr),
-                function(this: { count: number }, value: number): boolean {
-                    this.count++;
-                    return value > 7;
-                }, thisObj);
-        } catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling any(' + JSON.stringify(sourceNumberArr) + ', thisArg: { count: number })', e);
-            return false;
-        }
-        assertEqual({
-            name: 'Value of result from any(' + JSON.stringify(sourceNumberArr) + ', thisArg: { count: number })',
-            shouldbe: true,
-            value: obj
-        });
-        assertEqual({
-            name: 'This invocation count on any(' + JSON.stringify(sourceNumberArr) + ', thisArg: { count: number })',
-            shouldbe: 6,
-            value: thisObj.count
-        });
-        
-        thisObj.count = 0;
-
-        try {
-            obj = x_g_inte_site_17.Site17Util.any<number>(x_g_inte_site_17.Site17Util.cloneArray(sourceNumberArr),
-                function(this: { count: number }, value: number): boolean {
-                    this.count++;
-                    return value > 13;
-                }, thisObj);
-        } catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling any(' + JSON.stringify(sourceNumberArr) + ', thisArg: { count: number })', e);
-            return false;
-        }
-        assertEqual({
-            name: 'Value of result from any(' + JSON.stringify(sourceNumberArr) + ', thisArg: { count: number })',
-            shouldbe: false,
-            value: obj
-        });
-        assertEqual({
-            name: 'This invocation count on any(' + JSON.stringify(sourceNumberArr) + ', thisArg: { count: number })',
-            shouldbe: sourceNumberArr.length,
-            value: thisObj.count
-        });
-        
-        // #endregion
-
-        // #region all<number>(source: number[], predicate: { (value: number): boolean; }): boolean
-
-        try {
-            obj = x_g_inte_site_17.Site17Util.all<number>([], function(value: number): boolean { return true; });
-        } catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling all([])', e);
-            return false;
-        }
-        assertEqual({
-            name: 'Value of result from all(' + JSON.stringify(sourceNumberArr) + ')',
-            shouldbe: true,
-            value: obj
-        });
-
-        try {
-            obj = x_g_inte_site_17.Site17Util.all<number>(x_g_inte_site_17.Site17Util.cloneArray(sourceNumberArr),
-                function(value: number): boolean { return value < 15; });
-        } catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling all(' + JSON.stringify(sourceNumberArr) + ')', e);
-            return false;
-        }
-        assertEqual({
-            name: 'Value of result from all(' + JSON.stringify(sourceNumberArr) + ')',
-            shouldbe: true,
-            value: obj
-        });
-
-        try {
-            obj = x_g_inte_site_17.Site17Util.all<number>(x_g_inte_site_17.Site17Util.cloneArray(sourceNumberArr),
-                function(value: number): boolean { return value > 0; });
-        } catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling all(' + JSON.stringify(sourceNumberArr) + ')', e);
-            return false;
-        }
-        assertEqual({
-            name: 'Value of result from all(' + JSON.stringify(sourceNumberArr) + ')',
-            shouldbe: true,
-            value: obj
-        });
-
-        // #endregion
-
-        // #region all<string>(source: string[], predicate: { (value: string): boolean; }, thisArg: { count: number }): boolean
-
-        thisObj.count = 0;
-
-        try {
-            obj = x_g_inte_site_17.Site17Util.all<number>([], function(this: { count: number }, value: number): boolean {
-                this.count++;
-                return true;
-            }, thisObj);
-        } catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling all([], thisArg: { count: number })', e);
-            return false;
-        }
-        assertEqual({
-            name: 'Value of result from all(' + JSON.stringify(sourceNumberArr) + ', thisArg: { count: number })',
-            shouldbe: true,
-            value: obj
-        });
-        assertEqual({
-            name: 'This invocation count on any(' + JSON.stringify(sourceNumberArr) + ', thisArg: { count: number })',
-            shouldbe: 0,
-            value: thisObj.count
-        });
-
-        try {
-            obj = x_g_inte_site_17.Site17Util.all<number>(x_g_inte_site_17.Site17Util.cloneArray(sourceNumberArr),
-                function(this: { count: number }, value: number): boolean {
-                    this.count++;
-                    return value < 15;
-                }, thisObj);
-        } catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling all(' + JSON.stringify(sourceNumberArr) + ', thisArg: { count: number })', e);
-            return false;
-        }
-        assertEqual({
-            name: 'Value of result from all(' + JSON.stringify(sourceNumberArr) + ', thisArg: { count: number })',
-            shouldbe: true,
-            value: obj
-        });
-        assertEqual({
-            name: 'This invocation count on any(' + JSON.stringify(sourceNumberArr) + ', thisArg: { count: number })',
-            shouldbe: sourceNumberArr.length,
-            value: thisObj.count
-        });
-
-        thisObj.count = 0;
-
-        try {
-            obj = x_g_inte_site_17.Site17Util.all<number>(x_g_inte_site_17.Site17Util.cloneArray(sourceNumberArr),
-                function(this: { count: number }, value: number): boolean {
-                    this.count++;
-                    return value < 5;
-                }, thisObj);
-        } catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling all(' + JSON.stringify(sourceNumberArr) + ', thisArg: { count: number })', e);
-            return false;
-        }
-        assertEqual({
-            name: 'Value of result from all(' + JSON.stringify(sourceNumberArr) + ', thisArg: { count: number })',
-            shouldbe: false,
-            value: obj
-        });
-        assertEqual({
-            name: 'This invocation count on any(' + JSON.stringify(sourceNumberArr) + ', thisArg: { count: number })',
-            shouldbe: 4,
-            value: thisObj.count
-        });
-
-        // #endregion
-
-        return true;
-    })(outputs, steps, stepResult, assertEqual);
-}
-
 namespace site17Util_IteratorsTest {
     declare var outputs: sn_atf.ITestStepOutputs;
     declare function steps(sys_id: string): sn_atf.ITestStepOutputs;
     declare var stepResult: sn_atf.ITestStepResult;
     declare function assertEqual(assertion: sn_atf.ITestAssertion): void;
 
+    interface ITestData<T> {
+        inputs: T;
+        pseudoCode: string;
+    }
+
     interface IIteratorNextStep<TYield, TNext = undefined> {
         value: TYield;
-        next?: TNext;
+        arg?: TNext;
     }
 
-    interface ITerminalIteratorStep<TReturn> {
-        type: "return" | "throw" | "done";
-        return?: TReturn;
+    interface IIteratorTerminalOptions<TReturn> {
+        terminalValue?: TReturn;
+        implementReturn?: boolean;
+        onThrow?: { (e: any): TReturn | undefined; }
     }
 
-    interface IDoneIteratorStep<TReturn = any> extends ITerminalIteratorStep<TReturn> {
-        type: "done";
-    }
+    // interface ITerminalIteratorStep<TReturn> {
+    //     type: "return" | "throw" | "done";
+    //     return?: TReturn;
+    // }
 
-    interface IReturnIteratorStep<TYield, TReturn> extends ITerminalIteratorStep<TReturn> {
-        type: "return";
-        value?: TYield;
-    }
+    // interface IDoneIteratorStep<TReturn = any> extends ITerminalIteratorStep<TReturn> {
+    //     type: "done";
+    // }
 
-    interface IThrowIteratorStep<TYield, TReturn = any> extends ITerminalIteratorStep<TReturn> {
-        type: "throw";
-        value?: TYield;
-        arg?: any;
-    }
+    // interface IReturnIteratorStep<TYield, TReturn> extends ITerminalIteratorStep<TReturn> {
+    //     type: "return";
+    //     value?: TYield;
+    // }
+
+    // interface IThrowIteratorStep<TYield, TReturn = any> extends ITerminalIteratorStep<TReturn> {
+    //     type: "throw";
+    //     value?: TYield;
+    //     arg?: any;
+    // }
 
     (function(outputs: sn_atf.ITestStepOutputs, steps: sn_atf.ITestStepsFunc, stepResult: sn_atf.ITestStepResult, assertEqual: sn_atf.IAssertEqualFunc): boolean {
         var atfHelper: x_g_inte_site_17.AtfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
         
-        var sourceStringArray: IIteratorNextStep<string>[] = [
-            { value: "One" },
-            { value: "Two" },
-            { value: "Three" }
-        ];
-        var sourceNumberArray: IIteratorNextStep<number>[] = [
-            { value: 1 },
-            { value: 2 },
-            { value: 3 },
-            { value: 5 },
-            { value: 7 },
-            { value: 11 }
-        ];
-        var numberStringArray = ["1", "2", "3", "5", "7", "11"];
-        var actualStringIterator: Iterator<string>;
-        var actualNumberStringIterator: Iterator<number, string>;
-        var desc: string;
-
-        function getValueArray<TYield, TReturn = any, TNext = undefined>(nextSteps: IIteratorNextStep<TYield, TNext>[], terminalStep?: ITerminalIteratorStep<TReturn>): TYield[] {
-            var arr: TYield[] = [];
-            for (var item of nextSteps)
-                arr.push(item.value);
-            if (typeof terminalStep !== 'undefined')
-                switch (terminalStep.type) {
-                    case 'return':
-                        case 'throw':
-                        if (typeof (<IReturnIteratorStep<TYield, TReturn> | IThrowIteratorStep<TYield, TReturn>>terminalStep).value !== 'undefined')
-                            arr.push(<TYield>(<IReturnIteratorStep<TYield, TReturn> | IThrowIteratorStep<TYield, TReturn>>terminalStep).value);
-                        break;
-                }
-            return arr;
+        function getStringTestSteps(includeEmpty?: boolean): ITestData<IIteratorNextStep<string>[]> {
+            var arr: IIteratorNextStep<string>[];
+            if (includeEmpty === true) {
+                arr = [{ value: "One" }, { value: "Two" }, { value: "" }, { value: "Three" }, { value: "Four" }];
+            } else {
+                arr = [{ value: "One" }, { value: "Two" }, { value: "Three" }, { value: "Four" } ];
+            }
+            return {
+                inputs: arr,
+                pseudoCode: JSON.stringify(arr)
+            };
         }
 
-        function makeIterator<TYield, TReturn = any, TNext = undefined>(nextSteps: IIteratorNextStep<TYield, TNext>[], terminalStep?: ITerminalIteratorStep<TReturn>,
-            implementReturn?: boolean, implementThrow?: boolean): Iterator<TYield, TReturn, TNext> {
-            var context: { index: number; returned?: TReturn, values: TYield[] } = { index: 0, values: getValueArray(nextSteps, terminalStep) };
-            var madeIterator = <Iterator<TYield, TReturn, TNext>>{
-                next: function(arg?: TNext): IteratorResult<TYield, TReturn> {
+        function getStringTestStepsWithNext(includeEmpty?: boolean): ITestData<IIteratorNextStep<string, boolean | null>[]> {
+            var arr: IIteratorNextStep<string, boolean | null>[];
+            if (includeEmpty === true) {
+                arr = [{ value: "One", arg: true }, { value: "Two", arg: false }, { value: "" }, { value: "Three" }, { value: "Four", arg: null }];
+            } else {
+                arr = [{ value: "One", arg: true }, { value: "Two", arg: false }, { value: "Three" }, { value: "Four", arg: null } ];
+            }
+            return {
+                inputs: arr,
+                pseudoCode: JSON.stringify(arr)
+            };
+        }
+
+        function getNumberTestSteps(includeNaN?: boolean): ITestData<IIteratorNextStep<number>[]> {
+            var arr: IIteratorNextStep<number>[];
+            if (includeNaN === true) {
+                arr = [{ value: 1 }, { value: 2 }, { value: 3 }, { value: NaN }, { value: 5 }, { value: 7 }, { value: 11 }];
+            } else {
+                arr = [{ value: 1 }, { value: 2 }, { value: 3 }, { value: 5 }, { value: 7 }, { value: 11 }];
+            }
+            return {
+                inputs: arr,
+                pseudoCode: '[' + arr.map(function(item: IIteratorNextStep<number>): string {
+                    if (typeof item.arg === 'undefined') {
+                        if (isNaN(item.value))
+                            return '{value:NaN}';
+                        return '{value:' + item.value + '}'; 
+                    }
+                    if (isNaN(item.value))
+                        return '{value:NaN,arg:' + JSON.stringify(item.arg) + '}';
+                    return '{value:' + item.value + ',arg:' + JSON.stringify(item.arg) + '}';
+                }).join(',') + ']'
+            };
+        }
+
+        function getNumberTestStepsWithNext(includeNaN?: boolean): ITestData<IIteratorNextStep<number, boolean | null>[]> {
+            var arr: IIteratorNextStep<number, boolean | null>[];
+            if (includeNaN === true) {
+                arr = [{ value: 1 }, { value: 2, arg: true }, { value: 3, arg: false }, { value: NaN }, { value: 5 }, { value: 7, arg: null }, { value: 11 }];
+            } else {
+                arr = [{ value: 1 }, { value: 2, arg: true }, { value: 3, arg: false }, { value: 5 }, { value: 7, arg: null }, { value: 11 }];
+            }
+            return {
+                inputs: arr,
+                pseudoCode: '[' + arr.map(function(item: IIteratorNextStep<number, boolean | null>): string {
+                    if (typeof item.arg === 'undefined') {
+                        if (isNaN(item.value))
+                            return '{value:NaN}';
+                        return '{value:' + item.value + '}'; 
+                    }
+                    if (isNaN(item.value))
+                        return '{value:NaN,arg:' + JSON.stringify(item.arg) + '}';
+                    return '{value:' + item.value + ',arg:' + JSON.stringify(item.arg) + '}';
+                }).join(',') + ']'
+            };
+        }
+
+        function getStepValue<TYield, TNext = undefined>(step: IIteratorNextStep<TYield, TNext>): TYield { return step.value; }
+
+        function makeIterator<TYield>(nextSteps: IIteratorNextStep<TYield>[]): Iterator<TYield> {
+            var context: { index: number; values: TYield[] } = { index: 0, values: nextSteps.map(getStepValue) };
+            return{
+                next: function(): IteratorResult<TYield> {
+                    if (context.index < 0) return <IteratorReturnResult<any>>{ done: true };
+                    if (context.index < context.values.length) {
+                        var v = context.values[context.index];
+                        context.index++;
+                        return { value: v };
+                    }
+                    context.index = -1;
+                    return <IteratorReturnResult<any>>{ done: true };
+                }
+            };
+        }
+
+        function makeIterator2<TYield, TReturn>(nextSteps: IIteratorNextStep<TYield, boolean | null>[], thisObj: { next: (boolean | null | undefined)[]; }, terminalOptions?: IIteratorTerminalOptions<TReturn>): Iterator<TYield, TReturn, boolean | null> {
+            var context: { index: number; returned?: TReturn, values: TYield[] } = { index: 0, values: nextSteps.map(getStepValue) };
+            var madeIterator = <Iterator<TYield, TReturn, boolean | null>>{
+                next: function(arg?: boolean | null): IteratorResult<TYield, TReturn> {
+                    thisObj.next.push(arg);
                     if (context.index < 0) {
                         if (typeof context.returned === 'undefined') return <IteratorReturnResult<TReturn>>{ done: true };
                         return { done: true, value: context.returned };
@@ -538,295 +233,379 @@ namespace site17Util_IteratorsTest {
                         return { value: v };
                     }
                     context.index = -1;
-                    if (typeof terminalStep !== 'undefined' && terminalStep.type === 'done' && typeof terminalStep.return !== 'undefined') {
-                        context.returned = terminalStep.return;
-                        return { done: true, value: context.returned };
+                    if (typeof terminalOptions !== 'undefined' && typeof terminalOptions.terminalValue !== 'undefined') {
+                        context.returned = terminalOptions.terminalValue;
+                        return { done: true, value: terminalOptions.terminalValue };
                     }
                     return <IteratorReturnResult<TReturn>>{ done: true };
                 }
             };
-            if (implementReturn)
-                madeIterator.return = function(value?: TReturn): IteratorResult<TYield, TReturn> {
-                    if (context.index < 0) {
-                        if (typeof value === 'undefined') return <IteratorReturnResult<TReturn>>{ done: true };
-                    } else {
-                        context.index = -1;
-                        if (typeof value === 'undefined') return <IteratorReturnResult<TReturn>>{ done: true };
-                        context.returned = value;
-                    }
-                    return { done: true, value: value };
-                };
-            if (implementThrow)
-                madeIterator.throw = function(e?: any): IteratorResult<TYield, TReturn> {
-                    if (typeof terminalStep !== 'undefined' && terminalStep !== null && terminalStep.type === 'throw' && typeof terminalStep.return !== 'undefined' && (<IThrowIteratorStep<TYield, TReturn>>terminalStep).arg === e) {
-                        if (context.index > -1) {
+            if (typeof terminalOptions !== 'undefined') {
+                if (terminalOptions.implementReturn)
+                    madeIterator.return = function(value?: TReturn): IteratorResult<TYield, TReturn> {
+                        if (context.index < 0) {
+                            if (typeof value === 'undefined') return <IteratorReturnResult<TReturn>>{ done: true };
+                        } else {
                             context.index = -1;
-                            context.returned = terminalStep.return;
+                            if (typeof value === 'undefined') return <IteratorReturnResult<TReturn>>{ done: true };
+                            context.returned = value;
                         }
-                        return { done: true, value: terminalStep.return };
-                    }
-                    context.index = -1;
-                    return <IteratorReturnResult<TReturn>>{ done: true };
-                };
+                        return { done: true, value: value };
+                    };
+                if (typeof terminalOptions.onThrow !== 'undefined')
+                    madeIterator.throw = function(e?: any): IteratorResult<TYield, TReturn> {
+                        var returned = (<{ (e: any): TReturn | undefined; }>terminalOptions.onThrow)(e);
+                        if (typeof returned !== 'undefined') {
+                            if (context.index > -1) {
+                                context.index = -1;
+                                context.returned = returned;
+                            }
+                            return { done: true, value: returned };
+                        }
+                        context.index = -1;
+                        return <IteratorReturnResult<TReturn>>{ done: true };
+                    };
+            }
             return madeIterator;
         }
 
-        function testIteration<TYield, TReturn = any, TNext = undefined>(description: string, source: Iterator<TYield, TReturn, TNext>, expectedValues: IIteratorNextStep<TYield, TNext>[], expectedReturn?: ITerminalIteratorStep<TReturn>): boolean {
+        function testIteration<TYield>(description: string, source: Iterator<TYield>, expectedValues: IIteratorNextStep<TYield>[], maxIterations?: number): boolean {
             assertEqual({
-                name: 'Result type from ' + description,
+                name: description,
                 shouldbe: false,
                 value: typeof source === 'undefined' || source === null
             });
-            var ir: IteratorResult<TYield, TReturn>;
-            for (var idx = 0; idx < expectedValues.length; idx++) {
+            var ir: IteratorResult<TYield>;
+            var limit = (typeof maxIterations === 'number' && maxIterations < expectedValues.length) ? maxIterations : expectedValues.length;
+            for (var idx = 0; idx < limit; idx++) {
                 var ev = expectedValues[idx];
-                try {
-                    if (typeof ev.next === 'undefined')
-                        ir = source.next();
-                    else
-                        ir = source.next(ev.next);
-                }
+                var iterationDesc = description + '[' + (idx + 1) + '].next()';
+                try { ir = source.next(); }
                 catch (e) {
-                    atfHelper.setFailed('Unexpected exception while calling "next" method (iteration ' + (idx + 1) + ') on result from ' + description, e);
+                    atfHelper.setFailed('Unexpected exception while invoking ' + iterationDesc, e);
                     return false;
                 }
                 assertEqual({
-                    name: 'Result type of iteration ' + (idx + 1) + ' from ' + description,
+                    name: iterationDesc,
                     shouldbe: false,
                     value: typeof ir === 'undefined' || ir === null
                 });
                 assertEqual({
-                    name: 'Result Done for iteration ' + (idx + 1) + ' from ' + description,
+                    name: iterationDesc + '.done',
                     shouldbe: false,
                     value: ir.done == true
                 });
                 assertEqual({
-                    name: 'Result Value for iteration ' + (idx + 1) + ' from ' + description,
-                    shouldbe: expectedValues[idx].value,
+                    name: iterationDesc + '.value',
+                    shouldbe: ev.value,
                     value: ir.value
                 });
             }
-            if (typeof expectedReturn === 'undefined') {
-                try { ir = source.next(); }
-                catch (e) {
-                    atfHelper.setFailed('Unexpected exception while calling "next" method (iteration ' + (expectedValues.length + 1) + ') on result from ' + description, e);
-                    return false;
-                }
-                assertEqual({
-                    name: 'Result Done for iteration ' + (expectedValues.length + 1) + ' from ' + description,
-                    shouldbe: true,
-                    value: ir.done
-                });
-                assertEqual({
-                    name: 'Result Value for iteration ' + (expectedValues.length + 1) + ' from ' + description,
-                    shouldbe: true,
-                    value: typeof ir.value === 'undefined' || ir.value === null
-                });
-            } else {
-                switch (expectedReturn.type) {
-                    case 'return':
-                        try {
-                            if (typeof expectedReturn.return === 'undefined')
-                                ir = (<Required<Iterator<TYield, TReturn, TNext>>>source).return();
-                            else
-                                ir = (<Required<Iterator<TYield, TReturn, TNext>>>source).return(expectedReturn.return);
-                        } catch (e) {
-                            atfHelper.setFailed('Unexpected exception while calling "return" method (iteration ' + (expectedValues.length + 1) + ') on result from ' + description, e);
-                            return false;
-                        }
-                        assertEqual({
-                            name: 'Result Done of "return" for iteration ' + (expectedValues.length + 1) + ' from ' + description,
-                            shouldbe: true,
-                            value: ir.done
-                        });
-                        assertEqual({
-                            name: 'Result Value of "return" for iteration ' + (expectedValues.length + 1) + ' from ' + description,
-                            shouldbe: expectedReturn.return,
-                            value: ir.value
-                        });
-                        break;
-                    case 'throw':
-                        try {
-                            if (typeof (<IThrowIteratorStep<TYield, TReturn>>expectedReturn).arg === 'undefined')
-                                ir = (<Required<Iterator<TYield, TReturn, TNext>>>source).throw();
-                            else
-                                ir = (<Required<Iterator<TYield, TReturn, TNext>>>source).throw((<IThrowIteratorStep<TYield, TReturn>>expectedReturn).arg);
-                        } catch (e) {
-                            atfHelper.setFailed('Unexpected exception while calling "throw" method (iteration ' + (expectedValues.length + 1) + ') on result from ' + description, e);
-                            return false;
-                        }
-                        assertEqual({
-                            name: 'Result Done of "throw" for iteration ' + (expectedValues.length + 1) + ' from ' + description,
-                            shouldbe: true,
-                            value: ir.done
-                        });
-                        assertEqual({
-                            name: 'Result Value of "throw" for iteration ' + (expectedValues.length + 1) + ' from ' + description,
-                            shouldbe: expectedReturn.return,
-                            value: ir.value
-                        });
-                    default:
-                        try { ir = source.next(); }
-                        catch (e) {
-                            atfHelper.setFailed('Unexpected exception while calling "next" method (iteration ' + (expectedValues.length + 1) + ') on result from ' + description, e);
-                            return false;
-                        }
-                        assertEqual({
-                            name: 'Result Done for iteration ' + (expectedValues.length + 1) + ' from ' + description,
-                            shouldbe: true,
-                            value: ir.done
-                        });
-                        assertEqual({
-                            name: 'Result Value for iteration ' + (expectedValues.length + 1) + ' from ' + description,
-                            shouldbe: expectedReturn.return,
-                            value: ir.value
-                        });
-                }
+            if (limit < expectedValues.length) return true;
+            try { ir = source.next(); }
+            catch (e) {
+                atfHelper.setFailed('Unexpected exception while invoking ' + description + '.next()', e);
+                return false;
             }
+            assertEqual({
+                name: description + '.next().done',
+                shouldbe: true,
+                value: ir.done
+            });
             return true;
         }
 
+        function testIterationRN<TYield, TReturn>(description: string, source: Iterator<TYield, TReturn, boolean | null>, expectedValues: IIteratorNextStep<TYield, boolean | null>[], thisObj: { next: (boolean | null | undefined)[]; }, maxIterationsOrFinalNextArg?: number | boolean | null, expectedReturnValue?: TReturn): boolean {
+            assertEqual({
+                name: description,
+                shouldbe: false,
+                value: typeof source === 'undefined' || source === null
+            });
+            var ir: IteratorResult<TYield, TReturn>;
+            var expectedNext: (boolean | null | undefined)[] = [];
+            var limit = (typeof maxIterationsOrFinalNextArg === 'number' && maxIterationsOrFinalNextArg < expectedValues.length) ? maxIterationsOrFinalNextArg : expectedValues.length;
+            var iterationDesc: string;
+            for (var idx = 0; idx < limit; idx++) {
+                var ev = expectedValues[idx];
+                expectedNext.push(ev.arg);
+                if (typeof ev.arg === 'undefined') {
+                    iterationDesc = description + '[' + (idx + 1) + '].next()';
+                    try {
+                        ir = source.next();
+                    } catch (e) {
+                        atfHelper.setFailed('Unexpected exception while invoking ' + iterationDesc, e);
+                        return false;
+                    }
+                } else {
+                    iterationDesc = description + '[' + (idx + 1) + '].next(' + JSON.stringify(ev.arg) + ')';
+                    try {
+                        ir = source.next(ev.arg);
+                    } catch (e) {
+                        atfHelper.setFailed('Unexpected exception while invoking ' + iterationDesc, e);
+                        return false;
+                    }
+                }
+                assertEqual({
+                    name: iterationDesc,
+                    shouldbe: false,
+                    value: typeof ir === 'undefined' || ir === null
+                });
+                assertEqual({
+                    name: iterationDesc + '.done',
+                    shouldbe: false,
+                    value: ir.done == true
+                });
+                assertEqual({
+                    name: iterationDesc + '.value',
+                    shouldbe: ev.value,
+                    value: ir.value
+                });
+            }
+            if (limit < expectedValues.length) {
+                assertEqual({
+                    name: description + '; thisObj.next',
+                    shouldbe: expectedNext.map(function(value: boolean | null | undefined): string { return (typeof value === 'undefined') ? 'undefined' : JSON.stringify(value); }).join(','),
+                    value: thisObj.next.map(function(value: boolean | null | undefined): string { return (typeof value === 'undefined') ? 'undefined' : JSON.stringify(value); }).join(',')
+                });
+                return true;
+            }
+            if (typeof maxIterationsOrFinalNextArg === 'boolean' || maxIterationsOrFinalNextArg === null) {
+                iterationDesc = description + '.next(' + JSON.stringify(maxIterationsOrFinalNextArg) + ')';
+                try {
+                    ir = source.next(maxIterationsOrFinalNextArg);
+                } catch (e) {
+                    atfHelper.setFailed('Unexpected exception while invoking ' + iterationDesc, e);
+                    return false;
+                }
+                expectedNext.push(maxIterationsOrFinalNextArg);
+            } else {
+                iterationDesc = description + '.next()';
+                try {
+                    ir = source.next();
+                } catch (e) {
+                    atfHelper.setFailed('Unexpected exception while invoking ' + iterationDesc, e);
+                    return false;
+                }
+                expectedNext.push(undefined);
+            }
+            assertEqual({
+                name: iterationDesc + '.done',
+                shouldbe: true,
+                value: ir.done
+            });
+            if (typeof expectedReturnValue !== 'undefined')
+                assertEqual({
+                    name: iterationDesc + '.value',
+                    shouldbe: expectedReturnValue,
+                    value: ir.value
+                });
+            assertEqual({
+                name: iterationDesc + '; thisObj.next',
+                shouldbe: expectedNext.map(function(value: boolean | null | undefined): string { return (typeof value === 'undefined') ? 'undefined' : JSON.stringify(value); }).join(','),
+                value: thisObj.next.map(function(value: boolean | null | undefined): string { return (typeof value === 'undefined') ? 'undefined' : JSON.stringify(value); }).join(',')
+            });
+            return true;
+        }
+
+        function stringNotEmpty(value: string): boolean { return value.length > 0; }
+
+        function notNaN(value: number): boolean { return !isNaN(value); }
+
+        function alwaysTrue<T>(value: T): boolean { return true; }
+        
+        function alwaysFalse<T>(value: T): boolean { return false; }
+
+        function lessThanSeven(value: number): boolean { return value < 7; }
+        
+        var actualStringIterator: Iterator<string>;
+        var actualNumberStringIterator: Iterator<number, string, boolean | null>;
+        var pseudoCode: string;
+        var stringTestSteps: ITestData<IIteratorNextStep<string>[]>;
+        var stringTestStepsN: ITestData<IIteratorNextStep<string, boolean | null>[]>;
+        var stringValues: string[];
+        var stringIterator: Iterator<string>;
+        var stringIteratorRN: Iterator<string, number, boolean | null>;
+        var numberTestSteps: ITestData<IIteratorNextStep<number>[]>;
+        var numberTestStepsN: ITestData<IIteratorNextStep<number, boolean | null>[]>;
+        var numberValues: number[];
+        var numberIterator: Iterator<number>;
+        var numberIteratorRN: Iterator<number, string, boolean | null>;
+
+        stringTestStepsN = getStringTestStepsWithNext();
+        numberTestStepsN = getNumberTestStepsWithNext();
+
+        var thisObj: { next: (boolean | null | undefined)[]; };
+        
         // #region iteratorFromArray
 
-        // #region iteratorFromArray<string>(arr: string[]): Iterator<string>
+        stringTestSteps = getStringTestSteps();
+        stringValues = stringTestSteps.inputs.map(getStepValue);
 
-        desc = 'iteratorFromArray(' + JSON.stringify(getValueArray(sourceStringArray)) + ')';
-        try { actualStringIterator = x_g_inte_site_17.Site17Util.iteratorFromArray<string>(getValueArray(sourceStringArray)); }
+        pseudoCode = 'iteratorFromArray(' + JSON.stringify(stringValues) + ')';
+        try { actualStringIterator = x_g_inte_site_17.Site17Util.iteratorFromArray<string>(stringValues); }
         catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling ' + desc, e);
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
             return false;
         }
-        if (!testIteration<string>(desc, actualStringIterator, sourceStringArray)) return false;
+        if (!testIteration<string>(pseudoCode, actualStringIterator, <IIteratorNextStep<string>[]>stringTestSteps.inputs)) return false;
         
         try { actualStringIterator = x_g_inte_site_17.Site17Util.iteratorFromArray<string>([]); }
         catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling iteratorFromArray([])', e);
+            atfHelper.setFailed('Unexpected exception while invoking iteratorFromArray([])', e);
             return false;
         }
         if (!testIteration<string>('iteratorFromArray([])', actualStringIterator, [])) return false;
         
         // #endregion
         
-        // #region iteratorFromArray<string>(arr: string[], supportsReturn: boolean): Iterator<string>
-
-        // #endregion
-        
-        // #region iteratorFromArray<number, string>(arr: number[], supportsReturn: boolean): Iterator<number, string>
-
-        // #endregion
-        
-        // #region iteratorFromArray<number, string>(arr: number[], supportsReturn: undefined, finalReturnValue: string): Iterator<number, string>
-
-        desc = 'iteratorFromArray(' + JSON.stringify(getValueArray(sourceNumberArray)) + ')';
-        try { actualNumberStringIterator = x_g_inte_site_17.Site17Util.iteratorFromArray<number, string>(getValueArray(sourceNumberArray), undefined, "Test"); }
-        catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling iteratorFromArray(' + JSON.stringify(sourceNumberArray) + ', undefined, "Test")', e);
-            return false;
-        }
-        if (!testIteration<number, string>('iteratorFromArray(' + JSON.stringify(sourceNumberArray) + ', undefined, "Test")', actualNumberStringIterator, sourceNumberArray, <IDoneIteratorStep<string>>{ type: 'done', return: "Test" })) return false;
-        
-        try { actualNumberStringIterator = x_g_inte_site_17.Site17Util.iteratorFromArray<number, string>([], undefined, "Test"); }
-        catch (e) {
-            atfHelper.setFailed('Unexpected exception while calling iteratorFromArray([], undefined, "Test")', e);
-            return false;
-        }
-        if (!testIteration<number, string>('iteratorFromArray([], undefined, "Test")', actualNumberStringIterator, [], <IDoneIteratorStep<string>>{ type: 'done', return: "Test" })) return false;
-        
-        // #endregion
-        
-        // #region iteratorFromArray<number, string>(arr: number[], supportsReturn: boolean, finalReturnValue: string): Iterator<number, string>
-
-        // #endregion
-        
-        // #region iteratorFromArray<string>(arr: string[], supportsReturn: undefined, finalReturnValue: undefined, onThrow: { (e?: any): IteratorResult<string> }): Iterator<string>
-
-        // #endregion
-        
-        // #region iteratorFromArray<number, string>(arr: number[], supportsReturn: undefined, finalReturnValue: undefined, onThrow: { (e?: any): IteratorResult<number, string> }): Iterator<number, string>
-
-        // #endregion
-        
-        // #region iteratorFromArray<string>(arr: string[], supportsReturn: boolean, finalReturnValue: undefined, onThrow: { (e?: any): IteratorResult<string> }): Iterator<string>
-
-        // #endregion
-        
-        // #region iteratorFromArray<number, string>(arr: number[], supportsReturn: boolean, finalReturnValue: undefined, onThrow: { (e?: any): IteratorResult<number, string> }): Iterator<number, string>
-
-        // #endregion
-        
-        // #region iteratorFromArray<number, string>(arr: number[], supportsReturn: undefined, finalReturnValue: string, onThrow: { (e?: any): IteratorResult<number, string> }): Iterator<number, string>
-
-        // #endregion
-        
-        // #region iteratorFromArray<number, string>(arr: number[], supportsReturn: boolean, finalReturnValue: string, onThrow: { (e?: any): IteratorResult<number, string> }): Iterator<number, string>
-
-        // #endregion
-        
-        // #endregion
-        
-        // #region iteratorFromArray2
-
-        // #region iteratorFromArray2<number, string, { value?: boolean }>(arr: number[], onNext: { (value: number, next?: { value?: boolean }): IteratorResult<number>; }): Iterator<number, string, { value?: boolean }>
-
-        // #endregion
-        
-        // #region iteratorFromArray2<number, string, { value?: boolean }>(arr: number[], onNext: { (value: number, next?: { value?: boolean }): IteratorResult<number>; }, supportsReturn: boolean): Iterator<number, string, { value?: boolean }>
-
-        // #endregion
-        
-        // #region iteratorFromArray2<number, string, { value?: boolean }>(arr: number[], onNext: { (value: number, next?: { value?: boolean }): IteratorResult<number>; }, supportsReturn: undefined, finalReturnValue: string): Iterator<number, string, { value?: boolean }>
-
-        // #endregion
-        
-        // #region iteratorFromArray2<number, string, { value?: boolean }>(arr: number[], onNext: { (value: number, next?: { value?: boolean }): IteratorResult<number>; }, supportsReturn: boolean, finalReturnValue: string): Iterator<number, string, { value?: boolean }>
-
-        // #endregion
-        
-        // #region iteratorFromArray2<number, string, { value?: boolean }>(arr: number[], onNext: { (value: number, next?: { value?: boolean }): IteratorResult<number>; }, supportsReturn: undefined, finalReturnValue: undefined, onThrow: { (e?: any): IteratorResult<number, string> }): Iterator<number, string, { value?: boolean }>
-
-        // #endregion
-        
-        // #region iteratorFromArray2<number, string, { value?: boolean }>(arr: number[], onNext: { (value: number, next?: { value?: boolean }): IteratorResult<number>; }, supportsReturn: boolean, finalReturnValue: undefined, onThrow: { (e?: any): IteratorResult<number, string> }): Iterator<number, string, { value?: boolean }>
-
-        // #endregion
-        
-        // #region iteratorFromArray2<number, string, { value?: boolean }>(arr: number[], onNext: { (value: number, next?: { value?: boolean }): IteratorResult<number>; }, supportsReturn: undefined, finalReturnValue: string, onThrow: { (e?: any): IteratorResult<number, string> }): Iterator<number, string, { value?: boolean }>
-
-        // #endregion
-        
-        // #region iteratorFromArray2<number, string, { value?: boolean }>(arr: number[], onNext: { (value: number, next?: { value?: boolean }): IteratorResult<number>; }, supportsReturn: boolean, finalReturnValue: string, onThrow: { (e?: any): IteratorResult<number, string> }): Iterator<number, string, { value?: boolean }>
-
-        // #endregion
-        
-        // #endregion
-        
         // #region filterIterator
-
-        function testFilterIterator<TYield, TReturn = any, TNext = undefined>(values: TYield[], terminalSteps: ITerminalIteratorStep<TReturn>[]) {
-
-        }
 
         // #region filterIterator<string>(source: Iterator<string>, predicate: { (value: string): boolean; }): Iterator<string>
 
-        // #endregion
-        
-        // #region filterIterator<number, string>(source: Iterator<number, string>, predicate: { (value: number): boolean; }): Iterator<number, string>
+        stringTestSteps = getStringTestSteps();
+        stringIterator = makeIterator(stringTestSteps.inputs);
+        pseudoCode = 'filterIterator(' + JSON.stringify(stringTestSteps.inputs.map(getStepValue)) + '.values(), stringNotEmpty)';
+        try { actualStringIterator = x_g_inte_site_17.Site17Util.filterIterator<string>(stringIterator, stringNotEmpty); }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        if (!testIteration<string>(pseudoCode, actualStringIterator, <IIteratorNextStep<string>[]>stringTestSteps.inputs.filter(function(item: IIteratorNextStep<string>): boolean {
+            return stringNotEmpty(item.value);
+        }))) return false;
 
+        stringIterator = makeIterator(stringTestSteps.inputs);
+        pseudoCode = 'filterIterator(' + JSON.stringify(stringTestSteps.inputs.map(getStepValue)) + '.values(), alwaysTrue)';
+        try { actualStringIterator = x_g_inte_site_17.Site17Util.filterIterator<string>(stringIterator, alwaysTrue); }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        if (!testIteration<string>(pseudoCode, actualStringIterator, <IIteratorNextStep<string>[]>stringTestSteps.inputs)) return false;
+        
+        stringIterator = makeIterator(stringTestSteps.inputs);
+        pseudoCode = 'filterIterator(' + JSON.stringify(stringTestSteps.inputs.map(getStepValue)) + '.values(), alwaysFalse)';
+        try { actualStringIterator = x_g_inte_site_17.Site17Util.filterIterator<string>(stringIterator, alwaysFalse); }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        if (!testIteration<string>(pseudoCode, actualStringIterator, [])) return false;
+        
+        stringIterator = makeIterator([]);
+        pseudoCode = 'filterIterator([].values(), stringNotEmpty)';
+        try { actualStringIterator = x_g_inte_site_17.Site17Util.filterIterator<string>(stringIterator, stringNotEmpty); }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        if (!testIteration<string>(pseudoCode, actualStringIterator, [])) return false;
+        
         // #endregion
         
-        // #region filterIterator<number, string, { value?: boolean }>(source: Iterator<number, string, { value?: boolean }>, predicate: { (value: number): boolean; }): Iterator<number, string, { value?: boolean }>
+        // #region filterIterator<number, string, boolean | null>(source: Iterator<number, string, boolean | null>, predicate: { (value: number): boolean; }, thisObj): Iterator<number, string, boolean | null>
 
-        // #endregion
-        
-        // #region filterIterator<string>(source: Iterator<string>, predicate: { (value: string): boolean; }, thisArg: { count: string }): Iterator<string>
+        thisObj = { next: [] };
+        numberTestStepsN = getNumberTestStepsWithNext(true);
+        numberIteratorRN = makeIterator2(numberTestStepsN.inputs, thisObj);
+        pseudoCode = 'filterIterator(' + JSON.stringify(numberTestStepsN.inputs.map(getStepValue)) + '.values(), notNaN, thisObj)';
+        try { actualNumberStringIterator = x_g_inte_site_17.Site17Util.filterIterator<number, string, boolean | null>(numberIteratorRN, notNaN, thisObj); }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        if (!testIterationRN(pseudoCode, numberIteratorRN, numberTestStepsN.inputs.filter(function(item: IIteratorNextStep<number, boolean | null>): boolean {
+            return notNaN(item.value);
+        }), thisObj, false)) return false;
 
-        // #endregion
-        
-        // #region filterIterator<number, string>(source: Iterator<number, string>, predicate: { (value: number): boolean; }, thisArg: { count: number }): Iterator<number, string>
+        thisObj = { next: [] };
+        numberTestStepsN = getNumberTestStepsWithNext(true);
+        numberIteratorRN = makeIterator2(numberTestStepsN.inputs, thisObj, {
+            terminalValue: "Test"
+        });
+        pseudoCode = 'filterIterator(' + JSON.stringify(numberTestStepsN.inputs.map(getStepValue)) + '.values(), notNaN, thisObj)';
+        try { actualNumberStringIterator = x_g_inte_site_17.Site17Util.filterIterator<number, string, boolean | null>(numberIteratorRN, notNaN, thisObj); }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        if (!testIterationRN(pseudoCode, numberIteratorRN, numberTestStepsN.inputs.filter(function(item: IIteratorNextStep<number, boolean | null>): boolean {
+            return notNaN(item.value);
+        }), thisObj, false, "Test")) return false;
 
-        // #endregion
-        
-        // #region filterIterator<number, string, { value?: boolean }>(source: Iterator<number, string, { value?: boolean }>, predicate: { (value: number): boolean; }, thisArg: { count: number }): Iterator<number, string, { value?: boolean }>
+        thisObj = { next: [] };
+        numberTestStepsN = getNumberTestStepsWithNext(true);
+        numberIteratorRN = makeIterator2(numberTestStepsN.inputs, thisObj, {
+            implementReturn: true
+        });
+        pseudoCode = 'filterIterator(' + JSON.stringify(numberTestStepsN.inputs.map(getStepValue)) + '.values(), notNaN, thisObj)';
+        try { actualNumberStringIterator = x_g_inte_site_17.Site17Util.filterIterator<number, string, boolean | null>(numberIteratorRN, notNaN, thisObj); }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        if (!testIterationRN(pseudoCode, numberIteratorRN, numberTestStepsN.inputs.filter(function(item: IIteratorNextStep<number, boolean | null>): boolean {
+            return notNaN(item.value);
+        }), thisObj, numberTestStepsN.inputs.length - 1)) return false;
+        assertEqual({
+            name: pseudoCode + '.return',
+            shouldbe: true,
+            value: typeof actualNumberStringIterator.return === 'function'
+        });
+        var nextNumberResult = (<{ (value?: string): IteratorResult<number, string>; }>actualNumberStringIterator.return)("Test #2");
+        assertEqual({
+            name: pseudoCode + '.return("Test #2")',
+            shouldbe: false,
+            value: typeof nextNumberResult === 'undefined' || nextNumberResult === null
+        });
+        assertEqual({
+            name: pseudoCode + '.return("Test #2").done',
+            shouldbe: false,
+            value: nextNumberResult.done == true
+        });
+        assertEqual({
+            name: pseudoCode + '.return("Test #2").value',
+            shouldbe: "Test #2",
+            value: nextNumberResult.value
+        });
+
+        thisObj = { next: [] };
+        numberTestStepsN = getNumberTestStepsWithNext(true);
+        numberIteratorRN = makeIterator2(numberTestStepsN.inputs, thisObj, {
+            onThrow: function(e?: any): string | undefined {
+                return 'Thrown: ' + e;
+            }
+        });
+        pseudoCode = 'filterIterator(' + JSON.stringify(numberTestStepsN.inputs.map(getStepValue)) + '.values(), notNaN, thisObj)';
+        try { actualNumberStringIterator = x_g_inte_site_17.Site17Util.filterIterator<number, string, boolean | null>(numberIteratorRN, notNaN, thisObj); }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        if (!testIterationRN(pseudoCode, numberIteratorRN, numberTestStepsN.inputs.filter(function(item: IIteratorNextStep<number, boolean | null>): boolean {
+            return notNaN(item.value);
+        }), thisObj, numberTestStepsN.inputs.length - 1)) return false;
+        assertEqual({
+            name: pseudoCode + '.throw',
+            shouldbe: true,
+            value: typeof actualNumberStringIterator.throw === 'function'
+        });
+        var nextNumberResult = (<{ (value?: string): IteratorResult<number, string>; }>actualNumberStringIterator.throw)("Test #3");
+        assertEqual({
+            name: pseudoCode + '.throw("Test #3")',
+            shouldbe: false,
+            value: typeof nextNumberResult === 'undefined' || nextNumberResult === null
+        });
+        assertEqual({
+            name: pseudoCode + '.throw("Test #3").done',
+            shouldbe: false,
+            value: nextNumberResult.done == true
+        });
+        assertEqual({
+            name: pseudoCode + '.throw("Test #3").value',
+            shouldbe: "Thrown: Test #3",
+            value: nextNumberResult.value
+        });
 
         // #endregion
         
@@ -834,27 +613,11 @@ namespace site17Util_IteratorsTest {
         
         // #region reiterate
 
-        // #region reiterate<string>(source: Iterator<string>, callbackFn: { (value: string): void; }): Iterator<string>
+        // #region reiterate<GlideDuration>(source: Iterator<GlideDuration>, callbackFn: { (value: GlideDuration): void; }): Iterator<GlideDuration>
 
         // #endregion
         
-        // #region reiterate<number, string>(source: Iterator<number, string>, callbackFn: { (value: number): void; }): Iterator<number, string>
-
-        // #endregion
-        
-        // #region reiterate<number, string, { value?: boolean }>(source: Iterator<number, string, { value?: boolean }>, callbackFn: { (value: number): void; }): Iterator<number, string, { value?: boolean }>
-
-        // #endregion
-        
-        // #region reiterate<string>(source: Iterator<string>, callbackFn: { (value: string): void; }, thisArg: { count: string }): Iterator<string>
-
-        // #endregion
-        
-        // #region reiterate<number, string>(source: Iterator<number, string>, callbackFn: { (value: number): void; }, thisArg: { count: number }): Iterator<number, string>
-
-        // #endregion
-        
-        // #region reiterate<number, string, { value?: boolean }>(source: Iterator<number, string, { value?: boolean }>, callbackFn: { (value: number): void; }, thisArg: { count: number }): Iterator<number, string, { value?: boolean }>
+        // #region reiterate<GlideDuration, string, number>(source: Iterator<GlideDuration, string, number>, callbackFn: { (GlideDuration: number, arg: string): void; }, thisObj): Iterator<GlideDuration, string, number>
 
         // #endregion
         
@@ -866,23 +629,7 @@ namespace site17Util_IteratorsTest {
 
         // #endregion
         
-        // #region mapIterator<number, string, boolean>(source: Iterator<number, boolean>, mapper: { (value: number): string; }): Iterator<string, boolean>
-
-        // #endregion
-        
-        // #region mapIterator<number, string, boolean, { value?: boolean }>(source: Iterator<number, boolean, { value?: boolean }>, mapper: { (value: number): string; }): Iterator<string, boolean, { value?: boolean }>
-
-        // #endregion
-        
-        // #region mapIterator<number, string>(source: Iterator<number>, mapper: { (value: number): string; }, thisArg: { count: number }): Iterator<string>
-
-        // #endregion
-        
-        // #region mapIterator<number, string, boolean>(source: Iterator<number, boolean>, mapper: { (value: number): string; }, thisArg: { count: number }): Iterator<string, boolean>
-
-        // #endregion
-        
-        // #region mapIterator<number, string, boolean, { value?: boolean }>(source: Iterator<number, boolean, { value?: boolean }>, mapper: { (value: number): string; }, thisArg: { count: number }): Iterator<string, boolean, { value?: boolean }>
+        // #region mapIterator<GlideDateTime, string, number, GlideDuration>(source: Iterator<GlideDateTime, number, GlideDuration>, mapper: { (value: GlideDateTime, arg: GlideDuration): string; }, thisObj): Iterator<string, number, GlideDuration>
 
         // #endregion
         
@@ -890,11 +637,11 @@ namespace site17Util_IteratorsTest {
         
         // #region reduceIterator
 
-        // #region reduceIterator<number[], number>(source: Iterator<number[]>, initialValue: number, reducerFn: { (acc: number, cur: number[]): number }): number
+        // #region reduceIterator<GlideDuration, number>(source: Iterator<GlideDuration>, initialValue: number, reducerFn: { (acc: number, cur: GlideDuration): number }): number
 
         // #endregion
         
-        // #region reduceIterator<number[], number>(source: Iterator<number[]>, initialValue: number, reducerFn: { (acc: number, cur: number[]): number }, thisArg: { count: number }): number
+        // #region reduceIterator<GlideDuration, number>(source: Iterator<GlideDuration>, initialValue: number, reducerFn: { (acc: number, cur: GlideDuration): number }, thisObj): number
 
         // #endregion
         
@@ -906,11 +653,7 @@ namespace site17Util_IteratorsTest {
 
         // #endregion
         
-        // #region firstIterated<number>(source: Iterator<number>, predicate: { (value: number): boolean; }): number | undefined
-
-        // #endregion
-        
-        // #region firstIterated<string>(source: Iterator<string>, predicate: { (value: string): boolean; }, thisArg: { count: number }): string | undefined
+        // #region firstIterated<string>(source: Iterator<string>, predicate: { (value: string): boolean; }, thisObj): string | undefined
 
         // #endregion
         
@@ -918,15 +661,19 @@ namespace site17Util_IteratorsTest {
         
         // #region firstIteratedOrDefault
 
-        // #region firstIteratedOrDefault<number>(source: Iterator<number>, ifEmpty: number | { (): number; }): number
+        // #region firstIteratedOrDefault<number>(source: Iterator<number>, ifEmpty: number): number
 
         // #endregion
         
-        // #region firstIteratedOrDefault<string>(source: Iterator<string>, ifEmpty: string | { (): string; }, predicate: { (value: string): boolean; }): string
+        // #region firstIteratedOrDefault<number>(source: Iterator<number>, ifEmpty: { (): number; }): number
 
         // #endregion
         
-        // #region firstIteratedOrDefault<number>(source: Iterator<number>, ifEmpty: number | { (): number; }, predicate: { (value: number): boolean; }, thisArg: any): number
+        // #region firstIteratedOrDefault<number>(source: Iterator<number>, ifEmpty: number, predicate: { (value: number): boolean; }, thisArg: any): number
+
+        // #endregion
+        
+        // #region firstIteratedOrDefault<number>(source: Iterator<number>, ifEmpty: { (): number; }, predicate: { (value: number): boolean; }, thisArg: any): number
 
         // #endregion
         
@@ -938,11 +685,7 @@ namespace site17Util_IteratorsTest {
 
         // #endregion
         
-        // #region limitIterator<string, number>(source: Iterator<string, number>, count: number): Iterator<string, number>
-
-        // #endregion
-        
-        // #region limitIterator<string, number, { value?: boolean }>(source: Iterator<string, number, { value?: boolean }>, count: number): Iterator<string, number, { value?: boolean }>
+        // #region limitIterator<string, number, boolean | null>(source: Iterator<string, number, boolean | null>, count: number): Iterator<string, number, boolean | null>
 
         // #endregion
         
