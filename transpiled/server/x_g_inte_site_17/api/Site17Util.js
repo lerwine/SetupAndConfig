@@ -1012,6 +1012,98 @@ var x_g_inte_site_17;
                 };
             return iterator;
         };
+        constructor.filter = function (source, predicate, thisArg) {
+            if (typeof thisArg !== 'undefined')
+                if (constructor.any(source, function (value) { return !predicate.call(thisArg, value); })) {
+                    var arr = [];
+                    for (var _i = 0, source_1 = source; _i < source_1.length; _i++) {
+                        var item = source_1[_i];
+                        if (predicate.call(thisArg, item))
+                            arr.push(item);
+                    }
+                    return arr;
+                }
+                else if (constructor.any(source, function (value) { return !predicate(value); })) {
+                    var arr = [];
+                    for (var _a = 0, source_2 = source; _a < source_2.length; _a++) {
+                        var item = source_2[_a];
+                        if (predicate(item))
+                            arr.push(item);
+                    }
+                    return arr;
+                }
+            return source;
+        };
+        constructor.notNil = function (source) {
+            if (constructor.any(source, function (value) { return typeof value === 'undefined' || value === null; })) {
+                var arr = [];
+                for (var _i = 0, source_3 = source; _i < source_3.length; _i++) {
+                    var item = source_3[_i];
+                    if (typeof item !== 'undefined' && item !== null)
+                        arr.push(item);
+                }
+                return arr;
+            }
+            return source;
+        };
+        constructor.map = function (source, mapper, thisArg) {
+            var arr = [];
+            if (typeof thisArg === 'undefined')
+                for (var _i = 0, source_4 = source; _i < source_4.length; _i++) {
+                    var item = source_4[_i];
+                    arr.push(mapper(item));
+                }
+            else
+                for (var _a = 0, source_5 = source; _a < source_5.length; _a++) {
+                    var item = source_5[_a];
+                    arr.push(mapper.call(this, item));
+                }
+            return arr;
+        };
+        constructor.any = function (source, predicate, thisArg) {
+            if (typeof thisArg !== 'undefined') {
+                for (var _i = 0, source_6 = source; _i < source_6.length; _i++) {
+                    var item = source_6[_i];
+                    if (predicate.call(thisArg, item))
+                        return true;
+                }
+            }
+            else {
+                for (var _a = 0, source_7 = source; _a < source_7.length; _a++) {
+                    var item = source_7[_a];
+                    if (predicate(item))
+                        return true;
+                }
+            }
+            return false;
+        };
+        constructor.all = function (source, predicate, thisArg) {
+            if (source.length == 0)
+                return false;
+            if (typeof thisArg !== 'undefined') {
+                for (var _i = 0, source_8 = source; _i < source_8.length; _i++) {
+                    var item = source_8[_i];
+                    if (!predicate.call(thisArg, item))
+                        return false;
+                }
+            }
+            else {
+                for (var _a = 0, source_9 = source; _a < source_9.length; _a++) {
+                    var item = source_9[_a];
+                    if (!predicate(item))
+                        return false;
+                }
+            }
+            return true;
+        };
+        constructor.cloneArray = function (source) {
+            var arr = [];
+            for (var _i = 0, source_10 = source; _i < source_10.length; _i++) {
+                var item = source_10[_i];
+                arr.push(item);
+            }
+            return arr;
+        };
         // #endregion
         constructor.prototype = Object.extendsObject(global.AbstractAjaxProcessor, {
             /**

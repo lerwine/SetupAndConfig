@@ -399,6 +399,20 @@ declare namespace x_g_inte_site_17 {
         }, supportsReturn?: boolean, finalReturnValue?: TReturn, onThrow?: {
             (e?: any): IteratorResult<T, TReturn>;
         }): Iterator<T, TReturn, TNext>;
+        filter<T>(source: T[], predicate: {
+            (value: T): boolean;
+        }, thisArg?: any): T[];
+        notNil<T>(source: (T | null | undefined)[]): T[];
+        map<T, R>(source: T[], mapper: {
+            (value: T): R;
+        }, thisArg?: any): R[];
+        any<T>(source: T[], predicate: {
+            (value: T): boolean;
+        }, thisArg?: any): boolean;
+        all<T>(source: T[], predicate: {
+            (value: T): boolean;
+        }, thisArg?: any): boolean;
+        cloneArray<T>(source: T[]): T[];
     }
     const Site17Util: Site17UtilConstructor;
 }

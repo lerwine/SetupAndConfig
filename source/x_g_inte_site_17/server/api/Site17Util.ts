@@ -426,6 +426,18 @@ namespace x_g_inte_site_17 {
          */
         iteratorFromArray2<T, TReturn, TNext>(arr: T[], onNext: { (value: T, next?: TNext): IteratorResult<T>; }, supportsReturn?: boolean, finalReturnValue?: TReturn,
             onThrow?: { (e?: any): IteratorResult<T, TReturn> }): Iterator<T, TReturn, TNext>;
+        
+        filter<T>(source: T[], predicate: { (value: T): boolean; }, thisArg?: any): T[];
+    
+        notNil<T>(source: (T | null | undefined)[]): T[];
+    
+        map<T, R>(source: T[], mapper: { (value: T): R; }, thisArg?: any): R[];
+    
+        any<T>(source: T[], predicate: { (value: T): boolean; }, thisArg?: any): boolean;
+    
+        all<T>(source: T[], predicate: { (value: T): boolean; }, thisArg?: any): boolean;
+    
+        cloneArray<T>(source: T[]): T[];
     }
 
     export const Site17Util: Site17UtilConstructor = (function (): Site17UtilConstructor {
@@ -1144,7 +1156,6 @@ namespace x_g_inte_site_17 {
             return initialValue;
         };
 
-        
         /**
          * Gets the first yielded result from an iterator.
          * @template TYield - The yielded result type for the iterator.
@@ -1200,7 +1211,6 @@ namespace x_g_inte_site_17 {
             if (typeof ifEmpty === "function") return (<{ (): TYield; }>ifEmpty)();
             return ifEmpty;
         };
-        
         
         /**
          * Creates a wrapper iterator that limits the number of iterations from a source iterator.
@@ -1289,7 +1299,6 @@ namespace x_g_inte_site_17 {
             return result;
         }
 
-
         /**
          * Creates an interator from an array.
          * @template T - The element type.
@@ -1302,47 +1311,47 @@ namespace x_g_inte_site_17 {
          * @static
          * @memberof Site17Util
          */
-         constructor.iteratorFromArray = function<T, TReturn = any>(arr: T[], supportsReturn?: boolean, finalReturnValue?: TReturn, onThrow?: { (e?: any): IteratorResult<T, TReturn> }): Iterator<T, TReturn> {
-            var context: { index: number; returned?: TReturn } = { index: 0 };
-            var iterator = <Iterator<T, TReturn>> {
-                next: function(): IteratorResult<T, TReturn> {
-                    if (context.index < 0) {
-                        if (typeof context.returned === 'undefined') return <IteratorReturnResult<TReturn>>{ done: true };
-                        return { done: true, value: context.returned };
-                    }
-                    if (context.index < arr.length) {
-                        var result:  IteratorYieldResult<T> = { value: arr[context.index] };
-                        context.index++;
-                        return result;
-                    }
-                    context.index = -1;
-                    if (typeof finalReturnValue === "undefined") return <IteratorReturnResult<TReturn>>{ done: true };
-                    context.returned = finalReturnValue;
-                    return { done: true, value: finalReturnValue };
+        constructor.iteratorFromArray = function<T, TReturn = any>(arr: T[], supportsReturn?: boolean, finalReturnValue?: TReturn, onThrow?: { (e?: any): IteratorResult<T, TReturn> }): Iterator<T, TReturn> {
+        var context: { index: number; returned?: TReturn } = { index: 0 };
+        var iterator = <Iterator<T, TReturn>> {
+            next: function(): IteratorResult<T, TReturn> {
+                if (context.index < 0) {
+                    if (typeof context.returned === 'undefined') return <IteratorReturnResult<TReturn>>{ done: true };
+                    return { done: true, value: context.returned };
                 }
-            };
-            if (supportsReturn)
-                iterator.return = function(value?: TReturn): IteratorResult<T, TReturn> {
-                    if (context.index < 0) {
-                        if (typeof value === "undefined") return <IteratorReturnResult<TReturn>>{ done: true };
-                        return { done: true, value: value };
-                    }
-                    context.index = -1;
-                    if (typeof finalReturnValue === "undefined") return <IteratorReturnResult<TReturn>>{ done: true };
-                    context.returned = finalReturnValue;
-                    return { done: true, value: finalReturnValue };
-                }
-            if (typeof onThrow !== 'undefined')
-                iterator.throw = function(e?: any): IteratorResult<T, TReturn> {
-                    var result = onThrow(e);
-                    if (context.index >= 0) {
-                        context.index = -1;
-                        if (result.done) context.returned = result.value;
-                    }
+                if (context.index < arr.length) {
+                    var result:  IteratorYieldResult<T> = { value: arr[context.index] };
+                    context.index++;
                     return result;
-                };
-            return iterator;
-         };
+                }
+                context.index = -1;
+                if (typeof finalReturnValue === "undefined") return <IteratorReturnResult<TReturn>>{ done: true };
+                context.returned = finalReturnValue;
+                return { done: true, value: finalReturnValue };
+            }
+        };
+        if (supportsReturn)
+            iterator.return = function(value?: TReturn): IteratorResult<T, TReturn> {
+                if (context.index < 0) {
+                    if (typeof value === "undefined") return <IteratorReturnResult<TReturn>>{ done: true };
+                    return { done: true, value: value };
+                }
+                context.index = -1;
+                if (typeof finalReturnValue === "undefined") return <IteratorReturnResult<TReturn>>{ done: true };
+                context.returned = finalReturnValue;
+                return { done: true, value: finalReturnValue };
+            }
+        if (typeof onThrow !== 'undefined')
+            iterator.throw = function(e?: any): IteratorResult<T, TReturn> {
+                var result = onThrow(e);
+                if (context.index >= 0) {
+                    context.index = -1;
+                    if (result.done) context.returned = result.value;
+                }
+                return result;
+            };
+        return iterator;
+        };
 
         /**
          * Creates an interator from an array that accepts an argument for the "next" method.
@@ -1403,6 +1412,76 @@ namespace x_g_inte_site_17 {
                 };
             return iterator;
         };
+
+        constructor.filter = function<T>(source: T[], predicate: { (value: T): boolean; }, thisArg?: any): T[] {
+            if (typeof thisArg !== 'undefined')
+                if (constructor.any(source, function(value: T) { return !predicate.call(thisArg, value); })) {
+                    var arr: T[] = [];
+                    for (var item of source) {
+                        if (predicate.call(thisArg, item)) arr.push(item);
+                    }
+                    return arr;
+                }
+            else
+                if (constructor.any(source, function(value: T) { return !predicate(value); })) {
+                    var arr: T[] = [];
+                    for (var item of source) {
+                        if (predicate(item)) arr.push(item);
+                    }
+                    return arr;
+                }
+            return source;
+        };
+    
+        constructor.notNil = function<T>(source: (T | null | undefined)[]): T[] {
+            if (constructor.any(source, function(value?: T | null) { return typeof value === 'undefined' || value === null; })) {
+                var arr: T[] = [];
+                for (var item of source) {
+                    if (typeof item !== 'undefined' && item !== null) arr.push(item);
+                }
+                return arr;
+            }
+            return <T[]>source;
+        }
+
+        constructor.map = function<T, R>(source: T[], mapper: { (value: T): R; }, thisArg?: any): R[] {
+            var arr: R[] = [];
+            if (typeof thisArg === 'undefined')
+                for (var item of source) arr.push(mapper(item));
+            else
+                for (var item of source) arr.push(mapper.call(this, item));
+            return arr;
+        };
+    
+        constructor.any = function<T>(source: T[], predicate: { (value: T): boolean; }, thisArg?: any): boolean {
+            if (typeof thisArg !== 'undefined') {
+                for (var item of source)
+                    if (predicate.call(thisArg, item)) return true;
+            } else {
+                for (var item of source)
+                    if (predicate(item)) return true;
+            }
+            return false;
+        };
+    
+        constructor.all = function<T>(source: T[], predicate: { (value: T): boolean; }, thisArg?: any): boolean {
+            if (source.length == 0) return false;
+            if (typeof thisArg !== 'undefined') {
+                for (var item of source)
+                    if (!predicate.call(thisArg, item)) return false;
+            } else {
+                for (var item of source)
+                    if (!predicate(item)) return false;
+            }
+            return true;
+        };
+    
+        constructor.cloneArray = function<T>(source: T[]): T[] {
+            var arr: T[] = [];
+            for (var item of source)
+                arr.push(item);
+            return arr;
+        }
 
         // #endregion
         
