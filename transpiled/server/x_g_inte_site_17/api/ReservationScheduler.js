@@ -390,6 +390,10 @@ var x_g_inte_site_17;
                 else
                     md = getNormalizedGlideDuration(minimumDuration, this.duration_increment, this.minimum_duration, this.maximum_duration);
                 return x_g_inte_site_17.Site17Util.filterIterator(new AvailabilityIterator(this.schedule, getNormalizedGlideDateTime(fromDateTime, this.start_time_interval), toDateTime), function (ts) {
+                    var args = [];
+                    for (var _i = 1; _i < arguments.length; _i++) {
+                        args[_i - 1] = arguments[_i];
+                    }
                     var ms = normalizeGlideDateTime(ts.start, this.start_time_interval);
                     if (ms > 0) {
                         var d = new GlideDuration(ms);
