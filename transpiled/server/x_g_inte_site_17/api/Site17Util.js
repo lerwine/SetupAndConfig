@@ -358,6 +358,7 @@ var x_g_inte_site_17;
             var arrayUtil = new global.ArrayUtil();
             var iterator;
             if (typeof thisArg === 'undefined') {
+                // #region thisArg === 'undefined'
                 iterator = {
                     next: function () {
                         var args = [];
@@ -423,8 +424,10 @@ var x_g_inte_site_17;
                         }
                         return context["return"];
                     };
+                // #endregion
             }
             else {
+                // #region thisArg !== 'undefined'
                 iterator = {
                     next: function () {
                         var args = [];
@@ -489,6 +492,7 @@ var x_g_inte_site_17;
                         }
                         return context["return"];
                     };
+                // #endregion
             }
             return iterator;
         };
@@ -1085,7 +1089,7 @@ var x_g_inte_site_17;
         var PROPERTY_NAME_source_dn_groups = 'x_g_inte_site_17.source_dn_groups';
         var PROPERTY_NAME_source_user_include_empty = 'x_g_inte_site_17.source_user_include_empty';
         var PROPERTY_NAME_source_group_include_empty = 'x_g_inte_site_17.source_group_include_empty';
-        var dnRegex = /^([^=,\\]+|\\.)+=([^,\\]+|\\.)*(,([^=,\\]+|\\.)+=([^,\\]+|\\.)*)*$/;
+        var dnRegex = /^([^=\s,\\]+|\\.)+=([^,\\]+|\\.)*(,([^=\s,\\]+|\\.)+=([^,\\]+|\\.)*)*$/;
         var TABLE_NAME_sys_user = 'sys_user';
         var TABLE_NAME_sys_user_group = 'sys_user_group';
         var TABLE_NAME_business_unit = 'business_unit';
@@ -1252,7 +1256,7 @@ var x_g_inte_site_17;
                 return false;
             if (sourceDN.length == containerDN.length)
                 return sourceDN.toLowerCase() == containerDN.toLowerCase();
-            if (sourceDN.length >= (containerDN.length + 1))
+            if (sourceDN.length < (containerDN.length + 3))
                 return false;
             return testDistinguishedName(containerDN) && sourceDN.toLowerCase().endsWith(',' + containerDN.toLowerCase());
         }
