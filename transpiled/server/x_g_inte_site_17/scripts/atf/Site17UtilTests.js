@@ -71,570 +71,897 @@ var site17Util_DistinguishedNameTest;
         return true;
     })(outputs, steps, stepResult, assertEqual);
 })(site17Util_DistinguishedNameTest || (site17Util_DistinguishedNameTest = {}));
-var site17Util_IteratorsTest;
-(function (site17Util_IteratorsTest) {
-    // interface ITerminalIteratorStep<TReturn> {
-    //     type: "return" | "throw" | "done";
-    //     return?: TReturn;
-    // }
-    // interface IDoneIteratorStep<TReturn = any> extends ITerminalIteratorStep<TReturn> {
-    //     type: "done";
-    // }
-    // interface IReturnIteratorStep<TYield, TReturn> extends ITerminalIteratorStep<TReturn> {
-    //     type: "return";
-    //     value?: TYield;
-    // }
-    // interface IThrowIteratorStep<TYield, TReturn = any> extends ITerminalIteratorStep<TReturn> {
-    //     type: "throw";
-    //     value?: TYield;
-    //     arg?: any;
-    // }
+var site17Util_IteratorFromArrayTest;
+(function (site17Util_IteratorFromArrayTest) {
     (function (outputs, steps, stepResult, assertEqual) {
         var atfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
-        function getStringTestSteps(includeEmpty) {
-            var arr;
-            if (includeEmpty === true) {
-                arr = [{ value: "One" }, { value: "Two" }, { value: "" }, { value: "Three" }, { value: "Four" }];
-            }
-            else {
-                arr = [{ value: "One" }, { value: "Two" }, { value: "Three" }, { value: "Four" }];
-            }
-            return {
-                inputs: arr,
-                pseudoCode: JSON.stringify(arr)
-            };
+        var values = ["One", "Two", "Three"];
+        var supportsReturn = true;
+        var finalReturnValue = 7;
+        var idx;
+        var ir;
+        function onThrow(e) { return 12; }
+        var pseudoCode = 'iteratorFromArray<string, number>(' + JSON.stringify(values) + ', ' + JSON.stringify(supportsReturn) + ', ' + JSON.stringify(finalReturnValue) + ', ' + JSON.stringify(onThrow) + ')';
+        var iterator;
+        try {
+            iterator = x_g_inte_site_17.Site17Util.iteratorFromArray(values, supportsReturn, finalReturnValue, onThrow);
         }
-        function getStringTestStepsWithNext(includeEmpty) {
-            var arr;
-            if (includeEmpty === true) {
-                arr = [{ value: "One", arg: true }, { value: "Two", arg: false }, { value: "" }, { value: "Three" }, { value: "Four", arg: null }];
-            }
-            else {
-                arr = [{ value: "One", arg: true }, { value: "Two", arg: false }, { value: "Three" }, { value: "Four", arg: null }];
-            }
-            return {
-                inputs: arr,
-                pseudoCode: JSON.stringify(arr)
-            };
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
         }
-        function getNumberTestSteps(includeNaN) {
-            var arr;
-            if (includeNaN === true) {
-                arr = [{ value: 1 }, { value: 2 }, { value: 3 }, { value: NaN }, { value: 5 }, { value: 7 }, { value: 11 }];
-            }
-            else {
-                arr = [{ value: 1 }, { value: 2 }, { value: 3 }, { value: 5 }, { value: 7 }, { value: 11 }];
-            }
-            return {
-                inputs: arr,
-                pseudoCode: '[' + arr.map(function (item) {
-                    if (typeof item.arg === 'undefined') {
-                        if (isNaN(item.value))
-                            return '{value:NaN}';
-                        return '{value:' + item.value + '}';
-                    }
-                    if (isNaN(item.value))
-                        return '{value:NaN,arg:' + JSON.stringify(item.arg) + '}';
-                    return '{value:' + item.value + ',arg:' + JSON.stringify(item.arg) + '}';
-                }).join(',') + ']'
-            };
-        }
-        function getNumberTestStepsWithNext(includeNaN) {
-            var arr;
-            if (includeNaN === true) {
-                arr = [{ value: 1 }, { value: 2, arg: true }, { value: 3, arg: false }, { value: NaN }, { value: 5 }, { value: 7, arg: null }, { value: 11 }];
-            }
-            else {
-                arr = [{ value: 1 }, { value: 2, arg: true }, { value: 3, arg: false }, { value: 5 }, { value: 7, arg: null }, { value: 11 }];
-            }
-            return {
-                inputs: arr,
-                pseudoCode: '[' + arr.map(function (item) {
-                    if (typeof item.arg === 'undefined') {
-                        if (isNaN(item.value))
-                            return '{value:NaN}';
-                        return '{value:' + item.value + '}';
-                    }
-                    if (isNaN(item.value))
-                        return '{value:NaN,arg:' + JSON.stringify(item.arg) + '}';
-                    return '{value:' + item.value + ',arg:' + JSON.stringify(item.arg) + '}';
-                }).join(',') + ']'
-            };
-        }
-        function getStepValue(step) { return step.value; }
-        function makeIterator(nextSteps) {
-            var context = { index: 0, values: nextSteps.map(getStepValue) };
-            return {
-                next: function () {
-                    if (context.index < 0)
-                        return { done: true };
-                    if (context.index < context.values.length) {
-                        var v = context.values[context.index];
-                        context.index++;
-                        return { value: v };
-                    }
-                    context.index = -1;
-                    return { done: true };
-                }
-            };
-        }
-        function makeIterator2(nextSteps, thisObj, terminalOptions) {
-            var context = { index: 0, values: nextSteps.map(getStepValue) };
-            var madeIterator = {
-                next: function (arg) {
-                    thisObj.next.push(arg);
-                    if (context.index < 0) {
-                        if (typeof context.returned === 'undefined')
-                            return { done: true };
-                        return { done: true, value: context.returned };
-                    }
-                    if (context.index < context.values.length) {
-                        var v = context.values[context.index];
-                        context.index++;
-                        return { value: v };
-                    }
-                    context.index = -1;
-                    if (typeof terminalOptions !== 'undefined' && typeof terminalOptions.terminalValue !== 'undefined') {
-                        context.returned = terminalOptions.terminalValue;
-                        return { done: true, value: terminalOptions.terminalValue };
-                    }
-                    return { done: true };
-                }
-            };
-            if (typeof terminalOptions !== 'undefined') {
-                if (terminalOptions.implementReturn)
-                    madeIterator["return"] = function (value) {
-                        if (context.index < 0) {
-                            if (typeof value === 'undefined')
-                                return { done: true };
-                        }
-                        else {
-                            context.index = -1;
-                            if (typeof value === 'undefined')
-                                return { done: true };
-                            context.returned = value;
-                        }
-                        return { done: true, value: value };
-                    };
-                if (typeof terminalOptions.onThrow !== 'undefined')
-                    madeIterator["throw"] = function (e) {
-                        var returned = terminalOptions.onThrow(e);
-                        if (typeof returned !== 'undefined') {
-                            if (context.index > -1) {
-                                context.index = -1;
-                                context.returned = returned;
-                            }
-                            return { done: true, value: returned };
-                        }
-                        context.index = -1;
-                        return { done: true };
-                    };
-            }
-            return madeIterator;
-        }
-        function testIteration(description, source, expectedValues, maxIterations) {
-            assertEqual({
-                name: description,
-                shouldbe: false,
-                value: typeof source === 'undefined' || source === null
-            });
-            var ir;
-            var limit = (typeof maxIterations === 'number' && maxIterations < expectedValues.length) ? maxIterations : expectedValues.length;
-            for (var idx = 0; idx < limit; idx++) {
-                var ev = expectedValues[idx];
-                var iterationDesc = description + '[' + (idx + 1) + '].next()';
-                try {
-                    ir = source.next();
-                }
-                catch (e) {
-                    atfHelper.setFailed('Unexpected exception while invoking ' + iterationDesc, e);
-                    return false;
-                }
-                assertEqual({
-                    name: iterationDesc,
-                    shouldbe: false,
-                    value: typeof ir === 'undefined' || ir === null
-                });
-                assertEqual({
-                    name: iterationDesc + '.done',
-                    shouldbe: false,
-                    value: ir.done == true
-                });
-                assertEqual({
-                    name: iterationDesc + '.value',
-                    shouldbe: ev.value,
-                    value: ir.value
-                });
-            }
-            if (limit < expectedValues.length)
-                return true;
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: true,
+            value: typeof iterator !== 'undefined' && iterator !== null
+        });
+        var iterationPseudoCode;
+        for (idx = 0; idx < values.length; idx++) {
+            iterationPseudoCode = pseudoCode + '[' + idx + '].next()';
             try {
-                ir = source.next();
+                ir = iterator.next();
             }
             catch (e) {
-                atfHelper.setFailed('Unexpected exception while invoking ' + description + '.next()', e);
+                atfHelper.setFailed('Unexpected exception while invoking ' + iterationPseudoCode, e);
                 return false;
             }
             assertEqual({
-                name: description + '.next().done',
+                name: iterationPseudoCode,
                 shouldbe: true,
-                value: ir.done
+                value: typeof ir !== 'undefined' && ir !== null
             });
-            return true;
-        }
-        function testIterationRN(description, source, expectedValues, thisObj, maxIterationsOrFinalNextArg, expectedReturnValue) {
             assertEqual({
-                name: description,
-                shouldbe: false,
-                value: typeof source === 'undefined' || source === null
-            });
-            var ir;
-            var expectedNext = [];
-            var limit = (typeof maxIterationsOrFinalNextArg === 'number' && maxIterationsOrFinalNextArg < expectedValues.length) ? maxIterationsOrFinalNextArg : expectedValues.length;
-            var iterationDesc;
-            for (var idx = 0; idx < limit; idx++) {
-                var ev = expectedValues[idx];
-                expectedNext.push(ev.arg);
-                if (typeof ev.arg === 'undefined') {
-                    iterationDesc = description + '[' + (idx + 1) + '].next()';
-                    try {
-                        ir = source.next();
-                    }
-                    catch (e) {
-                        atfHelper.setFailed('Unexpected exception while invoking ' + iterationDesc, e);
-                        return false;
-                    }
-                }
-                else {
-                    iterationDesc = description + '[' + (idx + 1) + '].next(' + JSON.stringify(ev.arg) + ')';
-                    try {
-                        ir = source.next(ev.arg);
-                    }
-                    catch (e) {
-                        atfHelper.setFailed('Unexpected exception while invoking ' + iterationDesc, e);
-                        return false;
-                    }
-                }
-                assertEqual({
-                    name: iterationDesc,
-                    shouldbe: false,
-                    value: typeof ir === 'undefined' || ir === null
-                });
-                assertEqual({
-                    name: iterationDesc + '.done',
-                    shouldbe: false,
-                    value: ir.done == true
-                });
-                assertEqual({
-                    name: iterationDesc + '.value',
-                    shouldbe: ev.value,
-                    value: ir.value
-                });
-            }
-            if (limit < expectedValues.length) {
-                assertEqual({
-                    name: description + '; thisObj.next',
-                    shouldbe: expectedNext.map(function (value) { return (typeof value === 'undefined') ? 'undefined' : JSON.stringify(value); }).join(','),
-                    value: thisObj.next.map(function (value) { return (typeof value === 'undefined') ? 'undefined' : JSON.stringify(value); }).join(',')
-                });
-                return true;
-            }
-            if (typeof maxIterationsOrFinalNextArg === 'boolean' || maxIterationsOrFinalNextArg === null) {
-                iterationDesc = description + '.next(' + JSON.stringify(maxIterationsOrFinalNextArg) + ')';
-                try {
-                    ir = source.next(maxIterationsOrFinalNextArg);
-                }
-                catch (e) {
-                    atfHelper.setFailed('Unexpected exception while invoking ' + iterationDesc, e);
-                    return false;
-                }
-                expectedNext.push(maxIterationsOrFinalNextArg);
-            }
-            else {
-                iterationDesc = description + '.next()';
-                try {
-                    ir = source.next();
-                }
-                catch (e) {
-                    atfHelper.setFailed('Unexpected exception while invoking ' + iterationDesc, e);
-                    return false;
-                }
-                expectedNext.push(undefined);
-            }
-            assertEqual({
-                name: iterationDesc + '.done',
+                name: iterationPseudoCode + '.done',
                 shouldbe: true,
-                value: ir.done
+                value: ir.done !== true
             });
-            if (typeof expectedReturnValue !== 'undefined')
-                assertEqual({
-                    name: iterationDesc + '.value',
-                    shouldbe: expectedReturnValue,
-                    value: ir.value
-                });
             assertEqual({
-                name: iterationDesc + '; thisObj.next',
-                shouldbe: expectedNext.map(function (value) { return (typeof value === 'undefined') ? 'undefined' : JSON.stringify(value); }).join(','),
-                value: thisObj.next.map(function (value) { return (typeof value === 'undefined') ? 'undefined' : JSON.stringify(value); }).join(',')
+                name: iterationPseudoCode + '.value',
+                shouldbe: values[idx],
+                value: ir.value
             });
-            return true;
         }
-        function stringNotEmpty(value) { return value.length > 0; }
-        function notNaN(value) { return !isNaN(value); }
-        function alwaysTrue(value) { return true; }
-        function alwaysFalse(value) { return false; }
-        function lessThanSeven(value) { return value < 7; }
-        var actualStringIterator;
-        var actualNumberStringIterator;
-        var pseudoCode;
-        var stringTestSteps;
-        var stringTestStepsN;
-        var stringValues;
-        var stringIterator;
-        var stringIteratorRN;
-        var numberTestSteps;
-        var numberTestStepsN;
-        var numberValues;
-        var numberIterator;
-        var numberIteratorRN;
-        stringTestStepsN = getStringTestStepsWithNext();
-        numberTestStepsN = getNumberTestStepsWithNext();
-        var thisObj;
-        // #region iteratorFromArray
-        stringTestSteps = getStringTestSteps();
-        stringValues = stringTestSteps.inputs.map(getStepValue);
-        pseudoCode = 'iteratorFromArray(' + JSON.stringify(stringValues) + ')';
+        iterationPseudoCode = pseudoCode + '[' + values.length + ']';
         try {
-            actualStringIterator = x_g_inte_site_17.Site17Util.iteratorFromArray(stringValues);
+            ir = iterator.next();
         }
         catch (e) {
-            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            atfHelper.setFailed('Unexpected exception while invoking ' + iterationPseudoCode, e);
             return false;
         }
-        if (!testIteration(pseudoCode, actualStringIterator, stringTestSteps.inputs))
-            return false;
-        try {
-            actualStringIterator = x_g_inte_site_17.Site17Util.iteratorFromArray([]);
-        }
-        catch (e) {
-            atfHelper.setFailed('Unexpected exception while invoking iteratorFromArray([])', e);
-            return false;
-        }
-        if (!testIteration('iteratorFromArray([])', actualStringIterator, []))
-            return false;
-        // #endregion
-        // #region filterIterator
-        // #region filterIterator<string>(source: Iterator<string>, predicate: { (value: string): boolean; }): Iterator<string>
-        stringTestSteps = getStringTestSteps();
-        stringIterator = makeIterator(stringTestSteps.inputs);
-        pseudoCode = 'filterIterator(' + JSON.stringify(stringTestSteps.inputs.map(getStepValue)) + '.values(), stringNotEmpty)';
-        try {
-            actualStringIterator = x_g_inte_site_17.Site17Util.filterIterator(stringIterator, stringNotEmpty);
-        }
-        catch (e) {
-            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
-            return false;
-        }
-        if (!testIteration(pseudoCode, actualStringIterator, stringTestSteps.inputs.filter(function (item) {
-            return stringNotEmpty(item.value);
-        })))
-            return false;
-        stringIterator = makeIterator(stringTestSteps.inputs);
-        pseudoCode = 'filterIterator(' + JSON.stringify(stringTestSteps.inputs.map(getStepValue)) + '.values(), alwaysTrue)';
-        try {
-            actualStringIterator = x_g_inte_site_17.Site17Util.filterIterator(stringIterator, alwaysTrue);
-        }
-        catch (e) {
-            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
-            return false;
-        }
-        if (!testIteration(pseudoCode, actualStringIterator, stringTestSteps.inputs))
-            return false;
-        stringIterator = makeIterator(stringTestSteps.inputs);
-        pseudoCode = 'filterIterator(' + JSON.stringify(stringTestSteps.inputs.map(getStepValue)) + '.values(), alwaysFalse)';
-        try {
-            actualStringIterator = x_g_inte_site_17.Site17Util.filterIterator(stringIterator, alwaysFalse);
-        }
-        catch (e) {
-            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
-            return false;
-        }
-        if (!testIteration(pseudoCode, actualStringIterator, []))
-            return false;
-        stringIterator = makeIterator([]);
-        pseudoCode = 'filterIterator([].values(), stringNotEmpty)';
-        try {
-            actualStringIterator = x_g_inte_site_17.Site17Util.filterIterator(stringIterator, stringNotEmpty);
-        }
-        catch (e) {
-            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
-            return false;
-        }
-        if (!testIteration(pseudoCode, actualStringIterator, []))
-            return false;
-        // #endregion
-        // #region filterIterator<number, string, boolean | null>(source: Iterator<number, string, boolean | null>, predicate: { (value: number): boolean; }, thisObj): Iterator<number, string, boolean | null>
-        thisObj = { next: [] };
-        numberTestStepsN = getNumberTestStepsWithNext(true);
-        numberIteratorRN = makeIterator2(numberTestStepsN.inputs, thisObj);
-        pseudoCode = 'filterIterator(' + JSON.stringify(numberTestStepsN.inputs.map(getStepValue)) + '.values(), notNaN, thisObj)';
-        try {
-            actualNumberStringIterator = x_g_inte_site_17.Site17Util.filterIterator(numberIteratorRN, notNaN, thisObj);
-        }
-        catch (e) {
-            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
-            return false;
-        }
-        if (!testIterationRN(pseudoCode, numberIteratorRN, numberTestStepsN.inputs.filter(function (item) {
-            return notNaN(item.value);
-        }), thisObj, false))
-            return false;
-        thisObj = { next: [] };
-        numberTestStepsN = getNumberTestStepsWithNext(true);
-        numberIteratorRN = makeIterator2(numberTestStepsN.inputs, thisObj, {
-            terminalValue: "Test"
-        });
-        pseudoCode = 'filterIterator(' + JSON.stringify(numberTestStepsN.inputs.map(getStepValue)) + '.values(), notNaN, thisObj)';
-        try {
-            actualNumberStringIterator = x_g_inte_site_17.Site17Util.filterIterator(numberIteratorRN, notNaN, thisObj);
-        }
-        catch (e) {
-            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
-            return false;
-        }
-        if (!testIterationRN(pseudoCode, numberIteratorRN, numberTestStepsN.inputs.filter(function (item) {
-            return notNaN(item.value);
-        }), thisObj, false, "Test"))
-            return false;
-        thisObj = { next: [] };
-        numberTestStepsN = getNumberTestStepsWithNext(true);
-        numberIteratorRN = makeIterator2(numberTestStepsN.inputs, thisObj, {
-            implementReturn: true
-        });
-        pseudoCode = 'filterIterator(' + JSON.stringify(numberTestStepsN.inputs.map(getStepValue)) + '.values(), notNaN, thisObj)';
-        try {
-            actualNumberStringIterator = x_g_inte_site_17.Site17Util.filterIterator(numberIteratorRN, notNaN, thisObj);
-        }
-        catch (e) {
-            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
-            return false;
-        }
-        if (!testIterationRN(pseudoCode, numberIteratorRN, numberTestStepsN.inputs.filter(function (item) {
-            return notNaN(item.value);
-        }), thisObj, numberTestStepsN.inputs.length - 1))
-            return false;
         assertEqual({
-            name: pseudoCode + '.return',
+            name: iterationPseudoCode,
             shouldbe: true,
-            value: typeof actualNumberStringIterator["return"] === 'function'
-        });
-        var nextNumberResult = actualNumberStringIterator["return"]("Test #2");
-        assertEqual({
-            name: pseudoCode + '.return("Test #2")',
-            shouldbe: false,
-            value: typeof nextNumberResult === 'undefined' || nextNumberResult === null
+            value: typeof ir !== 'undefined' && ir !== null
         });
         assertEqual({
-            name: pseudoCode + '.return("Test #2").done',
-            shouldbe: false,
-            value: nextNumberResult.done == true
-        });
-        assertEqual({
-            name: pseudoCode + '.return("Test #2").value',
-            shouldbe: "Test #2",
-            value: nextNumberResult.value
-        });
-        thisObj = { next: [] };
-        numberTestStepsN = getNumberTestStepsWithNext(true);
-        numberIteratorRN = makeIterator2(numberTestStepsN.inputs, thisObj, {
-            onThrow: function (e) {
-                return 'Thrown: ' + e;
-            }
-        });
-        pseudoCode = 'filterIterator(' + JSON.stringify(numberTestStepsN.inputs.map(getStepValue)) + '.values(), notNaN, thisObj)';
-        try {
-            actualNumberStringIterator = x_g_inte_site_17.Site17Util.filterIterator(numberIteratorRN, notNaN, thisObj);
-        }
-        catch (e) {
-            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
-            return false;
-        }
-        if (!testIterationRN(pseudoCode, numberIteratorRN, numberTestStepsN.inputs.filter(function (item) {
-            return notNaN(item.value);
-        }), thisObj, numberTestStepsN.inputs.length - 1))
-            return false;
-        assertEqual({
-            name: pseudoCode + '.throw',
+            name: pseudoCode + iterationPseudoCode + '.done',
             shouldbe: true,
-            value: typeof actualNumberStringIterator["throw"] === 'function'
-        });
-        var nextNumberResult = actualNumberStringIterator["throw"]("Test #3");
-        assertEqual({
-            name: pseudoCode + '.throw("Test #3")',
-            shouldbe: false,
-            value: typeof nextNumberResult === 'undefined' || nextNumberResult === null
+            value: ir.done
         });
         assertEqual({
-            name: pseudoCode + '.throw("Test #3").done',
-            shouldbe: false,
-            value: nextNumberResult.done == true
+            name: pseudoCode + iterationPseudoCode + '.value',
+            shouldbe: finalReturnValue,
+            value: ir.value
         });
-        assertEqual({
-            name: pseudoCode + '.throw("Test #3").value',
-            shouldbe: "Thrown: Test #3",
-            value: nextNumberResult.value
-        });
-        // #endregion
-        // #endregion
-        // #region reiterate
-        // #region reiterate<GlideDuration>(source: Iterator<GlideDuration>, callbackFn: { (value: GlideDuration): void; }): Iterator<GlideDuration>
-        // #endregion
-        // #region reiterate<GlideDuration, string, number>(source: Iterator<GlideDuration, string, number>, callbackFn: { (GlideDuration: number, arg: string): void; }, thisObj): Iterator<GlideDuration, string, number>
-        // #endregion
-        // #endregion
-        // #region mapIterator
-        // #region mapIterator<number, string>(source: Iterator<number>, mapper: { (value: number): string; }): Iterator<string>
-        // #endregion
-        // #region mapIterator<GlideDateTime, string, number, GlideDuration>(source: Iterator<GlideDateTime, number, GlideDuration>, mapper: { (value: GlideDateTime, arg: GlideDuration): string; }, thisObj): Iterator<string, number, GlideDuration>
-        // #endregion
-        // #endregion
-        // #region reduceIterator
-        // #region reduceIterator<GlideDuration, number>(source: Iterator<GlideDuration>, initialValue: number, reducerFn: { (acc: number, cur: GlideDuration): number }): number
-        // #endregion
-        // #region reduceIterator<GlideDuration, number>(source: Iterator<GlideDuration>, initialValue: number, reducerFn: { (acc: number, cur: GlideDuration): number }, thisObj): number
-        // #endregion
-        // #endregion
-        // #region firstIterated
-        // #region firstIterated<string>(source: Iterator<string>): string | undefined
-        // #endregion
-        // #region firstIterated<string>(source: Iterator<string>, predicate: { (value: string): boolean; }, thisObj): string | undefined
-        // #endregion
-        // #endregion
-        // #region firstIteratedOrDefault
-        // #region firstIteratedOrDefault<number>(source: Iterator<number>, ifEmpty: number): number
-        // #endregion
-        // #region firstIteratedOrDefault<number>(source: Iterator<number>, ifEmpty: { (): number; }): number
-        // #endregion
-        // #region firstIteratedOrDefault<number>(source: Iterator<number>, ifEmpty: number, predicate: { (value: number): boolean; }, thisArg: any): number
-        // #endregion
-        // #region firstIteratedOrDefault<number>(source: Iterator<number>, ifEmpty: { (): number; }, predicate: { (value: number): boolean; }, thisArg: any): number
-        // #endregion
-        // #endregion
-        // #region limitIterator
-        // #region limitIterator<number>(source: Iterator<number>, count: number): Iterator<number>
-        // #endregion
-        // #region limitIterator<string, number, boolean | null>(source: Iterator<string, number, boolean | null>, count: number): Iterator<string, number, boolean | null>
-        // #endregion
-        // #endregion
-        // #region iteratorToArray
-        // #region iteratorToArray<number>(source: Iterator<number>): number[]
-        // #endregion
-        // #region iteratorToArray<string>(source: Iterator<string>, limit: number): string[]
-        // #endregion
-        // #endregion
         return true;
     })(outputs, steps, stepResult, assertEqual);
-})(site17Util_IteratorsTest || (site17Util_IteratorsTest = {}));
+})(site17Util_IteratorFromArrayTest || (site17Util_IteratorFromArrayTest = {}));
+var site17Util_FilterIteratorTest;
+(function (site17Util_FilterIteratorTest) {
+    (function (outputs, steps, stepResult, assertEqual) {
+        var atfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
+        var iterations = [
+            { value: "One" },
+            { value: "Two", arg: 1 },
+            { value: "" },
+            { value: "Three", arg: 3 }
+        ];
+        var expected = iterations.filter(function (value) { return value.value.length > 0; });
+        var expectedNextArgs = iterations.map(function (d) {
+            return d.arg;
+        });
+        var values = iterations.map(function (value) { return value.value; });
+        var source = x_g_inte_site_17.Site17Util.iteratorFromArray(values, false, true);
+        function predicate(value, arg) {
+            this.nextArgs.push(arg);
+            return value.length > 0;
+        }
+        var idx;
+        var arg;
+        var ir;
+        var item;
+        var thisArg = { nextArgs: [] };
+        var pseudoCode = 'filterIterator<string, boolean, number>(' + JSON.stringify(values) + '.iterator(), ' + JSON.stringify(predicate) + ', ' + JSON.stringify(thisArg) + ')';
+        var iterator;
+        try {
+            iterator = x_g_inte_site_17.Site17Util.filterIterator(source, predicate, thisArg);
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        var iterationPseudoCode;
+        for (idx = 0; idx < expected.length; idx++) {
+            item = expected[idx];
+            if (typeof item.arg === 'undefined') {
+                iterationPseudoCode = pseudoCode + '[' + idx + '].next()';
+                try {
+                    ir = iterator.next();
+                }
+                catch (e) {
+                    atfHelper.setFailed('Unexpected exception while invoking ' + iterationPseudoCode, e);
+                    return false;
+                }
+            }
+            else {
+                iterationPseudoCode = pseudoCode + '[' + idx + '].next(' + JSON.stringify(item.arg) + ')';
+                try {
+                    ir = iterator.next(item.arg);
+                }
+                catch (e) {
+                    atfHelper.setFailed('Unexpected exception while invoking ' + iterationPseudoCode, e);
+                    return false;
+                }
+            }
+            assertEqual({
+                name: iterationPseudoCode,
+                shouldbe: true,
+                value: typeof ir !== 'undefined' && ir !== null
+            });
+            assertEqual({
+                name: iterationPseudoCode + '.done',
+                shouldbe: true,
+                value: ir.done !== true
+            });
+            assertEqual({
+                name: iterationPseudoCode + '.value',
+                shouldbe: item.value,
+                value: ir.value
+            });
+        }
+        iterationPseudoCode = pseudoCode + '[' + values.length + ']';
+        try {
+            ir = iterator.next();
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + iterationPseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: iterationPseudoCode,
+            shouldbe: true,
+            value: typeof ir !== 'undefined' && ir !== null
+        });
+        assertEqual({
+            name: pseudoCode + iterationPseudoCode + '.done',
+            shouldbe: true,
+            value: ir.done
+        });
+        assertEqual({
+            name: pseudoCode + iterationPseudoCode + '.value',
+            shouldbe: true,
+            value: ir.value
+        });
+        assertEqual({
+            name: pseudoCode + '; thisArg.nextArgs',
+            shouldbe: expectedNextArgs.map(function (value) { return (typeof value === 'undefined') ? 'undefined' : JSON.stringify(value); }).join(','),
+            value: thisArg.nextArgs.map(function (value) { return (typeof value === 'undefined') ? 'undefined' : JSON.stringify(value); }).join(',')
+        });
+        return true;
+    })(outputs, steps, stepResult, assertEqual);
+})(site17Util_FilterIteratorTest || (site17Util_FilterIteratorTest = {}));
+var site17Util_ReiterateTest;
+(function (site17Util_ReiterateTest) {
+    (function (outputs, steps, stepResult, assertEqual) {
+        var atfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
+        var iterations = [
+            { value: new GlideDuration('1 0:0:0'), expect: new GlideDuration('1 0:0:3'), arg: 3 },
+            { value: new GlideDuration('0 0:0:0'), expect: new GlideDuration('0 0:0:12'), arg: 12 },
+            { value: new GlideDuration('0 7:0:0'), expect: new GlideDuration('0 7:6:0') }
+        ];
+        var values = iterations.map(function (d) {
+            return new GlideDuration(d.value);
+        });
+        var expectedNextArgs = iterations.map(function (d) {
+            return d.arg;
+        });
+        var source = x_g_inte_site_17.Site17Util.iteratorFromArray(values);
+        function callbackFn(value, arg) {
+            this.nextArgs.push(arg);
+            if (typeof arg === 'number')
+                value.addSeconds(arg);
+            else
+                value.addSeconds(420);
+        }
+        var idx;
+        var arg;
+        var ir;
+        var thisArg = { nextArgs: [] };
+        var pseudoCode = 'reiterate<GlideDuration, boolean, number>(' + JSON.stringify(values) + '.iterator(), ' + JSON.stringify(callbackFn) + ', ' + JSON.stringify(thisArg) + ')';
+        var iterator;
+        try {
+            iterator = x_g_inte_site_17.Site17Util.reiterate(source, callbackFn, thisArg);
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: true,
+            value: typeof iterator !== 'undefined' && iterator !== null
+        });
+        var iterationPseudoCode;
+        for (idx = 0; idx < values.length; idx++) {
+            arg = iterations[idx].arg;
+            if (typeof arg === 'undefined') {
+                iterationPseudoCode = pseudoCode + '[' + idx + '].next()';
+                try {
+                    ir = iterator.next();
+                }
+                catch (e) {
+                    atfHelper.setFailed('Unexpected exception while invoking ' + iterationPseudoCode, e);
+                    return false;
+                }
+            }
+            else {
+                iterationPseudoCode = pseudoCode + '[' + idx + '].next(' + JSON.stringify(arg) + ')';
+                try {
+                    ir = iterator.next(arg);
+                }
+                catch (e) {
+                    atfHelper.setFailed('Unexpected exception while invoking ' + iterationPseudoCode, e);
+                    return false;
+                }
+            }
+            assertEqual({
+                name: iterationPseudoCode,
+                shouldbe: true,
+                value: typeof ir !== 'undefined' && ir !== null
+            });
+            assertEqual({
+                name: iterationPseudoCode + '.done',
+                shouldbe: true,
+                value: ir.done !== true
+            });
+            assertEqual({
+                name: iterationPseudoCode + '.value',
+                shouldbe: true,
+                value: typeof ir.value != 'boolean' && ir.value !== null
+            });
+            assertEqual({
+                name: iterationPseudoCode + '.value.getDurationValue()',
+                shouldbe: iterations[idx].expect.getDurationValue(),
+                value: ir.value.getDurationValue()
+            });
+        }
+        iterationPseudoCode = pseudoCode + '[' + values.length + ']';
+        try {
+            ir = iterator.next();
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + iterationPseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: iterationPseudoCode,
+            shouldbe: true,
+            value: typeof ir !== 'undefined' && ir !== null
+        });
+        assertEqual({
+            name: pseudoCode + iterationPseudoCode + '.done',
+            shouldbe: true,
+            value: ir.done
+        });
+        assertEqual({
+            name: pseudoCode + iterationPseudoCode + '.value',
+            shouldbe: "Test 1",
+            value: ir.value
+        });
+        assertEqual({
+            name: pseudoCode + '; thisArg.nextArgs',
+            shouldbe: expectedNextArgs.map(function (value) { return (typeof value === 'undefined') ? 'undefined' : JSON.stringify(value); }).join(','),
+            value: thisArg.nextArgs.map(function (value) { return (typeof value === 'undefined') ? 'undefined' : JSON.stringify(value); }).join(',')
+        });
+        return true;
+    })(outputs, steps, stepResult, assertEqual);
+})(site17Util_ReiterateTest || (site17Util_ReiterateTest = {}));
+var site17Util_MapIteratorTest;
+(function (site17Util_MapIteratorTest) {
+    (function (outputs, steps, stepResult, assertEqual) {
+        var atfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
+        var iterations = [
+            { value: 1, expect: 'True: 1', arg: true },
+            { value: 2, expect: '(2)', arg: null },
+            { value: 3, expect: '3' },
+            { value: 5, expect: 'False: 5', arg: false },
+            { value: 7, expect: '7' },
+            { value: 11, expect: '11' }
+        ];
+        var values = iterations.map(function (d) {
+            return d.value;
+        });
+        var expectedNextArgs = iterations.map(function (d) {
+            return d.arg;
+        });
+        var source = x_g_inte_site_17.Site17Util.iteratorFromArray(values, false, "Test 1");
+        function mapper(value, arg) {
+            this.nextArgs.push(arg);
+            if (typeof arg === 'undefined')
+                return value.toString();
+            if (arg === null)
+                return '(' + value + ')';
+            if (arg)
+                return 'True: ' + value;
+            return 'False: ' + value;
+        }
+        var thisArg = { nextArgs: [] };
+        var idx;
+        var arg;
+        var ir;
+        var pseudoCode = 'mapIterator<number, string, string, boolean | null>(' + JSON.stringify(values) + '.iterator(), ' + JSON.stringify(mapper) + ', ' + JSON.stringify(thisArg) + ')';
+        var iterator;
+        try {
+            iterator = x_g_inte_site_17.Site17Util.mapIterator(source, mapper, thisArg);
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: true,
+            value: typeof iterator !== 'undefined' && iterator !== null
+        });
+        var iterationPseudoCode;
+        for (idx = 0; idx < values.length; idx++) {
+            arg = iterations[idx].arg;
+            if (typeof arg === 'undefined') {
+                iterationPseudoCode = pseudoCode + '[' + idx + '].next()';
+                try {
+                    ir = iterator.next();
+                }
+                catch (e) {
+                    atfHelper.setFailed('Unexpected exception while invoking ' + iterationPseudoCode, e);
+                    return false;
+                }
+            }
+            else {
+                iterationPseudoCode = pseudoCode + '[' + idx + '].next(' + JSON.stringify(arg) + ')';
+                try {
+                    ir = iterator.next(arg);
+                }
+                catch (e) {
+                    atfHelper.setFailed('Unexpected exception while invoking ' + iterationPseudoCode, e);
+                    return false;
+                }
+            }
+            assertEqual({
+                name: iterationPseudoCode,
+                shouldbe: true,
+                value: typeof ir !== 'undefined' && ir !== null
+            });
+            assertEqual({
+                name: iterationPseudoCode + '.done',
+                shouldbe: true,
+                value: ir.done !== true
+            });
+            assertEqual({
+                name: iterationPseudoCode + '.value',
+                shouldbe: iterations[idx].expect,
+                value: ir.value
+            });
+        }
+        iterationPseudoCode = pseudoCode + '[' + values.length + '].next()';
+        try {
+            ir = iterator.next();
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + iterationPseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: iterationPseudoCode,
+            shouldbe: true,
+            value: typeof ir !== 'undefined' && ir !== null
+        });
+        assertEqual({
+            name: pseudoCode + iterationPseudoCode + '.done',
+            shouldbe: true,
+            value: ir.done
+        });
+        assertEqual({
+            name: pseudoCode + iterationPseudoCode + '.value',
+            shouldbe: "Test 1",
+            value: ir.value
+        });
+        assertEqual({
+            name: pseudoCode + '; thisArg.nextArgs',
+            shouldbe: expectedNextArgs.map(function (value) { return (typeof value === 'undefined') ? 'undefined' : JSON.stringify(value); }).join(','),
+            value: thisArg.nextArgs.map(function (value) { return (typeof value === 'undefined') ? 'undefined' : JSON.stringify(value); }).join(',')
+        });
+        return true;
+    })(outputs, steps, stepResult, assertEqual);
+})(site17Util_MapIteratorTest || (site17Util_MapIteratorTest = {}));
+var site17Util_ReduceIteratorTest;
+(function (site17Util_ReduceIteratorTest) {
+    (function (outputs, steps, stepResult, assertEqual) {
+        var atfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
+        var values = [
+            new GlideDuration('1 0:0:0'),
+            new GlideDuration('0 1:0:0'),
+            new GlideDuration('0 0:1:0'),
+            new GlideDuration('0 0:0:1')
+        ];
+        var source = x_g_inte_site_17.Site17Util.iteratorFromArray(values);
+        var initialValue = 0;
+        function reducerFn(acc, cur) {
+            this.count++;
+            return cur.isValid() ? acc + cur.getNumericValue() : acc;
+        }
+        var thisArg = { count: 0 };
+        var pseudoCode = 'reduceIterator<GlideDuration, number>(' + JSON.stringify(values) + '.iterator(), ' + initialValue + ', ' + JSON.stringify(reducerFn) + ', ' + JSON.stringify(thisArg) + ')';
+        var aggregate;
+        try {
+            aggregate = x_g_inte_site_17.Site17Util.reduceIterator(source, initialValue, reducerFn, thisArg);
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: values.reduce(function (previousValue, currentValue) { return currentValue.isValid() ? currentValue.getNumericValue() + previousValue : previousValue; }, 0),
+            value: aggregate
+        });
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: values.length + 1,
+            value: thisArg.count
+        });
+        source = x_g_inte_site_17.Site17Util.iteratorFromArray([]);
+        initialValue = 7;
+        thisArg.count = 0;
+        var pseudoCode = 'reduceIterator<GlideDuration, number>([].iterator(), ' + initialValue + ', ' + JSON.stringify(reducerFn) + ', ' + JSON.stringify(thisArg) + ')';
+        try {
+            aggregate = x_g_inte_site_17.Site17Util.reduceIterator(source, initialValue, reducerFn, thisArg);
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: initialValue,
+            value: aggregate
+        });
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: 1,
+            value: thisArg.count
+        });
+        return true;
+    })(outputs, steps, stepResult, assertEqual);
+})(site17Util_ReduceIteratorTest || (site17Util_ReduceIteratorTest = {}));
+var site17Util_FirstIteratedTest;
+(function (site17Util_FirstIteratedTest) {
+    (function (outputs, steps, stepResult, assertEqual) {
+        var atfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
+        var values = [1, 2, 3, 5, 7, 11];
+        var source = x_g_inte_site_17.Site17Util.iteratorFromArray(values);
+        function predicate1(value) { return value > 5; }
+        var thisArg = { count: 0 };
+        var first;
+        var pseudoCode = 'firstIterated<number>(' + JSON.stringify(values) + '.iterator(), ' + JSON.stringify(predicate1) + ', ' + JSON.stringify(thisArg) + ')';
+        try {
+            first = x_g_inte_site_17.Site17Util.firstIterated(source, predicate1, thisArg);
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: 7,
+            value: first
+        });
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: values.length - 1,
+            value: thisArg.count
+        });
+        function predicate2(value) { return value > 11; }
+        var pseudoCode = 'firstIterated<number>(' + JSON.stringify(values) + '.iterator(), ' + JSON.stringify(predicate2) + ', ' + JSON.stringify(thisArg) + ')';
+        source = x_g_inte_site_17.Site17Util.iteratorFromArray(values);
+        thisArg.count = 0;
+        try {
+            first = x_g_inte_site_17.Site17Util.firstIterated(source, predicate2, thisArg);
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: true,
+            value: typeof first === 'undefined'
+        });
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: values.length + 1,
+            value: thisArg.count
+        });
+        return true;
+    })(outputs, steps, stepResult, assertEqual);
+})(site17Util_FirstIteratedTest || (site17Util_FirstIteratedTest = {}));
+var site17Util_firstIteratedOrDefault;
+(function (site17Util_firstIteratedOrDefault) {
+    (function (outputs, steps, stepResult, assertEqual) {
+        var atfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
+        var values = [1, 2, 3, 5, 7, 11];
+        var source = x_g_inte_site_17.Site17Util.iteratorFromArray(values);
+        var ifEmptyValue = 13;
+        function predicate1(value) { return value < 1; }
+        var thisArg = { count: 0 };
+        var first;
+        var pseudoCode = 'firstIterated<number>(' + JSON.stringify(values) + '.iterator(), ' + ifEmptyValue + ', ' + JSON.stringify(predicate1) + ', ' + JSON.stringify(thisArg) + ')';
+        try {
+            first = x_g_inte_site_17.Site17Util.firstIteratedOrDefault(source, ifEmptyValue, predicate1, thisArg);
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: 13,
+            value: first
+        });
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: values.length + 1,
+            value: thisArg.count
+        });
+        function predicate2(value) { return value > 5; }
+        pseudoCode = 'firstIterated<number>(' + JSON.stringify(values) + '.iterator(), ' + ifEmptyValue + ', ' + JSON.stringify(predicate2) + ', ' + JSON.stringify(thisArg) + ')';
+        source = x_g_inte_site_17.Site17Util.iteratorFromArray(values);
+        thisArg.count = 0;
+        try {
+            first = x_g_inte_site_17.Site17Util.firstIteratedOrDefault(source, ifEmptyValue, predicate2, thisArg);
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: 7,
+            value: first
+        });
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: values.length - 1,
+            value: thisArg.count
+        });
+        function ifEmptyFunc() { return 17; }
+        thisArg.count = 0;
+        pseudoCode = 'firstIterated<number>(' + JSON.stringify(values) + '.iterator(), ' + JSON.stringify(ifEmptyFunc) + ', ' + JSON.stringify(predicate1) + ', ' + JSON.stringify(thisArg) + ')';
+        source = x_g_inte_site_17.Site17Util.iteratorFromArray(values);
+        thisArg.count = 0;
+        try {
+            first = x_g_inte_site_17.Site17Util.firstIteratedOrDefault(source, ifEmptyFunc, predicate1, thisArg);
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: 17,
+            value: first
+        });
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: values.length + 1,
+            value: thisArg.count
+        });
+        return true;
+    })(outputs, steps, stepResult, assertEqual);
+})(site17Util_firstIteratedOrDefault || (site17Util_firstIteratedOrDefault = {}));
+var site17Util_LimitIteratorTest;
+(function (site17Util_LimitIteratorTest) {
+    (function (outputs, steps, stepResult, assertEqual) {
+        var atfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
+        var iterations = [
+            { value: 1 },
+            { value: 2, arg: false },
+            { value: 3 },
+            { value: 4, arg: true }
+        ];
+        var values = iterations.map(function (value) { return value.value; });
+        var source = x_g_inte_site_17.Site17Util.iteratorFromArray(values, false, "Test 1");
+        var count = 3;
+        var iterator;
+        var idx;
+        var arg;
+        var ir;
+        var pseudoCode = 'limitIterator<number, string, boolean>(' + JSON.stringify(values) + '.iterator():= "Test 1", ' + count + ')';
+        try {
+            iterator = x_g_inte_site_17.Site17Util.limitIterator(source, count);
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: true,
+            value: typeof iterator !== 'undefined' && iterator !== null
+        });
+        var iterationPseudoCode;
+        for (idx = 0; idx < count; idx++) {
+            arg = iterations[idx].arg;
+            if (typeof arg === 'undefined') {
+                iterationPseudoCode = pseudoCode + '[' + idx + '].next()';
+                try {
+                    ir = iterator.next();
+                }
+                catch (e) {
+                    atfHelper.setFailed('Unexpected exception while invoking ' + iterationPseudoCode, e);
+                    return false;
+                }
+            }
+            else {
+                iterationPseudoCode = pseudoCode + '[' + idx + '].next(' + JSON.stringify(arg) + ')';
+                try {
+                    ir = iterator.next(arg);
+                }
+                catch (e) {
+                    atfHelper.setFailed('Unexpected exception while invoking ' + iterationPseudoCode, e);
+                    return false;
+                }
+            }
+            assertEqual({
+                name: iterationPseudoCode,
+                shouldbe: true,
+                value: typeof ir !== 'undefined' && ir !== null
+            });
+            assertEqual({
+                name: pseudoCode + iterationPseudoCode + '].done',
+                shouldbe: true,
+                value: ir.done !== true
+            });
+            assertEqual({
+                name: pseudoCode + iterationPseudoCode + '].value',
+                shouldbe: values[idx],
+                value: ir.value
+            });
+        }
+        iterationPseudoCode = pseudoCode + '[' + (count + 1) + '].next()';
+        try {
+            ir = iterator.next();
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + iterationPseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: iterationPseudoCode,
+            shouldbe: true,
+            value: typeof ir !== 'undefined' && ir !== null
+        });
+        assertEqual({
+            name: iterationPseudoCode + '.done',
+            shouldbe: true,
+            value: ir.done
+        });
+        assertEqual({
+            name: iterationPseudoCode + '.value',
+            shouldbe: "Test 1",
+            value: ir.value
+        });
+        count = values.length + 1;
+        pseudoCode = 'limitIterator<number, string, boolean>(' + JSON.stringify(values) + '.iterator():= "Test 2", ' + count + ')';
+        source = x_g_inte_site_17.Site17Util.iteratorFromArray(values, false, "Test 2");
+        try {
+            iterator = x_g_inte_site_17.Site17Util.limitIterator(source, count);
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: true,
+            value: typeof iterator !== 'undefined' && iterator !== null
+        });
+        for (idx = 0; idx < values.length; idx++) {
+            arg = iterations[idx].arg;
+            if (typeof arg === 'undefined') {
+                iterationPseudoCode = pseudoCode + '[' + idx + '].next()';
+                try {
+                    ir = iterator.next();
+                }
+                catch (e) {
+                    atfHelper.setFailed('Unexpected exception while invoking ' + iterationPseudoCode, e);
+                    return false;
+                }
+            }
+            else {
+                iterationPseudoCode = pseudoCode + '[' + idx + '].next(' + JSON.stringify(arg) + ')';
+                try {
+                    ir = iterator.next(arg);
+                }
+                catch (e) {
+                    atfHelper.setFailed('Unexpected exception while invoking ' + iterationPseudoCode, e);
+                    return false;
+                }
+            }
+            assertEqual({
+                name: iterationPseudoCode,
+                shouldbe: true,
+                value: typeof ir !== 'undefined' && ir !== null
+            });
+            assertEqual({
+                name: pseudoCode + iterationPseudoCode + '].done',
+                shouldbe: true,
+                value: ir.done !== true
+            });
+            assertEqual({
+                name: pseudoCode + iterationPseudoCode + '].value',
+                shouldbe: values[idx],
+                value: ir.value
+            });
+        }
+        iterationPseudoCode = pseudoCode + '[' + values.length + '].next()';
+        try {
+            ir = iterator.next();
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + iterationPseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: iterationPseudoCode,
+            shouldbe: true,
+            value: typeof ir !== 'undefined' && ir !== null
+        });
+        assertEqual({
+            name: iterationPseudoCode + '.done',
+            shouldbe: true,
+            value: ir.done
+        });
+        assertEqual({
+            name: iterationPseudoCode + '.value',
+            shouldbe: "Test 2",
+            value: ir.value
+        });
+        count = 0;
+        pseudoCode = 'limitIterator<number, string, boolean>(' + JSON.stringify(values) + '.iterator(), ' + count + '):="Test3"';
+        source = x_g_inte_site_17.Site17Util.iteratorFromArray(values, false, "Test 3");
+        try {
+            iterator = x_g_inte_site_17.Site17Util.limitIterator(source, count);
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: true,
+            value: typeof iterator !== 'undefined' && iterator !== null
+        });
+        iterationPseudoCode = pseudoCode + '[0].next()';
+        try {
+            ir = iterator.next();
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + iterationPseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: iterationPseudoCode,
+            shouldbe: true,
+            value: typeof ir !== 'undefined' && ir !== null
+        });
+        assertEqual({
+            name: iterationPseudoCode + '.done',
+            shouldbe: true,
+            value: ir.done
+        });
+        assertEqual({
+            name: iterationPseudoCode + '.value',
+            shouldbe: "Test 3",
+            value: ir.value
+        });
+        return true;
+    })(outputs, steps, stepResult, assertEqual);
+})(site17Util_LimitIteratorTest || (site17Util_LimitIteratorTest = {}));
+var site17Util_IteratorToArrayTest;
+(function (site17Util_IteratorToArrayTest) {
+    (function (outputs, steps, stepResult, assertEqual) {
+        var atfHelper = new x_g_inte_site_17.AtfHelper(steps, stepResult);
+        var values = [1, 2, 3, 5, 7, 11];
+        var source = x_g_inte_site_17.Site17Util.iteratorFromArray(values);
+        var limit = 3;
+        var arr;
+        var idx;
+        var pseudoCode = 'iteratorToArray<number>(' + JSON.stringify(values) + '.iterator(), ' + limit + ')';
+        try {
+            arr = x_g_inte_site_17.Site17Util.iteratorToArray(source, limit);
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: true,
+            value: typeof arr !== 'undefined' && arr !== null
+        });
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: limit,
+            value: arr.length
+        });
+        for (idx = 0; idx < limit; idx++) {
+            assertEqual({
+                name: pseudoCode + '[' + idx + ']',
+                shouldbe: values[idx],
+                value: arr[idx]
+            });
+        }
+        limit = values.length + 1;
+        pseudoCode = 'iteratorToArray<number>(' + JSON.stringify(values) + '.iterator(), ' + limit + ')';
+        source = x_g_inte_site_17.Site17Util.iteratorFromArray(values);
+        try {
+            arr = x_g_inte_site_17.Site17Util.iteratorToArray(source, limit);
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: true,
+            value: typeof arr !== 'undefined' && arr !== null
+        });
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: values.length,
+            value: arr.length
+        });
+        for (idx = 0; idx < values.length; idx++) {
+            assertEqual({
+                name: pseudoCode + '[' + idx + ']',
+                shouldbe: values[idx],
+                value: arr[idx]
+            });
+        }
+        limit = 0;
+        pseudoCode = 'iteratorToArray<number>(' + JSON.stringify(values) + '.iterator(), ' + limit + ')';
+        source = x_g_inte_site_17.Site17Util.iteratorFromArray(values);
+        try {
+            arr = x_g_inte_site_17.Site17Util.iteratorToArray(source, limit);
+        }
+        catch (e) {
+            atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
+            return false;
+        }
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: true,
+            value: typeof arr !== 'undefined' && arr !== null
+        });
+        assertEqual({
+            name: pseudoCode,
+            shouldbe: limit,
+            value: arr.length
+        });
+        return true;
+    })(outputs, steps, stepResult, assertEqual);
+})(site17Util_IteratorToArrayTest || (site17Util_IteratorToArrayTest = {}));
 var site17Util_RecordTypesTest;
 (function (site17Util_RecordTypesTest) {
     (function (outputs, steps, stepResult, assertEqual) {
