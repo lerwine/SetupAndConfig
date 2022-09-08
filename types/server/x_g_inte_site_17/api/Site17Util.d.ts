@@ -269,13 +269,13 @@ declare namespace x_g_inte_site_17 {
          * @template TReturn - The optional final value type for the iterator.
          * @template TNext - The optional parameter type for obtaining a yielded result.
          * @param {Iterator<TYield, TReturn, TNext>} source - The source iterator.
-         * @param {{ (value: TYield): boolean; }} predicate - Determines whether a value will be yielded in the result iterator.
+         * @param {{ (value: TYield, ...args: [] | [TNext]): boolean; }} predicate - Determines whether a value will be yielded in the result iterator.
          * @param {*} [thisArg] - An optional object to which the this keyword can refer in the predicate function.
          * @return {Iterator<TYield, TReturn, TNext>} The iterator yielding filtered results.
          * @memberof Site17UtilConstructor
          */
         filterIterator<TYield, TReturn = any, TNext = undefined>(source: Iterator<TYield, TReturn, TNext>, predicate: {
-            (value: TYield): boolean;
+            (value: TYield, ...args: [] | [TNext]): boolean;
         }, thisArg?: any): Iterator<TYield, TReturn, TNext>;
         /**
          * Creates a new iterator which applies a given function before each value is yielded.
@@ -371,33 +371,16 @@ declare namespace x_g_inte_site_17 {
          * Creates an interator from an array.
          * @template T - The element type.
          * @template TReturn - The optional return value type.
+         * @template TNext - The optional parameter type for obtaining a yielded result.
          * @param {T[]} arr - The source array.
          * @param {boolean} [supportsReturn] - If true, the iterator will implement the "return" method.
          * @param {TReturn} [finalReturnValue] - The value to return with the iteration result when all items have been iterated.
-         * @param {{ (e?: any): IteratorResult<T, TReturn> }} [onThrow] - If defined, the iterator will implement the "throw" method, using this method to get the result value.
-         * @return {Iterator<T, TReturn>} - The iterator created from the array.
+         * @param {{ (e?: any): TReturn | undefined }} [onThrow] - If defined, the iterator will implement the "throw" method, using this method to get the result value.
+         * @return {Iterator<T, TReturn, TNext>} - The iterator created from the array.
          * @memberof Site17UtilConstructor
          */
-        iteratorFromArray<T, TReturn = any>(arr: T[], supportsReturn?: boolean, finalReturnValue?: TReturn, onThrow?: {
-            (e?: any): IteratorResult<T, TReturn>;
-        }): Iterator<T, TReturn>;
-        /**
-         * Creates an interator from an array that accepts an argument for the "next" method.
-         * @template T - The element type.
-         * @template TReturn - The optional return value type.
-         * @template TNext - The argument type for the "next" method.
-         * @param {T[]} arr - The source array.
-         * @param {{ (value: T, next?: TNext): IteratorYieldResult<T>; }} onNext - Gets return value for the "next" method.
-         * @param {boolean} [supportsReturn] - If true, the iterator will implement the "return" method.
-         * @param {TReturn} [finalReturnValue] - The value to return with the iteration result when all items have been iterated.
-         * @param {{ (e?: any): IteratorResult<T, TReturn> }} [onThrow] - If defined, the iterator will implement the "throw" method, using this method to get the result value.
-         * @return {*}  {Iterator<T, TReturn, TNext>} - The iterator created from the array.
-         * @memberof Site17UtilConstructor
-         */
-        iteratorFromArray2<T, TReturn, TNext>(arr: T[], onNext: {
-            (value: T, next?: TNext): IteratorResult<T>;
-        }, supportsReturn?: boolean, finalReturnValue?: TReturn, onThrow?: {
-            (e?: any): IteratorResult<T, TReturn>;
+        iteratorFromArray<T, TReturn = any, TNext = undefined>(arr: T[], supportsReturn?: boolean, finalReturnValue?: TReturn, onThrow?: {
+            (e?: any): TReturn | undefined;
         }): Iterator<T, TReturn, TNext>;
     }
     const Site17Util: Site17UtilConstructor;

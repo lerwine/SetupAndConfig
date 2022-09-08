@@ -347,7 +347,7 @@ var x_g_inte_site_17;
          * @template TReturn - The optional final value type for the iterator.
          * @template TNext - The optional parameter type for obtaining a yielded result.
          * @param {Iterator<TYield, TReturn, TNext>} source - The source iterator.
-         * @param {{ (value: TYield): boolean; }} predicate - Determines whether a value will be yielded in the result iterator.
+         * @param {{ (value: TYield, ...args: [] | [TNext]): boolean; }} predicate - Determines whether a value will be yielded in the result iterator.
          * @param {*} [thisArg] - An optional object to which the this keyword can refer in the predicate function.
          * @return {Iterator<TYield, TReturn, TNext>} The iterator yielding filtered results.
          * @static
@@ -355,6 +355,7 @@ var x_g_inte_site_17;
          */
         constructor.filterIterator = function (source, predicate, thisArg) {
             var context = {};
+            var arrayUtil = new global.ArrayUtil();
             var iterator;
             if (typeof thisArg === 'undefined') {
                 iterator = {
@@ -370,26 +371,35 @@ var x_g_inte_site_17;
                             context["return"] = result;
                             return result;
                         }
-                        while (!predicate(result.value)) {
-                            if ((result = source.next.apply(source, args)).done) {
-                                context["return"] = result;
-                                break;
+                        if (typeof args !== undefined && args.length > 0) {
+                            while (!predicate.apply(undefined, arrayUtil.concat([result.value], args))) {
+                                if ((result = source.next.apply(source, args)).done) {
+                                    context["return"] = result;
+                                    break;
+                                }
                             }
                         }
+                        else
+                            while (!predicate(result.value)) {
+                                if ((result = source.next.apply(source, args)).done) {
+                                    context["return"] = result;
+                                    break;
+                                }
+                            }
                         return result;
                     }
                 };
                 if (typeof source["return"] !== 'undefined')
                     iterator["return"] = function (value) {
                         if (typeof source["return"] === 'undefined')
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                         else {
                             var result = source["return"](value);
                             if (result.done) {
                                 context["return"] = result;
                                 return result;
                             }
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                             if (predicate(result.value))
                                 return result;
                         }
@@ -400,14 +410,14 @@ var x_g_inte_site_17;
                 if (typeof source["throw"] !== 'undefined')
                     iterator["throw"] = function (e) {
                         if (typeof source["throw"] === 'undefined')
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                         else {
                             var result = source["throw"](e);
                             if (result.done) {
                                 context["return"] = result;
                                 return result;
                             }
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                             if (predicate(result.value))
                                 return result;
                         }
@@ -428,26 +438,34 @@ var x_g_inte_site_17;
                             context["return"] = result;
                             return result;
                         }
-                        while (!predicate.call(thisArg, result.value)) {
-                            if ((result = source.next.apply(source, args)).done) {
-                                context["return"] = result;
-                                break;
+                        if (typeof args !== undefined && args.length > 0)
+                            while (!predicate.apply(thisArg, arrayUtil.concat([result.value], args))) {
+                                if ((result = source.next.apply(source, args)).done) {
+                                    context["return"] = result;
+                                    break;
+                                }
                             }
-                        }
+                        else
+                            while (!predicate.call(thisArg, result.value)) {
+                                if ((result = source.next.apply(source, args)).done) {
+                                    context["return"] = result;
+                                    break;
+                                }
+                            }
                         return result;
                     }
                 };
                 if (typeof source["return"] !== 'undefined')
                     iterator["return"] = function (value) {
                         if (typeof source["return"] === 'undefined')
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                         else {
                             var result = source["return"](value);
                             if (result.done) {
                                 context["return"] = result;
                                 return result;
                             }
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                             if (predicate.call(thisArg, result.value))
                                 return result;
                         }
@@ -458,14 +476,14 @@ var x_g_inte_site_17;
                 if (typeof source["throw"] !== 'undefined')
                     iterator["throw"] = function (e) {
                         if (typeof source["throw"] === 'undefined')
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                         else {
                             var result = source["throw"](e);
                             if (result.done) {
                                 context["return"] = result;
                                 return result;
                             }
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                             if (predicate.call(thisArg, result.value))
                                 return result;
                         }
@@ -514,7 +532,7 @@ var x_g_inte_site_17;
                 if (typeof source["return"] !== 'undefined')
                     iterator["return"] = function (value) {
                         if (typeof source["return"] === 'undefined') {
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                             if (typeof value !== 'undefined')
                                 context["return"].value = value;
                             return context["return"];
@@ -523,7 +541,7 @@ var x_g_inte_site_17;
                         if (result.done)
                             context["return"] = result;
                         else {
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                             callbackFn(result.value);
                         }
                         return result;
@@ -531,14 +549,14 @@ var x_g_inte_site_17;
                 if (typeof source["throw"] !== 'undefined')
                     iterator["throw"] = function (e) {
                         if (typeof source["throw"] === 'undefined') {
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                             return context["return"];
                         }
                         var result = source["throw"](e);
                         if (result.done)
                             context["return"] = result;
                         else {
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                             callbackFn(result.value);
                         }
                         return result;
@@ -568,7 +586,7 @@ var x_g_inte_site_17;
                 if (typeof source["return"] !== 'undefined')
                     iterator["return"] = function (value) {
                         if (typeof source["return"] === 'undefined') {
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                             if (typeof value !== 'undefined')
                                 context["return"].value = value;
                             return context["return"];
@@ -577,7 +595,7 @@ var x_g_inte_site_17;
                         if (result.done)
                             context["return"] = result;
                         else {
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                             callbackFn.call(thisArg, result.value);
                         }
                         return result;
@@ -585,14 +603,14 @@ var x_g_inte_site_17;
                 if (typeof source["throw"] !== 'undefined')
                     iterator["throw"] = function (e) {
                         if (typeof source["throw"] === 'undefined') {
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                             return context["return"];
                         }
                         var result = source["throw"](e);
                         if (result.done)
                             context["return"] = result;
                         else {
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                             callbackFn.call(thisArg, result.value);
                         }
                         return result;
@@ -639,14 +657,14 @@ var x_g_inte_site_17;
                 if (typeof source["return"] !== 'undefined')
                     iterator["return"] = function (value) {
                         if (typeof source["return"] === 'undefined')
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                         else {
                             var result = source["return"](value);
                             if (result.done) {
                                 context["return"] = result;
                                 return result;
                             }
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                             return { value: mapper(result.value) };
                         }
                         if (typeof value !== 'undefined')
@@ -656,14 +674,14 @@ var x_g_inte_site_17;
                 if (typeof source["throw"] !== 'undefined')
                     iterator["throw"] = function (e) {
                         if (typeof source["throw"] === 'undefined')
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                         else {
                             var result = source["throw"](e);
                             if (result.done) {
                                 context["return"] = result;
                                 return result;
                             }
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                             return { value: mapper(result.value) };
                         }
                         return context["return"];
@@ -691,14 +709,14 @@ var x_g_inte_site_17;
                 if (typeof source["return"] !== 'undefined')
                     iterator["return"] = function (value) {
                         if (typeof source["return"] === 'undefined')
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                         else {
                             var result = source["return"](value);
                             if (result.done) {
                                 context["return"] = result;
                                 return result;
                             }
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                             return { value: mapper.call(thisArg, result.value) };
                         }
                         if (typeof value !== 'undefined')
@@ -708,14 +726,14 @@ var x_g_inte_site_17;
                 if (typeof source["throw"] !== 'undefined')
                     iterator["throw"] = function (e) {
                         if (typeof source["throw"] === 'undefined')
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                         else {
                             var result = source["throw"](e);
                             if (result.done) {
                                 context["return"] = result;
                                 return result;
                             }
-                            context["return"] = { done: true };
+                            context["return"] = { done: true, value: null };
                             return { value: mapper.call(thisArg, result.value) };
                         }
                         return context["return"];
@@ -836,7 +854,7 @@ var x_g_inte_site_17;
                         return context["return"];
                     context.iterations++;
                     if (context.iterations > count) {
-                        context["return"] = { done: true };
+                        context["return"] = { done: true, value: null };
                         return context["return"];
                     }
                     var result = source.next.apply(source, args);
@@ -850,7 +868,7 @@ var x_g_inte_site_17;
             if (typeof source["return"] !== 'undefined')
                 iterator["return"] = function (value) {
                     if (typeof source["return"] === 'undefined') {
-                        context["return"] = { done: true };
+                        context["return"] = { done: true, value: null };
                         if (typeof value !== 'undefined')
                             context["return"].value = value;
                         return context["return"];
@@ -859,20 +877,20 @@ var x_g_inte_site_17;
                     if (result.done)
                         context["return"] = result;
                     else
-                        context["return"] = { done: true };
+                        context["return"] = { done: true, value: null };
                     return result;
                 };
             if (typeof source["throw"] !== 'undefined')
                 iterator["throw"] = function (e) {
                     if (typeof source["throw"] === 'undefined') {
-                        context["return"] = { done: true };
+                        context["return"] = { done: true, value: null };
                         return context["return"];
                     }
                     var result = source["throw"](e);
                     if (result.done)
                         context["return"] = result;
                     else
-                        context["return"] = { done: true };
+                        context["return"] = { done: true, value: null };
                     return result;
                 };
             return iterator;
@@ -905,11 +923,12 @@ var x_g_inte_site_17;
          * Creates an interator from an array.
          * @template T - The element type.
          * @template TReturn - The optional return value type.
+         * @template TNext - The optional parameter type for obtaining a yielded result.
          * @param {T[]} arr - The source array.
          * @param {boolean} [supportsReturn] - If true, the iterator will implement the "return" method.
          * @param {TReturn} [finalReturnValue] - The value to return with the iteration result when all items have been iterated.
-         * @param {{ (e?: any): IteratorResult<T, TReturn> }} [onThrow] - If defined, the iterator will implement the "throw" method, using this method to get the result value.
-         * @return {Iterator<T, TReturn>} - The iterator created from the array.
+         * @param {{ (e?: any): TReturn | undefined }} [onThrow] - If defined, the iterator will implement the "throw" method, using this method to get the result value.
+         * @return {Iterator<T, TReturn, TNext>} - The iterator created from the array.
          * @static
          * @memberof Site17Util
          */
@@ -919,7 +938,7 @@ var x_g_inte_site_17;
                 next: function () {
                     if (context.index < 0) {
                         if (typeof context.returned === 'undefined')
-                            return { done: true };
+                            return { done: true, value: null };
                         return { done: true, value: context.returned };
                     }
                     if (context.index < arr.length) {
@@ -929,7 +948,7 @@ var x_g_inte_site_17;
                     }
                     context.index = -1;
                     if (typeof finalReturnValue === "undefined")
-                        return { done: true };
+                        return { done: true, value: null };
                     context.returned = finalReturnValue;
                     return { done: true, value: finalReturnValue };
                 }
@@ -938,12 +957,12 @@ var x_g_inte_site_17;
                 iterator["return"] = function (value) {
                     if (context.index < 0) {
                         if (typeof value === "undefined")
-                            return { done: true };
+                            return { done: true, value: null };
                         return { done: true, value: value };
                     }
                     context.index = -1;
                     if (typeof finalReturnValue === "undefined")
-                        return { done: true };
+                        return { done: true, value: null };
                     context.returned = finalReturnValue;
                     return { done: true, value: finalReturnValue };
                 };
@@ -952,75 +971,11 @@ var x_g_inte_site_17;
                     var result = onThrow(e);
                     if (context.index >= 0) {
                         context.index = -1;
-                        if (result.done)
-                            context.returned = result.value;
+                        context.returned = result;
                     }
-                    return result;
-                };
-            return iterator;
-        };
-        /**
-         * Creates an interator from an array that accepts an argument for the "next" method.
-         * @template T - The element type.
-         * @template TReturn - The optional return value type.
-         * @template TNext - The argument type for the "next" method.
-         * @param {T[]} arr - The source array.
-         * @param {{ (value: T, next?: TNext): IteratorYieldResult<T>; }} onNext - Gets return value for the "next" method.
-         * @param {boolean} [supportsReturn] - If true, the iterator will implement the "return" method.
-         * @param {TReturn} [finalReturnValue] - The value to return with the iteration result when all items have been iterated.
-         * @param {{ (e?: any): IteratorResult<T, TReturn> }} [onThrow] - If defined, the iterator will implement the "throw" method, using this method to get the result value.
-         * @return {{Iterator<T, TReturn, TNext>} - The iterator created from the array.
-         * @static
-         * @memberof Site17Util
-         */
-        constructor.iteratorFromArray2 = function (arr, onNext, supportsReturn, finalReturnValue, onThrow) {
-            var context = { index: 0 };
-            var iterator = {
-                next: function (next) {
-                    if (context.index < 0) {
-                        if (typeof context.returned === 'undefined')
-                            return { done: true };
-                        return { done: true, value: context.returned };
-                    }
-                    if (context.index < arr.length) {
-                        var result = onNext(arr[context.index], next);
-                        if (result.done) {
-                            context.index = -1;
-                            context.returned = result.value;
-                        }
-                        else
-                            context.index++;
-                        return result;
-                    }
-                    context.index = -1;
-                    if (typeof finalReturnValue === "undefined")
-                        return { done: true };
-                    context.returned = finalReturnValue;
-                    return { done: true, value: finalReturnValue };
-                }
-            };
-            if (supportsReturn)
-                iterator["return"] = function (value) {
-                    if (context.index < 0) {
-                        if (typeof value === "undefined")
-                            return { done: true };
-                        return { done: true, value: value };
-                    }
-                    context.index = -1;
-                    if (typeof finalReturnValue === "undefined")
-                        return { done: true };
-                    context.returned = finalReturnValue;
-                    return { done: true, value: finalReturnValue };
-                };
-            if (typeof onThrow !== 'undefined')
-                iterator["throw"] = function (e) {
-                    var result = onThrow(e);
-                    if (context.index >= 0) {
-                        context.index = -1;
-                        if (result.done)
-                            context.returned = result.value;
-                    }
-                    return result;
+                    if (typeof result === 'undefined')
+                        return { done: true, value: null };
+                    return { done: true, value: result };
                 };
             return iterator;
         };
