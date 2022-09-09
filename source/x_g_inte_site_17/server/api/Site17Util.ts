@@ -1322,7 +1322,7 @@ namespace x_g_inte_site_17 {
         var iterator = <Iterator<T, TReturn, TNext>> {
             next: function(): IteratorResult<T, TReturn> {
                 if (context.index < 0) {
-                    if (typeof context.returned === 'undefined') return <IteratorReturnResult<TReturn>><any>{ done: true, value: null };
+                    if (typeof context.returned === 'undefined' || context.returned === null) return <IteratorReturnResult<TReturn>><any>{ done: true, value: null };
                     return { done: true, value: context.returned };
                 }
                 if (context.index < arr.length) {
@@ -1331,7 +1331,7 @@ namespace x_g_inte_site_17 {
                     return result;
                 }
                 context.index = -1;
-                if (typeof finalReturnValue === "undefined") return <IteratorReturnResult<TReturn>><any>{ done: true, value: null };
+                if (typeof finalReturnValue === "undefined" || finalReturnValue === null) return <IteratorReturnResult<TReturn>><any>{ done: true, value: null };
                 context.returned = finalReturnValue;
                 return { done: true, value: finalReturnValue };
             }
@@ -1343,18 +1343,19 @@ namespace x_g_inte_site_17 {
                     return { done: true, value: value };
                 }
                 context.index = -1;
-                if (typeof finalReturnValue === "undefined") return <IteratorReturnResult<TReturn>><any>{ done: true, value: null };
-                context.returned = finalReturnValue;
-                return { done: true, value: finalReturnValue };
+                if (typeof value === "undefined" || value === null) return <IteratorReturnResult<TReturn>><any>{ done: true, value: null };
+                context.returned = value;
+                return { done: true, value: value };
             }
         if (typeof onThrow !== 'undefined')
             iterator.throw = function(e?: any): IteratorResult<T, TReturn> {
                 var result = onThrow(e);
                 if (context.index >= 0) {
                     context.index = -1;
-                    context.returned = result;
+                    if (typeof result !== 'undefined' && result !== null)
+                        context.returned = result;
                 }
-                if (typeof result === 'undefined')
+                if (typeof result === 'undefined' || result === null)
                     return <IteratorReturnResult<TReturn>><any>{ done: true, value: null };
                 return { done: true, value: result };
             };
