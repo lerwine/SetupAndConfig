@@ -44,6 +44,8 @@
         "xabikos.javascriptsnippets",
         "yzhang.markdown-all-in-one",
         "zignd.html-css-class-completion",
-        "ziyasal.vscode-open-in-github"
+        "ziyasal.vscode-open-in-github",
+        "loiane.ts-extension-pack",
+        "adrianwilczynski.csharp-to-typescript"
     ]
 }
