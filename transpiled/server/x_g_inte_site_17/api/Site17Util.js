@@ -941,7 +941,7 @@ var x_g_inte_site_17;
             var iterator = {
                 next: function () {
                     if (context.index < 0) {
-                        if (typeof context.returned === 'undefined')
+                        if (typeof context.returned === 'undefined' || context.returned === null)
                             return { done: true, value: null };
                         return { done: true, value: context.returned };
                     }
@@ -951,7 +951,7 @@ var x_g_inte_site_17;
                         return result;
                     }
                     context.index = -1;
-                    if (typeof finalReturnValue === "undefined")
+                    if (typeof finalReturnValue === "undefined" || finalReturnValue === null)
                         return { done: true, value: null };
                     context.returned = finalReturnValue;
                     return { done: true, value: finalReturnValue };
@@ -965,19 +965,20 @@ var x_g_inte_site_17;
                         return { done: true, value: value };
                     }
                     context.index = -1;
-                    if (typeof finalReturnValue === "undefined")
+                    if (typeof value === "undefined" || value === null)
                         return { done: true, value: null };
-                    context.returned = finalReturnValue;
-                    return { done: true, value: finalReturnValue };
+                    context.returned = value;
+                    return { done: true, value: value };
                 };
             if (typeof onThrow !== 'undefined')
                 iterator["throw"] = function (e) {
                     var result = onThrow(e);
                     if (context.index >= 0) {
                         context.index = -1;
-                        context.returned = result;
+                        if (typeof result !== 'undefined' && result !== null)
+                            context.returned = result;
                     }
-                    if (typeof result === 'undefined')
+                    if (typeof result === 'undefined' || result === null)
                         return { done: true, value: null };
                     return { done: true, value: result };
                 };

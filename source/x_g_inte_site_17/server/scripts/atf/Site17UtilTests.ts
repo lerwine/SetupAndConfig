@@ -265,12 +265,18 @@ namespace site17Util_IteratorFromArrayTest {
                     shouldbe: value,
                     value: ir.value
                 });
-            else
+            else {
+                assertEqual({
+                    name: 'instanceof ' + pseudoCode + '.value',
+                    shouldbe: 'GlideDuration',
+                    value: (ir.value instanceof GlideDuration) ? 'GlideDuration' : (ir.value === null) ? 'null' : typeof ir.value
+                });
                 assertEqual({
                     name: pseudoCode + '.value',
                     shouldbe: value.getDurationValue(),
                     value: (<GlideDuration>ir.value).getDurationValue()
                 });
+            }
         }
 
         function testIterations(testParams: ITestParams, iteratorInfo: IIteratorInfo, limit?: number): boolean {
@@ -422,7 +428,7 @@ namespace site17Util_IteratorFromArrayTest {
                 if (!(createIterator(testParams, iteratorInfo, "Throw") && testIterations(testParams, iteratorInfo, limit))) return false;
                 pseudoCode = iteratorInfo.pseudoCode + '[' + limit + '].throw("Error!!!")';
                 try {
-                    ir = (<{ (value?: GlideDuration): IteratorResult<string, GlideDuration> }>iteratorInfo.iterator.return)();
+                    ir = (<{ (e?: any): IteratorResult<string, GlideDuration> }>iteratorInfo.iterator.throw)("Error!!!");
                 } catch (error) {
                     atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, error);
                     return false;
@@ -713,7 +719,12 @@ namespace site17Util_IteratorFromArrayTest {
                 onThrow: null
             }
         ]) {
-            if (!testIteratorFromArray(tp)) return false;
+            try {
+                if (!testIteratorFromArray(tp)) return false;
+            } catch (error) {
+                atfHelper.setFailed("Uncaught error", error);
+                return false;
+            }
         }
         return true;
     })(outputs, steps, stepResult, assertEqual);
@@ -731,7 +742,6 @@ namespace site17Util_ReiterateTest {
     }
 
     interface ITargetInfo {
-        iterations: (string | INextWithArg)[];
         pseudoCode: string;
         source: Iterator<string, GlideDuration, number>;
         iterator: Iterator<string, GlideDuration, number>;
@@ -762,7 +772,7 @@ namespace site17Util_ReiterateTest {
             thisObj.reiterated = [];
             thisObj.throwCalled = false;
             thisObj.thrown = undefined;
-            targetInfo.values = targetInfo.values.map(function(item: string | INextWithArg): string { return (typeof item === 'string') ? item : item.value });
+            targetInfo.values = testParams.iterations.map(function(item: string | INextWithArg): string { return (typeof item === 'string') ? item : item.value });
             if (testParams.hasThisArg) {
                 if (typeof testParams.onThrow !== 'undefined') {
                     if (testParams.onThrow === null) {
@@ -944,8 +954,8 @@ namespace site17Util_ReiterateTest {
             if (typeof value === 'undefined')
                 assertEqual({
                     name: 'typeof ' + pseudoCode + '.value',
-                    shouldbe: 'null',
-                    value: (value === null) ? 'null' : typeof value
+                    shouldbe: 'undefined',
+                    value: (value === null) ? 'undefined' : typeof value
                 });
             else if (typeof value === 'string')
                 assertEqual({
@@ -956,8 +966,8 @@ namespace site17Util_ReiterateTest {
             else {
                 assertEqual({
                     name: 'instanceof ' + pseudoCode + '.value',
-                    shouldbe: true,
-                    value: ir.value instanceof GlideDuration
+                    shouldbe: 'GlideDuration',
+                    value: (ir.value instanceof GlideDuration) ? 'GlideDuration' : (ir.value === null) ? 'null' : typeof ir.value
                 });
                 assertEqual({
                     name: pseudoCode + '.value',
@@ -967,19 +977,14 @@ namespace site17Util_ReiterateTest {
             }
         }
 
-        function assertIteratedValues(targetInfo: ITargetInfo, thisObj: IThisObj, pseudoCode: string, postIterationNext?: (number | undefined)[], iterationCount?: number): void {
-            assertEqual({
-                name: pseudoCode + '.done',
-                shouldbe: JSON.stringify(targetInfo.values),
-                value: JSON.stringify(thisObj.reiterated)
-            });
+        function assertIteratedValues(testParams: ITestParams, targetInfo: ITargetInfo, thisObj: IThisObj, pseudoCode: string, iterationCount?: number): void {
             var expectedValues: string[];
             var expectedIterated: (number | undefined)[];
             if (typeof iterationCount === 'number') {
                 expectedIterated = [];
                 expectedValues = []
                 for (var i = 0; i < iterationCount; i++) {
-                    var item: INextWithArg | string = targetInfo.iterations[i];
+                    var item: INextWithArg | string = testParams.iterations[i];
                     if (typeof item === 'string') {
                         expectedIterated.push(undefined);
                         expectedValues.push(item);
@@ -989,14 +994,12 @@ namespace site17Util_ReiterateTest {
                     }
                 }
             } else {
-                expectedIterated = targetInfo.iterations.map(function(item: INextWithArg | string): number | undefined {
+                expectedIterated = testParams.iterations.map(function(item: INextWithArg | string): number | undefined {
                     if (typeof item !== 'string')
                     return item.arg;
                 });
                 expectedValues = targetInfo.values;
             }
-            if (typeof postIterationNext !== 'undefined' && postIterationNext.length > 0)
-                expectedIterated = new global.ArrayUtil().concat(expectedIterated, postIterationNext);
             assertEqual({
                 name: pseudoCode + '; thisObj.nextArgs',
                 shouldbe: JSON.stringify(expectedIterated.map(function(value?: number) { return (typeof value === 'undefined') ? 'undefined' : value.toString(); })),
@@ -1009,10 +1012,10 @@ namespace site17Util_ReiterateTest {
             });
         }
 
-        function testIterations(targetInfo: ITargetInfo, limit?: number): boolean {
-            var count = (typeof limit === 'number') ? limit : targetInfo.iterations.length;
+        function testIterations(testParams: ITestParams, targetInfo: ITargetInfo, limit?: number): boolean {
+            var count = (typeof limit === 'number') ? limit : testParams.iterations.length;
             for (var idx = 0; idx < count; idx++) {
-                var nextItem = targetInfo.iterations[idx];
+                var nextItem = testParams.iterations[idx];
                 var iterationPseudoCode: string;
                 var ir: IteratorResult<string, GlideDuration>;
                 if (typeof nextItem === 'string') {
@@ -1047,7 +1050,7 @@ namespace site17Util_ReiterateTest {
             var iteratorInfo = <ITargetInfo>{ };
 
             var ir: IteratorResult<string, GlideDuration>;
-            if (!(createIterator(testParams, iteratorInfo, thisObj) && testIterations(iteratorInfo))) return false;
+            if (!(createIterator(testParams, iteratorInfo, thisObj) && testIterations(testParams, iteratorInfo))) return false;
             var pseudoCode = iteratorInfo.pseudoCode + '[' + iteratorInfo.values.length + ']';
             try { ir = iteratorInfo.iterator.next(); }
             catch (e) {
@@ -1055,16 +1058,16 @@ namespace site17Util_ReiterateTest {
                 return false;
             }
             assertIterationResult(pseudoCode, ir, true, testParams.finalReturnValue);
-            assertIteratedValues(iteratorInfo, thisObj, pseudoCode, [undefined]);
+            assertIteratedValues(testParams, iteratorInfo, thisObj, pseudoCode);
 
-            if (!(createIterator(testParams, iteratorInfo, thisObj) && testIterations(iteratorInfo))) return false;
+            if (!(createIterator(testParams, iteratorInfo, thisObj) && testIterations(testParams, iteratorInfo))) return false;
             try { ir = iteratorInfo.iterator.next(-1); }
             catch (e) {
                 atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, e);
                 return false;
             }
             assertIterationResult(pseudoCode, ir, true, testParams.finalReturnValue);
-            assertIteratedValues(iteratorInfo, thisObj, pseudoCode, [-1]);
+            assertIteratedValues(testParams, iteratorInfo, thisObj, pseudoCode);
 
             var limit = testParams.iterations.length - 1;
             if (testParams.supportsReturn) {
@@ -1083,7 +1086,7 @@ namespace site17Util_ReiterateTest {
                     return false;
                 }
                 assertIterationResult(pseudoCode, ir, true);
-                assertIteratedValues(iteratorInfo, thisObj, pseudoCode, [undefined], 0);
+                assertIteratedValues(testParams, iteratorInfo, thisObj, pseudoCode, 0);
     
                 if (!createIterator(testParams, iteratorInfo, thisObj, "Return")) return false;
                 pseudoCode = iteratorInfo.pseudoCode + "[0].return(new GlideDuration('0 0:0:0'))";
@@ -1100,9 +1103,9 @@ namespace site17Util_ReiterateTest {
                     return false;
                 }
                 assertIterationResult(pseudoCode, ir, true, zeroDuration);
-                assertIteratedValues(iteratorInfo, thisObj, pseudoCode, [-1]);
-                if (limit > 0) {
-                    if (!(createIterator(testParams, iteratorInfo, thisObj, "Return") && testIterations(iteratorInfo, limit))) return false;
+                assertIteratedValues(testParams, iteratorInfo, thisObj, pseudoCode, 0);
+                if (limit > 1) {
+                    if (!(createIterator(testParams, iteratorInfo, thisObj, "Return") && testIterations(testParams, iteratorInfo, limit))) return false;
                     pseudoCode = iteratorInfo.pseudoCode + '[' + limit + '].return()';
                     try { ir = (<{ (value?: GlideDuration): IteratorResult<string, GlideDuration>; }>iteratorInfo.iterator.return)(); }
                     catch (e) {
@@ -1117,9 +1120,9 @@ namespace site17Util_ReiterateTest {
                         return false;
                     }
                     assertIterationResult(pseudoCode, ir, true);
-                    assertIteratedValues(iteratorInfo, thisObj, pseudoCode, [undefined], limit);
+                    assertIteratedValues(testParams, iteratorInfo, thisObj, pseudoCode, limit);
                     
-                    if (!(createIterator(testParams, iteratorInfo, thisObj, "Return") && testIterations(iteratorInfo, limit))) return false;
+                    if (!(createIterator(testParams, iteratorInfo, thisObj, "Return") && testIterations(testParams, iteratorInfo, limit))) return false;
                     pseudoCode = iteratorInfo.pseudoCode + '[' + limit + "].return(new GlideDuration('0 0:0:0'))";
                     try { ir = (<{ (value?: GlideDuration): IteratorResult<string, GlideDuration>; }>iteratorInfo.iterator.return)(zeroDuration); }
                     catch (e) {
@@ -1134,7 +1137,7 @@ namespace site17Util_ReiterateTest {
                         return false;
                     }
                     assertIterationResult(pseudoCode, ir, true, zeroDuration);
-                    assertIteratedValues(iteratorInfo, thisObj, pseudoCode, [undefined], limit);
+                    assertIteratedValues(testParams, iteratorInfo, thisObj, pseudoCode, limit);
                 }
             }
 
@@ -1163,13 +1166,13 @@ namespace site17Util_ReiterateTest {
                 assertIterationResult(pseudoCode, ir, true);
             else
                 assertIterationResult(pseudoCode, ir, true, testParams.onThrow);
-            assertIteratedValues(iteratorInfo, thisObj, pseudoCode, [undefined], 0);
+            assertIteratedValues(testParams, iteratorInfo, thisObj, pseudoCode, 0);
 
-            if (limit > 0) {
-                if (!(createIterator(testParams, iteratorInfo, thisObj, "Throw") && testIterations(iteratorInfo, limit))) return false;
+            if (limit > 1) {
+                if (!(createIterator(testParams, iteratorInfo, thisObj, "Throw") && testIterations(testParams, iteratorInfo, limit))) return false;
                 pseudoCode = iteratorInfo.pseudoCode + '[' + limit + '].throw("Error!!!")';
                 try {
-                    ir = (<{ (value?: GlideDuration): IteratorResult<string, GlideDuration> }>iteratorInfo.iterator.return)();
+                    ir = (<{ (value?: any): IteratorResult<string, GlideDuration> }>iteratorInfo.iterator.throw)("Error!!!");
                 } catch (error) {
                     atfHelper.setFailed('Unexpected exception while invoking ' + pseudoCode, error);
                     return false;
@@ -1189,7 +1192,7 @@ namespace site17Util_ReiterateTest {
                     assertIterationResult(pseudoCode, ir, true);
                 else
                     assertIterationResult(pseudoCode, ir, true, testParams.onThrow);
-                assertIteratedValues(iteratorInfo, thisObj, pseudoCode, [undefined], limit);
+                assertIteratedValues(testParams, iteratorInfo, thisObj, pseudoCode, limit);
             }
 
             return true;
@@ -1641,7 +1644,12 @@ namespace site17Util_ReiterateTest {
                 onThrow: null
             }
         ]) {
-            if (!testReiterate(tp)) return false;
+            try {
+                if (!testReiterate(tp)) return false;
+            } catch (error) {
+                atfHelper.setFailed("Uncaught error", error);
+                return false;
+            }
         }
 
         return true;
@@ -1667,7 +1675,7 @@ namespace site17Util_FilterIteratorTest {
         var iterations: INextWithArg[] = [
             { value: "One" },
             { value: "Two", arg: 1 },
-            { value: "" },
+            { value: "", arg: 3 },
             { value: "Three", arg: 3 }
         ];
         var expected = iterations.filter(function(value: INextWithArg): boolean { return value.value.length > 0; });
@@ -1698,20 +1706,20 @@ namespace site17Util_FilterIteratorTest {
             value: (iterator === null) ? 'null' : typeof iterator
         });
         assertEqual({
-            name: 'typeof ' + pseudoCode + 'next',
+            name: 'typeof ' + pseudoCode + '.next',
             shouldbe: 'function',
             value: typeof iterator.next
         });
-        assertEqual({
-            name: 'typeof ' + pseudoCode + 'return',
-            shouldbe: 'function',
-            value: typeof iterator.return
-        });
-        assertEqual({
-            name: 'typeof ' + pseudoCode + 'throw',
-            shouldbe: 'function',
-            value: typeof iterator.throw
-        });
+        // assertEqual({
+        //     name: 'typeof ' + pseudoCode + '.return',
+        //     shouldbe: 'function',
+        //     value: typeof iterator.return
+        // });
+        // assertEqual({
+        //     name: 'typeof ' + pseudoCode + '.throw',
+        //     shouldbe: 'function',
+        //     value: typeof iterator.throw
+        // });
         var iterationPseudoCode;
         for (idx = 0; idx < expected.length; idx++) {
             item = expected[idx];
